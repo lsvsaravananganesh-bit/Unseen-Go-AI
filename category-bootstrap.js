@@ -1,0 +1,1 @@
+fetch('app.js').then(r=>r.text()).then(src=>{const a=src.indexOf('const cities=');const b=src.indexOf('\n\nconst icons');const code=src.slice(a,b);window.cityData=new Function(`${code};return cities;`)();renderCategoryPage();}).catch(()=>renderCategoryPage());
