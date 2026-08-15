@@ -53,8 +53,22 @@ function setCity(city){
  document.getElementById('heroCity').value=city;
  document.getElementById('citySelect').value=city;
  document.getElementById('planCity').value=city;
+ document.querySelectorAll('.city-chip').forEach(b=>b.classList.toggle('active',b.textContent.trim()===city));
  renderPlaces();
+ document.dispatchEvent(new CustomEvent('unseengo:citychange',{detail:{city}}));
  document.getElementById('discover').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function bindCitySelection(){
+ const select=document.getElementById('citySelect');
+ if(select&&!select.dataset.bound){
+  select.addEventListener('change',e=>{if(e.target.value)setCity(e.target.value);});
+  select.dataset.bound='1';
+ }
+ const hero=document.getElementById('heroCity');
+ if(hero&&!hero.dataset.bound){
+  hero.addEventListener('change',e=>{if(cities[e.target.value.trim()])setCity(e.target.value.trim());});
+  hero.dataset.bound='1';
+ }
 }
 function discover(){
  const city=document.getElementById('heroCity').value.trim();
@@ -71,4 +85,5 @@ function generatePlan(){
  const out=document.getElementById('output');out.classList.add('show');
  out.innerHTML=`<h3>✦ Your UnseenGo plan for ${city}</h3><p>${days} · ${style} · ${budget}</p><div class="plan-grid"><div class="day"><b>DAY 01</b><p>${picks[0][0]}<br>${picks[0][3]}</p></div><div class="day"><b>DAY 02</b><p>${picks[1][0]}<br>${picks[1][3]}</p></div><div class="day"><b>DAY 03</b><p>${picks[2][0]}<br>${picks[2][3]}</p></div></div>`;
 }
-populateCities();renderVibes();renderPlaces();
+populateCities();renderVibes();renderPlaces();bindCitySelection();
+setTimeout(bindCitySelection,500);
