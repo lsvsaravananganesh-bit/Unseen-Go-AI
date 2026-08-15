@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('#vibes .vibe').forEach((btn,i)=>{const categories=['Nature','Heritage','Food','Culture','Adventure'];btn.addEventListener('click',e=>{e.preventDefault();openCategoryPage(categories[i]);});});});
