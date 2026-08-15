@@ -2,9 +2,11 @@
 (function(){
   const escDetail=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
   const cityNow=()=>document.getElementById('citySelect')?.value||document.getElementById('heroCity')?.value||'';
+  const cityDatabase=()=>typeof cities!=='undefined'?cities:{};
+  const accommodationDatabase=()=>typeof stayData!=='undefined'?stayData:{};
 
   function findCuratedPlace(title,city){
-    const data=window.cities?.[city];
+    const data=cityDatabase()[city];
     if(!data)return null;
     for(const category of Object.keys(data)){
       if(category==='region'||!Array.isArray(data[category]))continue;
@@ -39,7 +41,7 @@
     const score=row?.[2];
     const blurb=row?.[3]||'Explore the place and discover its local character.';
     const mapUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(title+' '+city);
-    const stays=(window.stayData?.[city]||[]).slice(0,3);
+    const stays=(accommodationDatabase()[city]||[]).slice(0,3);
     grid.innerHTML=`<div><span>TYPE</span><strong>${escDetail(category)}</strong></div><div><span>LOCATION</span><strong>${escDetail(location)}</strong></div>${score?`<div><span>UNSEENGO SCORE</span><strong>✦ ${escDetail(score)}/100</strong></div>`:''}<div><span>WHY VISIT</span><strong>${escDetail(blurb)}</strong></div>`;
     actions.innerHTML=`<a href="${mapUrl}" target="_blank" rel="noopener noreferrer">Open location in Maps ↗</a>`+(stays.length?`<div class="nearby-stays"><span>GOOD AREAS TO STAY</span>${stays.map(s=>`<a href="https://www.google.com/maps/search/hotels+in+${encodeURIComponent(s[0]+' '+city)}" target="_blank" rel="noopener noreferrer">${escDetail(s[0])}</a>`).join('')}</div>`:'');
   }
@@ -56,7 +58,6 @@
     wrapped.__detailsWrapped=true;
     window.openPlaceStory=wrapped;
   }
-
   document.addEventListener('keydown',e=>{if(e.key==='Escape')window.closePlaceStory?.();});
   window.addEventListener('DOMContentLoaded',hook);
   setTimeout(hook,1200);
