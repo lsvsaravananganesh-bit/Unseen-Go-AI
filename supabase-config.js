@@ -1,10 +1,8 @@
 /* UnseenGo AI — Phase 2B configuration
- *
- * Replace ONLY these two values with your Supabase project's public
- * Project URL and Publishable key.
+ * Public browser configuration only. RLS must protect database tables.
  * Never put a Supabase secret/service-role key in this file.
  */
 window.UNSEENGO_SUPABASE_CONFIG = {
-  url: "YOUR_SUPABASE_PROJECT_URL",
-  publishableKey: "YOUR_SUPABASE_PUBLISHABLE_KEY"
+  url: "https://jpqbvliaaucyqnhcclbz.supabase.co",
+  publishableKey: "sb_publishable_K-0R9a2lSginTIfxHk-cxQ_joorBonP"
 };
