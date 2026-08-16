@@ -1,1 +1,70 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Discover India — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="city-picker.css"><link rel="stylesheet" href="discover-cities.css"></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a class="active" href="discover.html">Discover</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='index.html'">Home</button></header><main><section class="discover-hero"><div><p class="eyebrow">DISCOVER INDIA</p><h1>Every city has<br><em>a story to tell.</em></h1><p>Search for a city or choose one below. UnseenGo AI opens a dedicated destination experience with hidden gems, famous landmarks, history, photos, locations, maps and accommodation.</p><div class="city-picker"><input id="cityPickerInput" class="city-picker-input" placeholder="Search for a destination..." autocomplete="off"><span class="city-picker-arrow">⌄</span><div id="cityPickerList" class="city-picker-list"></div></div></div><div class="discover-side"><span>✦ CITY EXPLORER</span><strong>Find the<br>unseen side<br>of India.</strong></div></section><section class="section discover-cities"><div class="heading"><div><p class="eyebrow">CHOOSE A CITY</p><h2>Explore destinations.<br><em>One city at a time.</em></h2></div><p>Choose a destination to open its own page. Places are grouped by experience so you can explore history, forts, nature, culture, food, adventure and famous landmarks.</p></div><div class="city-directory" id="cityDirectory"></div></section><section class="section discover-features"><div class="mini-feature"><b>🏛</b><strong>History</strong><span>Stories behind places</span></div><div class="mini-feature"><b>✦</b><strong>Hidden Gems</strong><span>Less-discovered locations</span></div><div class="mini-feature"><b>⌖</b><strong>Maps</strong><span>Location for every place</span></div><div class="mini-feature"><b>⌂</b><strong>Accommodation</strong><span>Where to stay nearby</span></div></section></main><footer><b>✦ UnseenGo AI</b><span>Discover the places nobody told you about.</span><span>© 2026</span></footer><script src="app.js"></script><script src="nav.js"></script><script src="city-picker.js"></script><script>document.addEventListener('DOMContentLoaded',()=>{const box=document.getElementById('cityDirectory');if(typeof cities==='undefined'){box.innerHTML='<div class="no-city">Destinations are loading. Please refresh the page.</div>';return;}const names=Object.keys(cities).sort();box.innerHTML=names.map(city=>{const d=cities[city]||{};const cats=Object.keys(d).filter(k=>k!=='region'&&Array.isArray(d[k]));const count=cats.reduce((n,k)=>n+(d[k]?.length||0),0);return `<a class="directory-card" href="city.html?city=${encodeURIComponent(city)}"><div class="directory-top"><small>${d.region||'INDIA'} INDIA</small><span>${String(count).padStart(2,'0')}+ places</span></div><h3>${city}</h3><p>${cats.slice(0,4).join(' · ')}</p><strong>Explore city →</strong></a>`}).join('')});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Discover India — UnseenGo AI</title>
+<link rel="stylesheet" href="styles.css?v=20260816">
+<link rel="stylesheet" href="city-picker.css?v=20260816">
+<link rel="stylesheet" href="discover-cities.css?v=20260816">
+<style>
+/* DISCOVER CITY CARDS — inline fallback so GitHub Pages always renders the card layout */
+.discover-cities{overflow:visible!important}
+.city-directory{display:flex!important;flex-wrap:wrap!important;gap:20px!important;margin-top:34px!important;align-items:stretch!important;width:100%!important}
+.directory-card{box-sizing:border-box!important;position:relative!important;display:flex!important;flex:0 1 calc(25% - 15px)!important;width:calc(25% - 15px)!important;min-width:220px!important;min-height:210px!important;flex-direction:column!important;justify-content:space-between!important;padding:25px!important;text-decoration:none!important;color:#f5f6f1!important;background:linear-gradient(145deg,#141a15,#0b0f0c)!important;border:1px solid rgba(180,205,150,.22)!important;border-radius:22px!important;overflow:hidden!important;transition:transform .28s ease,border-color .28s ease,background .28s ease,box-shadow .28s ease!important}
+.directory-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,rgba(218,255,72,.16),transparent 42%);opacity:0;transition:opacity .28s ease;pointer-events:none!important}
+.directory-card:hover{transform:translateY(-8px)!important;border-color:#d8ff4d!important;background:linear-gradient(145deg,#192119,#0e130f)!important;box-shadow:0 20px 50px rgba(0,0,0,.4),0 0 24px rgba(216,255,77,.08)!important}
+.directory-card:hover::before{opacity:1}
+.directory-top{position:relative;z-index:2;display:flex!important;justify-content:space-between!important;align-items:center!important;gap:10px!important}
+.directory-top small{font-size:10px!important;letter-spacing:1.7px!important;color:#d8ff4d!important;font-weight:700!important}
+.directory-top span{font-size:11px!important;color:#929a91!important;white-space:nowrap!important}
+.directory-card h3{position:relative;z-index:2;margin:25px 0 10px!important;font-size:28px!important;line-height:1.05!important;color:#f5f6f1!important}
+.directory-card p{position:relative;z-index:2;margin:0!important;color:#a8b0a5!important;font-size:13px!important;text-transform:capitalize!important}
+.directory-card>strong{position:relative;z-index:2;margin-top:25px!important;color:#d8ff4d!important;font-size:13px!important;transition:transform .25s ease!important}
+.directory-card:hover>strong{transform:translateX(7px)!important}
+@media(max-width:1100px){.directory-card{flex-basis:calc(33.333% - 14px)!important;width:calc(33.333% - 14px)!important}}
+@media(max-width:760px){.city-directory{gap:14px!important}.directory-card{flex-basis:calc(50% - 7px)!important;width:calc(50% - 7px)!important;min-width:0!important;min-height:180px!important;padding:20px!important}.directory-card h3{font-size:23px!important}}
+@media(max-width:500px){.directory-card{flex-basis:100%!important;width:100%!important}}
+</style>
+</head>
+<body>
+<header class="nav">
+<a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a>
+<nav><a class="active" href="discover.html">Discover</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav>
+<button onclick="location.href='index.html'">Home</button>
+</header>
+<main>
+<section class="discover-hero">
+<div>
+<p class="eyebrow">DISCOVER INDIA</p>
+<h1>Every city has<br><em>a story to tell.</em></h1>
+<p>Search for a city or choose one below. UnseenGo AI opens a dedicated destination experience with hidden gems, famous landmarks, history, photos, locations, maps and accommodation.</p>
+<div class="city-picker"><input id="cityPickerInput" class="city-picker-input" placeholder="Search for a destination..." autocomplete="off"><span class="city-picker-arrow">⌄</span><div id="cityPickerList" class="city-picker-list"></div></div>
+</div>
+<div class="discover-side"><span>✦ CITY EXPLORER</span><strong>Find the<br>unseen side<br>of India.</strong></div>
+</section>
+<section class="section discover-cities">
+<div class="heading"><div><p class="eyebrow">CHOOSE A CITY</p><h2>Explore destinations.<br><em>One city at a time.</em></h2></div><p>Choose a destination to open its own page. Places are grouped by experience so you can explore history, forts, nature, culture, food, adventure and famous landmarks.</p></div>
+<div class="city-directory" id="cityDirectory"></div>
+</section>
+<section class="section discover-features"><div class="mini-feature"><b>🏛</b><strong>History</strong><span>Stories behind places</span></div><div class="mini-feature"><b>✦</b><strong>Hidden Gems</strong><span>Less-discovered locations</span></div><div class="mini-feature"><b>⌖</b><strong>Maps</strong><span>Location for every place</span></div><div class="mini-feature"><b>⌂</b><strong>Accommodation</strong><span>Where to stay nearby</span></div></section>
+</main>
+<footer><b>✦ UnseenGo AI</b><span>Discover the places nobody told you about.</span><span>© 2026</span></footer>
+<script src="app.js?v=20260816"></script>
+<script src="nav.js?v=20260816"></script>
+<script src="city-picker.js?v=20260816"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ const box=document.getElementById('cityDirectory');
+ if(typeof cities==='undefined'){box.innerHTML='<div class="no-city">Destinations are loading. Please refresh the page.</div>';return;}
+ const names=Object.keys(cities).sort();
+ box.innerHTML=names.map(city=>{
+   const d=cities[city]||{};
+   const cats=Object.keys(d).filter(k=>k!=='region'&&Array.isArray(d[k]));
+   const count=cats.reduce((n,k)=>n+(d[k]?.length||0),0);
+   return `<a class="directory-card" href="city.html?city=${encodeURIComponent(city)}"><div class="directory-top"><small>${d.region||'INDIA'} INDIA</small><span>${String(count).padStart(2,'0')}+ places</span></div><h3>${city}</h3><p>${cats.slice(0,4).join(' · ')}</p><strong>Explore city →</strong></a>`;
+ }).join('');
+});
+</script>
+</body>
+</html>
