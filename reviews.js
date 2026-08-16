@@ -10,21 +10,19 @@
     return '★'.repeat(rating) + '☆'.repeat(5 - rating);
   }
 
-  function listReviews() {
+  async function listReviews() {
     const sb = client();
-    if (!sb || !city) return Promise.resolve([]);
-    return sb.from('reviews')
+    if (!sb || !city) return [];
+    const { data, error } = await sb.from('reviews')
       .select('id,city,place_name,reviewer_name,rating,review_text,created_at')
       .eq('city', city)
       .order('created_at', { ascending: false })
-      .limit(30)
-      .then(({ data, error }) => {
-        if (error) {
-          console.warn('UnseenGo AI: reviews could not be loaded.', error.message);
-          return [];
-        }
-        return data || [];
-      });
+      .limit(30);
+    if (error) {
+      console.warn('UnseenGo AI: reviews could not be loaded.', error.message);
+      return [];
+    }
+    return data || [];
   }
 
   function render(reviews) {
@@ -36,7 +34,7 @@
     }
     host.innerHTML = reviews.map(r => {
       const date = r.created_at ? new Date(r.created_at).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' }) : '';
-      return `<article class="traveller-review"><div class="review-head"><div><b>${esc(r.reviewer_name)}</b>${r.place_name ? `<small>${esc(r.place_name)}</small>` : ''}</div><span class="review-stars">${stars(r.rating)}</span></div><p>${esc(r.review_text)}</p><small>${esc(date)}</small></article>`;
+      return `<article class="traveller-review"><div class="review-head"><div class="review-author"><b>${esc(r.reviewer_name)}</b>${r.place_name ? `<small>Visited: ${esc(r.place_name)}</small>` : ''}</div><span class="review-stars" aria-label="${Number(r.rating)} out of 5 stars">${stars(r.rating)}</span></div><p>${esc(r.review_text)}</p><small class="review-date">${esc(date)}</small></article>`;
     }).join('');
   }
 
@@ -49,25 +47,43 @@
     const sb = client();
     const form = document.getElementById('reviewForm');
     const status = document.getElementById('reviewStatus');
-    if (!sb) { if (status) status.textContent = 'Database connection is not ready. Refresh and try again.'; return false; }
+    if (!sb) {
+      if (status) status.textContent = 'Database connection is not ready. Please refresh the page and try again.';
+      return false;
+    }
+    if (!city) {
+      if (status) status.textContent = 'City information is missing from this page.';
+      return false;
+    }
+
     const name = document.getElementById('reviewName').value.trim();
     const rating = Number(document.getElementById('reviewRating').value);
     const text = document.getElementById('reviewText').value.trim();
     const place = document.getElementById('reviewPlace')?.value.trim() || null;
-    if (name.length < 2 || name.length > 60 || rating < 1 || rating > 5 || text.length < 10 || text.length > 1000) {
-      if (status) status.textContent = 'Please enter a valid name, 1–5 rating and a review of 10–1000 characters.';
+
+    if (name.length < 2 || name.length > 60 || !Number.isInteger(rating) || rating < 1 || rating > 5 || text.length < 10 || text.length > 1000) {
+      if (status) status.textContent = 'Please enter a valid name, choose a 1–5 rating, and write 10–1000 characters.';
       return false;
     }
+
     if (status) status.textContent = 'Publishing your review…';
-    const { error } = await sb.from('reviews').insert({ city, place_name: place, reviewer_name: name, rating, review_text: text });
+    const { error } = await sb.from('reviews').insert({
+      city,
+      place_name: place,
+      reviewer_name: name,
+      rating,
+      review_text: text
+    });
+
     if (error) {
-      console.error(error);
-      if (status) status.textContent = 'Could not publish the review. Check the Supabase table and RLS policy.';
+      console.error('UnseenGo AI review insert failed:', error);
+      if (status) status.textContent = 'Could not publish the review. Please try again.';
       return false;
     }
+
     form.reset();
     form.classList.remove('open');
-    if (status) status.textContent = 'Review published successfully.';
+    if (status) status.textContent = 'Review published successfully. Thank you for helping other travellers!';
     await refresh();
     return false;
   }
@@ -80,5 +96,11 @@
   }
 
   window.UnseenGoReviews = { refresh, submit };
-  window.addEventListener('DOMContentLoaded', init);
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', init, { once: true });
+  } else {
+    init();
+  }
+  window.addEventListener('unseengo:supabase-ready', refresh);
 })();
