@@ -9,7 +9,16 @@
   document.addEventListener('DOMContentLoaded',function(){
     const login=document.getElementById('loginForm'),signup=document.getElementById('signupForm');
     waitForClient(sb=>sb.auth.getSession().then(({data})=>{if(data.session&&(login||signup))goAfterAuth()}));
+
     if(login)login.addEventListener('submit',e=>{e.preventDefault();const b=document.getElementById('loginButton');b.disabled=true;b.textContent='LOGGING IN…';show('');waitForClient(async sb=>{const {error}=await sb.auth.signInWithPassword({email:document.getElementById('email').value.trim(),password:document.getElementById('password').value});b.disabled=false;b.textContent='LOGIN';if(error){show(error.message,'error');return}show('Login successful. Opening UnseenGo AI…','success');setTimeout(goAfterAuth,500)})});
-    if(signup)signup.addEventListener('submit',e=>{e.preventDefault();const b=document.getElementById('signupButton'),name=document.getElementById('name').value.trim(),email=document.getElementById('email').value.trim(),password=document.getElementById('password').value,confirm=document.getElementById('confirmPassword').value;if(password!==confirm){show('Passwords do not match.','error');return}if(password.length<6){show('Password must contain at least 6 characters.','error');return}b.disabled=true;b.textContent='CREATING ACCOUNT…';show('');waitForClient(async sb=>{const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name:name}}});b.disabled=false;b.textContent='CREATE MY ACCOUNT';if(error){show(error.message,'error');return}if(data.session){show('Account created. Opening UnseenGo AI…','success');setTimeout(goAfterAuth,600)}else show('Account created. Check your email to confirm your account, then login.','success')})});
+
+    if(signup)signup.addEventListener('submit',e=>{e.preventDefault();const b=document.getElementById('signupButton'),name=document.getElementById('name').value.trim(),email=document.getElementById('email').value.trim(),password=document.getElementById('password').value,confirm=document.getElementById('confirmPassword').value;if(password!==confirm){show('Passwords do not match.','error');return}if(password.length<6){show('Password must contain at least 6 characters.','error');return}b.disabled=true;b.textContent='CREATING ACCOUNT…';show('');waitForClient(async sb=>{const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name:name}}});b.disabled=false;b.textContent='CREATE MY ACCOUNT';if(error){show(error.message,'error');return}
+      // When Supabase email confirmation is disabled, signUp returns an active session.
+      // In that case the traveller goes straight to the home page — never back to login.
+      if(data.session){show('Account created successfully. Opening UnseenGo AI…','success');setTimeout(goAfterAuth,600);return}
+      // If email confirmation is enabled, Supabase cannot create an authenticated session yet.
+      // Keep the user on this page rather than sending them to login unexpectedly.
+      show('Account created. Please confirm your email, then use Login to continue.','success');
+    })});
   });
 })();
