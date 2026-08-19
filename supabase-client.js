@@ -12,6 +12,17 @@
     window.unseenGoSupabase = window.supabase.createClient(cfg.url, cfg.publishableKey);
     window.dispatchEvent(new CustomEvent("unseengo:supabase-ready", { detail: window.unseenGoSupabase }));
     console.info("UnseenGo AI: Supabase client connected.");
+
+    // City pages load the Supabase client directly rather than nav.js.
+    // Ensure the same authenticated Login/Profile navigation is available there too.
+    if (document.querySelector('.nav') && !/^(login|signup)\.html$/i.test(location.pathname.split('/').pop() || '')) {
+      if (!document.querySelector('script[data-unseengo-auth-nav]')) {
+        const navAuth = document.createElement('script');
+        navAuth.src = 'nav-auth.js?v=20260819';
+        navAuth.dataset.unseengoAuthNav = 'true';
+        document.head.appendChild(navAuth);
+      }
+    }
   };
   script.onerror = function () {
     console.error("UnseenGo AI: Could not load the Supabase client library.");
