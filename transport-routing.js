@@ -19,3 +19,35 @@ function visibleCityTransport(){
 function init(){setupModal();visibleCityTransport();setTimeout(visibleCityTransport,300);setTimeout(visibleCityTransport,1200);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
+
+/* Place-card visual repair: shared by every place on every city page. */
+(function(){
+'use strict';
+function addPlaceCardStyles(){
+ if(document.getElementById('unseengo-place-card-fix'))return;
+ const s=document.createElement('style');s.id='unseengo-place-card-fix';s.textContent=`
+.city-place-grid{align-items:stretch}
+.city-place-card{position:relative;isolation:isolate;min-width:0;display:flex;flex-direction:column;background:linear-gradient(145deg,#111711,#0c100d);border:1px solid rgba(180,205,150,.18);box-shadow:0 8px 24px rgba(0,0,0,.16);transition:transform .28s cubic-bezier(.2,.7,.2,1),border-color .28s ease,box-shadow .28s ease,background .28s ease}
+.city-place-card::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at 85% 8%,rgba(216,255,77,.14),transparent 34%);opacity:0;pointer-events:none;transition:opacity .28s ease}
+.city-place-card:hover{transform:translateY(-8px);border-color:rgba(216,255,77,.72);background:linear-gradient(145deg,#151d15,#0d120e);box-shadow:0 22px 48px rgba(0,0,0,.38),0 0 0 1px rgba(216,255,77,.08),0 0 32px rgba(216,255,77,.06)}
+.city-place-card:hover::after{opacity:1}
+.city-place-card:focus-visible{outline:3px solid #d8ff4d;outline-offset:4px}
+.city-place-card .place-image{position:relative;flex:0 0 210px;background:linear-gradient(135deg,#151d17,#0c110e);overflow:hidden}
+.city-place-card .place-image::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.18));pointer-events:none}
+.city-place-card .place-image img{transition:transform .55s cubic-bezier(.2,.7,.2,1),filter .35s ease;will-change:transform}
+.city-place-card:hover .place-image img{transform:scale(1.07);filter:saturate(1.06) contrast(1.03)}
+.city-place-card .place-card-body{position:relative;z-index:1;display:flex;flex:1;flex-direction:column;padding:20px}
+.city-place-card .place-card-body h3{transition:color .25s ease,text-shadow .25s ease,transform .25s ease}
+.city-place-card:hover .place-card-body h3{color:#d8ff4d;text-shadow:0 0 14px rgba(216,255,77,.22);transform:translateX(2px)}
+.city-place-card .place-location{margin-top:auto;padding-top:12px}
+.city-place-card .details-button{display:inline-flex;align-items:center;gap:7px;margin-top:14px;padding:9px 0;color:#d8ff4d;transition:transform .22s ease,text-shadow .22s ease}
+.city-place-card .details-button::after{content:"→";transition:transform .22s ease}
+.city-place-card:hover .details-button{transform:translateX(3px);text-shadow:0 0 12px rgba(216,255,77,.25)}
+.city-place-card:hover .details-button::after{transform:translateX(4px)}
+.image-fallback,.google-photo-unavailable{min-height:210px;background:linear-gradient(145deg,#151d17,#0c110e);color:#9aa49a}
+@media(max-width:650px){.city-place-card:hover{transform:translateY(-4px)}.city-place-card .place-image{flex-basis:200px}}
+`;
+ document.head.appendChild(s);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addPlaceCardStyles,{once:true});else addPlaceCardStyles();
+})();
