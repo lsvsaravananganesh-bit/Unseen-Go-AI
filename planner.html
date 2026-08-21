@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AI Planner — UnseenGo AI</title>
 <link rel="stylesheet" href="styles.css?v=20260819">
@@ -13,48 +12,11 @@
 <main class="page">
 <section class="hero"><p class="eyebrow">AI TRIP PLANNER · PHASE 1</p><h1>Tell us your trip.<br><em>We'll find the unseen.</em></h1><p class="intro">Choose a city, interests, budget, time and travel pace. UnseenGo ranks destinations with a dynamic UnseenGo Score, selects a balanced set of hidden gems and turns them into a practical itinerary.</p></section>
 <section class="planner-card">
-<div class="form-grid">
-<div class="field"><label for="city">DESTINATION CITY</label><select id="city"></select></div>
-<div class="field"><label for="days">TRIP DURATION</label><select id="days"><option value="1">1 day</option><option value="2" selected>2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="7">7 days</option></select></div>
-<div class="field"><label for="budget">BUDGET STYLE</label><select id="budget"><option value="low">Budget-friendly</option><option value="medium" selected>Comfort</option><option value="high">Premium</option></select></div>
-<div class="field"><label for="pace">TRAVEL PACE</label><select id="pace"><option value="slow">Slow & immersive</option><option value="balanced" selected>Balanced</option><option value="fast">Fast & packed</option></select></div>
-<div class="field" style="grid-column:1/-1"><label>INTERESTS</label><div class="interests">
-<label class="interest"><input type="checkbox" value="Heritage" checked><span>🏛 Heritage</span></label>
-<label class="interest"><input type="checkbox" value="Nature"><span>🌿 Nature</span></label>
-<label class="interest"><input type="checkbox" value="Food"><span>🍛 Local food</span></label>
-<label class="interest"><input type="checkbox" value="Culture"><span>🎨 Culture & crafts</span></label>
-<label class="interest"><input type="checkbox" value="Adventure"><span>🥾 Adventure</span></label>
-</div></div>
-</div>
-<button class="generate" id="generate">✦ Generate my hidden-gem trip</button>
-<p class="note">The current GitHub Pages version uses a transparent, client-side ranking model so no secret API key is exposed. The same interface can later connect to a secure server-side LLM for richer natural-language planning.</p>
+<div class="form-grid"><div class="field"><label for="city">DESTINATION CITY</label><select id="city"></select></div><div class="field"><label for="days">TRIP DURATION</label><select id="days"><option value="1">1 day</option><option value="2" selected>2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="7">7 days</option></select></div><div class="field"><label for="budget">BUDGET STYLE</label><select id="budget"><option value="low">Budget-friendly</option><option value="medium" selected>Comfort</option><option value="high">Premium</option></select></div><div class="field"><label for="pace">TRAVEL PACE</label><select id="pace"><option value="slow">Slow & immersive</option><option value="balanced" selected>Balanced</option><option value="fast">Fast & packed</option></select></div><div class="field" style="grid-column:1/-1"><label>INTERESTS</label><div class="interests"><label class="interest"><input type="checkbox" value="Heritage" checked><span>🏛 Heritage</span></label><label class="interest"><input type="checkbox" value="Nature"><span>🌿 Nature</span></label><label class="interest"><input type="checkbox" value="Food"><span>🍛 Local food</span></label><label class="interest"><input type="checkbox" value="Culture"><span>🎨 Culture & crafts</span></label><label class="interest"><input type="checkbox" value="Adventure"><span>🥾 Adventure</span></label></div></div></div>
+<button class="generate" id="generate">✦ Generate my hidden-gem trip</button><p class="note">The current GitHub Pages version uses a transparent, client-side ranking model so no secret API key is exposed. The same interface can later connect to a secure server-side LLM for richer natural-language planning.</p>
 </section>
-<section class="results" id="results">
-<div class="result-head"><div><p class="eyebrow">YOUR UNSEENGO PLAN</p><h2 id="resultTitle"></h2><p id="resultSummary" class="intro" style="font-size:15px"></p></div><div class="score-pill">✦ Dynamic UnseenGo scoring</div></div>
-<div class="cards" id="recommendations"></div>
-<div class="itinerary" id="itinerary"></div>
-<a id="mapLink" class="map-btn" target="_blank" rel="noopener">📍 Open optimized route in Google Maps</a>
-</section>
-</main>
-<footer><b>✦ UnseenGo AI</b><span>Discover the places nobody told you about.</span><span>© 2026</span></footer>
-<script src="app.js"></script>
-<script src="unseen-engine.js?v=20260819"></script>
-<script>
-(function(){
- const citySelect=document.getElementById('city');
- const cityNames=window.UnseenGoAI.getCityNames();
- cityNames.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;citySelect.appendChild(o);});
- if(cityNames.includes('Kurnool')) citySelect.value='Kurnool';
- const esc=s=>String(s).replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));
- document.getElementById('generate').addEventListener('click',function(){
-   const interests=[...document.querySelectorAll('.interest input:checked')].map(x=>x.value);
-   const prefs={days:Number(document.getElementById('days').value),budget:document.getElementById('budget').value,pace:document.getElementById('pace').value,interests};
-   const result=window.UnseenGoAI.generate(citySelect.value,prefs);
-   document.getElementById('resultTitle').textContent=`${result.city} · hidden gems`;document.getElementById('resultSummary').textContent=result.summary;
-   document.getElementById('recommendations').innerHTML=result.recommendations.map(p=>`<article class="place"><span class="category">${esc(p.category)}</span><h3>${esc(p.name)}</h3><small>${esc(p.location)}</small><p>${esc(p.description)}</p><div class="score">${p.unseenScore}<small>/100 UnseenGo Score</small></div></article>`).join('');
-   document.getElementById('itinerary').innerHTML=result.itinerary.map(day=>`<article class="day"><h3>DAY ${day.day}</h3>${day.places.map(p=>`<div class="day-place"><span><b>${esc(p.name)}</b><br><small>${esc(p.category)} · ${esc(p.location)}</small></span><strong>${p.unseenScore}</strong></div>`).join('')}</article>`).join('');
-   document.getElementById('mapLink').href=result.mapsUrl;document.getElementById('results').classList.add('show');document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
- });
-})();
-</script>
+<section class="results" id="results"><div class="result-head"><div><p class="eyebrow">YOUR UNSEENGO PLAN</p><h2 id="resultTitle"></h2><p id="resultSummary" class="intro" style="font-size:15px"></p></div><div class="score-pill">✦ Dynamic UnseenGo scoring</div></div><div class="cards" id="recommendations"></div><div class="itinerary" id="itinerary"></div><a id="mapLink" class="map-btn" target="_blank" rel="noopener">📍 Open optimized route in Google Maps</a></section>
+</main><footer><b>✦ UnseenGo AI</b><span>Discover the places nobody told you about.</span><span>© 2026</span></footer>
+<script src="app.js"></script><script src="unseen-engine.js?v=20260819"></script><script src="cultural-economy.js?v=20260821"></script>
+<script>(function(){const citySelect=document.getElementById('city');const cityNames=window.UnseenGoAI.getCityNames();cityNames.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;citySelect.appendChild(o)});if(cityNames.includes('Kurnool'))citySelect.value='Kurnool';const esc=s=>String(s).replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));document.getElementById('generate').addEventListener('click',function(){const interests=[...document.querySelectorAll('.interest input:checked')].map(x=>x.value);const prefs={days:Number(document.getElementById('days').value),budget:document.getElementById('budget').value,pace:document.getElementById('pace').value,interests};const result=window.UnseenGoAI.generate(citySelect.value,prefs);document.getElementById('resultTitle').textContent=`${result.city} · hidden gems`;document.getElementById('resultSummary').textContent=result.summary;document.getElementById('recommendations').innerHTML=result.recommendations.map(p=>`<article class="place"><span class="category">${esc(p.category)}</span><h3>${esc(p.name)}</h3><small>${esc(p.location)}</small><p>${esc(p.description)}</p><div class="score">${p.unseenScore}<small>/100 UnseenGo Score</small></div></article>`).join('');document.getElementById('itinerary').innerHTML=result.itinerary.map(day=>`<article class="day"><h3>DAY ${day.day}</h3>${day.places.map(p=>`<div class="day-place"><span><b>${esc(p.name)}</b><br><small>${esc(p.category)} · ${esc(p.location)}</small></span><strong>${p.unseenScore}</strong></div>`).join('')}</article>`).join('');document.getElementById('mapLink').href=result.mapsUrl;document.getElementById('results').classList.add('show');document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'})})})();</script>
 </body></html>
