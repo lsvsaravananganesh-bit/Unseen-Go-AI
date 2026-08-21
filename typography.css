@@ -1,0 +1,13 @@
+/* UnseenGo AI — global readability scale. Colors and hover colors intentionally unchanged. */
+body{font-size:17px;line-height:1.6}
+.nav .brand{font-size:22px}.nav nav a{font-size:16px}.nav button{font-size:15px}
+.lead{font-size:20px;line-height:1.7}.eyebrow{font-size:13px}.trust{font-size:14px}.search input{font-size:17px}
+.heading h2,.panel h2{font-size:56px}.heading>p,.muted{font-size:17px}
+.about-card>span{font-size:13px}.about-card h3,.feature-card h3{font-size:23px}.about-card p,.feature-card p{font-size:16px;line-height:1.65}.feature-icon{font-size:30px}.feature-card a{font-size:14px}
+.review-card p{font-size:20px}.review-card small{font-size:12px}.final-cta h2{font-size:62px}
+.quick-city small{font-size:12px}.quick-city strong{font-size:28px}.quick-city span{font-size:13px}
+.city-panel small{font-size:11px}.city-panel strong{font-size:18px}.city-chip{font-size:15px;padding:12px 17px}.vibe span{font-size:30px}.vibe small{font-size:14px}
+.place .tag{font-size:12px}.place small{font-size:13px}.place h3{font-size:24px}.place p{font-size:15px;line-height:1.6}.place.clickable-place:after{font-size:13px}
+.form label{font-size:13px}.form input,.form select{font-size:16px}.day b{font-size:13px}.steps span{font-size:14px}.steps h3{font-size:26px}footer{font-size:14px}
+.city-story-head h2{font-size:52px}.story-box>span,.modal-kicker,.history-block>span{font-size:12px}.story-box>p,.history-block p{font-size:18px;line-height:1.8}.famous-card strong{font-size:18px}.famous-card span,.famous-card small{font-size:12px}.modal-card h2{font-size:46px}.modal-desc{font-size:17px}.history-note{font-size:13px}
+@media(max-width:600px){body{font-size:16px}.nav nav a{font-size:15px}.lead{font-size:18px}.heading h2,.panel h2{font-size:42px}.final-cta h2{font-size:48px}.city-story-head h2{font-size:42px}.modal-card h2{font-size:38px}.about-card h3,.feature-card h3{font-size:21px}.quick-city strong{font-size:25px}.place h3{font-size:22px}}
