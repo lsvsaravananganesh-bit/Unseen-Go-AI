@@ -1,0 +1,549 @@
+/* UnseenGo AI — homepage competition upgrade */
+
+:root{
+  --home-glow:#d8f36a;
+  --home-glow-soft:#8fb83c;
+  --home-panel:#0f1510;
+  --home-panel-2:#131b13;
+  --home-border:#2f3b2d;
+}
+
+/* Stronger hero visual */
+.hero{
+  min-height:760px;
+  background:
+    radial-gradient(circle at 82% 28%,rgba(216,243,106,.13),transparent 24%),
+    radial-gradient(circle at 12% 78%,rgba(82,130,54,.12),transparent 30%),
+    linear-gradient(135deg,#080b09 0%,#0a100b 55%,#0d130c 100%);
+}
+
+.hero-art{
+  min-height:540px;
+}
+
+.hero-card{
+  background:
+    radial-gradient(circle at 68% 18%,rgba(216,243,106,.28),transparent 18%),
+    linear-gradient(145deg,#273821 0%,#172018 42%,#0d120e 100%);
+  border:1px solid rgba(216,243,106,.24);
+  overflow:hidden;
+}
+
+.hero-card:before{
+  border-color:rgba(216,243,106,.24);
+}
+
+.hero-card:after{
+  content:'INDIA';
+  left:auto;
+  right:-28px;
+  top:18%;
+  font-size:105px;
+  font-weight:900;
+  letter-spacing:-8px;
+  color:rgba(216,243,106,.055);
+  transform:rotate(90deg);
+  text-shadow:none;
+}
+
+.hero-stat-card:first-child b{font-size:18px}
+.hero-stat-card:first-child span{line-height:1.4}
+
+/* Discovery journey strip */
+.discovery-journey{
+  position:relative;
+  padding-top:76px;
+  padding-bottom:76px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(216,243,106,.08),transparent 32%),
+    #090d0a;
+}
+
+.discovery-journey:before{
+  content:'CULTURAL DISCOVERY';
+  position:absolute;
+  right:-40px;
+  top:45px;
+  font-size:clamp(70px,12vw,170px);
+  font-weight:900;
+  letter-spacing:-8px;
+  color:rgba(255,255,255,.018);
+  pointer-events:none;
+}
+
+.journey-head{
+  max-width:760px;
+  margin-bottom:34px;
+}
+
+.journey-head h2{
+  font-size:clamp(38px,5vw,64px);
+  line-height:.98;
+  letter-spacing:-3px;
+  margin:10px 0 15px;
+}
+
+.journey-head p:last-child{
+  color:var(--muted);
+  max-width:680px;
+}
+
+.journey-flow{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:10px;
+  position:relative;
+}
+
+.journey-step{
+  position:relative;
+  min-height:145px;
+  padding:22px 18px;
+  border:1px solid var(--home-border);
+  border-radius:20px;
+  background:linear-gradient(160deg,var(--home-panel-2),var(--home-panel));
+  transition:.3s ease;
+}
+
+.journey-step:hover{
+  transform:translateY(-6px);
+  border-color:rgba(216,243,106,.55);
+  box-shadow:0 20px 45px rgba(0,0,0,.42),0 0 30px rgba(216,243,106,.05);
+}
+
+.journey-step:not(:last-child):after{
+  content:'→';
+  position:absolute;
+  right:-15px;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:2;
+  color:var(--home-glow);
+  font-weight:900;
+}
+
+.journey-number{
+  color:var(--home-glow);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.journey-icon{
+  font-size:25px;
+  margin:12px 0 14px;
+}
+
+.journey-step strong{
+  display:block;
+  font-size:15px;
+}
+
+.journey-step span:last-child{
+  display:block;
+  margin-top:5px;
+  color:#7f887d;
+  font-size:11px;
+}
+
+/* AI explanation */
+.ai-intelligence{
+  background:
+    linear-gradient(180deg,#0b100c 0%,#0a0e0b 100%);
+}
+
+.ai-layout{
+  display:grid;
+  grid-template-columns:.85fr 1.15fr;
+  gap:22px;
+  align-items:stretch;
+}
+
+.ai-input-card,.ai-output-card{
+  border:1px solid var(--home-border);
+  border-radius:26px;
+  background:linear-gradient(145deg,#121a13,#0d120e);
+  padding:30px;
+}
+
+.ai-input-card{
+  position:relative;
+  overflow:hidden;
+}
+
+.ai-input-card:after{
+  content:'AI';
+  position:absolute;
+  right:-15px;
+  bottom:-42px;
+  font-size:150px;
+  line-height:1;
+  font-weight:900;
+  color:rgba(216,243,106,.035);
+  pointer-events:none;
+}
+
+.ai-card-kicker{
+  color:var(--home-glow);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.ai-input-card h3,.ai-output-card h3{
+  font-size:28px;
+  margin:10px 0 8px;
+}
+
+.ai-input-card p,.ai-output-card p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.preference-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:22px;
+}
+
+.preference-pill{
+  border:1px solid #344033;
+  background:#0c110d;
+  border-radius:999px;
+  padding:9px 12px;
+  color:#c5cbc1;
+  font-size:11px;
+}
+
+.ai-engine{
+  display:grid;
+  gap:11px;
+  margin-top:22px;
+}
+
+.engine-line{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#cbd1c7;
+  font-size:12px;
+}
+
+.engine-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--home-glow);
+  box-shadow:0 0 16px rgba(216,243,106,.6);
+  flex:none;
+}
+
+.ai-result{
+  margin-top:24px;
+  padding:20px;
+  border:1px solid rgba(216,243,106,.2);
+  border-radius:18px;
+  background:rgba(216,243,106,.035);
+}
+
+.ai-result strong{
+  display:block;
+  color:var(--home-glow);
+  margin-bottom:8px;
+}
+
+.ai-result span{
+  color:#aeb5aa;
+  font-size:12px;
+  line-height:1.7;
+}
+
+/* Verified trust layer */
+.trust-section{
+  background:#090d0a;
+}
+
+.trust-grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
+
+.trust-card{
+  min-height:150px;
+  padding:22px;
+  border:1px solid var(--home-border);
+  border-radius:20px;
+  background:linear-gradient(145deg,#111811,#0c110d);
+  transition:.3s ease;
+}
+
+.trust-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(216,243,106,.5);
+}
+
+.trust-check{
+  display:grid;
+  place-items:center;
+  width:34px;
+  height:34px;
+  border-radius:11px;
+  background:rgba(216,243,106,.12);
+  color:var(--home-glow);
+  margin-bottom:18px;
+  font-weight:900;
+}
+
+.trust-card strong{display:block;font-size:14px}
+.trust-card span{display:block;color:#7f887d;font-size:11px;margin-top:5px;line-height:1.5}
+
+/* Cultural economy impact */
+.impact-section{
+  background:
+    radial-gradient(circle at 50% 30%,rgba(216,243,106,.075),transparent 35%),
+    #0a0e0b;
+}
+
+.impact-panel{
+  position:relative;
+  padding:38px;
+  border:1px solid rgba(216,243,106,.25);
+  border-radius:30px;
+  overflow:hidden;
+  background:linear-gradient(145deg,#111911,#0c110d);
+}
+
+.impact-panel:before{
+  content:'';
+  position:absolute;
+  width:300px;
+  height:300px;
+  right:-100px;
+  top:-140px;
+  border-radius:50%;
+  background:rgba(216,243,106,.09);
+  filter:blur(25px);
+}
+
+.impact-panel h2{
+  font-size:clamp(36px,5vw,60px);
+  line-height:1;
+  letter-spacing:-3px;
+  max-width:850px;
+  margin:12px 0 16px;
+}
+
+.impact-panel>p{
+  color:var(--muted);
+  max-width:780px;
+}
+
+.impact-flow{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-top:32px;
+}
+
+.impact-node{
+  min-height:105px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:18px;
+  border:1px solid #33402f;
+  border-radius:17px;
+  background:#0b100c;
+  position:relative;
+}
+
+.impact-node:not(:last-child):after{
+  content:'→';
+  position:absolute;
+  right:-14px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--home-glow);
+  z-index:2;
+}
+
+.impact-node small{color:#737c70;font-size:9px;letter-spacing:1.5px}
+.impact-node strong{font-size:14px;margin-top:5px}
+.impact-node:last-child{border-color:rgba(216,243,106,.55);background:rgba(216,243,106,.06)}
+.impact-node:last-child strong{color:var(--home-glow)}
+
+/* Discover India bridge */
+.india-discovery{
+  background:#090d0a;
+}
+
+.india-bridge{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:20px;
+}
+
+.india-copy,.india-visual{
+  border:1px solid var(--home-border);
+  border-radius:26px;
+  background:linear-gradient(145deg,#111811,#0c110d);
+}
+
+.india-copy{padding:34px}
+.india-copy h2{font-size:clamp(38px,5vw,62px);line-height:.98;letter-spacing:-3px;margin:12px 0 16px}
+.india-copy p{color:var(--muted);max-width:650px}
+
+.india-path{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  margin-top:24px;
+}
+
+.india-path span{
+  border:1px solid #344033;
+  border-radius:999px;
+  padding:9px 12px;
+  color:#c9d0c5;
+  font-size:11px;
+  background:#0b100c;
+}
+
+.india-path b{color:var(--home-glow);font-size:12px}
+
+.india-visual{
+  min-height:310px;
+  padding:24px;
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  place-items:center;
+}
+
+.india-visual:before{
+  content:'';
+  position:absolute;
+  inset:16%;
+  border:1px solid rgba(216,243,106,.18);
+  border-radius:48% 52% 45% 55%;
+  transform:rotate(18deg) skew(-7deg);
+  box-shadow:0 0 80px rgba(216,243,106,.06),inset 0 0 50px rgba(216,243,106,.035);
+}
+
+.india-visual:after{
+  content:'INDIA';
+  position:absolute;
+  font-size:clamp(45px,6vw,76px);
+  font-weight:900;
+  letter-spacing:-4px;
+  color:rgba(216,243,106,.09);
+}
+
+.india-orbit{
+  width:210px;
+  height:210px;
+  border:1px dashed rgba(216,243,106,.28);
+  border-radius:50%;
+  position:relative;
+  z-index:2;
+  animation:homeOrbit 14s linear infinite;
+}
+
+.india-orbit span{
+  position:absolute;
+  width:9px;
+  height:9px;
+  border-radius:50%;
+  background:var(--home-glow);
+  box-shadow:0 0 18px rgba(216,243,106,.8);
+}
+
+.india-orbit span:nth-child(1){top:6%;left:52%}
+.india-orbit span:nth-child(2){right:7%;top:47%}
+.india-orbit span:nth-child(3){bottom:12%;left:25%}
+.india-orbit span:nth-child(4){left:8%;top:28%}
+
+@keyframes homeOrbit{to{transform:rotate(360deg)}}
+
+/* Rayalaseema pilot */
+.pilot-section{
+  background:linear-gradient(180deg,#0a0e0b,#090d0a);
+}
+
+.pilot-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border:1px solid rgba(216,243,106,.28);
+  border-radius:999px;
+  color:var(--home-glow);
+  background:rgba(216,243,106,.045);
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+/* Final CTA */
+.final-cta-inner{
+  position:relative;
+  padding:75px 25px;
+  border:1px solid rgba(216,243,106,.2);
+  border-radius:30px;
+  background:
+    radial-gradient(circle at 50% 0%,rgba(216,243,106,.13),transparent 42%),
+    linear-gradient(145deg,#101710,#0b100c);
+  overflow:hidden;
+}
+
+.final-cta-inner:before{
+  content:'DISCOVER';
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:clamp(70px,13vw,180px);
+  font-weight:900;
+  color:rgba(255,255,255,.018);
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+.final-cta-inner>*{position:relative;z-index:1}
+
+/* Homepage mobile/tablet */
+@media(max-width:1100px){
+  .journey-flow{grid-template-columns:repeat(3,1fr)}
+  .journey-step:nth-child(3):after{display:none}
+  .trust-grid{grid-template-columns:repeat(3,1fr)}
+  .impact-flow{grid-template-columns:repeat(3,1fr)}
+  .impact-node:nth-child(3):after{display:none}
+}
+
+@media(max-width:900px){
+  .hero{min-height:auto;padding-top:70px;padding-bottom:70px}
+  .hero-art{min-height:420px}
+  .ai-layout,.india-bridge{grid-template-columns:1fr}
+  .journey-flow{grid-template-columns:repeat(2,1fr)}
+  .journey-step:nth-child(3):after{display:block}
+  .journey-step:nth-child(even):after{display:none}
+  .trust-grid{grid-template-columns:repeat(2,1fr)}
+  .impact-flow{grid-template-columns:repeat(2,1fr)}
+  .impact-node:nth-child(3):after{display:block}
+  .impact-node:nth-child(even):after{display:none}
+}
+
+@media(max-width:600px){
+  .journey-flow,.trust-grid,.impact-flow{grid-template-columns:1fr}
+  .journey-step:after,.impact-node:after{display:none!important}
+  .journey-step{min-height:auto}
+  .ai-input-card,.ai-output-card,.india-copy,.india-visual,.impact-panel{padding:24px}
+  .india-visual{min-height:250px}
+  .hero-card{width:min(340px,90vw);height:410px}
+  .hero-art{min-height:450px}
+  .final-cta-inner{padding:55px 18px}
+}
