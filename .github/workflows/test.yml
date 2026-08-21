@@ -1,0 +1,116 @@
+name: UnseenGo AI Tests
+
+on:
+  push:
+    branches: [main, 'refactor/**']
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Validate HTML, JavaScript, references and smoke tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install test tools
+        run: npm install --no-save --no-package-lock html-validate@9 eslint@9
+
+      - name: HTML validity
+        run: |
+          set -e
+          html_files=$(find . -type f -name '*.html' -not -path './node_modules/*' | sort)
+          test -n "$html_files"
+          printf '%s\n' "$html_files" | xargs npx --no-install html-validate
+
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          files=$(find . -type f -name '*.js' -not -path './node_modules/*' -not -path './.git/*' | sort)
+          test -n "$files"
+          while IFS= read -r file; do
+            echo "Checking $file"
+            node --check "$file"
+          done <<< "$files"
+
+      - name: Required files
+        shell: bash
+        run: |
+          set -euo pipefail
+          required=(index.html discover.html planner.html app.js unseen-engine.js planner-ui.js nav.js auth-gate.js)
+          for file in "${required[@]}"; do
+            test -f "$file" || { echo "Missing required file: $file"; exit 1; }
+          done
+          echo 'All required files exist.'
+
+      - name: Broken local references
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import html.parser, pathlib, re, sys
+          root = pathlib.Path('.')
+          errors = []
+          asset_re = re.compile(r'^(?:[^:#?]+)(?:[?#].*)?$')
+
+          class Parser(html.parser.HTMLParser):
+              def __init__(self, path):
+                  super().__init__()
+                  self.path = path
+              def check(self, value):
+                  if not value or value.startswith(('#','/','http://','https://','mailto:','tel:','data:','javascript:')):
+                      return
+                  target = value.split('#',1)[0].split('?',1)[0]
+                  if not target or not asset_re.match(value):
+                      return
+                  candidate = (self.path.parent / target).resolve()
+                  if not candidate.exists():
+                      errors.append(f'{self.path}: missing local reference -> {value}')
+              def handle_starttag(self, tag, attrs):
+                  attrs = dict(attrs)
+                  for key in ('href','src'):
+                      self.check(attrs.get(key))
+
+          for path in root.rglob('*.html'):
+              if any(part in {'.git','node_modules'} for part in path.parts):
+                  continue
+              Parser(path).feed(path.read_text(encoding='utf-8'))
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('No broken local HTML asset references found.')
+          PY
+
+      - name: Basic application smoke tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '<html' index.html
+          grep -q 'id="heroCity"' index.html
+          grep -q 'discover.html' index.html
+          grep -q 'function\|const\|let' unseen-engine.js
+          grep -q 'function\|const\|let' planner-ui.js
+          grep -q 'UnseenGo' README.md
+          test -f supabase/schema.sql
+          echo 'Basic UnseenGo application smoke tests passed.'
+
+      - name: Security sanity check
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RniE 'AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9_-]{20,}|service_role|SUPABASE_SERVICE_ROLE_KEY' --exclude-dir=.git --exclude-dir=node_modules .; then
+            echo 'Potential private API/service credentials detected.'
+            exit 1
+          fi
+          echo 'No obvious private API/service-role credentials detected.'

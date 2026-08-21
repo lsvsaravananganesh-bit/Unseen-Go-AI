@@ -1,154 +1,201 @@
 # ✦ UnseenGo AI
 
-> **Discover the places nobody told you about.** 🚀
+> **Discover the places nobody told you about.**
 
-UnseenGo AI is an AI-powered tourism discovery platform focused on **lesser-known attractions, local experiences, underrated food, culture, nature and nearby unexplored destinations**.
+UnseenGo AI is a tourism and cultural-discovery platform designed to help travelers find **lesser-known heritage, nature, food, culture, adventure and local experiences** instead of seeing only the most popular attractions.
 
-Instead of simply showing the most popular tourist attractions, UnseenGo is designed around one question:
-
-> **What are travelers missing?**
+The project starts with a Rayalaseema-focused pilot and is structured to expand city-by-city across India.
 
 ## 🎯 Problem
 
-Mainstream travel platforms tend to prioritize popularity. Travelers therefore see the same famous attractions repeatedly while smaller destinations, local experiences and nearby hidden gems receive less attention.
+Mainstream travel discovery often rewards popularity. That makes famous attractions easier to find while smaller cultural assets, local experiences and nearby destinations receive less visibility.
 
-This can result in overcrowding, repetitive itineraries and missed opportunities for local discovery.
+UnseenGo aims to turn discovery into a complete journey:
 
-## 💡 Solution
+**Place → verified story → visitor interest → practical access → local opportunity**
 
-A traveler enters a city, selects an experience category and provides trip preferences. UnseenGo ranks and presents destinations using a **Hidden-Gem Discovery approach** and generates a personalized itinerary.
-
-### Core idea
-
-**Experience value + lower mainstream visibility + personal fit = UnseenGo recommendation**
-
-## ✨ MVP Features
-
-- 🌍 City destination search
-- 🌿 Nature discovery
-- 🏛️ Heritage discovery
-- 🍜 Local food discovery
-- 🎭 Culture discovery
-- 🧗 Adventure discovery
-- ⭐ UnseenGo Score
-- 🗺️ AI trip-planner interface
-- 💰 Budget selection
-- 🕐 Trip-length selection
-- 🎒 Travel-style selection
-- 📱 Responsive web design
-- 🚀 GitHub Pages-ready architecture
-
-## 🧠 UnseenGo Score
-
-The MVP uses a discovery score to represent how strongly a destination fits the hidden-gem concept. The future scoring engine will combine signals such as:
-
-- Discoverability
-- Tourist popularity
-- Experience value
-- Distance
-- Nature / heritage / cultural value
-- User interests
-- Crowd signals
-- Travel constraints
-
-## 🏗️ Architecture
+## 💡 How UnseenGo works
 
 ```text
 Traveler
    ↓
-City + Preferences
+City + interests + duration + budget + pace
    ↓
-UnseenGo Discovery Engine
+City destination records
    ↓
-Destination Data
+UnseenGo scoring engine
+   ├── base discovery signal
+   ├── preference match
+   ├── pace fit
+   └── budget fit
    ↓
-Hidden-Gem Scoring
+Ranked hidden-gem recommendations
    ↓
-Personalized Recommendations
+Day-by-day itinerary
    ↓
-AI Trip Planner
-   ↓
-Optimized Itinerary
+Google Maps route
 ```
 
-## 🛠️ Current Technology
+The current planner is intentionally transparent and deterministic. A secure server-side LLM can later add natural-language explanations, conversational planning and richer personalization without exposing API secrets in the browser.
 
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- GitHub
-- GitHub Pages-ready static architecture
+## ✨ Current MVP
 
-## 📁 Project Structure
+- 🌍 Multi-city destination dataset
+- 🏛 Heritage discovery
+- 🌿 Nature discovery
+- 🍛 Local food discovery
+- 🎭 Culture and craft discovery
+- 🥾 Adventure discovery
+- ⭐ Dynamic UnseenGo Score
+- 🧭 Personalized ranking from interests
+- 🕐 Trip-duration-aware itinerary generation
+- 💰 Budget preference
+- 🚶 Travel pace preference
+- 🗺️ Google Maps route generation
+- 🔐 Supabase authentication foundation
+- 💾 Supabase schema for places, profiles, reviews and saved places
+- 📱 Responsive premium UI
+- 🇮🇳 State → city discovery structure
+
+## 🧠 UnseenGo Score
+
+The browser MVP uses a deterministic score so the recommendation logic can be inspected and tested without an API key:
+
+- **45%** base discovery signal from the destination dataset
+- **35%** user-interest fit
+- **10%** travel-pace fit
+- **10%** budget fit
+
+This is a prototype scoring model, not a claim that the score represents real tourist popularity. Future versions can add verified popularity, crowd, distance, opening-hours, review and geographic signals.
+
+## 🔐 Security model
+
+The public repository may contain a **Supabase publishable key** because that key is intended for browser use. The database must remain protected by Row Level Security (RLS).
+
+**Never commit:**
+
+- Supabase service-role keys
+- Gemini private API keys
+- Google server API keys
+- database passwords
+- other server-side credentials
+
+For future AI integration, use:
 
 ```text
-Unseen-Go-AI/
-├── index.html      # Main application
-├── styles.css      # Responsive premium UI
-├── app.js          # Discovery data, filters and planner
-└── README.md       # Documentation
+Browser
+   ↓
+Supabase Edge Function / secure backend
+   ↓
+Gemini / Google APIs
+```
+
+not direct browser calls containing private credentials.
+
+## 🏗️ Data architecture
+
+The repository currently contains both a static city dataset for the GitHub Pages MVP and a Supabase schema for the next data-backed stage.
+
+```text
+Static MVP data
+      │
+      └── UnseenGo engine
+
+Supabase
+ ├── cities
+ ├── places
+ ├── accommodations
+ ├── profiles
+ ├── reviews
+ └── saved_places
+```
+
+The Supabase schema enables RLS and limits browser writes to authenticated user-owned records. Tourism data is publicly readable only when marked active. See `supabase/schema.sql`.
+
+## 📁 Important project files
+
+```text
+index.html                 # Premium homepage
+app.js                     # City destination dataset
+unseen-engine.js           # Scoring, ranking, itinerary and Maps route engine
+planner.html               # Planner UI
+planner-ui.js              # Planner validation and rendering
+city-picker.js             # City search and selection
+city-page.js               # Destination page behaviour
+transport*.js              # Transport experience
+accommodation.js           # Stay experience
+auth*.js                   # Authentication flow
+supabase/                  # Database schema and seed data
+cultural-economy.js        # Cultural-economy product layer
+README.md                  # Documentation
 ```
 
 ## 🚀 Roadmap
 
-### Phase 1 — MVP
+### Phase 1 — Functional MVP
 - [x] Premium responsive interface
-- [x] City search
-- [x] Discovery categories
-- [x] Hidden-gem cards
-- [x] UnseenGo Score
-- [x] Trip planner
+- [x] Multi-city destination records
+- [x] Dynamic scoring
+- [x] Preference-aware recommendations
+- [x] Duration-aware itinerary
+- [x] Google Maps route
 
-### Phase 2 — Smart Discovery
-- [ ] Multi-city destination database
-- [ ] Dynamic hidden-gem scoring algorithm
-- [ ] Destination detail pages
-- [ ] Search and filtering
-- [ ] Distance/radius selection
+### Phase 2 — Verified discovery
+- [x] Supabase schema
+- [x] City/place records
+- [x] RLS foundation
+- [ ] Complete source metadata for every destination
+- [ ] Opening hours and live availability signals
+- [ ] Better geographic distance calculations
 
-### Phase 3 — AI
-- [ ] AI recommendation engine
-- [ ] Personalized recommendations
-- [ ] AI-generated destination explanations
-- [ ] AI itinerary generation
-- [ ] Preference learning
+### Phase 3 — AI intelligence
+- [ ] Secure Gemini server-side integration
+- [ ] Natural-language preference understanding
+- [ ] AI destination explanations grounded in verified records
+- [ ] Conversational trip planning
+- [ ] Preference learning with user consent
 
-### Phase 4 — Travel Intelligence
-- [ ] Maps integration
-- [ ] Route optimization
+### Phase 4 — Travel intelligence
 - [ ] Weather-aware recommendations
-- [ ] Transport information
+- [ ] Real-time transport information
+- [ ] Route-time optimization
 - [ ] Budget estimation
+- [ ] Local guide and experience discovery
 
 ### Phase 5 — Platform
-- [ ] User authentication
-- [ ] Saved places
+- [x] Authentication foundation
+- [x] Reviews schema
+- [x] Saved places schema
 - [ ] Saved trips
-- [ ] Reviews and feedback
-- [ ] Admin dashboard
-- [ ] Destination management
+- [ ] Admin destination management
+- [ ] Moderation workflow
 - [ ] Analytics
 
-## 🎓 Project Vision
+## 🧪 Pre-merge checklist
 
-UnseenGo AI is being developed as an industry-oriented student project combining:
+Before merging major feature changes:
 
-**Artificial Intelligence + Tourism + Personalization + Local Discovery + Smart Travel Planning**
-
-The long-term vision is to help travelers explore destinations beyond the standard tourist trail while increasing visibility for overlooked local experiences.
-
-> **Don't just visit the famous places. Go unseen.**
+- [ ] Test at least three cities
+- [ ] Test 1, 2, 3, 5 and 7-day plans
+- [ ] Test every interest category
+- [ ] Test empty/unknown destination states
+- [ ] Test mobile layouts
+- [ ] Confirm no private secrets are committed
+- [ ] Confirm Supabase RLS policies are enabled
+- [ ] Confirm external links use safe `noopener` behaviour
 
 ## 📌 Status
 
-**Status:** 🚧 Active Development
+**Active development — functional MVP / Phase 2 foundation.**
 
-The current repository contains the first functional MVP. The next major milestone is the **multi-city Hidden-Gem Discovery Engine** and a real AI recommendation layer.
+The current repository is considerably beyond the original static landing-page prototype: it contains a multi-city dataset, a deterministic recommendation engine, itinerary generation, authentication foundation, destination pages, transport/stay modules and a Supabase data model. The next major product milestone is a **secure AI recommendation layer backed by verified destination data**.
 
 ## 👨‍💻 Repository
 
-**Project:** UnseenGo AI  
-**Repository:** `lsvsaravananganesh-bit/Unseen-Go-AI`  
-**Branch:** `main`
+Project: **UnseenGo AI**  
+Repository: `lsvsaravananganesh-bit/Unseen-Go-AI`  
+Default branch: `main`
+
+> **Don't just visit the famous places. Go unseen.**
 
 ## © 2026 UnseenGo AI
