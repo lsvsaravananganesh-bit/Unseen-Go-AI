@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Explore cities and destinations across an Indian state with UnseenGo AI.">
+<title>Explore State — UnseenGo AI</title>
+<link rel="stylesheet" href="styles.css?v=20260824">
+<link rel="stylesheet" href="responsive.css?v=20260824">
+<style>
+.state-hero{padding:90px 8% 65px;border-bottom:1px solid var(--line);background:radial-gradient(circle at 80% 20%,#2c3c1c33,transparent 35%)}
+.state-back{color:var(--accent);text-decoration:none;font-size:12px;font-weight:700}
+.state-hero h1{font-size:clamp(48px,7vw,86px);line-height:.95;letter-spacing:-4px;margin:22px 0 18px}.state-hero h1 em{font-family:Georgia,serif;font-weight:400;color:var(--accent)}
+.state-hero p{max-width:680px;color:var(--muted);font-size:17px}.state-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.state-meta span{border:1px solid var(--line);background:var(--panel);padding:10px 14px;border-radius:999px;color:#b8c0b5;font-size:12px}
+.state-city-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.state-city-card{min-height:190px;text-decoration:none;color:white;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;transition:.25s}.state-city-card:hover{transform:translateY(-6px);border-color:#71873d;box-shadow:0 20px 45px #0008}.state-city-card:before{content:'✦';position:absolute;right:20px;top:16px;color:#d8f36a55;font-size:32px}.state-city-card small{color:#7f887d;font-size:10px;letter-spacing:2px}.state-city-card strong{font-size:25px;margin-top:6px}.state-city-card span{color:#8f988d;font-size:11px;margin-top:5px}.empty-state-page{text-align:center;padding:60px 20px;border:1px dashed #3a4437;border-radius:20px;color:var(--muted)}
+@media(max-width:900px){.state-city-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.state-hero{padding:60px 6% 45px}.section{padding:70px 6%}.state-city-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a class="active" href="discover.html">Discover</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='discover.html'">All States</button></header>
+<main>
+<section class="state-hero"><a class="state-back" href="discover.html">← Explore all States & UTs</a><p class="eyebrow" style="margin-top:28px">STATE → CITY DISCOVERY</p><h1 id="stateTitle">Explore <em>India</em></h1><p id="stateIntro">Choose a city to discover its heritage, culture, hidden places, stories and local experiences.</p><div class="state-meta"><span id="cityCount">0 cities</span><span>✦ Hidden & famous destinations</span><span>✓ Verified profiles where available</span></div></section>
+<section class="section"><div class="heading"><div><p class="eyebrow">CHOOSE A CITY</p><h2>Explore <em>the cities.</em></h2></div><p>Open any city to continue to its dedicated UnseenGo discovery page.</p></div><div id="stateCities" class="state-city-grid"></div></section>
+</main>
+<footer><b>✦ UnseenGo AI</b><span>Discover heritage. Empower communities. Grow local economies.</span><span>© 2026</span></footer>
+<script src="india-state-directory.js?v=20260824"></script>
+<script>
+(function(){'use strict';
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const params=new URLSearchParams(location.search);const requested=params.get('state')||'';const directory=window.INDIA_DIRECTORY||{};const state=Object.keys(directory).find(s=>s.toLowerCase()===requested.trim().toLowerCase());
+const title=document.getElementById('stateTitle'), intro=document.getElementById('stateIntro'), count=document.getElementById('cityCount'), root=document.getElementById('stateCities');
+if(!state){title.innerHTML='State <em>not found</em>';intro.textContent='We could not find that state or union territory. Return to Explore India and choose a state.';root.innerHTML='<div class="empty-state-page" style="grid-column:1/-1">State not found.<br><br><a class="state-back" href="discover.html">← Back to all States & UTs</a></div>';return;}
+const cities=[...new Set(directory[state]||[])].sort((a,b)=>a.localeCompare(b));document.title=state+' — UnseenGo AI';title.innerHTML='Explore <em>'+esc(state)+'</em>';intro.textContent='Explore '+state+' city by city — discover heritage, culture, hidden gems, local stories, food, nature and practical travel information.';count.textContent=cities.length+' cities';
+root.innerHTML=cities.map(city=>`<a class="state-city-card" href="city.html?city=${encodeURIComponent(city)}"><small>${esc(state)}</small><strong>${esc(city)}</strong><span>Discover city →</span></a>`).join('');
+})();
+</script>
+</body>
+</html>
