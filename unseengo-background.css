@@ -5,6 +5,7 @@ body {
   isolation: isolate;
 }
 
+/* One single, horizontal UnseenGo watermark across every page. */
 body::before {
   content: "UNSEENGO";
   position: fixed;
@@ -20,12 +21,19 @@ body::before {
   user-select: none;
   white-space: nowrap;
   font-family: Inter, system-ui, sans-serif;
-  font-size: clamp(82px, 15vw, 250px);
+  font-size: clamp(90px, 13vw, 220px);
   font-weight: 950;
-  letter-spacing: clamp(-8px, -0.65vw, -2px);
+  letter-spacing: clamp(-7px, -0.55vw, -2px);
   line-height: 1;
-  color: rgba(255, 255, 255, 0.026);
-  transform: rotate(-8deg);
+  color: rgba(255, 255, 255, 0.024);
+  transform: none;
+}
+
+/* Disable the older hero watermark so there can never be a duplicate. */
+.hero::before,
+.hero:before {
+  content: none !important;
+  display: none !important;
 }
 
 body::after {
@@ -39,7 +47,7 @@ body::after {
     linear-gradient(180deg, rgba(9, 12, 10, 0), rgba(9, 12, 10, 0.12));
 }
 
-/* Keep the watermark subtle behind cards and sections. */
+/* Keep the watermark behind cards and sections. */
 .nav,
 .panel,
 .story-box,
@@ -63,9 +71,9 @@ body::after {
 
 @media (max-width: 700px) {
   body::before {
-    font-size: 22vw;
-    letter-spacing: -1.5vw;
-    transform: rotate(-10deg);
-    color: rgba(255, 255, 255, 0.022);
+    font-size: 20vw;
+    letter-spacing: -1.2vw;
+    transform: none;
+    color: rgba(255, 255, 255, 0.020);
   }
 }
