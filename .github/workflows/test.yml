@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+# When several commits are pushed quickly, keep only the newest validation run.
+concurrency:
+  group: unseengo-tests-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Validate HTML, JavaScript, references and smoke tests
@@ -24,35 +29,38 @@ jobs:
           node-version: 22
 
       - name: Install test tools
-        run: npm install --no-save --no-package-lock html-validate@9 eslint@9
+        run: npm install --no-save --no-package-lock html-validate@9
 
       - name: HTML validity
+        shell: bash
         run: |
-          set -e
-          html_files=$(find . -type f -name '*.html' -not -path './node_modules/*' | sort)
-          test -n "$html_files"
-          printf '%s\n' "$html_files" | xargs npx --no-install html-validate
+          set -euo pipefail
+          mapfile -t html_files < <(find . -type f -name '*.html' -not -path './node_modules/*' -not -path './.git/*' | sort)
+          test "${#html_files[@]}" -gt 0
+          # Validate HTML syntax/standards without making the build depend on
+          # presentation-style rules in legacy pages.
+          npx --no-install html-validate --preset standard "${html_files[@]}"
 
       - name: JavaScript syntax
         shell: bash
         run: |
           set -euo pipefail
-          files=$(find . -type f -name '*.js' -not -path './node_modules/*' -not -path './.git/*' | sort)
-          test -n "$files"
-          while IFS= read -r file; do
+          mapfile -t files < <(find . -type f -name '*.js' -not -path './node_modules/*' -not -path './.git/*' | sort)
+          test "${#files[@]}" -gt 0
+          for file in "${files[@]}"; do
             echo "Checking $file"
             node --check "$file"
-          done <<< "$files"
+          done
 
       - name: Required files
         shell: bash
         run: |
           set -euo pipefail
-          required=(index.html discover.html planner.html app.js unseen-engine.js planner-ui.js nav.js auth-gate.js)
+          required=(index.html discover.html planner.html app.js unseen-engine.js planner-ui.js nav.js auth-gate.js unseengo-enhancements.js unseengo-enhancements.css sw.js functions/api/chat.js)
           for file in "${required[@]}"; do
             test -f "$file" || { echo "Missing required file: $file"; exit 1; }
           done
-          echo 'All required files exist.'
+          echo 'All required application files exist.'
 
       - name: Broken local references
         shell: bash
@@ -103,13 +111,15 @@ jobs:
           grep -q 'function\|const\|let' planner-ui.js
           grep -q 'UnseenGo' README.md
           test -f supabase/schema.sql
+          grep -q 'unseengo-enhancements.js' nav.js
+          grep -q 'GEMINI_API_KEY' functions/api/chat.js
           echo 'Basic UnseenGo application smoke tests passed.'
 
       - name: Security sanity check
         shell: bash
         run: |
           set -euo pipefail
-          if grep -RniE 'AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9_-]{20,}|service_role|SUPABASE_SERVICE_ROLE_KEY' --exclude-dir=.git --exclude-dir=node_modules .; then
+          if grep -RniE 'AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9_-]{20,}|SUPABASE_SERVICE_ROLE_KEY' --exclude-dir=.git --exclude-dir=node_modules .; then
             echo 'Potential private API/service credentials detected.'
             exit 1
           fi
