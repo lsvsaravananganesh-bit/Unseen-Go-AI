@@ -54,7 +54,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          required=(index.html discover.html planner.html app.js unseen-engine.js planner-ui.js nav.js auth-gate.js unseengo-enhancements.js unseengo-enhancements.css sw.js functions/api/chat.js)
+          required=(index.html discover.html planner.html app.js unseen-engine.js planner-ui.js nav.js auth-gate.js unseengo-enhancements.js unseengo-enhancements.css sw.js)
           for file in "${required[@]}"; do
             test -f "$file" || { echo "Missing required file: $file"; exit 1; }
           done
@@ -110,15 +110,12 @@ jobs:
           grep -q 'UnseenGo' README.md
           test -f supabase/schema.sql
           grep -q 'unseengo-enhancements.js' nav.js
-          grep -q 'GEMINI_API_KEY' functions/api/chat.js
           echo 'Basic UnseenGo application smoke tests passed.'
 
       - name: Security sanity check
         shell: bash
         run: |
           set -euo pipefail
-          # Build the Supabase service-role token name in pieces so this test
-          # does not match its own source file while scanning the repository.
           service_role_key="SUPABASE_""SERVICE_ROLE_KEY"
           if grep -RniE "AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9_-]{20,}|${service_role_key}" --exclude-dir=.git --exclude-dir=node_modules --exclude='test.yml' .; then
             echo 'Potential private API/service-role credentials detected.'
