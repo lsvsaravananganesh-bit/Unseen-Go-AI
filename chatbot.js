@@ -1,7 +1,95 @@
 /* UnseenGo AI — Ollama-powered global travel chatbot */
 (function(){'use strict';
+
+// Retains dynamic custom path fallback from feature branch
 const API=(window.UNSEENGO_CHAT_API||'/api/chat').replace(/\/$/,'');
-function context(){const p=new URLSearchParams(location.search);const city=p.get('city')||document.getElementById('cityName')?.textContent||localStorage.getItem('unseengo_city')||'';const prefs=window.UnseenGoLastResult?.preferences||{};const places=(window.UnseenGoLastResult?.recommendations||[]).slice(0,10).map(x=>({name:x.name,category:x.category,score:x.score,description:x.description,latitude:x.latitude,longitude:x.longitude,opening_time:x.opening_time,closing_time:x.closing_time,visit_duration_minutes:x.visit_duration_minutes,verification_status:x.verification_status,crowd_level:x.crowd_level,budget_level:x.budget_level}));return {city,preferences:prefs,places};}
-function init(){if(document.querySelector('.ug-chat'))return;const b=document.createElement('button');b.className='ug-chat-launcher';b.setAttribute('aria-label','Open UnseenGo AI');b.textContent='✦';const box=document.createElement('section');box.className='ug-chat';box.innerHTML='<header class="ug-chat-head"><div><strong>✦ UnseenGo AI</strong><small>Ollama-powered travel assistant</small></div><button class="ug-chat-close" aria-label="Close">×</button></header><div class="ug-chat-messages"></div><div class="ug-chat-suggestions"><button>Find quiet places</button><button>Build a 1-day plan</button><button>Explain my recommendations</button></div><div class="ug-chat-status">AI answers use destination context when available.</div><form class="ug-chat-form"><textarea maxlength="6000" placeholder="Ask UnseenGo anything…"></textarea><button aria-label="Send">↑</button></form>';document.body.append(b,box);const msgs=box.querySelector('.ug-chat-messages'),ta=box.querySelector('textarea'),status=box.querySelector('.ug-chat-status');function add(text,type){const d=document.createElement('div');d.className='ug-msg '+type;d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight}async function send(text){text=(text||ta.value).trim();if(!text)return;add(text,'user');ta.value='';status.classList.remove('error');status.textContent='Ollama is thinking…';try{const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:text,...context()})});const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||'AI unavailable');add(d.reply||'I could not generate a response.','bot');status.textContent=d.model?'Powered by Ollama · '+d.model:'Powered by Ollama';}catch(e){add('I’m unable to reach the Ollama AI service right now. Please check that the backend and Ollama server are running.','bot');status.classList.add('error');status.textContent=e.message||'Ollama unavailable';}}b.onclick=()=>{box.classList.toggle('open');if(box.classList.contains('open'))ta.focus()};box.querySelector('.ug-chat-close').onclick=()=>box.classList.remove('open');box.querySelector('form').onsubmit=e=>{e.preventDefault();send()};box.querySelectorAll('.ug-chat-suggestions button').forEach(x=>x.onclick=()=>send(x.textContent));add('Hi! I’m UnseenGo AI. I’m powered by Ollama. Tell me your city and the kind of experience you want, and I’ll help you explore the available destination data.','bot')}
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+
+function context(){
+  const p=new URLSearchParams(location.search);
+  const city=p.get('city')||document.getElementById('cityName')?.textContent||localStorage.getItem('unseengo_city')||'';
+  const prefs=window.UnseenGoLastResult?.preferences||{};
+  const places=(window.UnseenGoLastResult?.recommendations||[]).slice(0,10).map(x=>({
+    name:x.name,
+    category:x.category,
+    score:x.score,
+    description:x.description,
+    latitude:x.latitude,
+    longitude:x.longitude,
+    opening_time:x.opening_time,
+    closing_time:x.closing_time,
+    visit_duration_minutes:x.visit_duration_minutes,
+    verification_status:x.verification_status,
+    crowd_level:x.crowd_level,
+    budget_level:x.budget_level
+  }));
+  return {city,preferences:prefs,places};
+}
+
+function init(){
+  if(document.querySelector('.ug-chat'))return;
+  const b=document.createElement('button');
+  b.className='ug-chat-launcher';
+  b.setAttribute('aria-label','Open UnseenGo AI');
+  b.textContent='✦';
+  
+  const box=document.createElement('section');
+  box.className='ug-chat';
+  
+  // Combines descriptive small headers and text from main branch
+  box.innerHTML='<header class="ug-chat-head"><div><strong>✦ UnseenGo AI</strong><small>Ask about hidden places, trips or your route.</small></div><button class="ug-chat-close" aria-label="Close">×</button></header><div class="ug-chat-messages"></div><div class="ug-chat-suggestions"><button>Find quiet places</button><button>Build a 1-day plan</button><button>Explain my recommendations</button></div><div class="ug-chat-status">Powered by Ollama Cloud · Supabase context when available.</div><form class="ug-chat-form"><textarea maxlength="6000" placeholder="Ask UnseenGo anything…"></textarea><button aria-label="Send">↑</button></form>';
+  document.body.append(b,box);
+  
+  const msgs=box.querySelector('.ug-chat-messages'),
+        ta=box.querySelector('textarea'),
+        status=box.querySelector('.ug-chat-status');
+        
+  function add(text,type){
+    const d=document.createElement('div');
+    d.className='ug-msg '+type;
+    d.textContent=text;
+    msgs.appendChild(d);
+    msgs.scrollTop=msgs.scrollHeight;
+  }
+  
+  async function send(text){
+    text=(text||ta.value).trim();
+    if(!text)return;
+    add(text,'user');
+    ta.value='';
+    status.classList.remove('error');
+    status.textContent='Ollama AI is thinking…';
+    
+    try{
+      const r=await fetch(API,{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({message:text,...context()})
+      });
+      const d=await r.json().catch(()=>({}));
+      if(!r.ok)throw new Error(d.error||'AI unavailable');
+      
+      add(d.reply||'I could not generate a response.','bot');
+      status.textContent=`Powered by Ollama Cloud · ${d.model||'AI model'}`;
+    }catch(e){
+      // Keeps main's clean fallback UX warning text
+      add('I’m unable to reach the AI service right now. You can still use the planner and deterministic recommendations.','bot');
+      status.classList.add('error');
+      status.textContent=e.message||'AI unavailable';
+    }
+  }
+  
+  b.onclick=()=>{
+    box.classList.toggle('open');
+    if(box.classList.contains('open'))ta.focus();
+  };
+  
+  box.querySelector('.ug-chat-close').onclick=()=>box.classList.remove('open');
+  box.querySelector('form').onsubmit=e=>{e.preventDefault();send();};
+  box.querySelectorAll('.ug-chat-suggestions button').forEach(x=>x.onclick=()=>send(x.textContent));
+  
+  add('Hi! I’m UnseenGo AI. Tell me your city and the kind of experience you want, and I’ll help you explore the available destination data.','bot');
+}
+
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});
+else init();
 })();
