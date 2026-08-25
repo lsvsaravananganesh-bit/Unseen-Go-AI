@@ -1,40 +1,65 @@
 # UnseenGo AI + Ollama setup
 
-The chatbot now sends its messages to `/api/chat`, and the backend forwards them to Ollama.
+The chatbot sends messages to `/api/chat`; the Vercel backend forwards them to an Ollama server.
 
-## 1. Install and run Ollama
+## Production architecture
 
-Install Ollama on the machine/server that will host the model, then pull a model:
+```text
+GitHub Pages
+     ↓
+Vercel /api/chat
+     ↓
+Publicly reachable Ollama server
+     ↓
+Qwen / Llama / Gemma
+```
+
+## 1. Run Ollama on a server
+
+Install Ollama on a machine/server that remains online. Pull the model you want:
 
 ```bash
 ollama pull qwen2.5:3b
 ollama serve
 ```
 
-You can change the model with the `OLLAMA_MODEL` environment variable.
+For production, put the Ollama service behind HTTPS and authentication. Do not expose an unauthenticated Ollama port to the public internet.
 
-## 2. Backend environment variables
+## 2. Configure Vercel
 
-For a Vercel deployment, set:
+Set these environment variables for the Vercel project:
 
 ```text
 OLLAMA_URL=https://YOUR-OLLAMA-HOST
 OLLAMA_MODEL=qwen2.5:3b
+ALLOWED_ORIGINS=https://lsvsaravananganesh-bit.github.io
 ```
 
-Do not expose Ollama credentials or private infrastructure details in frontend JavaScript.
+If your Ollama host requires authentication, also set:
 
-## 3. Important GitHub Pages note
+```text
+OLLAMA_API_KEY=YOUR_SECRET
+```
 
-The current UnseenGo website is deployed as a static GitHub Pages site. GitHub Pages cannot execute `api/chat.js` or run Ollama. The `api/chat.js` function therefore needs to be deployed to a serverless/backend host such as Vercel, with `OLLAMA_URL` pointing to an Ollama instance that is reachable from that backend.
+The API key stays server-side and is never placed in frontend JavaScript.
 
-If the frontend is kept on GitHub Pages, set `window.UNSEENGO_CHAT_API` before `chatbot.js` loads to the full URL of the deployed backend endpoint, for example:
+## 3. Connect GitHub Pages to the Vercel API
+
+Because the UnseenGo frontend is hosted on GitHub Pages, the browser must call the full Vercel endpoint instead of `/api/chat` on GitHub Pages.
+
+Before `chatbot.js` loads, add:
 
 ```html
 <script>
-  window.UNSEENGO_CHAT_API = 'https://YOUR-BACKEND-DOMAIN.vercel.app/api/chat';
+  window.UNSEENGO_CHAT_API = 'https://YOUR-VERCEL-DOMAIN.vercel.app/api/chat';
 </script>
 <script src="chatbot.js?v=20260825"></script>
 ```
 
-Do not use `http://localhost:11434` from the public website. A visitor's browser would try to connect to Ollama on the visitor's own device.
+Replace `YOUR-VERCEL-DOMAIN` with the actual deployed Vercel domain.
+
+## Important
+
+Do **not** use `http://localhost:11434` in the public website. A visitor's browser would try to connect to Ollama on the visitor's own computer.
+
+The Ollama server must be reachable by the Vercel backend. GitHub Pages itself never needs direct access to Ollama.
