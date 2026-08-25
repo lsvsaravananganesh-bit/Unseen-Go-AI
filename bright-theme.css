@@ -1,25 +1,47 @@
-/* UnseenGo — Saffron & Indigo Editorial Travel Theme */
-:root{--bg:#fffaf2;--surface:#ffffff;--surface-soft:#f8efe3;--surface-tint:#fff1dc;--line:#eadbc8;--text:#17233d;--muted:#6d6a67;--primary:#273c8f;--primary-dark:#18275f;--accent:#e76f51;--accent-strong:#cf4f32;--warm:#f2b84b;--ink:#17233d;--shadow:0 14px 40px rgba(39,60,143,.10)}
-html{background:var(--bg)!important;color-scheme:light}body{background:var(--bg)!important;color:var(--text)!important;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body::before{color:rgba(231,111,81,.035)!important}body::after{background:linear-gradient(180deg,rgba(255,255,255,0),rgba(248,239,227,.5))!important}
-.nav,.site-header,.navbar{background:rgba(255,250,242,.96)!important;color:var(--text)!important;border-bottom:1px solid var(--line)!important;box-shadow:0 2px 20px rgba(39,60,143,.07)!important}.brand{color:var(--text)!important}.brand b,.brand span,.eyebrow,em,.home-kicker{color:var(--accent)!important}.nav nav a{color:#555d70!important}.nav nav a:hover,.nav nav a.active{color:var(--primary)!important}.nav button,.search button,.generate,.primary,.btn-primary,.cta,.explore-btn{background:var(--primary)!important;color:#fff!important;box-shadow:0 8px 20px rgba(39,60,143,.18)!important;border-radius:12px!important}.nav button:hover,.search button:hover,.generate:hover{background:var(--primary-dark)!important}
-.hero,.home-hero{background:linear-gradient(135deg,#fffaf2 0%,#f7eadb 58%,#eee8fa 100%)!important;color:var(--text)!important}.hero h1,.home-copy h1{color:var(--text)!important}.home-copy h1 em,.hero h1 em{color:var(--accent)!important}.lead,.home-copy .lead,.heading>p,.muted{color:var(--muted)!important}
-.search,.home-search{background:#fff!important;border:1px solid #d9c8b5!important;box-shadow:var(--shadow)!important;border-radius:16px!important}.search input,.home-search input{color:var(--text)!important}.search input::placeholder,.home-search input::placeholder{color:#98928b!important}.search:focus-within{border-color:var(--accent)!important;box-shadow:0 0 0 4px rgba(231,111,81,.14),var(--shadow)!important}
-.panel,.story-box,.modal-card,.city-panel,.about-card,.feature-card,.review-card,.place,.quick-city,.vibe,.day,.famous-card,.how-card,.how-core,.home-card,.route-card,.nearby,.mode,.empty,.live-note,.city-history-card,.city-place-card,.city-stay,.review-empty,.traveller-review,.transport-panel,.planner-card,.ai-understanding,.ai-explanation{background:var(--surface)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:var(--shadow)!important;border-radius:18px!important}
-.about-card:hover,.feature-card:hover,.review-card:hover,.quick-city:hover,.vibe:hover,.place:hover,.famous-card:hover{border-color:#d98a73!important;box-shadow:0 20px 48px rgba(39,60,143,.14)!important;transform:translateY(-3px)}
-.home-features,.home-values{background:#fff!important;border-color:var(--line)!important;box-shadow:var(--shadow)!important;border-radius:20px!important}.home-feature{border-color:#eadfd3!important}.home-feature p,.home-value span,.feature-card p,.about-card p,.home-next p,.home-cta p{color:var(--muted)!important}.home-icon{background:#eeeafb!important;color:var(--primary)!important}
-.quick-city{color:var(--text)!important;background:linear-gradient(145deg,#f7eee3,#fff)!important}.quick-city small,.quick-city span{color:#756f69!important}.quick-city:before{color:rgba(231,111,81,.22)!important}.score,.place .tag,.tag,.route-meta span{background:#fff0e7!important;color:#a23f2a!important}
-.city-panel select,.form input,.form select,.field input,.field select,.intent,.transport-origin input,.city-search input,.transport-search input{background:#fff!important;color:var(--text)!important;border-color:#d9c8b5!important;border-radius:12px!important}.city-panel select:focus,.form select:focus,.field input:focus,.field select:focus{border-color:var(--accent)!important}.city-chips,.city-chip{background:#fff!important;color:#596273!important;border-color:var(--line)!important}.city-chip:hover,.city-chip.active,.filter-btn:hover,.filter-btn.active,.transport-mode.active,.mode:hover,.mode.active{background:#eeeafb!important;color:var(--primary)!important;border-color:#b7b0e0!important}
-.vibe{color:#4e5668!important}.vibe span{color:var(--accent)!important}.vibe.active{background:#fff0e7!important;border-color:#e2a08d!important}.place{background:linear-gradient(145deg,#fff,#f9f0e6)!important}.place p,.place small,.route-card p,.nearby p,.live-note{color:#756f69!important}.place.clickable-place:after,.feature-card a,.result-head button,.route-actions a{color:var(--primary)!important}
-.planner,.planner-page,.transport-page,.stay-page,.city-page{background:var(--bg)!important}.planner-card,.ai-understanding,.ai-explanation{background:#fff!important}.field label,.form label{color:#4f596d!important}.interest span,.avoid-item span,.toggle{background:#fff!important;border-color:#dfd3c5!important;color:#626b79!important}.interest input:checked+span,.avoid-item input:checked+span{background:var(--accent)!important;color:#fff!important;border-color:var(--accent-strong)!important}.ai-understanding,.ai-explanation{background:#f5effb!important}.why{border-color:#e7ddd0!important;color:#5e6571!important}.factor,.note{color:#7c7a78!important}
-.hero-card{box-shadow:0 28px 60px rgba(39,60,143,.18)!important}.home-place-card{background:rgba(255,255,255,.95)!important;border-color:#e4d8cb!important;color:var(--text)!important;box-shadow:var(--shadow)!important}.home-place-card span{color:var(--muted)!important}.home-dots i{background:#b8b1a8!important}.home-dots i:first-child{background:var(--accent)!important}
-.city-hero,.city-section,.stays-section,.traveller-feedback{background:var(--bg)!important}.city-history-card p,.city-place-card p,.city-stay p,.review-empty p,.traveller-review p,.modal-location,.city-modal-card>p{color:var(--muted)!important}.filter-btn,.transport-mode{background:#fff!important;color:#596273!important;border-color:#dfd3c5!important}.filter-btn:hover,.filter-btn.active,.transport-mode.active{background:var(--accent)!important;color:#fff!important;border-color:var(--accent)!important}.modal-backdrop{background:rgba(23,35,61,.48)!important}.modal-close{background:#f6eee5!important;color:#45506a!important;border:1px solid var(--line)!important}
-.story-section{background:linear-gradient(180deg,#f8efe5,#fffaf2)!important}.story-box>span,.modal-kicker,.history-block>span{color:var(--accent)!important}.story-box>p,.history-block p{color:#65625e!important}.famous-card{background:#fff!important;color:var(--text)!important}.famous-card span{color:#77716a!important}.famous-card small{color:var(--primary)!important}.history-block{background:#f7eee5!important;border-color:var(--line)!important}
-footer{background:var(--primary-dark)!important;color:#e8e9f5!important;border-color:var(--primary-dark)!important}footer b{color:#fff!important}footer a{color:#f5f1ea!important}
-/* New visual identity: editorial travel journal */
-.home-visual{background-image:linear-gradient(90deg,rgba(23,35,61,.08),rgba(23,35,61,.18)),url('https://commons.wikimedia.org/wiki/Special:FilePath/A%20beautiful%20sunset%20in%20Hampi.jpg')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;border-radius:24px!important;box-shadow:0 28px 70px rgba(39,60,143,.16)!important}.home-place-card{background:rgba(255,250,242,.95)!important;color:var(--text)!important}.home-place-card span{color:var(--muted)!important}
-.impact-section,.pilot-section{display:none!important}
-.temple-showcase{background:#f5eadc!important;border:1px solid var(--line)!important;border-radius:24px!important}.temple-showcase .temple-photo{filter:brightness(.94) saturate(.92)!important;transition:filter .45s ease,transform .7s ease}.temple-showcase:hover .temple-photo{filter:brightness(1.08) saturate(1.08)!important}.temple-showcase:after{background:linear-gradient(180deg,rgba(23,35,61,.02),rgba(23,35,61,.45))!important}.temple-card{background:rgba(255,250,242,.96)!important;border-color:#e3d5c6!important;color:var(--text)!important;box-shadow:0 22px 50px rgba(39,60,143,.18)!important;border-radius:18px!important}.temple-meta span{color:var(--muted)!important}.temple-meta small{color:#7c7771!important}.temple-arrow{background:#fffaf2!important;border-color:#d8c9b8!important;color:var(--primary)!important}.temple-arrow:hover{background:var(--accent)!important;color:#fff!important}.temple-dot{background:#b7afa7!important}.temple-dot.active{background:var(--accent)!important}.temple-progress{background:rgba(39,60,143,.10)!important}.temple-progress i{background:var(--accent)!important;box-shadow:0 0 14px rgba(231,111,81,.28)!important}.temple-index,.temple-credit{background:rgba(255,250,242,.9)!important;border-color:#e0d2c3!important;color:var(--primary)!important}
-/* Strongly override legacy dark variables/components */
-[class*="dark"],.dark,.dark-theme{background:var(--bg)!important;color:var(--text)!important}.section-label,.section-kicker{color:var(--accent)!important}.icon-box,.feature-icon{background:#eeeafb!important;color:var(--primary)!important}.outline,.secondary,.ghost{background:#fff!important;color:var(--primary)!important;border-color:#d9c8b5!important}.danger{color:#b94b35!important}
-@media(max-width:700px){.nav{box-shadow:0 2px 12px rgba(39,60,143,.07)!important}.home-hero::before{background:linear-gradient(180deg,rgba(255,250,242,.97),rgba(255,250,242,.62))!important}.panel{box-shadow:0 8px 25px rgba(39,60,143,.08)!important}.home-visual{border-radius:16px!important}}
+/* UnseenGo — stable dark theme lock
+   This file is intentionally theme-neutral: it prevents legacy bright-theme
+   rules from changing the site appearance between pages or refreshes. */
+:root{
+  --bg:#090c0a;
+  --panel:#121713;
+  --surface:#121713;
+  --surface-soft:#182016;
+  --surface-tint:#182016;
+  --line:#293029;
+  --text:#f3f5ef;
+  --muted:#9da69b;
+  --primary:#d8f36a;
+  --primary-dark:#b8d84f;
+  --accent:#d8f36a;
+  --accent-strong:#b8d84f;
+  --warm:#d8f36a;
+  --ink:#f3f5ef;
+  --shadow:0 14px 40px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+html{background:var(--bg)!important;color-scheme:dark!important}
+body{background:var(--bg)!important;color:var(--text)!important}
+body::after{background:transparent!important}
+.nav,.site-header,.navbar{background:rgba(9,12,10,.94)!important;color:var(--text)!important;border-bottom:1px solid rgba(255,255,255,.06)!important;box-shadow:none!important}
+.brand{color:var(--text)!important}.brand b,.brand span,.eyebrow,em,.home-kicker{color:var(--accent)!important}
+.nav nav a,.nav a{color:var(--muted)!important}.nav nav a:hover,.nav nav a.active{color:var(--accent)!important}
+.nav button,.search button,.generate,.primary,.btn-primary,.cta,.explore-btn{background:var(--accent)!important;color:#10140d!important;box-shadow:none!important;border-radius:10px!important}
+.nav button:hover,.search button:hover,.generate:hover{background:var(--accent-strong)!important;color:#10140d!important}
+.hero,.home-hero{background:#080c0a!important;color:var(--text)!important}.hero h1,.home-copy h1{color:var(--text)!important}.hero h1 em,.home-copy h1 em{color:var(--accent)!important}
+.lead,.home-copy .lead,.heading>p,.muted{color:var(--muted)!important}
+.search,.home-search{background:#151a16!important;border:1px solid #3b4635!important;box-shadow:0 15px 45px rgba(0,0,0,.35)!important}
+.search input,.home-search input{color:var(--text)!important}.search input::placeholder,.home-search input::placeholder{color:#6f776d!important}
+.panel,.story-box,.modal-card,.city-panel,.about-card,.feature-card,.review-card,.place,.quick-city,.vibe,.day,.famous-card,.how-card,.how-core,.home-card,.route-card,.nearby,.mode,.empty,.live-note,.city-history-card,.city-place-card,.city-stay,.review-empty,.traveller-review,.transport-panel,.planner-card,.ai-understanding,.ai-explanation{background:var(--panel)!important;color:var(--text)!important;border-color:var(--line)!important;box-shadow:none!important}
+.home-features,.home-values{background:#09100d!important;border-color:var(--line)!important;box-shadow:none!important}.home-feature{border-color:#334038!important}
+.home-feature p,.home-value span,.feature-card p,.about-card p,.home-next p,.home-cta p{color:var(--muted)!important}.home-icon{background:#18241c!important;color:var(--accent)!important}
+.quick-city{background:linear-gradient(145deg,#263220,#111510)!important;color:var(--text)!important}.quick-city small,.quick-city span{color:var(--muted)!important}
+.city-panel select,.form input,.form select,.field input,.field select,.intent,.transport-origin input,.city-search input,.transport-search input{background:#0b0e0c!important;color:var(--text)!important;border-color:#303830!important}
+.city-chips,.city-chip{background:#101410!important;color:#aeb5aa!important;border-color:var(--line)!important}.city-chip:hover,.city-chip.active,.filter-btn:hover,.filter-btn.active,.transport-mode.active,.mode:hover,.mode.active{background:#182016!important;color:var(--accent)!important;border-color:#71873d!important}
+.vibe{color:var(--text)!important}.vibe.active{background:#182016!important;border-color:#71873d!important}.place{background:linear-gradient(145deg,#34402f,#111511)!important}.place p,.place small,.route-card p,.nearby p,.live-note{color:#aeb5aa!important}
+.score,.place .tag,.tag,.route-meta span{background:#0c140a!important;color:var(--accent)!important}
+.planner,.planner-page,.transport-page,.stay-page,.city-page{background:var(--bg)!important}
+.interest span,.avoid-item span,.toggle{background:#101410!important;border-color:#303830!important;color:#aeb5aa!important}.interest input:checked+span,.avoid-item input:checked+span{background:#182016!important;color:var(--accent)!important;border-color:#71873d!important}
+footer{background:#090c0a!important;color:#747d73!important;border-color:var(--line)!important}footer b{color:var(--text)!important}footer a{color:#c9d0c5!important}
+.modal-backdrop{background:rgba(0,0,0,.72)!important}.modal-close{background:#202720!important;color:var(--text)!important;border-color:#3a4437!important}
+.story-section{background:linear-gradient(180deg,#0b100c,#090c0a)!important}.history-block{background:#0b100c!important;border-color:var(--line)!important}
+[class*="dark"],.dark,.dark-theme{background:var(--bg)!important;color:var(--text)!important}
