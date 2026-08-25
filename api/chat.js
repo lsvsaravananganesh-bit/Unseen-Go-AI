@@ -20,20 +20,24 @@ export default async function handler(req, res) {
   if (!allowed && origin) return res.status(403).json({ error: 'Origin not allowed' });
 
   try {
-    const { message, city, preferences = {}, places = [] } = req.body || {};
+    const { message, city, preferences = {}, places = [], model: requestedModel } = req.body || {};
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ error: 'Message is required' });
     }
 
     // 3. Environment Variables Checks
     const ollamaKey = process.env.OLLAMA_API_KEY;
-    const model = process.env.OLLAMA_MODEL || 'qwen3:8b'; // Main branch model default
-    const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_ANON_KEY;
-
     if (!ollamaKey) {
       return res.status(503).json({ error: 'Ollama Cloud is not configured on Vercel.' });
     }
+
+    // Model selection with allowlist from main
+    const allowedModels = ['gemma4:31b-cloud', 'gemma4:26b-cloud', 'gemma4:12b-cloud', 'gemma4:cloud'];
+    const envModel = process.env.OLLAMA_MODEL || 'gemma4:31b-cloud';
+    const model = allowedModels.includes(requestedModel) ? requestedModel : (allowedModels.includes(envModel) ? envModel : 'gemma4:31b-cloud');
+
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_ANON_KEY;
 
     // 4. Supabase Data Enrichment (From main)
     let verifiedPlaces = Array.isArray(places) ? places.slice(0, 12) : [];
@@ -56,7 +60,6 @@ export default async function handler(req, res) {
     const system = `You are UnseenGo AI, a responsible Indian hidden-gem tourism assistant. Use only destination facts supplied in CONTEXT. Never invent coordinates, opening hours, prices, verification status, crowd levels, travel times, or local businesses. If a fact is missing, say it is not verified. Explain recommendations clearly. Respect explicit preferences and avoid constraints. Distinguish the UnseenGo Score from real crowd/popularity measurements. Keep answers practical and concise.`;
     
     const context = JSON.stringify({ city, preferences, places: verifiedPlaces }, null, 2);
-    const prompt = `${system}\n\nCONTEXT:\n${context}\n\nUSER:\n${message.slice(0, 6000)}`;
 
     // 6. Ollama Cloud Request (From main API structure)
     const response = await fetch('https://ollama.com/api/chat', {
@@ -67,8 +70,12 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model,
-        messages: [{ role: 'user', content: prompt }],
-        stream: false
+        messages: [
+          { role: 'system', content: system },
+          { role: 'user', content: `CONTEXT:\n${context}\n\nUSER:\n${message.slice(0, 6000)}` }
+        ],
+        stream: false,
+        options: { temperature: 0.7 }
       })
     });
 
