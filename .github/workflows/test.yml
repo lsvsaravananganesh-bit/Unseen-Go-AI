@@ -9,7 +9,6 @@ on:
 permissions:
   contents: read
 
-# Keep only the newest validation when several commits are pushed quickly.
 concurrency:
   group: unseengo-tests-${{ github.ref }}
   cancel-in-progress: true
@@ -18,19 +17,15 @@ jobs:
   test:
     name: Validate HTML, JavaScript, references and smoke tests
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-
       - name: Install test tools
         run: npm install --no-save --no-package-lock html-validate@9
-
       - name: HTML validity
         shell: bash
         run: |
@@ -38,66 +33,40 @@ jobs:
           mapfile -t html_files < <(find . -type f -name '*.html' -not -path './node_modules/*' -not -path './.git/*' | sort)
           test "${#html_files[@]}" -gt 0
           npx --no-install html-validate --preset standard "${html_files[@]}"
-
       - name: JavaScript syntax
         shell: bash
         run: |
           set -euo pipefail
           mapfile -t files < <(find . -type f -name '*.js' -not -path './node_modules/*' -not -path './.git/*' | sort)
           test "${#files[@]}" -gt 0
-          for file in "${files[@]}"; do
-            echo "Checking $file"
-            node --check "$file"
-          done
-
+          for file in "${files[@]}"; do node --check "$file"; done
       - name: Required files
         shell: bash
         run: |
           set -euo pipefail
           required=(index.html discover.html planner.html app.js unseen-engine.js planner-ui.js nav.js auth-gate.js unseengo-enhancements.js unseengo-enhancements.css sw.js)
-          for file in "${required[@]}"; do
-            test -f "$file" || { echo "Missing required file: $file"; exit 1; }
-          done
-          echo 'All required application files exist.'
-
+          for file in "${required[@]}"; do test -f "$file" || { echo "Missing required file: $file"; exit 1; }; done
       - name: Broken local references
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           import html.parser, pathlib, re, sys
-          root = pathlib.Path('.')
-          errors = []
-          asset_re = re.compile(r'^(?:[^:#?]+)(?:[?#].*)?$')
-
+          root=pathlib.Path('.'); errors=[]
           class Parser(html.parser.HTMLParser):
-              def __init__(self, path):
-                  super().__init__()
-                  self.path = path
-              def check(self, value):
-                  if not value or value.startswith(('#','/','http://','https://','mailto:','tel:','data:','javascript:')):
-                      return
-                  target = value.split('#',1)[0].split('?',1)[0]
-                  if not target or not asset_re.match(value):
-                      return
-                  candidate = (self.path.parent / target).resolve()
-                  if not candidate.exists():
-                      errors.append(f'{self.path}: missing local reference -> {value}')
-              def handle_starttag(self, tag, attrs):
-                  attrs = dict(attrs)
-                  for key in ('href','src'):
-                      self.check(attrs.get(key))
-
+              def __init__(self,path): super().__init__(); self.path=path
+              def check(self,value):
+                  if not value or value.startswith(('#','/','http://','https://','mailto:','tel:','data:','javascript:')): return
+                  target=value.split('#',1)[0].split('?',1)[0]
+                  if target and not (self.path.parent/target).resolve().exists(): errors.append(f'{self.path}: missing local reference -> {value}')
+              def handle_starttag(self,tag,attrs):
+                  attrs=dict(attrs)
+                  for key in ('href','src'): self.check(attrs.get(key))
           for path in root.rglob('*.html'):
-              if any(part in {'.git','node_modules'} for part in path.parts):
-                  continue
+              if any(part in {'.git','node_modules'} for part in path.parts): continue
               Parser(path).feed(path.read_text(encoding='utf-8'))
-          if errors:
-              print('\n'.join(errors))
-              sys.exit(1)
-          print('No broken local HTML asset references found.')
+          if errors: print('\n'.join(errors)); sys.exit(1)
           PY
-
       - name: Basic application smoke tests
         shell: bash
         run: |
@@ -110,15 +79,22 @@ jobs:
           grep -q 'UnseenGo' README.md
           test -f supabase/schema.sql
           grep -q 'unseengo-enhancements.js' nav.js
-          echo 'Basic UnseenGo application smoke tests passed.'
-
+      - name: Ensure chatbot code is absent
+        shell: bash
+        run: |
+          set -euo pipefail
+          if find . -type f \( -iname '*chatbot*' -o -path './api/chat.js' -o -path './functions/api/chat.js' \) -not -path './.git/*' | grep -q .; then
+            echo 'Chatbot files still exist.'; exit 1
+          fi
+          if grep -RniE '(/api/chat|chatbot\.js|chatbot\.css|Ollama Cloud|GEMINI_API_KEY)' --exclude-dir=.git --exclude-dir=node_modules .; then
+            echo 'Chatbot/API references still exist.'; exit 1
+          fi
+          echo 'No chatbot files or chatbot API references found.'
       - name: Security sanity check
         shell: bash
         run: |
           set -euo pipefail
           service_role_key="SUPABASE_""SERVICE_ROLE_KEY"
           if grep -RniE "AIza[0-9A-Za-z_-]{20,}|sk-[A-Za-z0-9_-]{20,}|${service_role_key}" --exclude-dir=.git --exclude-dir=node_modules --exclude='test.yml' .; then
-            echo 'Potential private API/service-role credentials detected.'
-            exit 1
+            echo 'Potential private API/service-role credentials detected.'; exit 1
           fi
-          echo 'No obvious private API/service-role credentials detected.'
