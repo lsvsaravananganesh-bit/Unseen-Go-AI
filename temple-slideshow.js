@@ -15,6 +15,7 @@
   ];
 
   const css = `
+    .home-visual{position:relative}
     .temple-showcase{position:absolute;inset:0;overflow:hidden;border-radius:0 0 0 28px;background:#080c0a;isolation:isolate}
     .temple-showcase .temple-slide{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .8s ease,visibility .8s ease}
     .temple-showcase .temple-slide.active{opacity:1;visibility:visible}
@@ -56,7 +57,7 @@
     const credit=document.createElement('div'); credit.className='temple-credit'; credit.textContent='Famous temples of India'; showcase.append(credit);
     visual.prepend(showcase);
 
-    let current=0,timer=null,started=0,duration=5000;
+    let current=0,timer=null,duration=5000;
     function img(file){return 'https://commons.wikimedia.org/wiki/Special:Redirect/file/'+encodeURIComponent(file)}
     function button(text,label){const b=document.createElement('button');b.className='temple-arrow';b.type='button';b.textContent=text;b.setAttribute('aria-label',label);return b}
     function render(i){current=(i+slides.length)%slides.length;const data=slides[current];showcase.querySelectorAll('.temple-slide').forEach((el,n)=>el.classList.toggle('active',n===current));showcase.querySelectorAll('.temple-dot').forEach((el,n)=>el.classList.toggle('active',n===current));thumb.src=img(data.file);strong.textContent=data.name;place.textContent=data.place;story.textContent=data.story;index.textContent=String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');restartProgress();}
@@ -64,7 +65,7 @@
     function restartProgress(){const bar=progress.firstElementChild;bar.style.transition='none';bar.style.width='0';requestAnimationFrame(()=>{bar.style.transition=`width ${duration}ms linear`;bar.style.width='100%'})}
     function restartTimer(){clearInterval(timer);timer=setInterval(()=>render(current+1),duration)}
     prev.addEventListener('click',e=>{e.stopPropagation();go(current-1)}); next.addEventListener('click',e=>{e.stopPropagation();go(current+1)});
-    showcase.addEventListener('mouseenter',()=>{clearInterval(timer)}); showcase.addEventListener('mouseleave',()=>restartTimer());
+    showcase.addEventListener('mouseenter',()=>clearInterval(timer)); showcase.addEventListener('mouseleave',()=>restartTimer());
     showcase.addEventListener('mousemove',e=>{const r=showcase.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;showcase.style.setProperty('--mx',(x*18).toFixed(1)+'px');showcase.style.setProperty('--my',(y*14).toFixed(1)+'px')});
     showcase.addEventListener('mouseleave',()=>{showcase.style.setProperty('--mx','0px');showcase.style.setProperty('--my','0px')});
     let touchX=null; showcase.addEventListener('touchstart',e=>{touchX=e.changedTouches[0].clientX},{passive:true}); showcase.addEventListener('touchend',e=>{if(touchX===null)return;const dx=e.changedTouches[0].clientX-touchX;if(Math.abs(dx)>45)go(current+(dx<0?1:-1));touchX=null},{passive:true});
