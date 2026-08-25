@@ -1,10 +1,29 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
+  const origin = req.headers.origin || '';
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || 'https://lsvsaravananganesh-bit.github.io').split(',').map(x => x.trim()).filter(Boolean);
+  const allowed = allowedOrigins.includes('*') || allowedOrigins.includes(origin);
 
-  const ollamaUrl = process.env.OLLAMA_URL || 'http://127.0.0.1:11434';
+  if (allowed) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Vary', 'Origin');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Max-Age', '86400');
+
+  if (req.method === 'OPTIONS') return res.status(204).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!allowed && origin) return res.status(403).json({ error: 'Origin not allowed' });
+
+  const ollamaUrl = process.env.OLLAMA_URL;
   const ollamaModel = process.env.OLLAMA_MODEL || 'qwen2.5:3b';
+  const ollamaApiKey = process.env.OLLAMA_API_KEY;
+
+  if (!ollamaUrl) {
+    return res.status(503).json({
+      error: 'Ollama is not configured. Set OLLAMA_URL in the Vercel project environment variables.'
+    });
+  }
 
   try {
     const { message, city, preferences, places } = req.body || {};
@@ -23,15 +42,18 @@ Current city: ${city || 'not provided'}
 User preferences: ${JSON.stringify(preferences || {})}
 Available destination context: ${JSON.stringify(safePlaces)}`;
 
-    const response = await fetch(`${ollamaUrl.replace(/\\/$/, '')}/api/chat`, {
+    const headers = { 'Content-Type': 'application/json' };
+    if (ollamaApiKey) headers.Authorization = `Bearer ${ollamaApiKey}`;
+
+    const response = await fetch(`${ollamaUrl.replace(/\/$/, '')}/api/chat`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({
         model: ollamaModel,
         stream: false,
         messages: [
           { role: 'system', content: system },
-          { role: 'user', content: message }
+          { role: 'user', content: message.slice(0, 6000) }
         ],
         options: { temperature: 0.4 }
       })
@@ -50,7 +72,7 @@ Available destination context: ${JSON.stringify(safePlaces)}`;
   } catch (error) {
     console.error('Ollama chatbot error:', error);
     return res.status(502).json({
-      error: 'Unable to reach Ollama. Make sure Ollama is running and OLLAMA_URL is reachable from the backend.'
+      error: 'Unable to reach Ollama. Check that OLLAMA_URL is publicly reachable from Vercel and the selected model is installed.'
     });
   }
 }
