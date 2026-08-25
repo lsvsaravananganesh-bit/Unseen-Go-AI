@@ -1,0 +1,40 @@
+name: Sync India city data
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 2 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+      - name: Enrich every city in the India directory
+        env:
+          SUPABASE_URL: https://jpqbvliaaucyqnhcclbz.supabase.co
+          SUPABASE_PUBLISHABLE_KEY: sb_publishable_K-0R9a2lSginTIfxHk-cxQ_joorBonp
+        run: |
+          python - <<'PY'
+          import ast, json, re, time, urllib.request
+          text=open('india-state-directory.js',encoding='utf-8').read()
+          body=text.split('window.INDIA_DIRECTORY=',1)[1].split('};',1)[0]+'}'
+          data=ast.literal_eval(body)
+          cities=[{'city':city,'state':state} for state,names in data.items() for city in names]
+          endpoint='https://jpqbvliaaucyqnhcclbz.supabase.co/functions/v1/city-data'
+          headers={'Content-Type':'application/json','apikey':__import__('os').environ['SUPABASE_PUBLISHABLE_KEY']}
+          total=len(cities);done=0
+          for i in range(0,total,20):
+              batch=cities[i:i+20]
+              req=urllib.request.Request(endpoint,data=json.dumps({'cities':batch}).encode(),headers=headers,method='POST')
+              try:
+                  with urllib.request.urlopen(req,timeout=120) as r:
+                      result=json.load(r)
+                  print(json.dumps(result,ensure_ascii=False))
+              except Exception as e:
+                  print('batch failed:',e)
+              done+=len(batch)
+              print(f'Processed {done}/{total} cities')
+              time.sleep(2)
+          PY
