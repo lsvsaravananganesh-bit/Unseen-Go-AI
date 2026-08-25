@@ -1,15 +1,30 @@
-/* UnseenGo AI — responsive foundation */
+/* UnseenGo AI — responsive foundation + consistent icon/button visibility */
 *,*::before,*::after{box-sizing:border-box}
-html{width:100%;overflow-x:hidden}
-body{max-width:100%;overflow-x:hidden}
-img,svg,video,canvas{max-width:100%;height:auto}
+html{width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{width:100%;max-width:100%;margin:0;overflow-x:hidden}
+img,svg,video,canvas{display:block;max-width:100%;height:auto}
 button,input,select,textarea{max-width:100%;font:inherit}
+button,a{ -webkit-tap-highlight-color:transparent }
 .container,.section-inner,.page-shell{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+
+/* One visual language for action icons. Existing icon markup remains untouched. */
+.icon,.nav-icon,.feature-icon,.card-icon,.action-icon{width:1.15em;height:1.15em;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;line-height:1;vertical-align:-.15em}
+button,.button,.cta,.generate{min-height:44px}
+
+@media (min-width:1024px){
+  .nav{min-height:72px}
+  .nav nav{display:flex;align-items:center;gap:clamp(14px,2vw,30px)}
+  .hero,.hero-section{min-height:560px}
+  .grid,.cards-grid,.destination-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 
 @media (max-width:1023px){
   .container,.section-inner,.page-shell{width:min(100% - 32px,900px)}
   .grid,.cards-grid,.destination-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   h1{font-size:clamp(2.2rem,6vw,4rem)}
+  .nav{gap:16px}
+  .nav nav{gap:14px;flex-wrap:wrap}
+  .hero,.hero-section{min-height:auto}
 }
 
 @media (max-width:767px){
@@ -18,15 +33,34 @@ button,input,select,textarea{max-width:100%;font:inherit}
   .two-column,.split-layout{grid-template-columns:1fr!important}
   .hero,.hero-section{padding-inline:12px}
   .hero-actions,.actions,.button-row{flex-direction:column;align-items:stretch}
-  .hero-actions>* ,.actions>* ,.button-row>*{width:100%}
-  table{display:block;width:100%;overflow-x:auto}
+  .hero-actions>*,.actions>*,.button-row>*{width:100%}
+
+  /* Keep navigation and important controls visible on phones. */
+  .nav{position:relative;flex-wrap:wrap;padding:12px 14px;min-height:64px}
+  .nav .brand{flex:1 1 auto;min-width:0;white-space:nowrap}
+  .nav nav{order:3;width:100%;display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:4px 0 2px;scrollbar-width:none}
+  .nav nav::-webkit-scrollbar{display:none}
+  .nav nav a{flex:0 0 auto;white-space:nowrap;padding:8px 10px}
+  .nav>button,.nav .cta{flex:0 0 auto}
+
+  /* Prevent desktop fixed widths from clipping content. */
+  .hero>* ,.section>* ,.heading>*{min-width:0}
+  .hero-search,.search-row,.input-row{flex-wrap:wrap}
+  .hero-search input,.search-row input,.input-row input{min-width:0;flex:1 1 100%}
+  .hero-search button,.search-row button,.input-row button{width:100%}
+  table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .modal,.dialog{max-width:calc(100vw - 20px)}
 }
 
 @media (max-width:480px){
   .container,.section-inner,.page-shell{width:calc(100% - 20px)}
-  h1{font-size:clamp(1.9rem,10vw,2.8rem)}
+  h1{font-size:clamp(1.9rem,10vw,2.8rem);line-height:1.05}
   h2{font-size:clamp(1.5rem,7vw,2.2rem)}
+  h3{font-size:clamp(1.1rem,5vw,1.45rem)}
   p{overflow-wrap:anywhere}
   .card,.panel{padding:18px}
   .modal,.dialog{width:calc(100% - 20px);margin:10px}
+  button,.button,.cta,.generate{width:100%;min-height:46px}
 }
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
