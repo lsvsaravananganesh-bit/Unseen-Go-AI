@@ -43,10 +43,32 @@ img,svg,video,canvas{display:block;max-width:100%;height:auto}
 
 .hero .search::before{content:'PLAN YOUR DISCOVERY' !important;display:block !important;color:#d8f36a !important;font-size:10px !important;font-weight:900 !important;letter-spacing:2px !important;padding:2px 5px 10px !important}
 
-/* POPULAR PLACES: one destination fills the carousel viewport.
-   The existing homepage script advances one card every 3 seconds. */
-.popular-track{width:100% !important;overflow-x:hidden !important;scroll-snap-type:x mandatory !important}
-.popular-card{flex:0 0 100% !important;min-width:100% !important;scroll-snap-align:start !important}
-.popular-image{height:390px !important}
-@media(max-width:1050px){.popular-card{flex-basis:100% !important;min-width:100% !important}.popular-image{height:340px !important}}
-@media(max-width:650px){.popular-card{flex-basis:100% !important;min-width:100% !important}.popular-image{height:260px !important}.popular-track{padding-left:0 !important;padding-right:0 !important}}
+/* POPULAR PLACES — one full-width destination at a time. */
+.popular-wrap{width:min(1000px,100%) !important;margin:0 auto !important}
+.popular-wrap .head{text-align:center !important}
+.popular-track{width:100% !important;overflow-x:hidden !important;scroll-snap-type:x mandatory !important;scroll-behavior:smooth !important;scroll-padding:0 !important}
+.popular-card{flex:0 0 100% !important;min-width:100% !important;scroll-snap-align:start !important;scroll-snap-stop:always !important}
+.popular-image{height:430px !important}
+.popular-image img{width:100% !important;height:100% !important;object-fit:cover !important}
+.popular-body{text-align:center !important;padding:24px 28px 28px !important}
+.popular-body .place-meta{display:block !important}
+.popular-body h3{margin:7px 0 7px !important;font-size:24px !important}
+.popular-body p{max-width:720px !important;margin:0 auto 15px !important;line-height:1.65 !important}
+.popular-body a{display:inline-block !important}
+.popular-dots{justify-content:center !important;margin-top:16px !important}
+.popular-controls{right:0 !important}
+
+/* The homepage script already uses a 3000ms interval; keep each card as one complete slide. */
+@media(max-width:1050px){
+  .popular-card{flex-basis:100% !important;min-width:100% !important}
+  .popular-image{height:350px !important}
+}
+@media(max-width:650px){
+  .popular-wrap{width:100% !important}
+  .popular-card{flex-basis:100% !important;min-width:100% !important}
+  .popular-image{height:260px !important}
+  .popular-body{padding:20px 16px 24px !important}
+  .popular-body h3{font-size:21px !important}
+  .popular-track{padding-left:0 !important;padding-right:0 !important}
+  .popular-controls{position:static !important;justify-content:center !important;margin-bottom:14px !important}
+}
