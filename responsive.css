@@ -3,20 +3,42 @@
 html{width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
 body{width:100%;max-width:100%;margin:0;overflow-x:hidden}
 img,svg,video,canvas{display:block;max-width:100%;height:auto}
-button,input,select,textarea{max-width:100%;font:inherit}
-button,a{ -webkit-tap-highlight-color:transparent }
-.container,.section-inner,.page-shell{width:min(1180px,calc(100% - 40px));margin-inline:auto}
-.icon,.nav-icon,.feature-icon,.card-icon,.action-icon{width:1.15em;height:1.15em;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;line-height:1;vertical-align:-.15em}
-button,.button,.cta,.generate{min-height:44px}
-@media (min-width:1024px){.nav{min-height:72px}.nav nav{display:flex;align-items:center;gap:clamp(14px,2vw,30px)}.hero,.hero-section{min-height:560px}.grid,.cards-grid,.destination-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media (max-width:1023px){.container,.section-inner,.page-shell{width:min(100% - 32px,900px)}.grid,.cards-grid,.destination-grid{grid-template-columns:repeat(2,minmax(0,1fr))}h1{font-size:clamp(2.2rem,6vw,4rem)}.nav{gap:16px}.nav nav{gap:14px;flex-wrap:wrap}.hero,.hero-section{min-height:auto}}
-@media (max-width:767px){.container,.section-inner,.page-shell{width:calc(100% - 24px)}.grid,.cards-grid,.destination-grid{grid-template-columns:1fr}.two-column,.split-layout{grid-template-columns:1fr!important}.hero,.hero-section{padding-inline:12px}.hero-actions,.actions,.button-row{flex-direction:column;align-items:stretch}.hero-actions>*,.actions>*,.button-row>*{width:100%}.nav{position:relative;flex-wrap:wrap;padding:12px 14px;min-height:64px}.nav .brand{flex:1 1 auto;min-width:0;white-space:nowrap}.nav nav{order:3;width:100%;display:flex;gap:8px;overflow-x:auto;flex-wrap:nowrap;padding:4px 0 2px;scrollbar-width:none}.nav nav::-webkit-scrollbar{display:none}.nav nav a{flex:0 0 auto;white-space:nowrap;padding:8px 10px}.nav>button,.nav .cta{flex:0 0 auto}.hero>* ,.section>* ,.heading>*{min-width:0}.hero-search,.search-row,.input-row{flex-wrap:wrap}.hero-search input,.search-row input,.input-row input{min-width:0;flex:1 1 100%}.hero-search button,.search-row button,.input-row button{width:100%}table{display:block;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}.modal,.dialog{max-width:calc(100vw - 20px)}}
-@media (max-width:480px){.container,.section-inner,.page-shell{width:calc(100% - 20px)}h1{font-size:clamp(1.9rem,10vw,2.8rem);line-height:1.05}h2{font-size:clamp(1.5rem,7vw,2.2rem)}h3{font-size:clamp(1.1rem,5vw,1.45rem)}p{overflow-wrap:anywhere}.card,.panel{padding:18px}.modal,.dialog{width:calc(100% - 20px);margin:10px}button,.button,.cta,.generate{width:100%;min-height:46px}}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-/* Homepage hero image fix */
-.home-visual{background-image:linear-gradient(90deg,rgba(5,8,7,.08),rgba(5,8,7,.18)),url('https://commons.wikimedia.org/wiki/Special:FilePath/Virupaksha%20temple%20sunset.jpg?width=1600')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;min-height:520px!important;border-radius:0!important}
-.home-visual>.home-place-card{background:rgba(10,12,11,.9)!important;backdrop-filter:blur(8px);max-width:520px}
-.home-visual>.home-place-card img{content:url('https://commons.wikimedia.org/wiki/Special:FilePath/Virupaksha%20temple%20sunset.jpg?width=400')!important;display:block!important;object-fit:cover!important}
-@media(max-width:1100px){.home-visual{min-height:420px!important}}
-@media(max-width:700px){.home-visual{min-height:300px!important;background-position:center!important}.home-visual>.home-place-card{width:100%!important}}
+/* Homepage hero: large, clear travel-search box across the image */
+@media (min-width:1051px){
+  .hero{min-height:760px !important;padding-bottom:245px !important}
+  .hero .wrap{width:100% !important;max-width:1400px !important;padding-left:40px !important;padding-right:40px !important}
+  .hero .search{position:absolute !important;z-index:5 !important;left:50% !important;bottom:-205px !important;transform:translateX(-50%) !important;width:min(1220px,calc(100vw - 80px)) !important;max-width:none !important;padding:16px !important;border-radius:22px !important;background:rgba(12,18,15,.97) !important;border:1px solid #66735e !important;box-shadow:0 28px 90px rgba(0,0,0,.62),0 0 0 1px rgba(216,243,106,.08) !important;backdrop-filter:blur(14px) !important}
+  .hero .tabs{padding:0 4px 12px !important;gap:5px !important}
+  .hero .tabs a{padding:13px 20px !important;font-size:14px !important;min-height:44px !important}
+  .hero .fields{grid-template-columns:minmax(300px,1.65fr) minmax(190px,1fr) minmax(180px,.9fr) 190px !important;gap:12px !important;padding-top:14px !important}
+  .hero .field{min-height:82px !important;padding:14px 17px !important;border-radius:13px !important}
+  .hero .field small{font-size:10px !important;letter-spacing:.7px !important;margin-bottom:9px !important}
+  .hero .field input,.hero .field select{font-size:16px !important;min-height:32px !important}
+  .hero .go{min-height:82px !important;font-size:15px !important;border-radius:13px !important;padding:0 20px !important}
+  .hero .quick{margin-top:13px !important;padding:0 4px !important}
+  .hero .quick button{padding:9px 15px !important;font-size:12px !important}
+  .hero h1{max-width:720px !important}
+  .hero p{max-width:680px !important}
+}
+
+@media (min-width:651px) and (max-width:1050px){
+  .hero{min-height:820px !important;padding-bottom:260px !important}
+  .hero .search{position:absolute !important;left:50% !important;bottom:-225px !important;transform:translateX(-50%) !important;width:min(94vw,900px) !important;max-width:none !important;padding:14px !important;z-index:5 !important;border-radius:20px !important;background:rgba(12,18,15,.98) !important}
+  .hero .fields{gap:10px !important}
+  .hero .field{min-height:76px !important}
+  .hero .go{min-height:76px !important}
+}
+
+@media (max-width:650px){
+  .hero{min-height:900px !important;padding-bottom:0 !important;align-items:flex-start !important}
+  .hero .wrap{padding-top:70px !important}
+  .hero .search{position:relative !important;left:auto !important;bottom:auto !important;transform:none !important;width:100% !important;max-width:none !important;margin-top:28px !important;padding:10px !important;border-radius:18px !important;background:rgba(12,18,15,.97) !important;z-index:5 !important}
+  .hero .tabs{padding-bottom:8px !important}
+  .hero .tabs a{padding:9px 12px !important;font-size:11px !important}
+  .hero .field{min-height:66px !important}
+  .hero .go{min-height:55px !important}
+  .hero .quick{margin-top:10px !important}
+}
+
+.hero .search::before{content:'PLAN YOUR DISCOVERY' !important;display:block !important;color:#d8f36a !important;font-size:10px !important;font-weight:900 !important;letter-spacing:2px !important;padding:2px 5px 10px !important}
