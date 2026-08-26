@@ -1,5 +1,5 @@
 /* UnseenGo — Global Background Identity (stable dark theme) */
-@import url('bright-theme.css?v=20260825-5');
+@import url('bright-theme.css?v=20260826-lime-retry');
 body{position:relative;min-height:100vh;isolation:isolate}
 body::before{content:"UNSEENGO";position:fixed;inset:0;z-index:-1;display:flex;align-items:center;justify-content:center;width:100%;height:100%;overflow:hidden;pointer-events:none;user-select:none;white-space:nowrap;font-family:Inter,system-ui,sans-serif;font-size:clamp(90px,13vw,220px);font-weight:950;letter-spacing:clamp(-7px,-.55vw,-2px);line-height:1;color:rgba(216,243,106,.035);transform:none}
 .hero::before,.hero:before{content:none!important;display:none!important}
@@ -63,43 +63,22 @@ body:has(.popular-track) #popular .head{margin-bottom:30px!important}
 body:has(.popular-track) #popular .popular-image{height:430px!important}
 body:has(.popular-track) #popular .popular-card{max-width:1000px!important;margin:0 auto!important}
 
-@media(max-width:1050px){
- body:has(.popular-track) .hero{min-height:auto!important;padding:60px 0 30px!important}
- body:has(.popular-track) .fields{grid-template-columns:1fr 1fr!important}
- body:has(.popular-track) .go{grid-column:1/-1!important}
- body:has(.popular-track) .popular-image{height:360px!important}
- body:has(.popular-track) .stepgrid{grid-template-columns:repeat(2,1fr)!important;row-gap:42px!important}
-}
-@media(max-width:650px){
- body:has(.popular-track) .top{height:70px!important}
- body:has(.popular-track) .top .wrap{padding:0 15px!important;gap:10px!important}
- body:has(.popular-track) .brand{font-size:18px!important}
- body:has(.popular-track) .actions .btn.primary{min-height:38px!important;padding:0 13px!important}
- body:has(.popular-track) .hero{padding:42px 0 25px!important}
- body:has(.popular-track) .hero .wrap{padding:0 15px!important}
- body:has(.popular-track) .hero h1{font-size:46px!important;letter-spacing:-2.5px!important;margin:18px 0 20px!important}
- body:has(.popular-track) .hero-copy{font-size:15px!important;line-height:1.7!important}
- body:has(.popular-track) .hero-meta{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;margin-top:20px!important}
- body:has(.popular-track) .search{margin-top:0!important;padding:9px!important;border-radius:18px!important;margin-bottom:45px!important}
- body:has(.popular-track) .tabs{padding-bottom:8px!important}
- body:has(.popular-track) .tabs a{padding:9px 12px!important;font-size:12px!important}
- body:has(.popular-track) .fields{grid-template-columns:1fr!important;gap:9px!important}
- body:has(.popular-track) .field,body:has(.popular-track) .go{min-height:64px!important}
- body:has(.popular-track) .go{grid-column:auto!important}
- body:has(.popular-track) .quick{margin-top:12px!important}
- body:has(.popular-track) .quick button{font-size:10px!important;padding:8px 11px!important}
- body:has(.popular-track) .section{padding:70px 0!important}
- body:has(.popular-track) .section>.wrap{padding:0 15px!important}
- body:has(.popular-track) .head{margin-bottom:28px!important}
- body:has(.popular-track) .head h2{font-size:28px!important}
- body:has(.popular-track) #popular .popular-image{height:250px!important}
- body:has(.popular-track) .popular-body{padding:25px 18px 29px!important;min-height:175px!important}
- body:has(.popular-track) .popular-body h3{font-size:23px!important}
- body:has(.popular-track) .popular-body p{font-size:13px!important}
- body:has(.popular-track) .popular-controls{position:static!important;justify-content:center!important;margin:0 0 13px!important}
- body:has(.popular-track) .feature-main,body:has(.popular-track) .feature-side{padding:24px!important}
- body:has(.popular-track) .stepgrid{grid-template-columns:1fr!important;padding:42px 0!important;gap:32px!important}
- body:has(.popular-track) .step{padding:0!important;border-right:0!important}
- body:has(.popular-track) .footergrid{grid-template-columns:1fr 1fr!important;padding:42px 15px!important;gap:30px 20px!important}
- body:has(.popular-track) .copy{padding:17px 15px!important}
-}
+/* FINAL UNSEENGO LIME OVERRIDE — applies to the existing home-page layout without removing any boxes. */
+:root{--ug-lime:#c8e66a;--ug-lime-bright:#d8f36a;--ug-black:#050805;--ug-panel:#0d150f;--ug-panel2:#111c13;--ug-border:#334a38;--ug-white:#f4f5ed}
+body,html{background:var(--ug-black)!important;color:var(--ug-white)!important}
+.top,.nav{background:rgba(5,8,5,.97)!important;color:var(--ug-white)!important;border-color:rgba(200,230,106,.16)!important}
+.brand,.brand b,.nav nav a,.actions .btn{color:var(--ug-white)!important}.brand b,.nav nav a:hover,.nav nav a.active,.india-nav,.eyebrow,.hero h1 em,.home-kicker{color:var(--ug-lime)!important}
+.india-badge,.btn.primary,.hero-links a:not(.alt),.go{background:var(--ug-lime)!important;color:#071006!important;border-color:var(--ug-lime)!important}
+.hero{background:var(--ug-black)!important;color:var(--ug-white)!important}.hero h1{color:var(--ug-white)!important}.hero p{color:#d4dbd4!important}.hero-links a.alt{background:#101812!important;color:#fff!important;border-color:#3a4d3d!important}
+.search{background:#0d150f!important;color:var(--ug-white)!important;border:1px solid var(--ug-border)!important;box-shadow:0 20px 55px rgba(0,0,0,.55)!important}.tabs{border-color:#26372a!important}.tabs a{color:#a5afa6!important}.tabs a.active,.tabs a:hover{background:#172411!important;color:var(--ug-lime)!important}.field{background:#090e09!important;border-color:#334a38!important;color:#fff!important}.field small{color:#9aa69c!important}.field input,.field select{color:#fff!important}.quick button{background:#101812!important;color:#c3cbc4!important;border-color:#334a38!important}.quick button:hover{background:#172411!important;color:var(--ug-lime)!important;border-color:var(--ug-lime)!important}
+.section,.section.alt{background:var(--ug-black)!important;color:var(--ug-white)!important}.india-feature,.planner{background:#0b130c!important;color:var(--ug-white)!important;border-color:#334a38!important}.india-icon{background:#172411!important;border-color:#3a4d3d!important}.india-feature p,.planner p{color:#a5afa6!important}.india-feature a{background:var(--ug-lime)!important;color:#071006!important}
+.story,.about-card,.feature-card,.review-card,.panel,.story-box,.famous-card,.day,.city-panel,.place,.quick-city,.vibe,.how-card,.how-core,.planner-card{background:var(--ug-panel)!important;color:var(--ug-white)!important;border-color:#26372a!important}.story-body small,.feature-copy small,.feature-copy a,.story-body a{color:var(--ug-lime)!important}.story-body p,.about-card p,.feature-card p,.review-card p,.head p{color:#a5afa6!important}
+.destination,.experience,.feature-main,.feature-side{background:#111c13!important}.destination small{color:var(--ug-lime)!important}.destination:after,.experience:after,.feature-main:after,.feature-side:after{background:linear-gradient(0deg,rgba(3,8,5,.88),transparent 65%)!important}
+.planner-card{background:#111c13!important;border-color:#334a38!important}.planner-card div{border-color:#2b382e!important;color:#a5afa6!important}.planner-card b{color:#fff!important}.footer,.copy,footer{background:#050805!important;color:#777f78!important;border-color:#26372a!important}
+/* Legacy yellow/gold inline colors are normalized to the same lime accent. */
+[style*="yellow" i],[style*="gold" i],[style*="#FFD21F" i],[style*="#ffd21f" i],[style*="#FFC400" i],[style*="#ffc400" i],[style*="#FFCC00" i],[style*="#ffcc00" i],[style*="#E5B800" i],[style*="#e5b800" i],[style*="#D4AF37" i],[style*="#d4af37" i]{color:var(--ug-lime)!important;border-color:var(--ug-lime)!important}
+/* Preserve white boxes but convert their surfaces to UnseenGo panels. */
+.search,.story,.section.alt,.home-card,.home-features,.home-values,.white-box,.white-section,.bg-white{background:var(--ug-panel)!important;color:var(--ug-white)!important}
+
+@media(max-width:1050px){body:has(.popular-track) .hero{min-height:auto!important;padding:60px 0 30px!important}body:has(.popular-track) .fields{grid-template-columns:1fr 1fr!important}body:has(.popular-track) .go{grid-column:1/-1!important}body:has(.popular-track) .popular-image{height:360px!important}body:has(.popular-track) .stepgrid{grid-template-columns:repeat(2,1fr)!important;row-gap:42px!important}}
+@media(max-width:650px){body:has(.popular-track) .top{height:70px!important}body:has(.popular-track) .top .wrap{padding:0 15px!important;gap:10px!important}body:has(.popular-track) .brand{font-size:18px!important}body:has(.popular-track) .actions .btn.primary{min-height:38px!important;padding:0 13px!important}body:has(.popular-track) .hero{padding:42px 0 25px!important}body:has(.popular-track) .hero .wrap{padding:0 15px!important}body:has(.popular-track) .hero h1{font-size:46px!important;letter-spacing:-2.5px!important;margin:18px 0 20px!important}body:has(.popular-track) .hero-copy{font-size:15px!important;line-height:1.7!important}body:has(.popular-track) .hero-meta{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;margin-top:20px!important}body:has(.popular-track) .search{margin-top:0!important;padding:9px!important;border-radius:18px!important;margin-bottom:45px!important}body:has(.popular-track) .tabs{padding-bottom:8px!important}body:has(.popular-track) .tabs a{padding:9px 12px!important;font-size:12px!important}body:has(.popular-track) .fields{grid-template-columns:1fr!important;gap:9px!important}body:has(.popular-track) .field,body:has(.popular-track) .go{min-height:64px!important}body:has(.popular-track) .go{grid-column:auto!important}body:has(.popular-track) .quick{margin-top:12px!important}body:has(.popular-track) .quick button{font-size:10px!important;padding:8px 11px!important}body:has(.popular-track) .section{padding:70px 0!important}body:has(.popular-track) .section>.wrap{padding:0 15px!important}body:has(.popular-track) .head{margin-bottom:28px!important}body:has(.popular-track) .head h2{font-size:28px!important}body:has(.popular-track) #popular .popular-image{height:250px!important}body:has(.popular-track) .popular-body{padding:25px 18px 29px!important;min-height:175px!important}body:has(.popular-track) .popular-body h3{font-size:23px!important}body:has(.popular-track) .popular-body p{font-size:13px!important}body:has(.popular-track) .popular-controls{position:static!important;justify-content:center!important;margin:0 0 13px!important}body:has(.popular-track) .feature-main,body:has(.popular-track) .feature-side{padding:24px!important}body:has(.popular-track) .stepgrid{grid-template-columns:1fr!important;padding:42px 0!important;gap:32px!important}body:has(.popular-track) .step{padding:0!important;border-right:0!important}body:has(.popular-track) .footergrid{grid-template-columns:1fr 1fr!important;padding:42px 15px!important;gap:30px 20px!important}body:has(.popular-track) .copy{padding:17px 15px!important}}
