@@ -42,3 +42,11 @@ img,svg,video,canvas{display:block;max-width:100%;height:auto}
 }
 
 .hero .search::before{content:'PLAN YOUR DISCOVERY' !important;display:block !important;color:#d8f36a !important;font-size:10px !important;font-weight:900 !important;letter-spacing:2px !important;padding:2px 5px 10px !important}
+
+/* POPULAR PLACES: one destination fills the carousel viewport.
+   The existing homepage script advances one card every 3 seconds. */
+.popular-track{width:100% !important;overflow-x:hidden !important;scroll-snap-type:x mandatory !important}
+.popular-card{flex:0 0 100% !important;min-width:100% !important;scroll-snap-align:start !important}
+.popular-image{height:390px !important}
+@media(max-width:1050px){.popular-card{flex-basis:100% !important;min-width:100% !important}.popular-image{height:340px !important}}
+@media(max-width:650px){.popular-card{flex-basis:100% !important;min-width:100% !important}.popular-image{height:260px !important}.popular-track{padding-left:0 !important;padding-right:0 !important}}
