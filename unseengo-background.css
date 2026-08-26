@@ -6,8 +6,6 @@ body::before{content:"UNSEENGO";position:fixed;inset:0;z-index:-1;display:flex;a
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 50% 32%,rgba(216,243,106,.035),transparent 42%),linear-gradient(180deg,rgba(9,12,10,0),rgba(9,12,10,.18))}
 .nav,.panel,.story-box,.modal-card,.city-panel,.about-card,.feature-card,.review-card,.place,.quick-city,.vibe,.day,.famous-card,.search,.hero-card,.how-card,.how-core{position:relative;z-index:1}
 .home-visual{background-image:linear-gradient(90deg,rgba(6,10,8,.08),rgba(6,10,8,.28)),url('https://commons.wikimedia.org/wiki/Special:FilePath/A%20beautiful%20sunset%20in%20Hampi.jpg')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
-
-/* Home-page refinement: more breathing room, clearer hierarchy and less visual crowding. */
 body:has(.popular-track) .top{height:82px!important}
 body:has(.popular-track) .top .wrap{padding-left:30px!important;padding-right:30px!important;gap:34px!important}
 body:has(.popular-track) nav{gap:28px!important}
@@ -48,13 +46,25 @@ body:has(.popular-track) .step{padding:0 30px!important}
 body:has(.popular-track) .footergrid{padding:58px 30px!important;gap:42px!important}
 body:has(.popular-track) .copy{padding:19px 30px!important}
 
-/* New hero image strip: sits after the headline/supporting copy and before the search box. */
-body:has(.popular-track) .hero-meta{display:flex;flex-wrap:wrap;align-items:center}
-body:has(.popular-track) .hero-meta::after{content:"";order:99;flex:0 0 100%;height:158px;margin-top:14px;border:1px solid rgba(216,243,106,.16);border-radius:18px;overflow:hidden;background-color:#101712;background-image:url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=700&q=82'),url('https://e1.pxfuel.com/desktop-wallpaper/880/156/desktop-wallpaper-india-hampi-village-the-city-of-ruins-hampi.jpg'),url('https://curlytales.com/wp-content/uploads/2023/11/gurudwara-1.jpg'),url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=700&q=82');background-size:24.2% 100%,24.2% 100%,24.2% 100%,24.2% 100%;background-position:0 0,25.3% 0,50.6% 0,75.9% 0;background-repeat:no-repeat;box-shadow:0 20px 55px rgba(0,0,0,.32)}
-body:has(.popular-track) .hero-meta::before{content:"Featured destinations";order:98;flex:0 0 100%;color:#7f8b82;font-size:9px;font-weight:950;letter-spacing:1.8px;text-transform:uppercase;margin-top:2px}
+/* Remove the temporary image strip from the hero. The real Popular Places cards are the visual focus. */
+body:has(.popular-track) .hero-meta::before,body:has(.popular-track) .hero-meta::after{display:none!important;content:none!important}
+
+/* Requested home-page order: headline -> Popular Places & Temples -> Plan Your Discovery. */
+body:has(.popular-track) main{display:flex!important;flex-direction:column!important;align-items:stretch!important}
+body:has(.popular-track) .hero{display:contents!important;min-height:0!important;padding:0!important}
+body:has(.popular-track) .hero>.wrap{display:contents!important}
+body:has(.popular-track) .hero .eyebrow{order:1!important;display:block!important;width:min(1080px,calc(100% - 60px))!important;margin:22px auto 0!important}
+body:has(.popular-track) .hero h1{order:2!important;width:min(1080px,calc(100% - 60px))!important;max-width:800px!important;margin:18px auto 20px!important}
+body:has(.popular-track) .hero-copy{order:3!important;width:min(1080px,calc(100% - 60px))!important;margin:0 auto!important}
+body:has(.popular-track) .hero-meta{order:4!important;width:min(1080px,calc(100% - 60px))!important;margin:20px auto 0!important}
+body:has(.popular-track) #popular{order:5!important;width:100%!important;margin:30px 0 0!important}
+body:has(.popular-track) .hero .search{order:6!important;width:min(1080px,calc(100% - 60px))!important;margin:0 auto 70px!important}
+body:has(.popular-track) #popular .head{margin-bottom:30px!important}
+body:has(.popular-track) #popular .popular-image{height:430px!important}
+body:has(.popular-track) #popular .popular-card{max-width:1000px!important;margin:0 auto!important}
 
 @media(max-width:1050px){
- body:has(.popular-track) .hero{min-height:auto!important;padding:68px 0 76px!important}
+ body:has(.popular-track) .hero{min-height:auto!important;padding:60px 0 30px!important}
  body:has(.popular-track) .fields{grid-template-columns:1fr 1fr!important}
  body:has(.popular-track) .go{grid-column:1/-1!important}
  body:has(.popular-track) .popular-image{height:360px!important}
@@ -65,14 +75,12 @@ body:has(.popular-track) .hero-meta::before{content:"Featured destinations";orde
  body:has(.popular-track) .top .wrap{padding:0 15px!important;gap:10px!important}
  body:has(.popular-track) .brand{font-size:18px!important}
  body:has(.popular-track) .actions .btn.primary{min-height:38px!important;padding:0 13px!important}
- body:has(.popular-track) .hero{padding:52px 0 62px!important}
+ body:has(.popular-track) .hero{padding:42px 0 25px!important}
  body:has(.popular-track) .hero .wrap{padding:0 15px!important}
  body:has(.popular-track) .hero h1{font-size:46px!important;letter-spacing:-2.5px!important;margin:18px 0 20px!important}
  body:has(.popular-track) .hero-copy{font-size:15px!important;line-height:1.7!important}
  body:has(.popular-track) .hero-meta{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;margin-top:20px!important}
- body:has(.popular-track) .hero-meta::before{grid-column:1/-1!important;margin-top:2px!important}
- body:has(.popular-track) .hero-meta::after{grid-column:1/-1!important;flex:none!important;width:100%!important;height:112px!important;margin-top:8px!important;border-radius:14px!important;background-size:24.2% 100%,24.2% 100%,24.2% 100%,24.2% 100%!important}
- body:has(.popular-track) .search{margin-top:28px!important;padding:9px!important;border-radius:18px!important}
+ body:has(.popular-track) .search{margin-top:0!important;padding:9px!important;border-radius:18px!important;margin-bottom:45px!important}
  body:has(.popular-track) .tabs{padding-bottom:8px!important}
  body:has(.popular-track) .tabs a{padding:9px 12px!important;font-size:12px!important}
  body:has(.popular-track) .fields{grid-template-columns:1fr!important;gap:9px!important}
@@ -84,7 +92,7 @@ body:has(.popular-track) .hero-meta::before{content:"Featured destinations";orde
  body:has(.popular-track) .section>.wrap{padding:0 15px!important}
  body:has(.popular-track) .head{margin-bottom:28px!important}
  body:has(.popular-track) .head h2{font-size:28px!important}
- body:has(.popular-track) .popular-image{height:250px!important}
+ body:has(.popular-track) #popular .popular-image{height:250px!important}
  body:has(.popular-track) .popular-body{padding:25px 18px 29px!important;min-height:175px!important}
  body:has(.popular-track) .popular-body h3{font-size:23px!important}
  body:has(.popular-track) .popular-body p{font-size:13px!important}
