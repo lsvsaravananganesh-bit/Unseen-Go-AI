@@ -11,11 +11,12 @@ export default defineConfig({
         home: resolve(__dirname, 'index.html'),
         discover: resolve(__dirname, 'discover.html'),
         planner: resolve(__dirname, 'planner.html'),
-        stay: resolve(__dirname, 'stay.html'),
-        transport: resolve(__dirname, 'transport.html'),
-        tripideas: resolve(__dirname, 'tripideas.html'),
-        login: resolve(__dirname, 'login.html'),
-        signup: resolve(__dirname, 'signup.html')
+        place: resolve(__dirname, 'place.html'),
+        profile: resolve(__dirname, 'profile.html'),
+        personalize: resolve(__dirname, 'personalize.html'),
+        'stay-local': resolve(__dirname, 'stay-local.html'),
+        'india-cities': resolve(__dirname, 'india-cities.html'),
+        'connect-travel': resolve(__dirname, 'connect-travel.html')
       }
     }
   }
