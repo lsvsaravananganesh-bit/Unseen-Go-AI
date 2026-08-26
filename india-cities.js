@@ -1,4 +1,5 @@
-/* UnseenGo AI — India page visual upgrade loader */
+/* UnseenGo AI — India page visual upgrade + city detail loader */
 (function(){'use strict';
-var s=document.createElement('script');s.src='india-heritage-upgrade.js?v=20260826';document.body.appendChild(s);
+  var scripts=['india-heritage-upgrade.js?v=20260826','india-city-details.js?v=20260826'];
+  scripts.forEach(function(src){var s=document.createElement('script');s.src=src;document.body.appendChild(s);});
 })();
