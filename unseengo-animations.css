@@ -1,4 +1,4 @@
-/* UnseenGo homepage motion layer — original interactions inspired by modern tourism editorial sites */
+/* UnseenGo homepage motion layer */
 @keyframes ueHeroZoom{from{transform:scale(1.04)}to{transform:scale(1.12)}}
 @keyframes ueFadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .hero-bg{animation:ueHeroZoom 16s ease-in-out infinite alternate!important;transform-origin:center!important}
@@ -11,4 +11,35 @@
 .experience:hover{transform:translateY(-7px) scale(1.015)!important;box-shadow:0 22px 45px rgba(8,20,10,.2)!important}.experience:hover img{transform:scale(1.09)!important;filter:saturate(1.1) brightness(1.05)!important}.experience:hover strong,.destination:hover h3{transform:translateX(3px);transition:transform .25s ease!important}
 .feature-main:hover,.feature-side:hover{transform:translateY(-7px)!important;box-shadow:0 28px 60px rgba(4,14,7,.28)!important}.feature-main:hover img,.feature-side:hover img{transform:scale(1.06)!important;filter:saturate(1.08)!important}.feature-copy a,.story-body a{transition:letter-spacing .25s ease,color .25s ease!important}.feature-copy a:hover,.story-body a:hover{letter-spacing:.4px!important}
 .story:hover{transform:translateY(-7px)!important;box-shadow:0 22px 45px rgba(20,35,20,.15)!important;border-color:#bdc9b5!important}.story:hover img{transform:scale(1.06)!important;filter:saturate(1.08)!important}.planner:hover{transform:translateY(-5px)!important;box-shadow:0 28px 60px rgba(3,12,6,.28)!important}.planner-card:hover{transform:scale(1.015)!important;border-color:#53664b!important}.planner-card div{transition:padding-left .25s ease,color .25s ease!important}.planner-card div:hover{padding-left:7px!important;color:#d8f36a!important}.head h2{transition:letter-spacing .35s ease!important}.head:hover h2{letter-spacing:-1px!important}
+
+/* Homepage: restore UnseenGo black + lime identity */
+body{background:#090c0a!important;color:#f3f5ef!important}
+.section,.section.alt{background:#090c0a!important;color:#f3f5ef!important;border-top:1px solid #293029!important}
+.section.alt .head h2{color:#fff!important;font-size:clamp(34px,4vw,52px)!important;letter-spacing:-2px!important}
+.section.alt .head p{color:#9da69b!important}.text-link{color:#d8f36a!important}
+.destination{border:1px solid #293029!important;background:#111611!important;box-shadow:0 18px 45px #0008!important}
+.destination:after{background:linear-gradient(0deg,rgba(3,8,5,.9),rgba(3,8,5,.05) 72%)!important}
+.destination small{color:#d8f36a!important}.destination h3{color:#fff!important}
+
+/* Real Wikimedia Commons photographs for the three showcase cards */
+.destination-grid .destination:nth-child(1){background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Konda_Reddy_Fort_Kurnool.jpg?width=1400')!important;background-size:cover!important;background-position:center!important}
+.destination-grid .destination:nth-child(2){background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Hampi_karnataka.jpg?width=1400')!important;background-size:cover!important;background-position:center!important}
+.destination-grid .destination:nth-child(3){background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Araku%20valley.jpg?width=1400')!important;background-size:cover!important;background-position:center!important}
+.destination-grid .destination:nth-child(-n+3) img{opacity:0!important}
+.destination-grid .destination:nth-child(-n+3) div{z-index:4!important}
+.destination-grid .destination:nth-child(1) div:before{content:'Kurnool';display:block;color:#d8f36a;font-size:10px;letter-spacing:1.6px;font-weight:950;text-transform:uppercase;margin-bottom:4px}
+.destination-grid .destination:nth-child(2) div:before{content:'Hampi';display:block;color:#d8f36a;font-size:10px;letter-spacing:1.6px;font-weight:950;text-transform:uppercase;margin-bottom:4px}
+.destination-grid .destination:nth-child(3) div:before{content:'Araku Valley';display:block;color:#d8f36a;font-size:10px;letter-spacing:1.6px;font-weight:950;text-transform:uppercase;margin-bottom:4px}
+.destination-grid .destination:nth-child(1) div:after{content:'92 UnseenGo Score';display:block;color:#fff;font-size:10px;font-weight:850;margin-top:6px}
+.destination-grid .destination:nth-child(2) div:after{content:'94 UnseenGo Score';display:block;color:#fff;font-size:10px;font-weight:850;margin-top:6px}
+.destination-grid .destination:nth-child(3) div:after{content:'91 UnseenGo Score';display:block;color:#fff;font-size:10px;font-weight:850;margin-top:6px}
+.section.alt .destination-grid{gap:14px!important}
+
+/* White search box intentionally kept as the main contrast element */
+.search{background:#fff!important;color:#101510!important;border:1px solid #fff!important;box-shadow:0 25px 70px #0009!important}
+.search .tabs{border-bottom-color:#e5e9e4!important}.search .tabs a{color:#68736a!important}.search .tabs a.active,.search .tabs a:hover{background:#edf4df!important;color:#22300f!important}
+.search .field{background:#f5f7f3!important;border-color:#e0e5df!important}.search .go{background:#111611!important;color:#d8f36a!important;border:1px solid #293029!important}
+.search .quick button{background:#fff!important;color:#3b463e!important;border-color:#d7ded5!important}.search .quick button:hover{background:#f2f7e7!important;border-color:#9eb65b!important}
+.story{background:#111611!important;border-color:#293029!important;color:#fff!important}.story-body h3{color:#fff!important}.story-body p{color:#9da69b!important}.planner{background:#09120c!important;border-color:#293029!important}.footer{background:#07100b!important}
+@media(max-width:650px){.section.alt{padding-top:215px!important}.destination-grid .destination:nth-child(1){grid-row:span 1!important}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
