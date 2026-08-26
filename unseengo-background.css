@@ -6,4 +6,85 @@ body::before{content:"UNSEENGO";position:fixed;inset:0;z-index:-1;display:flex;a
 body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(circle at 50% 32%,rgba(216,243,106,.035),transparent 42%),linear-gradient(180deg,rgba(9,12,10,0),rgba(9,12,10,.18))}
 .nav,.panel,.story-box,.modal-card,.city-panel,.about-card,.feature-card,.review-card,.place,.quick-city,.vibe,.day,.famous-card,.search,.hero-card,.how-card,.how-core{position:relative;z-index:1}
 .home-visual{background-image:linear-gradient(90deg,rgba(6,10,8,.08),rgba(6,10,8,.28)),url('https://commons.wikimedia.org/wiki/Special:FilePath/A%20beautiful%20sunset%20in%20Hampi.jpg')!important;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important}
-@media(max-width:700px){body::before{font-size:20vw;letter-spacing:-1.2vw;transform:none;color:rgba(216,243,106,.025)}.home-visual{background-position:center center}}
+
+/* Home-page refinement: more breathing room, clearer hierarchy and less visual crowding. */
+body:has(.popular-track) .top{height:82px!important}
+body:has(.popular-track) .top .wrap{padding-left:30px!important;padding-right:30px!important;gap:34px!important}
+body:has(.popular-track) nav{gap:28px!important}
+body:has(.popular-track) .actions{gap:10px!important}
+body:has(.popular-track) .hero{min-height:790px!important;padding:72px 0 92px!important}
+body:has(.popular-track) .hero .wrap{max-width:1160px!important;padding-left:30px!important;padding-right:30px!important}
+body:has(.popular-track) .hero h1{max-width:760px!important;margin:24px 0 25px!important;font-size:clamp(50px,6vw,78px)!important;line-height:1.02!important;letter-spacing:-3.8px!important}
+body:has(.popular-track) .hero-copy{max-width:680px!important;font-size:16px!important;line-height:1.8!important}
+body:has(.popular-track) .hero-meta{gap:12px 26px!important;flex-wrap:wrap!important;margin-top:26px!important}
+body:has(.popular-track) .search{margin-top:38px!important;padding:13px!important;border-radius:22px!important}
+body:has(.popular-track) .tabs{padding:2px 2px 12px!important;gap:5px!important}
+body:has(.popular-track) .tabs a{padding:11px 17px!important}
+body:has(.popular-track) .fields{gap:12px!important;padding-top:13px!important;align-items:stretch!important}
+body:has(.popular-track) .field{min-height:78px!important;padding:14px 16px!important;border-radius:13px!important}
+body:has(.popular-track) .field small{margin-bottom:10px!important;letter-spacing:.7px!important}
+body:has(.popular-track) .field input,body:has(.popular-track) .field select{font-size:14px!important}
+body:has(.popular-track) .go{min-height:78px!important;border-radius:13px!important;padding:0 23px!important;box-shadow:0 12px 30px rgba(216,243,106,.10)!important}
+body:has(.popular-track) .quick{gap:8px!important;margin-top:13px!important;padding:0 3px!important}
+body:has(.popular-track) .quick button{padding:9px 14px!important}
+body:has(.popular-track) .section{padding:96px 0!important}
+body:has(.popular-track) .section>.wrap{padding-left:30px!important;padding-right:30px!important}
+body:has(.popular-track) .head{max-width:760px!important;margin:0 auto 38px!important}
+body:has(.popular-track) .head h2{font-size:34px!important;line-height:1.15!important;margin-bottom:10px!important}
+body:has(.popular-track) .head p{line-height:1.75!important;margin:0!important}
+body:has(.popular-track) .popular-wrap{padding-top:2px!important}
+body:has(.popular-track) .popular-card{border-radius:22px!important}
+body:has(.popular-track) .popular-image{height:430px!important}
+body:has(.popular-track) .popular-body{padding:32px 34px 38px!important;min-height:205px!important}
+body:has(.popular-track) .popular-body h3{font-size:28px!important;margin:8px 0 10px!important}
+body:has(.popular-track) .popular-body p{font-size:14px!important;line-height:1.7!important;margin-bottom:17px!important}
+body:has(.popular-track) .popular-controls{top:-58px!important}
+body:has(.popular-track) .feature{padding-bottom:96px!important}
+body:has(.popular-track) .feature-grid{gap:18px!important}
+body:has(.popular-track) .feature-main,body:has(.popular-track) .feature-side{padding:34px!important;border-radius:20px!important}
+body:has(.popular-track) .steps .wrap{padding-left:30px!important;padding-right:30px!important}
+body:has(.popular-track) .stepgrid{padding:62px 0!important;gap:0!important}
+body:has(.popular-track) .step{padding:0 30px!important}
+body:has(.popular-track) .footergrid{padding:58px 30px!important;gap:42px!important}
+body:has(.popular-track) .copy{padding:19px 30px!important}
+
+@media(max-width:1050px){
+ body:has(.popular-track) .hero{min-height:auto!important;padding:68px 0 76px!important}
+ body:has(.popular-track) .fields{grid-template-columns:1fr 1fr!important}
+ body:has(.popular-track) .go{grid-column:1/-1!important}
+ body:has(.popular-track) .popular-image{height:360px!important}
+ body:has(.popular-track) .stepgrid{grid-template-columns:repeat(2,1fr)!important;row-gap:42px!important}
+}
+@media(max-width:650px){
+ body:has(.popular-track) .top{height:70px!important}
+ body:has(.popular-track) .top .wrap{padding:0 15px!important;gap:10px!important}
+ body:has(.popular-track) .brand{font-size:18px!important}
+ body:has(.popular-track) .actions .btn.primary{min-height:38px!important;padding:0 13px!important}
+ body:has(.popular-track) .hero{padding:52px 0 62px!important}
+ body:has(.popular-track) .hero .wrap{padding:0 15px!important}
+ body:has(.popular-track) .hero h1{font-size:46px!important;letter-spacing:-2.5px!important;margin:18px 0 20px!important}
+ body:has(.popular-track) .hero-copy{font-size:15px!important;line-height:1.7!important}
+ body:has(.popular-track) .hero-meta{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;margin-top:20px!important}
+ body:has(.popular-track) .search{margin-top:28px!important;padding:9px!important;border-radius:18px!important}
+ body:has(.popular-track) .tabs{padding-bottom:8px!important}
+ body:has(.popular-track) .tabs a{padding:9px 12px!important;font-size:12px!important}
+ body:has(.popular-track) .fields{grid-template-columns:1fr!important;gap:9px!important}
+ body:has(.popular-track) .field,body:has(.popular-track) .go{min-height:64px!important}
+ body:has(.popular-track) .go{grid-column:auto!important}
+ body:has(.popular-track) .quick{margin-top:12px!important}
+ body:has(.popular-track) .quick button{font-size:10px!important;padding:8px 11px!important}
+ body:has(.popular-track) .section{padding:70px 0!important}
+ body:has(.popular-track) .section>.wrap{padding:0 15px!important}
+ body:has(.popular-track) .head{margin-bottom:28px!important}
+ body:has(.popular-track) .head h2{font-size:28px!important}
+ body:has(.popular-track) .popular-image{height:250px!important}
+ body:has(.popular-track) .popular-body{padding:25px 18px 29px!important;min-height:175px!important}
+ body:has(.popular-track) .popular-body h3{font-size:23px!important}
+ body:has(.popular-track) .popular-body p{font-size:13px!important}
+ body:has(.popular-track) .popular-controls{position:static!important;justify-content:center!important;margin:0 0 13px!important}
+ body:has(.popular-track) .feature-main,body:has(.popular-track) .feature-side{padding:24px!important}
+ body:has(.popular-track) .stepgrid{grid-template-columns:1fr!important;padding:42px 0!important;gap:32px!important}
+ body:has(.popular-track) .step{padding:0!important;border-right:0!important}
+ body:has(.popular-track) .footergrid{grid-template-columns:1fr 1fr!important;padding:42px 15px!important;gap:30px 20px!important}
+ body:has(.popular-track) .copy{padding:17px 15px!important}
+}
