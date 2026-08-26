@@ -48,6 +48,11 @@ body:has(.popular-track) .step{padding:0 30px!important}
 body:has(.popular-track) .footergrid{padding:58px 30px!important;gap:42px!important}
 body:has(.popular-track) .copy{padding:19px 30px!important}
 
+/* New hero image strip: sits after the headline/supporting copy and before the search box. */
+body:has(.popular-track) .hero-meta{display:flex;flex-wrap:wrap;align-items:center}
+body:has(.popular-track) .hero-meta::after{content:"";order:99;flex:0 0 100%;height:158px;margin-top:14px;border:1px solid rgba(216,243,106,.16);border-radius:18px;overflow:hidden;background-color:#101712;background-image:url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=700&q=82'),url('https://e1.pxfuel.com/desktop-wallpaper/880/156/desktop-wallpaper-india-hampi-village-the-city-of-ruins-hampi.jpg'),url('https://curlytales.com/wp-content/uploads/2023/11/gurudwara-1.jpg'),url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=700&q=82');background-size:24.2% 100%,24.2% 100%,24.2% 100%,24.2% 100%;background-position:0 0,25.3% 0,50.6% 0,75.9% 0;background-repeat:no-repeat;box-shadow:0 20px 55px rgba(0,0,0,.32)}
+body:has(.popular-track) .hero-meta::before{content:"Featured destinations";order:98;flex:0 0 100%;color:#7f8b82;font-size:9px;font-weight:950;letter-spacing:1.8px;text-transform:uppercase;margin-top:2px}
+
 @media(max-width:1050px){
  body:has(.popular-track) .hero{min-height:auto!important;padding:68px 0 76px!important}
  body:has(.popular-track) .fields{grid-template-columns:1fr 1fr!important}
@@ -65,6 +70,8 @@ body:has(.popular-track) .copy{padding:19px 30px!important}
  body:has(.popular-track) .hero h1{font-size:46px!important;letter-spacing:-2.5px!important;margin:18px 0 20px!important}
  body:has(.popular-track) .hero-copy{font-size:15px!important;line-height:1.7!important}
  body:has(.popular-track) .hero-meta{display:grid!important;grid-template-columns:1fr!important;gap:8px!important;margin-top:20px!important}
+ body:has(.popular-track) .hero-meta::before{grid-column:1/-1!important;margin-top:2px!important}
+ body:has(.popular-track) .hero-meta::after{grid-column:1/-1!important;flex:none!important;width:100%!important;height:112px!important;margin-top:8px!important;border-radius:14px!important;background-size:24.2% 100%,24.2% 100%,24.2% 100%,24.2% 100%!important}
  body:has(.popular-track) .search{margin-top:28px!important;padding:9px!important;border-radius:18px!important}
  body:has(.popular-track) .tabs{padding-bottom:8px!important}
  body:has(.popular-track) .tabs a{padding:9px 12px!important;font-size:12px!important}
