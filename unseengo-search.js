@@ -1,0 +1,67 @@
+/* UnseenGo AI — Maps/MakeMyTrip-style location search */
+(function(){
+'use strict';
+const seed=[
+['Kurnool','Andhra Pradesh','Kurnool district','city','📍','Kurnool, Andhra Pradesh','Kurnool'],
+['Hyderabad','Telangana','Hyderabad district','city','📍','Hyderabad, Telangana','Hyderabad'],
+['Bengaluru','Karnataka','Bengaluru Urban district','city','📍','Bengaluru, Karnataka','Bengaluru'],
+['Chennai','Tamil Nadu','Chennai district','city','📍','Chennai, Tamil Nadu','Chennai'],
+['Mumbai','Maharashtra','Mumbai Suburban district','city','📍','Mumbai, Maharashtra','Mumbai'],
+['Pune','Maharashtra','Pune district','city','📍','Pune, Maharashtra','Pune'],
+['Delhi','Delhi','New Delhi district','city','📍','Delhi, India','Delhi'],
+['Jaipur','Rajasthan','Jaipur district','city','📍','Jaipur, Rajasthan','Jaipur'],
+['Kolkata','West Bengal','Kolkata district','city','📍','Kolkata, West Bengal','Kolkata'],
+['Ahmedabad','Gujarat','Ahmedabad district','city','📍','Ahmedabad, Gujarat','Ahmedabad'],
+['Lucknow','Uttar Pradesh','Lucknow district','city','📍','Lucknow, Uttar Pradesh','Lucknow'],
+['Bhubaneswar','Odisha','Khordha district','city','📍','Bhubaneswar, Odisha','Bhubaneswar'],
+['Visakhapatnam','Andhra Pradesh','Visakhapatnam district','city','📍','Visakhapatnam, Andhra Pradesh','Visakhapatnam'],
+['Vijayawada','Andhra Pradesh','NTR district','city','📍','Vijayawada, Andhra Pradesh','Vijayawada'],
+['Tirupati','Andhra Pradesh','Tirupati district','city','📍','Tirupati, Andhra Pradesh','Tirupati'],
+['Mysuru','Karnataka','Mysuru district','city','📍','Mysuru, Karnataka','Mysuru'],
+['Goa','Goa','North Goa / South Goa','destination','✦','Goa, India','Goa'],
+['Araku Valley','Andhra Pradesh','Alluri Sitharama Raju district','destination','🏔','Araku Valley, Andhra Pradesh','Visakhapatnam'],
+['Hampi','Karnataka','Vijayanagara district','destination','🏛','Hampi, Karnataka','Bengaluru'],
+['Konda Reddy Fort','Andhra Pradesh','Kurnool district','attraction','🏛','Kurnool, Andhra Pradesh','Kurnool'],
+['Charminar','Telangana','Hyderabad district','attraction','🏛','Hyderabad, Telangana','Hyderabad'],
+['Golconda Fort','Telangana','Hyderabad district','attraction','🏰','Hyderabad, Telangana','Hyderabad'],
+['Borra Caves','Andhra Pradesh','Alluri Sitharama Raju district','attraction','🪨','Araku region, Andhra Pradesh','Visakhapatnam'],
+['Vijaya Vittala Temple','Karnataka','Vijayanagara district','attraction','🏛','Hampi, Karnataka','Hampi'],
+['Mysore Palace','Karnataka','Mysuru district','attraction','🏛','Mysuru, Karnataka','Mysuru'],
+['Amer Fort','Rajasthan','Jaipur district','attraction','🏰','Jaipur, Rajasthan','Jaipur'],
+['Gateway of India','Maharashtra','Mumbai City district','attraction','🏛','Mumbai, Maharashtra','Mumbai']
+].map(x=>({name:x[0],state:x[1],district:x[2],type:x[3],icon:x[4],sub:x[5],city:x[6]}));
+const esc=s=>String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function data(){
+ let out=seed.slice();
+ try{
+  if(window.cities&&typeof window.cities==='object'){
+   Object.keys(window.cities).forEach(name=>{
+    if(!out.some(x=>x.name.toLowerCase()===name.toLowerCase())){
+     const c=window.cities[name]||{};
+     const region=c.region||'India';
+     out.push({name,state:region,district:name+' district',type:'city',icon:'📍',sub:name+' · '+region,city:name});
+     ['Nature','Heritage','Food','Culture','Adventure'].forEach(cat=>{
+      (c[cat]||[]).slice(0,2).forEach(p=>{if(Array.isArray(p)&&p[0]&&!out.some(x=>x.name.toLowerCase()===String(p[0]).toLowerCase()))out.push({name:p[0],state:region,district:name+' area',type:'attraction',icon:cat==='Heritage'?'🏛':cat==='Nature'?'🌿':cat==='Food'?'🍜':cat==='Adventure'?'⛰':'✦',sub:p[1]||name,city:name});});
+     });
+    }
+   });
+  }
+ }catch(e){}
+ return out;
+}
+function score(item,q){const n=item.name.toLowerCase(),s=item.state.toLowerCase(),d=item.district.toLowerCase(),sub=item.sub.toLowerCase();if(!q)return 0;let v=0;if(n===q)v+=100;if(n.startsWith(q))v+=70;if(n.includes(q))v+=45;if(s.startsWith(q))v+=35;if(d.includes(q))v+=30;if(sub.includes(q))v+=20;return v;}
+function resultHTML(item){return `<button type="button" class="ug-result" data-city="${esc(item.city)}" data-name="${esc(item.name)}"><span class="ug-result-icon">${item.icon}</span><span class="ug-result-main"><span class="ug-result-title">${esc(item.name)}${item.type==='city'?', '+esc(item.state):''}</span><span class="ug-result-sub">${esc(item.sub)} · ${esc(item.district)}</span></span><span class="ug-result-type">${esc(item.type)}</span></button>`}
+function attach(input){
+ if(!input||input.dataset.ugSearch==='1')return;input.dataset.ugSearch='1';
+ const wrap=input.closest('.ug-search-wrap')||input.parentElement;if(!wrap)return;wrap.classList.add('ug-search-wrap');
+ let box=wrap.querySelector('.ug-search-results');if(!box){box=document.createElement('div');box.className='ug-search-results';wrap.appendChild(box)}
+ const render=()=>{const q=input.value.trim().toLowerCase();if(!q){box.innerHTML='<div class="ug-search-hint">Search by city, state, district, destination or attraction</div>'+data().filter(x=>x.type==='city').slice(0,6).map(resultHTML).join('');box.classList.add('open');return}const matches=data().map(x=>[x,score(x,q)]).filter(x=>x[1]>0).sort((a,b)=>b[1]-a[1]||a[0].name.localeCompare(b[0].name)).slice(0,8).map(x=>x[0]);box.innerHTML=matches.length?'<div class="ug-search-hint">Top matches</div>'+matches.map(resultHTML).join(''):'<div class="ug-search-empty">No matching place found.<br><span>Try a city, state, district or attraction name.</span></div>';box.classList.add('open')};
+ input.addEventListener('input',render);input.addEventListener('focus',render);input.addEventListener('keydown',e=>{if(e.key==='Escape')box.classList.remove('open');if(e.key==='Enter'){const first=box.querySelector('.ug-result');if(first){e.preventDefault();first.click()}}});
+ box.addEventListener('click',e=>{const b=e.target.closest('.ug-result');if(!b)return;const city=b.dataset.city||b.dataset.name;if(city){localStorage.setItem('unseengo_city',city);location.href='city.html?city='+encodeURIComponent(city)}});
+ document.addEventListener('click',e=>{if(!wrap.contains(e.target))box.classList.remove('open')});
+ const old=wrap.querySelector('.city-picker-list,.cityPickerList,#cityPickerList');if(old)old.style.display='none';
+}
+function normalizeNav(){document.querySelectorAll('.nav,.top .nav,header.nav').forEach(nav=>{if(nav.dataset.ugNav==='1')return;nav.dataset.ugNav='1';nav.classList.add('ug-nav');const links=nav.querySelector('nav');if(links){const path=location.pathname.toLowerCase();const items=[['Discover','discover.html','discover'],['Plan','planner.html','planner'],['Stay','stay.html','stay'],['Transport','transport.html','transport'],['Experiences','activities.html','activities']];links.innerHTML=items.map(i=>`<a href="${i[1]}" class="${path.endsWith(i[1])?'active':''}">${i[0]}</a>`).join('')}let c=nav.querySelector('button');if(c){c.classList.add('ug-start');c.textContent='✦ Start Exploring';c.onclick=()=>location.href='discover.html'}else{c=document.createElement('button');c.className='ug-start';c.textContent='✦ Start Exploring';c.onclick=()=>location.href='discover.html';nav.appendChild(c)}})}
+function init(){normalizeNav();document.querySelectorAll('#cityPickerInput,.city-search,input[data-city-search],input[placeholder*="city" i][placeholder*="search" i]').forEach(attach)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();setTimeout(init,900);setTimeout(init,2200);
+})();
