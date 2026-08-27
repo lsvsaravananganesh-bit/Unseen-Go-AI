@@ -24,6 +24,23 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
+      - name: Apply UnseenGo USA editorial theme to every HTML page
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          tag='<script src="/Unseen-Go-AI/theme.js?v=20260827" defer></script>'
+          css='<link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827">'
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts: continue
+              s=p.read_text(encoding='utf-8')
+              if 'unseengo-usa-theme.css' not in s:
+                  s=s.replace('</head>', css+'\n</head>',1) if '</head>' in s else s
+              if 'theme.js?v=20260827' not in s and 'theme.js' not in s:
+                  s=s.replace('</head>', tag+'\n</head>',1) if '</head>' in s else s.replace('</body>',tag+'\n</body>',1)
+              p.write_text(s,encoding='utf-8')
+          PY
+
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:
@@ -37,5 +54,5 @@ jobs:
     needs: build
     steps:
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
+        id: deployment
