@@ -1,0 +1,49 @@
+name: Use previous-year event photos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'major-events.html'
+      - '.github/workflows/use-previous-year-event-photos.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-event-photo-search:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prefer 2025 event photographs
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('major-events.html')
+          s = p.read_text(encoding='utf-8')
+          marker = "const query=card.dataset.query+' 2025 India'"
+          if marker in s:
+              print('Already configured for previous-year event photos.')
+              raise SystemExit(0)
+          old = "const query=card.dataset.query,place=card.dataset.place,city=card.dataset.city"
+          new = "const query=card.dataset.query+' 2025 India',place=card.dataset.place,city=card.dataset.city"
+          if old not in s:
+              raise SystemExit('Expected photo loader was not found; refusing to modify the page.')
+          s = s.replace(old, new, 1)
+          s = s.replace("badge.textContent='● Event photograph'", "badge.textContent='● 2025 event photograph'", 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Commit update
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add major-events.html
+          if git diff --cached --quiet; then
+            echo 'No changes to commit.'
+          else
+            git commit -m 'Prefer 2025 event-specific photographs'
+            git push
+          fi
