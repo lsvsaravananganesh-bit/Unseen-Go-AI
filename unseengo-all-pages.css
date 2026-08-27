@@ -1,0 +1,35 @@
+/* UnseenGo — shared editorial system for every secondary page. Loaded after page CSS so legacy layouts keep working while the visual language becomes consistent. */
+:root{--ug2-paper:#f6f3e9;--ug2-ink:#172018;--ug2-green:#17351f;--ug2-lime:#d9ef78;--ug2-muted:#69746b;--ug2-line:#dfe4da}
+body:not(.discover-page){background:var(--ug2-paper)!important;color:var(--ug2-ink)!important;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif!important}
+body:not(.discover-page) .top{background:rgba(23,53,31,.96)!important;color:#fff!important;border-bottom:1px solid rgba(255,255,255,.12)!important;position:sticky!important;top:0!important;z-index:100!important;backdrop-filter:blur(16px)!important}
+body:not(.discover-page) .nav{min-height:76px!important;height:auto!important;padding:0 max(20px,5vw)!important;display:flex!important;align-items:center!important;gap:24px!important}
+body:not(.discover-page) .nav nav{gap:22px!important;margin-left:auto!important}
+body:not(.discover-page) .nav nav a{color:#d7e0d7!important;font-weight:750!important;text-decoration:none!important}
+body:not(.discover-page) .nav nav a:hover,body:not(.discover-page) .nav nav a.active{color:var(--ug2-lime)!important}
+body:not(.discover-page) .brand{color:#fff!important;font-weight:950!important;letter-spacing:-.7px}
+body:not(.discover-page) .brand b,body:not(.discover-page) .brand span{color:var(--ug2-lime)!important}
+body:not(.discover-page) .home,body:not(.discover-page) .nav button{background:var(--ug2-lime)!important;color:#162014!important;border:0!important;border-radius:999px!important;padding:11px 17px!important;font-weight:900!important}
+body:not(.discover-page) .hero{position:relative!important;min-height:560px!important;display:flex!important;align-items:flex-end!important;overflow:hidden!important;color:#fff!important;background:linear-gradient(90deg,rgba(7,17,10,.92),rgba(7,17,10,.42)),linear-gradient(0deg,rgba(5,12,7,.72),transparent 65%),url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2200&q=88') center/cover!important}
+body:not(.discover-page) .hero-inner{position:relative!important;z-index:2!important;padding:95px 0 65px!important}
+body:not(.discover-page) .hero h1{color:#fff!important;font-size:clamp(48px,7vw,88px)!important;line-height:.94!important;letter-spacing:-4px!important}
+body:not(.discover-page) .hero h1 em{font-family:Georgia,serif!important;color:var(--ug2-lime)!important;font-weight:400!important}
+body:not(.discover-page) .hero p{color:#d8e1d9!important;max-width:760px!important;line-height:1.7!important}
+body:not(.discover-page) .eyebrow{color:#657d25!important;font-weight:900!important;letter-spacing:2.2px!important}
+body:not(.discover-page) .hero .eyebrow{color:var(--ug2-lime)!important}
+body:not(.discover-page) .section{padding:82px 0!important;background:var(--ug2-paper)!important;border:0!important}
+body:not(.discover-page) .section.light{background:#fff!important}
+body:not(.discover-page) .head h2,body:not(.discover-page) .heading h2,body:not(.discover-page) .panel h2{color:var(--ug2-ink)!important;letter-spacing:-2.5px!important}
+body:not(.discover-page) .head p,body:not(.discover-page) .heading>p,body:not(.discover-page) .muted{color:var(--ug2-muted)!important}
+body:not(.discover-page) .about-card,body:not(.discover-page) .feature-card,body:not(.discover-page) .review-card,body:not(.discover-page) .city-panel,body:not(.discover-page) .panel,body:not(.discover-page) .place,body:not(.discover-page) .story-box,body:not(.discover-page) .day,body:not(.discover-page) .famous-card{background:#fff!important;color:var(--ug2-ink)!important;border:1px solid var(--ug2-line)!important;border-radius:18px!important;box-shadow:0 8px 28px rgba(25,45,28,.05)!important}
+body:not(.discover-page) .about-card:hover,body:not(.discover-page) .feature-card:hover,body:not(.discover-page) .place:hover,body:not(.discover-page) .famous-card:hover{transform:translateY(-5px)!important;border-color:#b2c77a!important;box-shadow:0 18px 45px rgba(25,45,28,.10)!important}
+body:not(.discover-page) .quick-city,body:not(.discover-page) .vibe{background:#fff!important;color:var(--ug2-ink)!important;border-color:var(--ug2-line)!important}
+body:not(.discover-page) .vibe.active,body:not(.discover-page) .vibe:hover{background:#f0f5e6!important;border-color:#b2c77a!important}
+body:not(.discover-page) .search input,body:not(.discover-page) .form input,body:not(.discover-page) .form select,body:not(.discover-page) .city-panel select{border-color:var(--ug2-line)!important;background:#fff!important;color:var(--ug2-ink)!important}
+body:not(.discover-page) .search button,body:not(.discover-page) .generate{background:var(--ug2-green)!important;color:#fff!important;border-radius:999px!important}
+body:not(.discover-page) .cta,body:not(.discover-page) .planner-cta{background:var(--ug2-green)!important;color:#fff!important;border-radius:22px!important}
+body:not(.discover-page) .cta h2,body:not(.discover-page) .planner-cta h2{color:#fff!important}
+body:not(.discover-page) .cta p,body:not(.discover-page) .planner-cta p{color:#b9c7bb!important}
+body:not(.discover-page) footer{background:#14231a!important;color:#aeb9ae!important;border:0!important}
+body:not(.discover-page) footer b{color:#fff!important}
+@media(max-width:900px){body:not(.discover-page) .nav nav{display:none!important}body:not(.discover-page) .section{padding:65px 0!important}}
+@media(max-width:600px){body:not(.discover-page) .nav{padding:0 16px!important}body:not(.discover-page) .hero{min-height:610px!important}body:not(.discover-page) .hero h1{font-size:50px!important;letter-spacing:-3px!important}body:not(.discover-page) .section{padding:55px 0!important}}
