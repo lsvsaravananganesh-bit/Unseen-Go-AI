@@ -1,28 +1,63 @@
 # ✦ UnseenGo AI
 
-> **Discover the places nobody told you about.**
+> **Discover the places nobody told you about — then decide what to do next.**
 
-UnseenGo AI is a tourism and cultural-discovery platform that helps travelers find lesser-known heritage, nature, food, culture, adventure and local experiences across India.
+UnseenGo AI is India's AI hidden-gem tourism explorer. It is designed around three connected product pillars rather than being another generic travel search or chatbot.
 
-## What it does
+## Three product pillars
+
+### 1. 🇮🇳 India Discovery Graph
+A structured discovery layer connecting cities with lesser-known places, stories, heritage, nature, food, culture and experiences. Existing city/place records are consumed through `app.js` and normalized by `unseen-engine.js`.
+
+### 2. 🧠 UnseenGo Personalization Engine
+The recommendation engine ranks places with transparent components instead of returning unexplained AI suggestions:
+
+- Hiddenness / discovery signal
+- Interest match
+- Cultural/local value
+- Travel ease
+- Budget fit
+- Pace fit
+- Photography fit
+- Explicit avoid-preference penalties
+
+Each result exposes an **UnseenGo Score** and a **Why this matches** explanation.
+
+### 3. ⚡ Real-Time Travel Decision Engine
+The new `decision-engine.html` experience adds a context layer over recommendations. It reads the current browser time and, when the traveler permits location, retrieves live weather from Open-Meteo. The decision layer then adjusts the suggested action for conditions such as rain, time of day, category, budget and trip duration.
+
+> Production integrations for verified opening hours, traffic, live events, transit and place availability should be connected through server-side APIs before presenting those signals as authoritative.
+
+## Try the three-pillar experience
+
+Open `decision-engine.html` from the deployed GitHub Pages site. It provides:
+
+1. India Discovery Graph overview
+2. City + interest + duration + budget controls
+3. Explainable ranked hidden gems
+4. Live time / optional location / weather context
+5. A concrete **What should I do now?** decision
+6. Google Maps route handoff
+
+## Product flow
 
 ```text
-City + interests + duration + budget + pace
-                    ↓
-          Destination recommendations
-                    ↓
-             UnseenGo Score
-                    ↓
-           Personalized places
-                    ↓
-          Route optimization
-                    ↓
-          Practical itinerary
+India Discovery Graph
+        ↓
+Structured place + story signals
+        ↓
+UnseenGo Personalization Engine
+        ↓
+Explainable UnseenGo Score
+        ↓
+Real-Time Travel Decision Engine
+        ↓
+Time + location + weather + budget + preferences
+        ↓
+        NEXT BEST ACTION
 ```
 
-The product focuses on turning destination discovery into a useful journey rather than providing a generic list of attractions.
-
-## Core features
+## Existing platform
 
 - Multi-city destination discovery
 - State → city exploration across India
@@ -39,48 +74,50 @@ The product focuses on turning destination discovery into a useful journey rathe
 - Supabase authentication and data foundation
 - Responsive mobile and desktop interface
 
-## Recommendation model
-
-The current browser recommendation engine uses a transparent deterministic score:
-
-- 45% base discovery signal
-- 35% interest match
-- 10% travel-pace fit
-- 10% budget fit
-
-The score is a product ranking signal, not a claim about real-world popularity.
-
-## Route optimization
-
-Selected destinations can be sent to the secure route service. The route engine uses real road-network travel times and distances, then calculates an optimized visit order. When a traffic-aware provider is configured it can use traffic-aware durations; otherwise the service falls back to road-network routing.
-
-## Data architecture
+## Architecture
 
 ```text
 Browser
    ↓
-UnseenGo engine
+UnseenGo Engine
    ↓
-Destination data
+India Discovery Graph
+ ├── Cities
+ ├── Places
+ ├── Categories
+ ├── Stories / context
+ └── Verification metadata
    ↓
-Supabase
- ├── cities
- ├── places
- ├── accommodations
- ├── profiles
- ├── reviews
- └── saved_places
+Personalization
+ ├── Interest
+ ├── Budget
+ ├── Pace
+ ├── Hiddenness
+ └── Explicit avoids
+   ↓
+Real-Time Context
+ ├── Browser time
+ ├── Optional geolocation
+ ├── Live weather
+ ├── Opening hours → production API
+ ├── Traffic → production API
+ └── Events → verified event feed
+   ↓
+Next Best Action
 ```
 
-Private server credentials must never be committed to the repository. Browser-accessible Supabase keys must be protected by Row Level Security.
+## Important data principle
+
+UnseenGo should not fabricate real-world facts. Scores are ranking signals, not claims about popularity. Opening hours, traffic, events, transport availability and live place status should be labeled as live/verified only when they come from an authoritative or configured API.
 
 ## Main project areas
 
 - `index.html` — homepage
+- `decision-engine.html` — three-pillar Travel Decision Engine experience
 - `discover.html` — India and city discovery
 - `planner.html` — personalized trip planning
 - `app.js` — destination data
-- `unseen-engine.js` — recommendation and itinerary logic
+- `unseen-engine.js` — explainable recommendation and itinerary logic
 - `live-route.js` — route-service integration
 - `city-page.js` — destination experience
 - `transport*.js` — transport experience
@@ -88,17 +125,25 @@ Private server credentials must never be committed to the repository. Browser-ac
 - `auth*.js` — authentication
 - `supabase/` — database schema and seed data
 
-## Product direction
+## Next production upgrades
 
-The next improvements are focused on verified destination data, better geographic signals, opening hours, real-time transport information, budget estimation and deeper personalization.
+To make the third pillar genuinely production-grade, connect:
+
+1. Verified Google Places / Maps or equivalent place data
+2. Traffic-aware routing
+3. Verified opening hours and temporary closures
+4. Weather forecast + severe-weather alerts
+5. Government/official event calendars
+6. Public transport / railway / flight availability where licensed APIs permit
+7. Real-time budget and booking availability
+8. Supabase-backed user preference profiles and feedback loops
 
 ## Status
 
-**Active development.**
+**Active development — three-pillar Travel Decision Engine added.**
 
 Project: **UnseenGo AI**  
-Repository: `lsvsaravananganesh-bit/Unseen-Go-AI`  
-Default branch: `main`
+Repository: `lsvsaravananganesh-bit/Unseen-Go-AI`
 
 > **Don't just visit the famous places. Go unseen.**
 
