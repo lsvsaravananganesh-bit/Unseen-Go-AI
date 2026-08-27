@@ -1,12 +1,9 @@
 /* UnseenGo AI — navigation + Supabase bootstrap + global enhancements */
 (function(){
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function(){
-      navigator.serviceWorker.getRegistrations().then(function(registrations){return Promise.all(registrations.map(function(r){return r.unregister();}));}).then(function(){if('caches' in window)return caches.keys().then(function(keys){return Promise.all(keys.map(function(k){return caches.delete(k);}));});}).catch(function(){});
-    });
-  }
+  if ('serviceWorker' in navigator) window.addEventListener('load',function(){navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister();}));}).then(function(){if('caches' in window)return caches.keys().then(function(ks){return Promise.all(ks.map(function(k){return caches.delete(k);}));});}).catch(function(){});});
   function loadGlobalSystem(){
     if(!document.querySelector('link[data-ug-system]')){const l=document.createElement('link');l.rel='stylesheet';l.href='/Unseen-Go-AI/unseengo-system.css?v=20260826';l.dataset.ugSystem='1';document.head.appendChild(l)}
+    if(!document.querySelector('link[data-ug-redesign]')){const l=document.createElement('link');l.rel='stylesheet';l.href='/Unseen-Go-AI/unseengo-redesign.css?v=20260827';l.dataset.ugRedesign='1';document.head.appendChild(l)}
     if(!document.querySelector('script[data-ug-search]')){const s=document.createElement('script');s.src='/Unseen-Go-AI/unseengo-search.js?v=20260826';s.dataset.ugSearch='1';document.body.appendChild(s)}
   }
   window.openCityPage=function(city){if(city){localStorage.setItem('unseengo_city',city);location.href='city.html?city='+encodeURIComponent(city)}};

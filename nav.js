@@ -11,6 +11,7 @@
   }
   function loadGlobalSystem(){
     if(!document.querySelector('link[data-ug-system]')){const l=document.createElement('link');l.rel='stylesheet';l.href='unseengo-system.css?v=20260826';l.dataset.ugSystem='1';document.head.appendChild(l)}
+    if(!document.querySelector('link[data-ug-redesign]')){const l=document.createElement('link');l.rel='stylesheet';l.href='unseengo-redesign.css?v=20260827';l.dataset.ugRedesign='1';document.head.appendChild(l)}
     if(!document.querySelector('script[data-ug-search]')){const s=document.createElement('script');s.src='unseengo-search.js?v=20260826';s.dataset.ugSearch='1';document.body.appendChild(s)}
   }
   window.openCityPage=function(city){if(city){localStorage.setItem('unseengo_city',city);location.href='city.html?city='+encodeURIComponent(city)}};
