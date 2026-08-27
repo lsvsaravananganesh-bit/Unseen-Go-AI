@@ -1,0 +1,30 @@
+name: Apply UnseenGo editorial theme
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  theme-all-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply global theme to every HTML page
+        run: python scripts/apply-unseengo-theme.py
+
+      - name: Commit themed pages
+        run: |
+          git config user.name "unseengo-theme-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' '**/*.html' || true
+          if git diff --cached --quiet; then
+            echo "All HTML pages already use the UnseenGo editorial theme."
+          else
+            git commit -m "Apply unified Visit-The-USA-inspired theme to all pages [skip ci]"
+            git push
+          fi
