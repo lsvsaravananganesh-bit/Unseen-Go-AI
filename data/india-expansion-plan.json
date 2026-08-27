@@ -1,0 +1,9 @@
+{
+  "policy": "verified-only",
+  "coverage": "India",
+  "statesAndUnionTerritories": 36,
+  "minimumRequiredFields": ["name","state","region","description","history","latitude","longitude","verification_status","source","verified_at"],
+  "placeMinimumRequiredFields": ["name","city_id","category","description","latitude","longitude","verification_status","source","verified_at"],
+  "verificationLevels": ["government_verified","google_verified","dual_verified"],
+  "rule": "Never synthesize a place, coordinate, rating, review, opening hour, photo or transport schedule. Unverified records remain hidden from factual discovery results."
+}
