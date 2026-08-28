@@ -1,0 +1,21 @@
+/* Homepage reference look: preserve the dark navy/orange design. */
+.home-page .ug-hero{background:#071522!important;color:#fff!important}
+.home-page .nav{background:rgba(5,22,34,.92)!important;color:#fff!important;border-bottom:0!important}
+.home-page .nav .brand,.home-page .nav nav a{color:#fff!important}
+.home-page .nav .brand span{color:#ff8a00!important}
+.home-page .nav nav a.active,.home-page .nav nav a:hover{color:#fff!important}
+.home-page .nav nav a.active:after{background:#ff8a00!important}
+.home-page .nav .ug-btn,.home-page .ug-actions .ug-btn{background:#ff8a00!important;color:#fff!important}
+.home-page .ug-actions .ug-btn.alt{background:transparent!important;border:0!important;color:#fff!important}
+.home-page .ug-kicker{color:#ff8a00!important}
+.home-page .ug-hero h1 em{color:#ff8a00!important;font-family:inherit!important;font-weight:800!important}
+.home-page .ug-feature-strip{background:rgba(7,16,24,.9)!important}
+.home-page .ug-feature-icon{color:#ff8a00!important}
+.home-page .ug-feature strong{color:#fff!important}
+.home-page .ug-section{background:#071522!important;color:#fff!important}
+.home-page .ug-section.white{background:#fff!important;color:#101820!important}
+.home-page .ug-section-head p{color:#aeb8c0!important}
+.home-page .ug-card-copy small,.home-page .ug-score{color:#ff8a00!important}
+.home-page .ug-score{border-color:rgba(255,138,0,.35)!important;background:rgba(255,138,0,.12)!important}
+.home-page .ug-ai{background:#0b1c29!important}
+.home-page .ug-cta-inner{background:#ff8a00!important;color:#fff!important}
