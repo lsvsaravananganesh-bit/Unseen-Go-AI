@@ -31,7 +31,7 @@
   <div class="ug-container">
     <div class="ug-section-head"><div><div class="ug-kicker">Start with curiosity</div><h2>Hidden India, <span class="ug-serif">beautifully mapped.</span></h2></div><p>Browse places by destination, experience and story — then use the AI layer when you want a decision instead of another list.</p></div>
     <div class="ug-cards">
-      <a class="ug-card large" href="place.html?place=Gandikota"><img src="https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=1200&q=85" alt="Gandikota landscape"><div class="ug-card-copy"><small>Andhra Pradesh · Hidden gem</small><h3>Gandikota</h3><p>Cliffs, a historic fort and a dramatic river gorge.</p><span class="ug-score">✦ 92 Unseen Score</span></div></a>
+      <a class="ug-card large" href="place.html?place=Gandikota"><img src="https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=1200&q=85" alt="Gandikota landscape"><div class="ug-card-copy"><small>Andhra Pradesh · Hidden gem</small><h3>Gandikota</h3><p>Cliffs, a historic fort and a dramatic river gorge.</p><span class="ug-score" id="gandikotaScore">Calculating UnseenGo Score…</span></div></a>
       <a class="ug-card" href="place.html?place=Lepakshi"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=85" alt="Temple architecture"><div class="ug-card-copy"><small>Heritage</small><h3>Lepakshi</h3><p>Architecture, sculpture and stories.</p></div></a>
       <a class="ug-card" href="place.html?place=Agumbe"><img src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=85" alt="Western Ghats forest"><div class="ug-card-copy"><small>Nature</small><h3>Agumbe</h3><p>Rainforest, sunsets and quiet trails.</p></div></a>
       <a class="ug-card" href="place.html?place=Hampi"><img src="https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=900&q=85" alt="Hampi ruins"><div class="ug-card-copy"><small>History</small><h3>Hampi</h3><p>Look beyond the famous ruins.</p></div></a>
@@ -51,8 +51,8 @@
 </div></section>
 
 <section class="ug-section"><div class="ug-container"><div class="ug-ai">
-  <div><div class="ug-kicker">The UnseenGo difference</div><h2>Tell us what you want. <span class="ug-serif">We'll decide where.</span></h2><p>Try natural language instead of filling ten forms. Your interests, time, budget and crowd preferences become a personalized discovery profile.</p><a class="ug-btn" href="decision-engine.html">Open the full decision engine →</a></div>
-  <div class="ug-ai-box"><textarea id="homePrompt" placeholder="I have 2 days from Bengaluru. I love history, photography and quiet places. Budget ₹6,000."></textarea><button id="homeRun">✨ Understand my trip</button><div id="homeResult" class="ug-ai-result"><strong>We understood you.</strong><span>History · Photography · Quiet · 2 days · Budget-conscious</span><br><a href="decision-engine.html">Continue to personalized results →</a></div></div>
+  <div><div class="ug-kicker">The UnseenGo difference</div><h2>Tell us what you want. <span class="ug-serif">We'll decide where.</span></h2><p>Try natural language instead of filling ten forms. Your interests, time, budget and crowd preferences become a personalized discovery profile.</p><a class="ug-btn" href="decision-engine.html">Open the full decision engine</a></div>
+  <div class="ug-ai-box"><textarea id="homePrompt" placeholder="I have 2 days from Bengaluru. I love history, photography and quiet places. Budget ₹6,000."></textarea><button id="homeRun">✨ Find my hidden gem</button><div id="homeResult" class="ug-ai-result"><strong>Ready to calculate your match.</strong><span>Enter your trip preferences and UnseenGo will rank destinations from its structured discovery dataset.</span></div></div>
 </div></div></section>
 
 <section class="ug-section white"><div class="ug-container"><div class="ug-section-head"><div><div class="ug-kicker">Stories behind the places</div><h2>Travel through <span class="ug-serif">India's stories.</span></h2></div><p>Destinations become memorable when you understand the people, history and culture behind them.</p></div><div class="ug-story-grid">
@@ -75,8 +75,36 @@
 <section class="ug-cta"><div class="ug-container"><div class="ug-cta-inner"><div class="ug-kicker">Your next journey starts differently</div><h2>Don't just visit India.<br><span class="ug-serif">Find your India.</span></h2><p>Use UnseenGo to move from endless travel inspiration to a clear, personalized decision.</p><a class="ug-btn" href="decision-engine.html">Start discovering →</a></div></div></section>
 
 <footer><div><b>UNSEENGO</b> — India's AI hidden-gem discovery engine.</div><div>Discover · Plan · Explore beyond the obvious</div></footer>
+
+<script src="app.js"></script>
+<script src="unseen-engine.js"></script>
 <script>
-const p=document.getElementById('homePrompt'),b=document.getElementById('homeRun'),r=document.getElementById('homeResult');
-b.addEventListener('click',()=>{if(!p.value.trim())p.value='I want a quiet 2-day trip with history, nature and photography.';r.classList.add('show');b.textContent='✓ Trip understood';setTimeout(()=>b.textContent='✨ Understand my trip',2200)});
+const p=document.getElementById('homePrompt'),b=document.getElementById('homeRun'),r=document.getElementById('homeResult'),scoreEl=document.getElementById('gandikotaScore');
+function calculateHomepageScore(){
+  try{
+    const place=UnseenGoAI.collectAllPlaces().find(x=>x.name.toLowerCase()==='gandikota');
+    if(!place)return;
+    const profile={interests:['Heritage'],days:2,budget:'medium',pace:'balanced',diversify:true,avoid:[]};
+    const scored=UnseenGoAI.scoreBreakdown(place,profile);
+    scoreEl.textContent=`✦ ${scored.score} Unseen Score · calculated live`;
+    scoreEl.title='Calculated from destination data and the current personalization profile';
+  }catch(e){scoreEl.textContent='✦ Score unavailable';}
+}
+b.addEventListener('click',()=>{
+  const text=p.value.trim()||'I want a quiet 2-day trip with history, nature and photography.';
+  try{
+    const profile=UnseenGoAI.parseNaturalLanguage(text);
+    if(!profile.interests.length)profile.interests=['Heritage'];
+    const result=UnseenGoAI.generate(profile.city,profile);
+    const top=result.recommendations[0];
+    if(top){
+      r.innerHTML=`<strong>🎯 ${top.name} — ${top.unseenScore}% match</strong><span>${top.why}</span><small>Score calculated from interest fit, hiddenness, local experience, budget, pace and travel ease.</small><a href="decision-engine.html">See full ranking & score breakdown →</a>`;
+    }else{r.innerHTML='<strong>No matching destination yet.</strong><span>Try a city, interest, budget or trip duration.</span>'}
+    r.classList.add('show');
+    b.textContent='✓ Match calculated';
+    setTimeout(()=>b.textContent='✨ Find my hidden gem',2200);
+  }catch(e){r.innerHTML='<strong>Engine unavailable.</strong><span>Please open the full AI Decision Engine.</span>';r.classList.add('show');}
+});
+calculateHomepageScore();
 </script>
 </body></html>
