@@ -1,21 +1,42 @@
-/* Homepage reference look: preserve the dark navy/orange design. */
-.home-page .ug-hero{background:#071522!important;color:#fff!important}
-.home-page .nav{background:rgba(5,22,34,.92)!important;color:#fff!important;border-bottom:0!important}
-.home-page .nav .brand,.home-page .nav nav a{color:#fff!important}
-.home-page .nav .brand span{color:#ff8a00!important}
-.home-page .nav nav a.active,.home-page .nav nav a:hover{color:#fff!important}
-.home-page .nav nav a.active:after{background:#ff8a00!important}
-.home-page .nav .ug-btn,.home-page .ug-actions .ug-btn{background:#ff8a00!important;color:#fff!important}
-.home-page .ug-actions .ug-btn.alt{background:transparent!important;border:0!important;color:#fff!important}
-.home-page .ug-kicker{color:#ff8a00!important}
-.home-page .ug-hero h1 em{color:#ff8a00!important;font-family:inherit!important;font-weight:800!important}
-.home-page .ug-feature-strip{background:rgba(7,16,24,.9)!important}
-.home-page .ug-feature-icon{color:#ff8a00!important}
+/* Homepage palette override — light green / cream theme. */
+.home-page{background:#f6f3e9!important;color:#172018!important}
+.home-page .nav,.home-page header.nav{background:rgba(246,243,233,.96)!important;color:#172018!important;border-bottom:1px solid #dfe3d8!important;backdrop-filter:blur(14px)!important}
+.home-page .nav .brand,.home-page .nav .brand small,.home-page .nav nav a{color:#172018!important}
+.home-page .nav .brand span{color:#657d25!important}
+.home-page .nav nav a:hover,.home-page .nav nav a.active{color:#285633!important}
+.home-page .nav nav a.active:after{background:#657d25!important}
+.home-page .nav .ug-btn{background:#17351f!important;color:#fff!important;border:1px solid #17351f!important}
+.home-page .nav .ug-btn:hover{background:#285633!important}
+.home-page .ug-hero{background:#17351f!important;color:#fff!important}
+.home-page .ug-hero-media{opacity:1!important;background-size:cover!important;background-position:center center!important;display:block!important}
+.home-page .ug-hero-media:after{background:linear-gradient(90deg,rgba(15,43,24,.72),rgba(23,53,31,.35) 48%,rgba(23,53,31,.08) 78%,rgba(23,53,31,.02)),linear-gradient(0deg,rgba(12,30,18,.48),transparent 58%)!important}
+.home-page .ug-hero-inner{position:relative!important;z-index:3!important}
+.home-page .ug-kicker{color:#d9ef78!important}
+.home-page .ug-hero h1{color:#fff!important}
+.home-page .ug-hero h1 em{color:#d9ef78!important}
+.home-page .ug-hero p{color:#f1f4ec!important}
+.home-page .ug-actions .ug-btn:first-child{background:#d9ef78!important;color:#172018!important;box-shadow:0 10px 30px rgba(217,239,120,.18)!important}
+.home-page .ug-actions .ug-btn.alt{background:transparent!important;color:#fff!important;border-color:#d9ef78!important}
+.home-page .ug-feature-strip{background:rgba(23,53,31,.94)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 16px 45px rgba(20,35,22,.22)!important}
+.home-page .ug-feature{border-right-color:rgba(255,255,255,.12)!important}
+.home-page .ug-feature-icon{color:#d9ef78!important}
 .home-page .ug-feature strong{color:#fff!important}
-.home-page .ug-section{background:#071522!important;color:#fff!important}
-.home-page .ug-section.white{background:#fff!important;color:#101820!important}
-.home-page .ug-section-head p{color:#aeb8c0!important}
-.home-page .ug-card-copy small,.home-page .ug-score{color:#ff8a00!important}
-.home-page .ug-score{border-color:rgba(255,138,0,.35)!important;background:rgba(255,138,0,.12)!important}
-.home-page .ug-ai{background:#0b1c29!important}
-.home-page .ug-cta-inner{background:#ff8a00!important;color:#fff!important}
+.home-page .ug-feature span{color:#d4ddd2!important}
+.home-page .ug-section{background:#f6f3e9!important;color:#172018!important}
+.home-page .ug-section.white{background:#fff!important;color:#172018!important}
+.home-page .ug-section-head h2{color:#172018!important}
+.home-page .ug-section-head p{color:#667067!important}
+.home-page .ug-card-copy small,.home-page .ug-score{color:#d9ef78!important}
+.home-page .ug-score{border-color:rgba(217,239,120,.35)!important;background:rgba(217,239,120,.15)!important}
+.home-page .ug-ai{background:#17351f!important;color:#fff!important}
+.home-page .ug-ai p{color:#c8d2c9!important}
+.home-page .ug-ai-box{background:#fff!important;color:#172018!important}
+.home-page .ug-ai-box button{background:#17351f!important;color:#fff!important}
+.home-page .ug-ai-result{background:#f0f5e7!important;border-color:#dce6c9!important}
+.home-page .ug-event,.home-page .ug-route{background:#fff!important;border-color:#dfe3d8!important}
+.home-page .ug-event .date{background:#eef3e5!important;color:#3d5a27!important}
+.home-page .ug-event a,.home-page .ug-route small{color:#4f6d25!important}
+.home-page .ug-cta-inner{background:#dfeeb2!important;color:#172018!important}
+.home-page .ug-cta p{color:#53604d!important}
+.home-page footer{background:#14231a!important;color:#aeb9ae!important}
+.home-page footer b{color:#fff!important}
