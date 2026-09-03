@@ -1,35 +1,38 @@
-/* UnseenGo AI — explainable hidden-gem recommendation engine */
+/* UnseenGo AI — explainable hidden-gem recommendation engine
+ * Compatibility facade: existing pages keep the same UnseenGoAI API while
+ * canonical data/runtime ownership moves into data/ and core/.
+ */
 (function(){'use strict';
+ const ENGINE_VERSION='2.1.0';
  const CATEGORY_MAP={heritage:'Heritage',history:'Heritage',temple:'Temples',temples:'Temples',spiritual:'Temples',religious:'Temples',fort:'Forts',forts:'Forts',architecture:'Heritage',nature:'Nature',wildlife:'Nature',outdoors:'Nature',scenic:'Nature',waterfall:'Nature',waterfalls:'Nature',food:'Food',localfood:'Food',cuisine:'Food',culture:'Culture',arts:'Culture',craft:'Culture',adventure:'Adventure',trekking:'Adventure',sports:'Adventure',photography:'Photography'};
  const normalise=v=>String(v||'').trim().toLowerCase().replace(/[^a-z0-9]/g,'');
 
- // Load the canonical registry during normal script parsing without changing any
- // existing page URL or page flow. app.js remains backward compatible.
- function ensureRegistry(){
-   if(window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations))return window.UnseenGoData;
+ function loadRuntime(){
+   if(window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations)&&window.UnseenGoCore)return true;
    try{
      if(document.readyState==='loading'){
-       document.write('<script src="data/destination-registry.js"><\\/script>');
+       if(!(window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations)))document.write('<script src="data/destination-registry.js"><\\/script>');
+       if(!window.UnseenGoCore)document.write('<script src="core/unseengo-core.js"><\\/script>');
      }
    }catch(_){}
-   return window.UnseenGoData||null;
+   return Boolean(window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations));
  }
- ensureRegistry();
+ loadRuntime();
 
  function getLegacyCities(){try{if(typeof cities==='object'&&cities)return cities}catch(_){}return window.cities&&typeof window.cities==='object'?window.cities:{}}
- function getCanonicalPlaces(){return window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations)?window.UnseenGoData.destinations:[]}
+ function getCanonicalPlaces(){return window.UnseenGoCore?.destinations?.()||window.UnseenGoData?.destinations||[]}
  function getCities(){return getLegacyCities()}
  function getCityNames(){
+   if(window.UnseenGoCore?.cities)return window.UnseenGoCore.cities();
    const canonical=getCanonicalPlaces();
    if(canonical.length)return [...new Set(canonical.map(p=>p.identity?.city).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
    return Object.keys(getCities()).sort((a,b)=>a.localeCompare(b));
  }
  function getCategories(){
-   const canonical=getCanonicalPlaces();
-   if(canonical.length)return [...new Set(canonical.flatMap(p=>p.classification?.categories||[]).map(v=>String(v||'').trim()).filter(Boolean).map(v=>({nature:'Nature',heritage:'Heritage',food:'Food',culture:'Culture',adventure:'Adventure',wildlife:'Wildlife',photography:'Photography',temples:'Temples',forts:'Forts'}[v.toLowerCase()]||v)))].sort();
+   if(window.UnseenGoCore?.categories)return window.UnseenGoCore.categories().map(v=>({nature:'Nature',heritage:'Heritage',food:'Food',culture:'Culture',adventure:'Adventure',wildlife:'Wildlife',photography:'Photography',temples:'Temples',forts:'Forts'}[String(v).toLowerCase()]||v));
    const set=new Set();Object.keys(getCities()).forEach(city=>collectPlaces(city).forEach(p=>set.add(p.category)));return [...set].sort();
  }
- function canonicalCategory(place){const c=place.classification?.destinationType||place.classification?.categories?.[0]||'';return({nature:'Nature',heritage:'Heritage',food:'Food',culture:'Culture',adventure:'Adventure',wildlife:'Wildlife',photography:'Photography',temples:'Temples',forts:'Forts'}[String(c).toLowerCase()]||String(c||'Nature'));}
+ function canonicalCategory(place){const c=place.classification?.destinationType||place.classification?.categories?.[0]||'';return({nature:'Nature',heritage:'Heritage',food:'Food',culture:'Culture',adventure:'Adventure',wildlife:'Wildlife',photography:'Photography',temples:'Temples',forts:'Forts',shopping:'Shopping',festivals:'Festivals',stays:'Stays',transport:'Transport',experiences:'Experiences'}[String(c).toLowerCase()]||String(c||'Nature'));}
  function fromCanonical(place){
    const identity=place.identity||{};const travel=place.travel||{};const rec=place.recommendationSignals||{};const content=place.content||{};const legacy=place.legacy||{};
    return {id:place.id||'',name:String(identity.name||'Unnamed destination'),location:String(travel.distanceText?`${identity.locality||identity.city||''} · ${travel.distanceText}`:(identity.locality||identity.city||'')),baseScore:Number(rec.hiddenness??legacy.score)||70,description:String(content.description||'A distinctive local experience.'),category:canonicalCategory(place),city:String(identity.city||''),state:identity.state||null,region:identity.region||null,lat:Number(identity.coordinates?.lat)||null,lng:Number(identity.coordinates?.lng)||null,verification:place.verification||null,crowdLevel:rec.crowdLevel||null,budgetLevel:rec.budgetLevel||null,paceLevel:rec.paceLevel||null,photographyScore:Number(place.experience?.photography??rec.photographyScore)||null,sustainability:place.sustainability||null};
@@ -38,11 +41,12 @@
    if(row&&typeof row==='object'&&!Array.isArray(row)&&row.identity)return fromCanonical(row);
    const r=Array.isArray(row)?row:[];const verification=r[6]&&typeof r[6]==='object'?r[6]:null;return{name:String(r[0]||'Unnamed destination'),location:String(r[1]||city),baseScore:Number(r[2])||70,description:String(r[3]||'A distinctive local experience.'),category,city,lat:Number(r[4])||null,lng:Number(r[5])||null,verification,crowdLevel:verification?.crowdLevel||r[7]||null,budgetLevel:verification?.budgetLevel||r[8]||null,paceLevel:verification?.paceLevel||r[9]||null,photographyScore:Number(verification?.photographyScore??r[10])||null,sustainability:null}}
  function collectPlaces(city){
+   if(window.UnseenGoCore?.byCity)return window.UnseenGoCore.byCity(city).map(fromCanonical);
    const canonical=getCanonicalPlaces();
    if(canonical.length)return canonical.filter(p=>!city||p.identity?.city===city).map(fromCanonical);
    const data=getCities()[city];if(!data||typeof data!=='object')return[];return Object.entries(data).filter(([k,v])=>k!=='region'&&Array.isArray(v)).flatMap(([cat,rows])=>rows.map(r=>parsePlace(r,cat,city)));
  }
- function collectAllPlaces(){const canonical=getCanonicalPlaces();if(canonical.length)return canonical.map(fromCanonical);return getCityNames().flatMap(city=>collectPlaces(city))}
+ function collectAllPlaces(){if(window.UnseenGoCore?.destinations)return window.UnseenGoGoCore?[]:window.UnseenGoCore.destinations().map(fromCanonical);const canonical=getCanonicalPlaces();if(canonical.length)return canonical.map(fromCanonical);return getCityNames().flatMap(city=>collectPlaces(city))}
  function budgetFit(place,budget){const level=String(place.budgetLevel||'medium').toLowerCase();const wanted=budget||'medium';if(wanted==='low')return level==='low'?100:level==='medium'?72:40;if(wanted==='high')return level==='high'?100:level==='medium'?78:52;return level==='medium'?100:level==='low'?82:78}
  function paceFit(place,pace){const level=String(place.paceLevel||'balanced').toLowerCase();if(pace==='slow')return level==='slow'?100:level==='balanced'?82:62;if(pace==='fast')return level==='fast'?100:level==='balanced'?84:62;return level==='balanced'?100:82}
  function photographyFit(place){if(Number.isFinite(place.photographyScore))return Math.max(0,Math.min(100,place.photographyScore));return({Heritage:88,Temples:86,Forts:88,Culture:90,Nature:86,Food:80,Adventure:82,Photography:100}[place.category]||75)}
@@ -55,5 +59,6 @@
  function mapsUrl(places){if(!places?.length)return'#';const names=places.map(p=>encodeURIComponent(`${p.name}, ${p.city}`));const q=new URLSearchParams({api:'1',destination:names.at(-1),travelmode:'driving'});if(names.length>1)q.set('waypoints',names.slice(0,-1).join('|'));return`https://www.google.com/maps/dir/?${q}`}
  function generate(city,p={}){const recs=recommend(city,p);if(!recs.length)return{city:city||'All destinations',recommendations:[],itinerary:[],mapsUrl:'#',summary:'No matching verified destination records are available yet.'};const itinerary=buildItinerary(recs,p.days||2,p.pace||'balanced',p.avoid||[]);return{city:city||'All destinations',recommendations:recs,itinerary,mapsUrl:mapsUrl(recs),requestedDays:Number(p.days)||2,actualDays:itinerary.length,summary:`${itinerary.length}-day ${p.interests?.length?'interest-focused':'preference-aware'} trip · ${p.pace||'balanced'} pace · ${p.budget||'medium'} budget · ${(p.interests||[]).join(', ')||'mixed interests'}${city?' · '+city:' · multi-city discovery'}${p.diversify?' · diversified':''}`}}
  function parseNaturalLanguage(text){const q=String(text||'').toLowerCase();const interests=[];if(/heritage|history|architecture/.test(q))interests.push('Heritage');if(/temple|temples|spiritual|religious|pilgrim/.test(q))interests.push('Temples');if(/fort|forts/.test(q))interests.push('Forts');if(/nature|wildlife|outdoor|scenic|waterfall/.test(q))interests.push('Nature');if(/photograph|photography|photos|camera/.test(q))interests.push('Photography');if(/food|cuisine|breakfast|lunch/.test(q))interests.push('Food');if(/culture|craft|artisan|festival/.test(q))interests.push('Culture');if(/adventure|trek|hike/.test(q))interests.push('Adventure');const avoid=[];if(/crowd|crowded|busy|tourist trap/.test(q))avoid.push('crowds');if(/long travel|far away|too much travel|long drive/.test(q))avoid.push('long-travel');if(/long walk|too much walking|can't walk|cannot walk/.test(q))avoid.push('long-walk');if(/expensive|high cost|costly/.test(q))avoid.push('high-cost');if(/tourist trap/.test(q))avoid.push('tourist-traps');if(/early morning|early mornings|don't want mornings|dont want mornings|not a morning person/.test(q))avoid.push('early');const days=Number((q.match(/(\d+)\s*day/)||[])[1])||2;const pace=/slow|relax|quiet|immersive/.test(q)?'slow':/fast|packed|as much as possible/.test(q)?'fast':'balanced';const budget=/premium|luxury/.test(q)?'high':/cheap|budget|low cost/.test(q)?'low':'medium';const names=getCityNames();const city=names.find(n=>q.includes(n.toLowerCase()))||'';return{city,interests:[...new Set(interests)],avoid:[...new Set(avoid)],days,pace,budget}}
- window.UnseenGoAI={getCityNames,getCategories,collectPlaces,collectAllPlaces,scoreBreakdown,scorePlace,recommend,buildItinerary,mapsUrl,generate,parseNaturalLanguage,parsePlace};
+ function diagnostics(){return{engineVersion:ENGINE_VERSION,core:window.UnseenGoCore?.diagnostics?.()||null,registry:window.UnseenGoData?.summary||null,legacyCitiesAvailable:Object.keys(getCities()).length>0}}
+ window.UnseenGoAI={version:ENGINE_VERSION,getCityNames,getCategories,collectPlaces,collectAllPlaces,scoreBreakdown,scorePlace,recommend,buildItinerary,mapsUrl,generate,parseNaturalLanguage,parsePlace,diagnostics};
 })();
