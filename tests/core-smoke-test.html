@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UnseenGo Core Smoke Test</title><style>body{font-family:system-ui;margin:32px;max-width:900px}li{margin:8px 0}.ok{color:green}.fail{color:#b00020}pre{background:#f4f4f4;padding:16px;border-radius:10px;overflow:auto}</style></head><body>
+<h1>UnseenGo AI · Core Smoke Test</h1>
+<p>This test validates the canonical registry, stable core runtime and compatibility recommendation API without changing production page URLs.</p>
+<ul id="checks"></ul><pre id="output">Running…</pre>
+<script src="../app.js"></script>
+<script src="../data/destination-registry.js"></script>
+<script src="../core/unseengo-core.js"></script>
+<script src="../unseen-engine.js"></script>
+<script>
+(function(){
+ const checks=[];
+ const add=(name,pass,detail)=>checks.push({name,pass,detail});
+ try{
+  add('Canonical registry loaded',Boolean(window.UnseenGoData?.destinations?.length),`${window.UnseenGoData?.destinations?.length||0} destinations`);
+  add('Core runtime loaded',Boolean(window.UnseenGoCore?.ready?.()),window.UnseenGoCore?.version||'missing');
+  const d=window.UnseenGoCore?.diagnostics?.()||{};
+  add('Cities available',d.cityCount>0,`${d.cityCount||0} cities`);
+  add('Categories available',d.categoryCount>0,`${d.categoryCount||0} categories`);
+  add('No duplicate destination IDs',Array.isArray(d.duplicateIds)&&d.duplicateIds.length===0,`${d.duplicateIds?.length||0} duplicates`);
+  add('Recommendation API loaded',Boolean(window.UnseenGoAI?.recommend&&window.UnseenGoAI?.generate),window.UnseenGoAI?.version||'missing');
+  const city=window.UnseenGoAI.getCityNames()[0];
+  const result=window.UnseenGoAI.generate(city,{interests:['Nature'],days:2,budget:'medium',pace:'balanced',diversify:true,avoid:[]});
+  add('Recommendation returns results',Array.isArray(result.recommendations)&&result.recommendations.length>0,`${result.recommendations?.length||0} recommendations`);
+  add('Scores are bounded',result.recommendations.every(x=>Number.isFinite(x.unseenScore)&&x.unseenScore>=1&&x.unseenScore<=100),'1–100');
+  add('Itinerary is generated',Array.isArray(result.itinerary)&&result.itinerary.length>0,`${result.itinerary?.length||0} day(s)`);
+  add('Sustainability is not falsely measured',Number(d.sustainabilityMeasured||0)===0,`${d.sustainabilityMeasured||0} measured records`);
+ }catch(error){add('Runtime execution',false,error?.stack||String(error));}
+ const ul=document.getElementById('checks');ul.innerHTML=checks.map(c=>`<li class="${c.pass?'ok':'fail'}"><b>${c.pass?'PASS':'FAIL'}</b> — ${c.name}: ${c.detail}</li>`).join('');
+ document.getElementById('output').textContent=JSON.stringify({passed:checks.filter(c=>c.pass).length,total:checks.length,diagnostics:window.UnseenGoAI?.diagnostics?.(),checks},null,2);
+})();
+</script></body></html>
