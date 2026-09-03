@@ -2,16 +2,52 @@
 (function(){'use strict';
  const CATEGORY_MAP={heritage:'Heritage',history:'Heritage',temple:'Temples',temples:'Temples',spiritual:'Temples',religious:'Temples',fort:'Forts',forts:'Forts',architecture:'Heritage',nature:'Nature',wildlife:'Nature',outdoors:'Nature',scenic:'Nature',waterfall:'Nature',waterfalls:'Nature',food:'Food',localfood:'Food',cuisine:'Food',culture:'Culture',arts:'Culture',craft:'Culture',adventure:'Adventure',trekking:'Adventure',sports:'Adventure',photography:'Photography'};
  const normalise=v=>String(v||'').trim().toLowerCase().replace(/[^a-z0-9]/g,'');
- function getCities(){try{if(typeof cities==='object'&&cities)return cities}catch(_){}return window.cities&&typeof window.cities==='object'?window.cities:{}}
- function getCityNames(){return Object.keys(getCities()).sort((a,b)=>a.localeCompare(b))}
- function getCategories(){const set=new Set();Object.keys(getCities()).forEach(city=>collectPlaces(city).forEach(p=>set.add(p.category)));return [...set].sort()}
- function parsePlace(row,category,city){const r=Array.isArray(row)?row:[];const verification=r[6]&&typeof r[6]==='object'?r[6]:null;return{name:String(r[0]||'Unnamed destination'),location:String(r[1]||city),baseScore:Number(r[2])||70,description:String(r[3]||'A distinctive local experience.'),category,city,lat:Number(r[4])||null,lng:Number(r[5])||null,verification,crowdLevel:verification?.crowdLevel||r[7]||null,budgetLevel:verification?.budgetLevel||r[8]||null,paceLevel:verification?.paceLevel||r[9]||null,photographyScore:Number(verification?.photographyScore??r[10])||null}}
- function collectPlaces(city){const data=getCities()[city];if(!data||typeof data!=='object')return[];return Object.entries(data).filter(([k,v])=>k!=='region'&&Array.isArray(v)).flatMap(([cat,rows])=>rows.map(r=>parsePlace(r,cat,city)))}
- function collectAllPlaces(){return getCityNames().flatMap(city=>collectPlaces(city))}
+
+ // Load the canonical registry during normal script parsing without changing any
+ // existing page URL or page flow. app.js remains backward compatible.
+ function ensureRegistry(){
+   if(window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations))return window.UnseenGoData;
+   try{
+     if(document.readyState==='loading'){
+       document.write('<script src="data/destination-registry.js"><\\/script>');
+     }
+   }catch(_){}
+   return window.UnseenGoData||null;
+ }
+ ensureRegistry();
+
+ function getLegacyCities(){try{if(typeof cities==='object'&&cities)return cities}catch(_){}return window.cities&&typeof window.cities==='object'?window.cities:{}}
+ function getCanonicalPlaces(){return window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations)?window.UnseenGoData.destinations:[]}
+ function getCities(){return getLegacyCities()}
+ function getCityNames(){
+   const canonical=getCanonicalPlaces();
+   if(canonical.length)return [...new Set(canonical.map(p=>p.identity?.city).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
+   return Object.keys(getCities()).sort((a,b)=>a.localeCompare(b));
+ }
+ function getCategories(){
+   const canonical=getCanonicalPlaces();
+   if(canonical.length)return [...new Set(canonical.flatMap(p=>p.classification?.categories||[]).map(v=>String(v||'').trim()).filter(Boolean).map(v=>({nature:'Nature',heritage:'Heritage',food:'Food',culture:'Culture',adventure:'Adventure',wildlife:'Wildlife',photography:'Photography',temples:'Temples',forts:'Forts'}[v.toLowerCase()]||v)))].sort();
+   const set=new Set();Object.keys(getCities()).forEach(city=>collectPlaces(city).forEach(p=>set.add(p.category)));return [...set].sort();
+ }
+ function canonicalCategory(place){const c=place.classification?.destinationType||place.classification?.categories?.[0]||'';return({nature:'Nature',heritage:'Heritage',food:'Food',culture:'Culture',adventure:'Adventure',wildlife:'Wildlife',photography:'Photography',temples:'Temples',forts:'Forts'}[String(c).toLowerCase()]||String(c||'Nature'));}
+ function fromCanonical(place){
+   const identity=place.identity||{};const travel=place.travel||{};const rec=place.recommendationSignals||{};const content=place.content||{};const legacy=place.legacy||{};
+   return {id:place.id||'',name:String(identity.name||'Unnamed destination'),location:String(travel.distanceText?`${identity.locality||identity.city||''} · ${travel.distanceText}`:(identity.locality||identity.city||'')),baseScore:Number(rec.hiddenness??legacy.score)||70,description:String(content.description||'A distinctive local experience.'),category:canonicalCategory(place),city:String(identity.city||''),state:identity.state||null,region:identity.region||null,lat:Number(identity.coordinates?.lat)||null,lng:Number(identity.coordinates?.lng)||null,verification:place.verification||null,crowdLevel:rec.crowdLevel||null,budgetLevel:rec.budgetLevel||null,paceLevel:rec.paceLevel||null,photographyScore:Number(place.experience?.photography??rec.photographyScore)||null,sustainability:place.sustainability||null};
+ }
+ function parsePlace(row,category,city){
+   if(row&&typeof row==='object'&&!Array.isArray(row)&&row.identity)return fromCanonical(row);
+   const r=Array.isArray(row)?row:[];const verification=r[6]&&typeof r[6]==='object'?r[6]:null;return{name:String(r[0]||'Unnamed destination'),location:String(r[1]||city),baseScore:Number(r[2])||70,description:String(r[3]||'A distinctive local experience.'),category,city,lat:Number(r[4])||null,lng:Number(r[5])||null,verification,crowdLevel:verification?.crowdLevel||r[7]||null,budgetLevel:verification?.budgetLevel||r[8]||null,paceLevel:verification?.paceLevel||r[9]||null,photographyScore:Number(verification?.photographyScore??r[10])||null,sustainability:null}}
+ function collectPlaces(city){
+   const canonical=getCanonicalPlaces();
+   if(canonical.length)return canonical.filter(p=>!city||p.identity?.city===city).map(fromCanonical);
+   const data=getCities()[city];if(!data||typeof data!=='object')return[];return Object.entries(data).filter(([k,v])=>k!=='region'&&Array.isArray(v)).flatMap(([cat,rows])=>rows.map(r=>parsePlace(r,cat,city)));
+ }
+ function collectAllPlaces(){const canonical=getCanonicalPlaces();if(canonical.length)return canonical.map(fromCanonical);return getCityNames().flatMap(city=>collectPlaces(city))}
  function budgetFit(place,budget){const level=String(place.budgetLevel||'medium').toLowerCase();const wanted=budget||'medium';if(wanted==='low')return level==='low'?100:level==='medium'?72:40;if(wanted==='high')return level==='high'?100:level==='medium'?78:52;return level==='medium'?100:level==='low'?82:78}
  function paceFit(place,pace){const level=String(place.paceLevel||'balanced').toLowerCase();if(pace==='slow')return level==='slow'?100:level==='balanced'?82:62;if(pace==='fast')return level==='fast'?100:level==='balanced'?84:62;return level==='balanced'?100:82}
  function photographyFit(place){if(Number.isFinite(place.photographyScore))return Math.max(0,Math.min(100,place.photographyScore));return({Heritage:88,Temples:86,Forts:88,Culture:90,Nature:86,Food:80,Adventure:82,Photography:100}[place.category]||75)}
  function scoreBreakdown(place,p={}){const rawInterests=p.interests||[];const selected=rawInterests.map(v=>CATEGORY_MAP[normalise(v)]||String(v));const photography=selected.includes('Photography');const avoid=p.avoid||[];const categoryMatch=selected.includes(place.category);const interest=rawInterests.length===0?75:categoryMatch?100:42;const interestPreference=photography?Math.max(interest,photographyFit(place)):interest;const travelEasePreference=avoid.includes('long-travel')?60:78;const budgetPreference=budgetFit(place,p.budget||'medium');const pacePreference=paceFit(place,p.pace||'balanced');const crowdLevel=String(place.crowdLevel||'').toLowerCase();let avoidPenalty=0;if(avoid.includes('tourist-traps')&&place.baseScore>=95)avoidPenalty+=6;if(avoid.includes('crowds')&&crowdLevel==='high')avoidPenalty+=10;const hiddenness=Math.min(25,Math.max(10,Math.round(place.baseScore*.25)));const cultural=Math.min(20,Math.max(7,Math.round((place.category==='Heritage'||place.category==='Culture'||place.category==='Temples'||place.category==='Forts'?96:78)*.20)));const interestPts=Math.round(interestPreference*.20);const travelEasePts=Math.round(travelEasePreference*.10);const local=Math.round((place.category==='Food'||place.category==='Culture'||place.category==='Temples'?92:78)*.10);const budgetPts=Math.round(budgetPreference*.07);const pacePts=Math.round(pacePreference*.08);const score=Math.min(100,Math.max(1,hiddenness+cultural+interestPts+travelEasePts+local+budgetPts+pacePts-avoidPenalty));return{score,hiddenness,culturalValue:cultural,interestMatch:interestPts,travelEase:travelEasePts,accessibility:travelEasePts,localExperience:local,budgetPreference,budgetPoints:budgetPts,pacePreference,pacePoints:pacePts,interestPercent:interestPreference,paceFit:pacePreference,budgetFit:budgetPreference,photographyScore:photographyFit(place),crowdLevel:crowdLevel||'not supplied',avoidPenalty}}
+ function scorePlace(place,p={}){return scoreBreakdown(place,p).score}
  function whyPlace(place,p={},b=scoreBreakdown(place,p)){const mapped=(p.interests||[]).map(v=>CATEGORY_MAP[normalise(v)]||v);const lines=[];if(mapped.includes(place.category))lines.push(`matches your ${place.category.toLowerCase()} focus`);if(mapped.includes('Photography'))lines.push(`has a photography fit of ${b.photographyScore}/100`);if((p.avoid||[]).includes('crowds'))lines.push(b.crowdLevel==='high'?'receives a crowd penalty from explicit high-crowd metadata':'does not infer crowding from its discovery score');if((p.avoid||[]).includes('long-travel'))lines.push('is favored by your travel-ease preference');if((p.avoid||[]).includes('high-cost'))lines.push(`is scored against your ${p.budget||'selected'} budget preference`);if((p.avoid||[]).includes('early'))lines.push('will be scheduled later because you want to avoid early mornings');if(!lines.length)lines.push(`selected for its ${place.category.toLowerCase()} character and discovery signal`);return `Strong match for ${(p.interests||[]).join(' + ')||'your selected interests'}. ${lines.slice(0,3).join('. ')}.`}
  function rankPlaces(places,p={}){return places.map(place=>{const breakdown=scoreBreakdown(place,p);return{...place,...breakdown,unseenScore:breakdown.score,why:whyPlace(place,p,breakdown)}}).sort((a,b)=>b.unseenScore-a.unseenScore||b.baseScore-a.baseScore||a.name.localeCompare(b.name))}
  function recommend(city,p={}){const raw=p.interests||[];const selected=raw.map(v=>CATEGORY_MAP[normalise(v)]||String(v));const diversify=Boolean(p.diversify);const source=city?collectPlaces(city):collectAllPlaces();const places=rankPlaces(source,p);const days=Math.max(1,Math.min(14,Number(p.days)||2));const perDay=p.pace==='slow'?2:p.pace==='fast'?4:3;const target=Math.min(places.length,Math.max(3,days*perDay));if(!selected.length)return places.slice(0,target);const preferred=places.filter(x=>selected.includes(x.category));const other=places.filter(x=>!selected.includes(x.category));if(!diversify)return preferred.slice(0,target);const preferredTarget=Math.max(1,Math.ceil(target*.8));return preferred.slice(0,preferredTarget).concat(other.slice(0,target-preferredTarget));}
