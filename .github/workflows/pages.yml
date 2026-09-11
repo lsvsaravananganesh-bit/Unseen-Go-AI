@@ -24,21 +24,38 @@ jobs:
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Apply UnseenGo USA editorial theme to every HTML page
+      - name: Prepare static runtime
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          tag='<script src="/Unseen-Go-AI/theme.js?v=20260827" defer></script>'
-          css='<link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827">'
-          for p in Path('.').rglob('*.html'):
-              if '.git' in p.parts: continue
-              s=p.read_text(encoding='utf-8')
-              if 'unseengo-usa-theme.css' not in s:
-                  s=s.replace('</head>', css+'\n</head>',1) if '</head>' in s else s
-              if 'theme.js?v=20260827' not in s and 'theme.js' not in s:
-                  s=s.replace('</head>', tag+'\n</head>',1) if '</head>' in s else s.replace('</body>',tag+'\n</body>',1)
-              p.write_text(s,encoding='utf-8')
+
+          ROOT = Path('.')
+          BASE = '/Unseen-Go-AI/'
+          runtime_data = '<script src="' + BASE + 'data/destination-registry.js?v=20260911"></script>'
+          runtime_core = '<script src="' + BASE + 'core/unseengo-core.js?v=20260911"></script>'
+          theme_css = '<link rel="stylesheet" href="' + BASE + 'unseengo-usa-theme.css?v=20260911">'
+          theme_js = '<script src="' + BASE + 'theme.js?v=20260911" defer></script>'
+
+          for p in ROOT.rglob('*.html'):
+              if '.git' in p.parts:
+                  continue
+              s = p.read_text(encoding='utf-8')
+
+              # Keep the project as a static HTML/CSS/JS site. Do not build or mount
+              # the unused React source tree into the GitHub Pages artifact.
+              if 'unseen-engine.js' in s:
+                  if 'data/destination-registry.js?v=20260911' not in s:
+                      s = s.replace('<script src="unseen-engine.js">', runtime_data + runtime_core + '<script src="unseen-engine.js">', 1)
+                  elif 'core/unseengo-core.js?v=20260911' not in s:
+                      s = s.replace('data/destination-registry.js?v=20260911"></script>', 'data/destination-registry.js?v=20260911"></script>' + runtime_core, 1)
+
+              if 'unseengo-usa-theme.css' not in s and '</head>' in s:
+                  s = s.replace('</head>', theme_css + '\n</head>', 1)
+              if 'theme.js?v=20260911' not in s and 'theme.js' not in s and '</head>' in s:
+                  s = s.replace('</head>', theme_js + '\n</head>', 1)
+
+              p.write_text(s, encoding='utf-8')
           PY
 
       - name: Upload static site
