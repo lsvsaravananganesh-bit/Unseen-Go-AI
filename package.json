@@ -1,8 +1,8 @@
 {
   "name": "unseengo-ai",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": true,
-  "description": "UnseenGo AI - React Hidden-Gem Tourism Explorer",
+  "description": "UnseenGo AI - static AI-assisted hidden-gem tourism explorer",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,10 +12,6 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
-    "lucide": "^0.468.0",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "lucide-react": "^0.468.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {
