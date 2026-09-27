@@ -133,3 +133,23 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
 }
+/* Final responsive safety/navigation pass — keeps destination actions usable on tablets and phones. */
+.nav,.site-header,.navbar,.top{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.nav nav,.site-header nav,.navbar nav,.top nav{display:flex;align-items:center;gap:14px;flex-wrap:wrap;min-width:0}
+@media(max-width:1100px){
+  .ug-safety-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+@media(max-width:760px){
+  .nav,.site-header,.navbar,.top{gap:10px!important;padding-top:10px!important;padding-bottom:10px!important}
+  .nav nav,.site-header nav,.navbar nav,.top nav{width:100%;overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;padding-bottom:2px}
+  .nav nav::-webkit-scrollbar,.site-header nav::-webkit-scrollbar,.navbar nav::-webkit-scrollbar,.top nav::-webkit-scrollbar{display:none}
+  .nav nav a,.site-header nav a,.navbar nav a,.top nav a{white-space:nowrap}
+  .ug-btn{white-space:nowrap}
+  .ug-safety-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .ug-safety-grid a{min-height:74px;display:flex;flex-direction:column;justify-content:center}
+}
+@media(max-width:420px){
+  .ug-travel-info,.ug-safety{padding:15px!important;border-radius:15px!important}
+  .ug-safety-grid{gap:7px!important}
+  .ug-safety-grid a{padding:10px 6px!important;font-size:10px!important}
+}
