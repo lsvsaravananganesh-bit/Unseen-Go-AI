@@ -28,7 +28,7 @@
       '</nav>'+
       '<div class="ug-shell-actions">'+
       '<a class="ug-shell-icon search" href="discover.html" aria-label="Search">⌕</a>'+
-      '<a class="ug-shell-profile" id="ugShellProfile" href="login.html?redirect='+encodeURIComponent(page)+'"><span class="ug-avatar">?</span><span class="ug-profile-name">Sign in</span></a>'+
+      '<a class="ug-shell-profile" id="ugShellProfile" href="login.html?redirect='+encodeURIComponent(page)+'"><span class="ug-avatar">?</span><span class="ug-profile-name">Sign in</span></a><button class="ug-auth-button" id="ugLogout" type="button" style="display:none">Log out</button>'+
       '</div></div>';
     if(old)old.replaceWith(shell);else document.body.insertBefore(shell,document.body.firstChild);
     const menu=shell.querySelector('#ugMenu'), nav=shell.querySelector('#ugMainNav');
@@ -48,6 +48,11 @@
         const initial=name.trim().charAt(0).toUpperCase()||'A';
         profile.href='profile.html';
         profile.innerHTML='<span class="ug-avatar">'+initial+'</span><span class="ug-profile-name">'+name.split(' ')[0]+'</span>';
+        const logout=document.getElementById('ugLogout');
+        if(logout){logout.style.display='inline-flex';logout.onclick=async()=>{logout.disabled=true;logout.textContent='Logging out…';try{await sb.auth.signOut()}finally{location.href='index.html'}}}
+      }else{
+        const logout=document.getElementById('ugLogout');if(logout)logout.style.display='none';
+      }
       }
     }).catch(()=>{});
   }
