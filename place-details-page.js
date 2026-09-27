@@ -11,42 +11,90 @@ const requested=(q.get('place')||q.get('destination')||q.get('city')||'Konda Red
 const IMG_BASE='https://commons.wikimedia.org/wiki/Special:FilePath/';
 const places={
   'konda reddy fort':{
-    name:'Konda Reddy Fort',
-    alternate:'Konda Reddy Buruju · Achyutha Devarayala Buruzu',
-    location:'Kurnool, Andhra Pradesh',
-    type:'Historical · Heritage',
-    bestTime:'October–February',
-    entry:'Not published',
-    rating:'Not yet verified',
-    timings:'Not yet verified',
-    status:'✓ Official source available',
-    image:IMG_BASE+'Konda%20Reddy%20Fort%20Kurnool.jpg?width=1600',
-    image2:IMG_BASE+'KONDAREDDY%20FORT.jpg?width=1200',
-    image3:IMG_BASE+'Konda%20Reddy%20Fort%20%2896137%29.jpg?width=1000',
-    source:'https://kurnool.ap.gov.in/tourist-place/achyutha-devarayala-buruzukonda-reddy-buruzu/',
-    sourceLabel:'Kurnool District — Government of Andhra Pradesh',
-    maps:'https://www.google.com/maps/search/?api=1&query=Konda+Reddy+Fort+Kurnool',
-    lat:15.83379,lng:78.048655,
+    name:'Konda Reddy Fort',alternate:'Konda Reddy Buruju · Achyutha Devarayala Buruzu',
+    location:'Kurnool, Andhra Pradesh',type:'Historical · Heritage',bestTime:'October–February',
+    entry:'Not published',rating:'Not yet verified',timings:'Not yet verified',status:'✓ Official source available',
+    image:IMG_BASE+'Konda%20Reddy%20Fort%20Kurnool.jpg?width=1600',image2:IMG_BASE+'KONDAREDDY%20FORT.jpg?width=1200',image3:IMG_BASE+'Konda%20Reddy%20Fort%20%2896137%29.jpg?width=1000',
+    source:'https://kurnool.ap.gov.in/tourist-place/achyutha-devarayala-buruzukonda-reddy-buruzu/',sourceLabel:'Kurnool District — Government of Andhra Pradesh',
+    maps:'https://www.google.com/maps/search/?api=1&query=Konda+Reddy+Fort+Kurnool',lat:15.83379,lng:78.048655,
     history:'Achyutha Devarayala Buruzu, also known as Konda Reddy Buruju, is a historic structure in the heart of Kurnool. The Kurnool district administration describes it as part of the old Kurnool Fort and associates its construction with Achyutha Devaraya of the Vijayanagara period, dated to 1529–1542 AD. The site was used as a prison, and the monument later became associated with Konda Reddy.',
-    significance:'It is a surviving landmark connected with Kurnool’s Vijayanagara-era and later regional history. Wikimedia Commons also identifies it as an Archaeological Survey of India monument of national importance.',
-    nearby:[
-      ['Orvakal Rock Garden','Nature · Scenic','Regional day trip'],
-      ['Kurnool Archaeological Museum','Archaeology · Heritage','Kurnool city'],
-      ['Gol Gummaz','History · Architecture','Kurnool city'],
-      ['Belum Caves','Natural · Heritage','Regional day trip'],
-      ['Yaganti Uma Maheswara Temple','Spiritual · Heritage','Regional day trip'],
-      ['Gandikota Fort','Fort · Heritage','Longer regional circuit']
-    ],
-    food:['Rayalaseema local cuisine','Kurnool city restaurants','Local breakfast & tiffin'],
-    stay:['Kurnool city hotels','Railway station / city-centre stays','Hotels near major road corridors'],
-    reach:[
-      ['By air','Kurnool airport','District source lists approximately 25 km.'],
-      ['By train','Kurnool City Railway Station','District source lists approximately 3 km.'],
-      ['By road','Kurnool city / bus stand','District source lists approximately 3 km.']
-    ],
-    note:'Timings, entry fee and live rating are intentionally not invented. Connect these fields to Google Places / official tourism data when the production data layer is added.'
+    significance:'A surviving landmark connected with Kurnool’s Vijayanagara-era and later regional history.',
+    nearby:[['Kurnool Archaeological Museum','Archaeology · Heritage','Kurnool city'],['Gol Gummaz','History · Architecture','Kurnool city'],['Orvakal Rock Garden','Nature · Scenic','Regional day trip'],['Belum Caves','Natural · Heritage','Regional day trip'],['Yaganti Uma Maheswara Temple','Spiritual · Heritage','Regional day trip'],['Gandikota Fort','Fort · Heritage','Longer regional circuit']],
+    food:['Rayalaseema local cuisine','Kurnool city restaurants','Local breakfast & tiffin'],stay:['Kurnool city hotels','City-centre stays','Hotels near major road corridors'],
+    reach:[['By air','Kurnool Airport','District source lists approximately 25 km.'],['By train','Kurnool City Railway Station','District source lists approximately 3 km.'],['By road','Kurnool city / bus stand','District source lists approximately 3 km.']],
+    note:'Timings, entry fee and live rating are intentionally not invented. Connect these fields to Google Places / official tourism data for production.'
+  },
+  'gandikota':{
+    name:'Gandikota Fort',alternate:'Fort & Penna River Gorge · YSR Kadapa',
+    location:'Gandikota, Kadapa, Andhra Pradesh',type:'Historical · Natural · Adventure',bestTime:'October–February',
+    entry:'Not published',rating:'Not yet verified',timings:'Not yet verified',status:'✓ Government tourism source available',
+    image:'https://kadapa.ap.gov.in/gallery/gandikota/gandikota_viewpoint.jpg',image2:'https://kadapa.ap.gov.in/gallery/gandikota/Penna%20River_View%20Point.jpg',image3:'https://kadapa.ap.gov.in/gallery/gandikota/Masjid%20and%20Temple.jpg',
+    source:'https://kadapa.ap.gov.in/gandikota-fort/',sourceLabel:'YSR Kadapa District — Government of Andhra Pradesh',
+    maps:'https://www.google.com/maps/search/?api=1&query=Gandikota+Fort+Andhra+Pradesh',lat:14.81358,lng:78.28789,
+    history:'Gandikota is a historic fort on a hill above the Penna River gorge. The YSR Kadapa district administration describes the fort as a major stone fortification with a large entrance and numerous bastions, and records temples, Juma Masjid, a granary, palace and other structures inside the fort.',
+    significance:'The destination combines a major historic fort precinct with the dramatic Penna gorge and viewpoints. Government tourism material identifies history, natural scenery and adventure as core parts of Gandikota.',
+    nearby:[['Penna River Viewpoint','Nature · Viewpoint','Inside the Gandikota landscape'],['Madhavaraya Temple','Vijayanagara · Heritage','Inside fort precinct'],['Juma Masjid','Architecture · Heritage','Inside fort precinct'],['Mini Charminar','Historic Architecture','Inside fort precinct'],['Mylavaram Dam','Nature · Water','Regional attraction'],['Ranganatha Swamy Temple','Temple · Heritage','Fort precinct']],
+    food:['Local Andhra meals','Jammalamadugu restaurants','Local snacks & refreshments'],stay:['Gandikota-area stays','Jammalamadugu stays','Kadapa hotels'],
+    reach:[['By road','Jammalamadugu','Approximately 15 km from Jammalamadugu.'],['From Kadapa','Kadapa city','Approximately 77 km according to district tourism information.'],['By rail','Jammalamadugu / regional rail access','Use road transfer for the final leg.']],
+    note:'Entry fee, exact timings and live ratings should be connected to verified current sources before being presented as operational facts.'
+  },
+  'lepakshi':{
+    name:'Lepakshi',alternate:'Veerabhadra Temple · Hanging Pillar · Monolithic Nandi',
+    location:'Lepakshi, Sri Sathya Sai district, Andhra Pradesh',type:'Historical · Spiritual · Architecture',bestTime:'October–February',
+    entry:'Not published',rating:'Not yet verified',timings:'Not yet verified',status:'✓ Incredible India / tourism source available',
+    image:'https://www.incredibleindia.gov.in/content/dam/incredible-india-v2/images/places/lepakshi/lepakshi-veera-bhadra-temple.jpg',image2:'https://www.incredibleindia.gov.in/content/dam/incredible-india-v2/images/places/lepakshi/lepakshi-hanging-pillar.jpg',image3:'https://www.incredibleindia.gov.in/content/dam/incredible-india-v2/images/places/lepakshi/lepakshi-monolithic-nandi.jpg',
+    source:'https://www.incredibleindia.gov.in/en/rural-tourism/lepakshi',sourceLabel:'Incredible India — Ministry of Tourism, Government of India',
+    maps:'https://www.google.com/maps/search/?api=1&query=Lepakshi+Veerabhadra+Temple',lat:13.8014,lng:77.6038,
+    history:'Lepakshi is renowned for the Veerabhadra Temple and its Vijayanagara-style architecture. The destination is especially known for the Hanging Pillar, large sculptural work and the monolithic Nandi. Its heritage combines architecture, religious traditions and local cultural practices.',
+    significance:'Lepakshi is a strong heritage destination because its temple complex preserves distinctive Vijayanagara architectural and sculptural features. Incredible India also highlights its annual Brahmotsavam and cultural traditions.',
+    nearby:[['Veerabhadra Temple','Architecture · Spiritual','Main heritage complex'],['Monolithic Nandi','Sculpture · Heritage','Near temple'],['Hanging Pillar','Vijayanagara Architecture','Inside temple'],['Jatayu Theme Park','Culture · Experience','Lepakshi'],['Hindupur','Town · Services','Nearby town'],['Penukonda Fort','Fort · Heritage','Regional circuit']],
+    food:['Local Andhra meals','Lepakshi / Hindupur restaurants','South Indian breakfast & tiffin'],stay:['Hindupur stays','Lepakshi-area stays','Anantapur-region hotels'],
+    reach:[['By air','Bengaluru International Airport','Incredible India lists approximately 45 km.'],['By train','Hindupur Junction','Incredible India lists approximately 13 km.'],['By road','Andhra Pradesh / Karnataka road network','Well connected by road to nearby towns and cities.']],
+    note:'Operational timings, current ticket pricing and ratings should be verified before publication.'
+  },
+  'araku':{
+    name:'Araku Valley',alternate:'Eastern Ghats · Tribal Culture · Borra Caves',
+    location:'Araku Valley, Alluri Sitharama Raju district, Andhra Pradesh',type:'Nature · Culture · Adventure',bestTime:'October–February',
+    entry:'Destination-wide fee varies by attraction',rating:'Not yet verified',timings:'Attraction-specific',status:'✓ Government tourism source available',
+    image:'https://allurisitharamaraju.ap.gov.in/gallery/araku-valley/araku-valley.jpg',image2:'https://allurisitharamaraju.ap.gov.in/gallery/araku-valley/burra-caves.jpg',image3:'https://allurisitharamaraju.ap.gov.in/gallery/araku-valley/araku-tribal-museum.jpg',
+    source:'https://allurisitharamaraju.ap.gov.in/tourism/',sourceLabel:'Alluri Sitharamaraju District — Government of Andhra Pradesh',
+    maps:'https://www.google.com/maps/search/?api=1&query=Araku+Valley+Andhra+Pradesh',lat:18.3273,lng:82.8740,
+    history:'Araku Valley is a major Eastern Ghats destination known for its landscapes and tribal culture. The district tourism information highlights tribal folklore and traditions, Dhimsa dance, the scenic railway journey through tunnels, the Tribal Museum, Padmapuram horticulture and nearby waterfalls. Borra Caves are a major geological attraction in the wider Araku region.',
+    significance:'Araku combines nature, indigenous cultural traditions, agriculture, railway experiences and geological attractions in one regional tourism circuit.',
+    nearby:[['Borra Caves','Geology · Nature','Ananthagiri Hills'],['Tribal Museum','Culture · Heritage','Araku'],['Padmapuram Gardens','Nature · Horticulture','Araku'],['Ranajilleda Waterfall','Nature · Waterfall','Regional attraction'],['Araku Railway Journey','Scenic · Experience','Eastern Ghats'],['Dhimsa Dance','Culture · Community','Local tradition']],
+    food:['Araku coffee','Tribal-inspired local cuisine','Araku town restaurants'],stay:['Araku Valley resorts','Government / tourism accommodation','Homestays and local stays'],
+    reach:[['By train','Araku Railway Station','Rail route through Eastern Ghats is a major travel experience.'],['By road','Visakhapatnam → Araku','Road access through the Eastern Ghats.'],['By air','Visakhapatnam Airport','Common gateway for the Araku region.']],
+    note:'Araku is a region rather than one ticketed monument, so timings and fees must be displayed per attraction.'
+  },
+  'hampi':{
+    name:'Hampi',alternate:'Vijayanagara Ruins · UNESCO World Heritage Site',
+    location:'Hampi, Vijayanagara district, Karnataka',type:'UNESCO · Historical · Heritage',bestTime:'October–February',
+    entry:'Attraction-specific',rating:'Not yet verified',timings:'Attraction-specific',status:'✓ Karnataka Tourism source available',
+    image:'https://karnatakatourism.org/wp-content/uploads/2020/05/Hampi.jpg',image2:'https://karnatakatourism.org/wp-content/uploads/2020/05/Stone-Chariot-Hampi.jpg',image3:'https://karnatakatourism.org/wp-content/uploads/2020/05/Virupaksha-Temple-Hampi.jpg',
+    source:'https://karnatakatourism.org/en/destinations/hampi',sourceLabel:'Karnataka Tourism — Government of Karnataka',
+    maps:'https://www.google.com/maps/search/?api=1&query=Hampi+Karnataka',lat:15.3350,lng:76.4600,
+    history:'Hampi was the capital of the Vijayanagara Empire and developed into a major historic city between the 14th and 16th centuries. Karnataka Tourism describes its surviving temples, markets, royal structures, water systems and dramatic granite landscape as a vast heritage destination. The monuments were declared a UNESCO World Heritage Site in 1986.',
+    significance:'Hampi preserves an unusually large archaeological landscape where temples, royal architecture, markets and natural terrain remain connected. It is recognised internationally for its outstanding historical and architectural significance.',
+    nearby:[['Virupaksha Temple','Spiritual · Heritage','Sacred Centre'],['Vijaya Vittala Temple','Architecture · Heritage','Sacred Centre'],['Stone Chariot','Vijayanagara Architecture','Vittala complex'],['Lotus Mahal','Royal Architecture','Royal Centre'],['Matanga Hill','Viewpoint · Adventure','Hampi'],['Hampi Bazaar','Heritage · Culture','Historic market area']],
+    food:['Hampi local cafés','South Indian meals','Hospet / Hosapete restaurants'],stay:['Hampi heritage stays','Homestays near Hampi','Hosapete hotels'],
+    reach:[['By rail','Hosapete Junction','Karnataka Tourism lists it as the nearest railway station, about 13 km away.'],['By road','Hosapete → Hampi','Regular road access connects the railway town and Hampi.'],['By air','Regional airports','Use regional airport access followed by road transfer.']],
+    note:'Hampi is a large heritage landscape, so entrance rules, fees and timings vary by individual monument.'
+  },
+  'tirupati':{
+    name:'Tirupati',alternate:'Temple City · Heritage · Spiritual & Eco Tourism',
+    location:'Tirupati, Andhra Pradesh',type:'Spiritual · Heritage · Nature',bestTime:'October–February',
+    entry:'Attraction-specific',rating:'Not yet verified',timings:'Attraction-specific',status:'✓ Tirupati District tourism source available',
+    image:'https://tirupati.ap.gov.in/wp-content/uploads/2020/06/tirumala.jpg',image2:'https://tirupati.ap.gov.in/wp-content/uploads/2020/06/talakona.jpg',image3:'https://tirupati.ap.gov.in/wp-content/uploads/2020/06/kapila-theertham.jpg',
+    source:'https://tirupati.ap.gov.in/tourist-places/',sourceLabel:'Tirupati District — Government of Andhra Pradesh',
+    maps:'https://www.google.com/maps/search/?api=1&query=Tirupati+Andhra+Pradesh',lat:13.6288,lng:79.4192,
+    history:'Tirupati district combines religious, cultural, eco-tourism, forest, archaeological and engineering attractions. The district tourism portal lists Sri Vari Temple at Tirumala, Sri Kapileswara Swamy Temple, Sri Govindarajaswamy Temple, Talakona waterfall and other destinations across the district.',
+    significance:'Tirupati is more than a pilgrimage stop: the district tourism programme covers religious, cultural, eco, forest and archaeological experiences, making it suitable for a broader destination guide.',
+    nearby:[['Sri Vari Temple, Tirumala','Spiritual · Pilgrimage','Tirumala'],['Sri Kapileswara Swamy Temple','Spiritual · Heritage','Tirupati'],['Govindarajaswamy Temple','Religious · Heritage','Tirupati city'],['Talakona Waterfall','Nature · Waterfall','Regional attraction'],['Regional Science Centre','Education · Experience','Tirupati'],['Pulicat Lake','Nature · Wetland','Regional attraction']],
+    food:['Tirupati local vegetarian cuisine','Traditional Andhra meals','Tiffin & prasadam areas'],stay:['Tirupati city hotels','Pilgrim accommodation','Tirumala-area accommodation'],
+    reach:[['By road','Tirupati city','Major road connections serve Tirupati and Tirumala.'],['By rail','Tirupati railway station','Rail access connects the city with major South Indian cities.'],['By air','Tirupati Airport','Airport serves the Tirupati region.']],
+    note:'Tirupati contains many separately managed attractions, so fees, timings and booking rules must be shown per attraction.'
   }
-};
+}
 
 function normalise(s){return s.toLowerCase().replace(/[–—]/g,' ').replace(/[^a-z0-9]+/g,' ').trim()}
 const place=places[normalise(requested)]||places['konda reddy fort'];
