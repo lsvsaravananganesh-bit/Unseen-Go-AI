@@ -3,7 +3,18 @@
   function show(message,type){const el=document.getElementById('message');if(!el)return;el.textContent=message||'';el.className='msg message'+(type?' '+type:'');}
   function waitForClient(cb){if(window.unseenGoSupabase)return cb(window.unseenGoSupabase);window.addEventListener('unseengo:supabase-ready',e=>cb(e.detail),{once:true});setTimeout(()=>{if(!window.unseenGoSupabase)show('Supabase connection is not ready. Please refresh the page.','error')},5000)}
   function requestedDestination(){const p=new URLSearchParams(location.search).get('redirect');if(!p)return 'dashboard.html';try{const u=new URL(p,location.href);if(u.origin!==location.origin)return 'dashboard.html';return u.pathname.split('/').pop()+(u.search||'')+(u.hash||'')}catch(_){return 'dashboard.html'}}
-  function goAfterAuth(){location.href=requestedDestination()}
+  async function goAfterAuth(){
+  try{
+    if(window.unseenGoSupabase){
+      const {data:{user}}=await window.unseenGoSupabase.auth.getUser();
+      if(user){
+        const {data:admin}=await window.unseenGoSupabase.from('admin_users').select('role').eq('user_id',user.id).maybeSingle();
+        if(admin){location.href='admin.html';return}
+      }
+    }
+  }catch(e){console.warn('Admin role check failed; continuing to normal dashboard.',e)}
+  location.href=requestedDestination()
+}
   async function forgotPassword(email){waitForClient(async sb=>{const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:new URL('reset-password.html',location.href).href});if(error)show(error.message,'error');else show('Password reset link sent. Check your email.','success')})}
   window.UnseenGoAuthForgotPassword=forgotPassword;
   document.addEventListener('DOMContentLoaded',function(){
