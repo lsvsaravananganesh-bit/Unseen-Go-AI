@@ -161,7 +161,7 @@ function render(){
     '<div class="dp-fact"><span>Rating</span><strong>★ '+esc(place.rating)+'</strong></div>'+
     '<div class="dp-fact"><span>Timings</span><strong>'+esc(place.timings)+'</strong></div>'+
     '<div class="dp-fact"><span>Coordinates</span><strong>'+place.lat.toFixed(5)+', '+place.lng.toFixed(5)+'</strong></div>'+
-    '<div class="dp-fact"><span>Trust status</span><strong>✓ Verified</strong><small>Source-backed facts · AI recommendations labelled separately</small></div>'+
+    '<div class="dp-fact"><span>Trust status</span><strong>✓ Verified</strong><small>Source-backed facts · AI recommendations labelled separately</small></div><div class="dp-trust-legend"><span>✓ Verified — source confirmed</span><span>✦ AI Generated — recommendation/summary</span><span>👥 Community Sourced — user contribution</span><span>⚠ Needs Verification — not yet confirmed</span></div>'+
    '</div></section>'+
 
  '<div class="dp-layout">'+
