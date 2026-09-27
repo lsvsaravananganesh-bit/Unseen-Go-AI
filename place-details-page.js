@@ -141,7 +141,7 @@ function render(){
  app.innerHTML=
  '<div class="dp-breadcrumb"><a href="index.html">Home</a><span>›</span><a href="discover.html">Discover</a><span>›</span><span>'+esc(place.name)+'</span></div>'+
  '<section class="dp-hero">'+
-   '<div class="dp-hero-media"><img src="'+esc(place.image)+'" alt="'+esc(place.name)+'" loading="eager"><span class="dp-photo-credit">Real place photo · Wikimedia Commons</span></div>'+
+   '<div class="dp-hero-media">'+(place.image?'<img src="'+esc(place.image)+'" alt="'+esc(place.name)+'" loading="eager">':'<div class="dp-photo-placeholder"><strong>📸 Real photos coming soon</strong><span>Verified destination photos will appear here.</span></div>')+'<span class="dp-photo-credit">'+(place.image?'Real place photo · verified source':'Photo verification pending')+'</span></div>''+
    '<div class="dp-hero-copy">'+
      '<div class="dp-eyebrow">'+esc(place.type)+'</div>'+
      '<h1>'+esc(place.name)+'</h1>'+
