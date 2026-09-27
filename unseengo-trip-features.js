@@ -54,7 +54,8 @@ function addDestinationInfo(){
  const img=placeName;
  const lat=hero.querySelector('[data-lat]')?.dataset.lat;
  const coord=window.UnseenGoPlaceCoordinates;
- if(coord)weather(coord.lat,coord.lng,document.getElementById(weatherId));
+ if(coord) weather(coord.lat,coord.lng,document.getElementById(weatherId));
+ else { const iframe=app.querySelector('iframe[src*="marker="]'); const m=iframe?.src.match(/marker=([-0-9.]+)%2C([-0-9.]+)/); if(m) weather(Number(m[1]),Number(m[2]),document.getElementById(weatherId)); }
 }
 function observePlace(){
  const app=document.getElementById('placeApp');if(!app)return;
