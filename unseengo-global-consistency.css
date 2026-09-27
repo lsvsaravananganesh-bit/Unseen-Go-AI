@@ -1,0 +1,135 @@
+/* UnseenGo AI — Unified Platform Design System
+   Loaded last on every user-facing page so navigation, typography, controls,
+   cards and responsive behavior feel like one product. Page-specific layouts remain intact. */
+:root{
+  --ug-brand-bg:#070b08;
+  --ug-brand-surface:#0d1510;
+  --ug-brand-surface-2:#121d15;
+  --ug-brand-line:#29392d;
+  --ug-brand-text:#f5f7f2;
+  --ug-brand-muted:#9ca89e;
+  --ug-brand-lime:#c8e66a;
+  --ug-brand-lime-strong:#d8f36a;
+  --ug-brand-ink:#071006;
+  --ug-radius:14px;
+  --ug-shadow:0 18px 50px rgba(0,0,0,.24);
+}
+html{background:var(--ug-brand-bg)!important;color-scheme:dark}
+body{
+  background:var(--ug-brand-bg)!important;
+  color:var(--ug-brand-text)!important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
+}
+body,body *{box-sizing:border-box}
+a{transition:color .18s ease,border-color .18s ease,background .18s ease,transform .18s ease}
+h1,h2,h3,h4,h5,h6{color:var(--ug-brand-text)}
+p{color:var(--ug-brand-muted)}
+/* One navigation language for the different legacy header classes. */
+.nav,.site-header,.navbar,.top{
+  min-height:70px!important;
+  background:rgba(7,11,8,.96)!important;
+  color:var(--ug-brand-text)!important;
+  border-bottom:1px solid rgba(200,230,106,.14)!important;
+  box-shadow:0 8px 28px rgba(0,0,0,.12)!important;
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.nav .brand,.site-header .brand,.navbar .brand,.top .brand,
+.nav .logo,.site-header .logo,.navbar .logo,.top .logo{
+  color:#fff!important;
+  font-weight:900!important;
+  letter-spacing:-.4px;
+}
+.nav .brand span,.nav .brand b,.site-header .brand span,.site-header .brand b,
+.navbar .brand span,.navbar .brand b,.top .brand span,.top .brand b,
+.nav .logo span,.site-header .logo span,.navbar .logo span,.top .logo span{color:var(--ug-brand-lime)!important}
+.nav nav a,.site-header nav a,.navbar nav a,.top nav a{
+  color:#aeb9b0!important;
+  text-decoration:none!important;
+  font-size:12px!important;
+  font-weight:700!important;
+}
+.nav nav a:hover,.nav nav a.active,.site-header nav a:hover,.site-header nav a.active,
+.navbar nav a:hover,.navbar nav a.active,.top nav a:hover,.top nav a.active{
+  color:var(--ug-brand-lime)!important;
+}
+/* Shared controls */
+button,.btn,.ug-btn,.primary-btn,.primary,.btn-primary,.cta,.generate,.go,.explore-btn{
+  font-family:inherit!important;
+  border-radius:10px!important;
+  font-weight:850!important;
+  transition:transform .18s ease,background .18s ease,border-color .18s ease!important;
+}
+.ug-btn,.primary-btn,.primary,.btn-primary,.cta,.generate,.go,.explore-btn{
+  background:var(--ug-brand-lime)!important;
+  color:var(--ug-brand-ink)!important;
+  border-color:var(--ug-brand-lime)!important;
+}
+.ug-btn:hover,.primary-btn:hover,.primary:hover,.btn-primary:hover,.cta:hover,.generate:hover,.go:hover,.explore-btn:hover{
+  background:var(--ug-brand-lime-strong)!important;
+  transform:translateY(-1px);
+}
+.ug-btn.alt,.outline,.secondary,.ghost,.outline-btn{
+  background:#101812!important;
+  color:var(--ug-brand-lime)!important;
+  border:1px solid #3b4d3e!important;
+}
+input,select,textarea{
+  font-family:inherit!important;
+  background:#090e09!important;
+  color:#f5f7f2!important;
+  border-color:#334638!important;
+}
+input::placeholder,textarea::placeholder{color:#7f8c82!important}
+/* Shared content surfaces */
+.panel,.card,.feature-card,.about-card,.route-card,.nearby,.mode,.empty,
+.place,.story-box,.story,.planner-card,.transport-panel,.review-card,.home-card,
+.city-panel,.city-history-card,.city-place-card,.city-stay,.ai-card,.ai-demo-card,
+.ai-understanding,.ai-explanation,.vibe,.day,.famous-card,.how-card,.how-core{
+  background:var(--ug-brand-surface)!important;
+  color:var(--ug-brand-text)!important;
+  border-color:var(--ug-brand-line)!important;
+}
+.panel:hover,.card:hover,.feature-card:hover,.place:hover,.route-card:hover,.nearby:hover{
+  border-color:#52694f!important;
+}
+.section,.section.alt,main{color:var(--ug-brand-text)}
+/* Keep content width and section rhythm recognizable across pages. */
+.container,.wrap,.page-container,.content-wrap,.discover-wrap{
+  max-width:1240px;
+}
+/* Consistent status/tag language */
+.tag,.score,.pill,.badge,.route-meta span,.place .tag{
+  background:#121b13!important;
+  color:var(--ug-brand-lime)!important;
+  border-color:#334638!important;
+}
+/* Footer language */
+footer,.footer{
+  background:#050805!important;
+  color:#87938a!important;
+  border-top:1px solid var(--ug-brand-line)!important;
+}
+footer a,.footer a{color:#b8c2ba!important}
+footer a:hover,.footer a:hover{color:var(--ug-brand-lime)!important}
+footer b,.footer b{color:#fff!important}
+/* Prevent legacy bright yellow/blue accents from creating a separate brand. */
+[style*="#ffd21f"],[style*="#FFD21F"],[style*="#e5b800"],[style*="#E5B800"],
+[style*="#ffcf00"],[style*="#FFCF00"]{color:var(--ug-brand-lime)!important;border-color:var(--ug-brand-lime)!important}
+/* Accessible focus */
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--ug-brand-lime)!important;
+  outline-offset:3px;
+}
+/* Mobile: same shell, less density */
+@media(max-width:850px){
+  .nav,.site-header,.navbar,.top{min-height:66px!important}
+  .nav nav,.site-header nav,.navbar nav,.top nav{gap:10px!important}
+}
+@media(max-width:560px){
+  .nav,.site-header,.navbar,.top{padding-left:14px!important;padding-right:14px!important}
+  .nav .brand,.site-header .brand,.navbar .brand,.top .brand{font-size:18px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}
+}
