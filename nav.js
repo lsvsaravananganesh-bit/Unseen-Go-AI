@@ -52,7 +52,7 @@
     }).catch(()=>{});
   }
   function bootstrap(){
-    loadCss();buildShell();
+    loadCss();buildShell();loadSearch();loadEnhancements();loadTripFeatures();
     if(!window.UNSEENGO_SUPABASE_CONFIG){
       const s=document.createElement('script');s.src='supabase-config.js';s.onload=loadClient;document.head.appendChild(s);
     }else loadClient();
@@ -63,5 +63,8 @@
   }
   window.openCityPage=function(city){if(city){localStorage.setItem('unseengo_city',city);location.href='city.html?city='+encodeURIComponent(city)}};
   window.setCity=function(city){if(!city)return;localStorage.setItem('unseengo_city',city);const picker=document.getElementById('cityPickerInput');if(picker)picker.value=city;window.openCityPage(city)};
+  function loadEnhancements(){if(document.querySelector('script[data-unseengo-enhancements]'))return;const s=document.createElement('script');s.src='unseengo-enhancements.js?v=20260825d';s.dataset.unseengoEnhancements='true';document.body.appendChild(s)}
+  function loadSearch(){if(document.querySelector('script[data-ug-search]'))return;const s=document.createElement('script');s.src='unseengo-search.js?v=20260826';s.dataset.ugSearch='1';document.body.appendChild(s)}
+  function loadTripFeatures(){if(document.querySelector('script[data-ug-trip-features]'))return;const s=document.createElement('script');s.src='unseengo-trip-features.js?v=20260927';s.dataset.ugTripFeatures='1';document.body.appendChild(s)}
   document.addEventListener('DOMContentLoaded',bootstrap,{once:true});
 })();
