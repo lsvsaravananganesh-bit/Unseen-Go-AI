@@ -97,7 +97,42 @@ const places={
 }
 
 function normalise(s){return s.toLowerCase().replace(/[–—]/g,' ').replace(/[^a-z0-9]+/g,' ').trim()}
-const place=places[normalise(requested)]||places['konda reddy fort'];
+const fallbackData={
+  'Kurnool':{location:'Kurnool, Andhra Pradesh',type:'Destination · City',bestTime:'October–February'},
+  'Hyderabad':{location:'Hyderabad, Telangana',type:'Destination · City',bestTime:'October–February'},
+  'Bengaluru':{location:'Bengaluru, Karnataka',type:'Destination · City',bestTime:'October–February'},
+  'Chennai':{location:'Chennai, Tamil Nadu',type:'Destination · City',bestTime:'October–February'},
+  'Mumbai':{location:'Mumbai, Maharashtra',type:'Destination · City',bestTime:'November–February'},
+  'Pune':{location:'Pune, Maharashtra',type:'Destination · City',bestTime:'October–February'},
+  'Delhi':{location:'Delhi, India',type:'Destination · City',bestTime:'October–February'},
+  'Jaipur':{location:'Jaipur, Rajasthan',type:'Destination · City',bestTime:'October–March'},
+  'Kolkata':{location:'Kolkata, West Bengal',type:'Destination · City',bestTime:'October–February'},
+  'Ahmedabad':{location:'Ahmedabad, Gujarat',type:'Destination · City',bestTime:'October–February'},
+  'Lucknow':{location:'Lucknow, Uttar Pradesh',type:'Destination · City',bestTime:'October–February'},
+  'Bhubaneswar':{location:'Bhubaneswar, Odisha',type:'Destination · City',bestTime:'October–February'},
+  'Visakhapatnam':{location:'Visakhapatnam, Andhra Pradesh',type:'Destination · City',bestTime:'October–February'},
+  'Vijayawada':{location:'Vijayawada, Andhra Pradesh',type:'Destination · City',bestTime:'October–February'},
+  'Mysuru':{location:'Mysuru, Karnataka',type:'Destination · City',bestTime:'October–February'},
+  'Goa':{location:'Goa, India',type:'Destination · Beach · Culture',bestTime:'November–February'}
+};
+function makeFallback(name){
+  const key=Object.keys(fallbackData).find(k=>normalise(k)===normalise(name));
+  const f=fallbackData[key]||{location:name,type:'Destination',bestTime:'October–February'};
+  return {name:name,alternate:'Explore this destination with UnseenGo AI',location:f.location,type:f.type,bestTime:f.bestTime,entry:'Needs verification',rating:'Not yet verified',timings:'Needs verification',status:'⚠ Needs destination-data verification',
+    image:'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80',
+    image2:'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80',
+    image3:'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=80',
+    source:'https://www.incredibleindia.gov.in/',sourceLabel:'Incredible India — official tourism portal',
+    maps:'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name),
+    lat:20,lng:78,
+    history:'This destination is present in the UnseenGo destination catalogue. Detailed historical and cultural content should be populated from an official tourism, heritage or local-government source before publication.',
+    significance:'UnseenGo uses this same structured destination page for every destination. Verified history, significance, operational details and local recommendations can be attached as destination data becomes available.',
+    nearby:[],food:[],stay:[],
+    reach:[['By road','Local / regional road network','Open Maps for the current route.'],['By rail','Nearest railway station','Verify the nearest station before travel.'],['By air','Nearest airport','Verify the nearest airport and onward transport.']],
+    note:'This is a generated destination shell. Do not treat unavailable ratings, fees, timings or descriptive facts as verified.'
+  };
+}
+const place=places[normalise(requested)]||makeFallback(requested);
 const mapEmbed='https://www.openstreetmap.org/export/embed.html?bbox='+(place.lng-.012)+'%2C'+(place.lat-.009)+'%2C'+(place.lng+.012)+'%2C'+(place.lat+.009)+'&layer=mapnik&marker='+place.lat+'%2C'+place.lng;
 
 function unavailable(label,detail){return '<div class="dp-unavailable"><b>'+esc(label)+'</b>'+esc(detail)+'</div>'}
