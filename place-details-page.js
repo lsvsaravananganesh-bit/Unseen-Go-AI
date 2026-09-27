@@ -168,9 +168,9 @@ function render(){
   '<div>'+
    '<section class="dp-card"><div class="dp-section-head"><div><div class="dp-eyebrow">📸 Photos</div><h2>See the place.</h2></div></div>'+
     '<div class="dp-gallery">'+
-      '<figure><img src="'+esc(place.image)+'" alt="'+esc(place.name)+' front view" loading="lazy"><figcaption>📷 Photo source: destination-specific verified source</figcaption></figure>'+
-      '<figure><img src="'+esc(place.image2)+'" alt="'+esc(place.name)+' view" loading="lazy"><figcaption>📷 Photo source: destination-specific verified source</figcaption></figure>'+
-      '<figure><img src="'+esc(place.image3)+'" alt="'+esc(place.name)+' view" loading="lazy"><figcaption>📷 Photo source: destination-specific verified source</figcaption></figure>'+
+      (place.image?'<figure><img src="'+esc(place.image)+'" alt="'+esc(place.name)+' real destination photo" loading="lazy"><figcaption>📷 '+esc(place.photoSource||place.sourceLabel||'Photo source pending verification')+'</figcaption></figure>':'<div class="dp-photo-placeholder"><strong>📸 Real photo unavailable</strong><span>⚠ Needs Verification · no verified image is stored yet.</span></div>')+
+      (place.image2?'<figure><img src="'+esc(place.image2)+'" alt="'+esc(place.name)+' real destination photo" loading="lazy"><figcaption>📷 '+esc(place.photoSource||place.sourceLabel||'Photo source pending verification')+'</figcaption></figure>':'')+
+      (place.image3?'<figure><img src="'+esc(place.image3)+'" alt="'+esc(place.name)+' real destination photo" loading="lazy"><figcaption>📷 '+esc(place.photoSource||place.sourceLabel||'Photo source pending verification')+'</figcaption></figure>':'')+
     '</div>'+
    '</section>'+
 
