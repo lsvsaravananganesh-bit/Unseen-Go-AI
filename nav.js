@@ -22,4 +22,6 @@
   if(!window.UNSEENGO_SUPABASE_CONFIG){const s=document.createElement('script');s.src='supabase-config.js';s.onload=function(){if(!document.querySelector('script[data-unseengo-supabase-client]')){const c=document.createElement('script');c.src='supabase-client.js';c.dataset.unseengoSupabaseClient='true';c.onload=function(){loadAuthNav();loadEnhancements()};document.head.appendChild(c)}};document.head.appendChild(s)}else{loadAuthNav();loadEnhancements()}
   function loadAuthNav(){if(document.querySelector('script[data-unseengo-auth-nav]'))return;const s=document.createElement('script');s.src='nav-auth.js';s.dataset.unseengoAuthNav='true';document.head.appendChild(s)}
   loadGlobalSystem();
+  function loadTripFeatures(){if(document.querySelector('script[data-ug-trip-features]'))return;const s=document.createElement('script');s.src='unseengo-trip-features.js?v=20260927';s.dataset.ugTripFeatures='1';document.body.appendChild(s)}
+  document.addEventListener('DOMContentLoaded',loadTripFeatures,{once:true});
 })();
