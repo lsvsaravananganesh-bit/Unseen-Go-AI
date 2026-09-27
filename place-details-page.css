@@ -88,3 +88,5 @@ body.place-page{background:#f7f9f5;color:var(--dp-ink)}
 .dp-photo-placeholder strong{color:var(--ug-brand-text,#f5f7f2);font-size:12px}
 .dp-photo-placeholder span{font-size:9px}
 @media(max-width:700px){.dp-trust-legend{grid-template-columns:1fr}.dp-actions>*{flex:1 1 100%}}
+
+.dp-service-grid{display:grid;grid-template-columns:1fr;gap:8px}.dp-service-grid a{display:flex;justify-content:space-between;align-items:center;padding:10px 11px;border:1px solid var(--ug-brand-line,#29392d);border-radius:9px;color:var(--ug-brand-text,#f5f7f2);text-decoration:none;background:rgba(255,255,255,.02);font-size:10px}.dp-service-grid a:hover{border-color:var(--ug-brand-lime,#c8e66a);color:var(--ug-brand-lime,#c8e66a)}
