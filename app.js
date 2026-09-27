@@ -27,36 +27,45 @@ let selectedCity='';
 
 function cityNames(){return Object.keys(cities).sort();}
 function populateCities(){
+ if (typeof document === 'undefined' || typeof document.getElementById !== 'function') return;
  const names=cityNames();
  const datalist=document.getElementById('cities');
  const select=document.getElementById('citySelect');
  const plan=document.getElementById('planCity');
- datalist.innerHTML=names.map(c=>`<option value="${c}"></option>`).join('');
- select.innerHTML='<option value="">Choose a city...</option>'+names.map(c=>`<option value="${c}">${c} · ${cities[c].region} India</option>`).join('');
- plan.innerHTML='<option value="">Choose a city...</option>'+names.map(c=>`<option value="${c}">${c}</option>`).join('');
- document.getElementById('cityChips').innerHTML=names.map(c=>`<button class="city-chip" onclick="setCity('${c}')">${c}</button>`).join('');
+ const chips=document.getElementById('cityChips');
+ if(datalist) datalist.innerHTML=names.map(c=>`<option value="${c}"></option>`).join('');
+ if(select) select.innerHTML='<option value="">Choose a city...</option>'+names.map(c=>`<option value="${c}">${c} · ${cities[c].region} India</option>`).join('');
+ if(plan) plan.innerHTML='<option value="">Choose a city...</option>'+names.map(c=>`<option value="${c}">${c}</option>`).join('');
+ if(chips) chips.innerHTML=names.map(c=>`<button class="city-chip" onclick="setCity('${c}')">${c}</button>`).join('');
 }
 function renderVibes(){
- document.getElementById('vibes').innerHTML=Object.keys(icons).map(k=>`<button class="vibe ${k===selected?'active':''}" onclick="selectVibe('${k}')"><span>${icons[k]}</span><b>${k==='Food'?'Local Food':k}</b><small>${k==='Nature'?'Quiet escapes':k==='Heritage'?'Stories & ruins':k==='Food'?'Eat like a local':k==='Culture'?'Local life':'Road less known'}</small></button>`).join('');
+ const vibes=document.getElementById('vibes');
+ if(vibes) vibes.innerHTML=Object.keys(icons).map(k=>`<button class="vibe ${k===selected?'active':''}" onclick="selectVibe('${k}')"><span>${icons[k]}</span><b>${k==='Food'?'Local Food':k}</b><small>${k==='Nature'?'Quiet escapes':k==='Heritage'?'Stories & ruins':k==='Food'?'Eat like a local':k==='Culture'?'Local life':'Road less known'}</small></button>`).join('');
 }
 function renderPlaces(){
  const places=document.getElementById('places');
- if(!selectedCity){document.getElementById('resultLabel').textContent='Choose a city to see hidden gems';places.innerHTML='<div class="empty-state">⌖<strong>Your India journey starts here</strong><span>Select a city above to reveal its hidden gems.</span></div>';return;}
+ if(!places) return;
+ const resultLabel=document.getElementById('resultLabel');
+ if(!selectedCity){if(resultLabel) resultLabel.textContent='Choose a city to see hidden gems';places.innerHTML='<div class="empty-state">⌖<strong>Your India journey starts here</strong><span>Select a city above to reveal its hidden gems.</span></div>';return;}
  const list=cities[selectedCity][selected]||[];
- document.getElementById('resultLabel').textContent=`${selected==='Food'?'Local Food':selected} picks · ${selectedCity}`;
+ if(resultLabel) resultLabel.textContent=`${selected==='Food'?'Local Food':selected} picks · ${selectedCity}`;
  places.innerHTML=list.map((p,i)=>`<article class="place place-${i+1}"><span class="tag">✦ ${p[2]}/100</span><small>${p[1]}</small><h3>${p[0]}</h3><p>${p[3]}</p><span class="explore">Explore gem →</span></article>`).join('');
 }
 function selectVibe(v){selected=v;renderVibes();renderPlaces();}
 function setCity(city){
  if(!cities[city])return;
  selectedCity=city;
- document.getElementById('heroCity').value=city;
- document.getElementById('citySelect').value=city;
- document.getElementById('planCity').value=city;
+ const heroCity=document.getElementById('heroCity');
+ if(heroCity) heroCity.value=city;
+ const citySelect=document.getElementById('citySelect');
+ if(citySelect) citySelect.value=city;
+ const planCity=document.getElementById('planCity');
+ if(planCity) planCity.value=city;
  document.querySelectorAll('.city-chip').forEach(b=>b.classList.toggle('active',b.textContent.trim()===city));
  renderPlaces();
  document.dispatchEvent(new CustomEvent('unseengo:citychange',{detail:{city}}));
- document.getElementById('discover').scrollIntoView({behavior:'smooth',block:'start'});
+ const discoverEl=document.getElementById('discover');
+ if(discoverEl) discoverEl.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function bindCitySelection(){
  const select=document.getElementById('citySelect');
@@ -85,5 +94,7 @@ function generatePlan(){
  const out=document.getElementById('output');out.classList.add('show');
  out.innerHTML=`<h3>✦ Your UnseenGo plan for ${city}</h3><p>${days} · ${style} · ${budget}</p><div class="plan-grid"><div class="day"><b>DAY 01</b><p>${picks[0][0]}<br>${picks[0][3]}</p></div><div class="day"><b>DAY 02</b><p>${picks[1][0]}<br>${picks[1][3]}</p></div><div class="day"><b>DAY 03</b><p>${picks[2][0]}<br>${picks[2][3]}</p></div></div>`;
 }
-populateCities();renderVibes();renderPlaces();bindCitySelection();
-setTimeout(bindCitySelection,500);
+if (typeof document !== 'undefined' && typeof document.getElementById === 'function') {
+  populateCities();renderVibes();renderPlaces();bindCitySelection();
+  setTimeout(bindCitySelection,500);
+}

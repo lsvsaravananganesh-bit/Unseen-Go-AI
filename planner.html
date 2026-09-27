@@ -1,1 +1,1861 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Create a realistic AI travel plan with UnseenGo."><title>AI Planner — UnseenGo AI</title><link rel="stylesheet" href="styles.css?v=20260827"><link rel="stylesheet" href="unseengo-background.css?v=20260827"><link rel="stylesheet" href="unseengo-suite.css?v=20260827"><style>:root{--lime:#d8ff4d;--ink:#0b0f0c;--panel:#111811;--line:#2b372d;--muted:#929d93}*{box-sizing:border-box}body{margin:0;background:#080d09;color:#f5f7f3;font-family:Inter,system-ui,sans-serif}.page{width:min(1180px,calc(100% - 32px));margin:auto;padding:110px 0 70px}.hero{max-width:820px;margin-bottom:32px}.eyebrow{color:var(--lime);font-size:10px;font-weight:950;letter-spacing:2px}.hero h1{font-size:clamp(44px,7vw,78px);line-height:.92;letter-spacing:-4px;margin:12px 0}.hero em{font-family:Georgia,serif;color:var(--lime);font-weight:400}.hero p{color:#aeb8ae;line-height:1.6;max-width:700px;margin:0}.planner-card{padding:28px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(145deg,#121a14,#0c120e);box-shadow:0 24px 70px #0007}.section-label{display:block;color:#dbe3da;font-size:10px;font-weight:950;letter-spacing:1.2px;margin-bottom:12px}.focus-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.focus input,.interest input,.avoid-item input{position:absolute;opacity:0;pointer-events:none}.focus-card{display:flex;flex-direction:column;gap:5px;min-height:78px;padding:15px;border:1px solid var(--line);border-radius:14px;background:#0a0f0b;color:#9fa99f;cursor:pointer;transition:.2s}.focus-card strong{color:#f3f6f2;font-size:13px}.focus-card small{font-size:10px;line-height:1.35}.focus input:checked+.focus-card{background:var(--lime);border-color:var(--lime);color:#10150e}.focus input:checked+.focus-card strong{color:#10150e}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.secondary{margin-top:22px}.field label{display:block;color:#bfc8bf;font-size:9px;font-weight:950;letter-spacing:1px;margin-bottom:7px}.field input,.field select,.intent{width:100%;background:#0a0f0b;color:#f5f7f3;border:1px solid var(--line);border-radius:11px;padding:13px;font:inherit}.intent{min-height:82px;resize:vertical;line-height:1.5}.interests,.avoid{display:flex;flex-wrap:wrap;gap:7px}.avoid-item span{display:block;padding:9px 11px;border:1px solid var(--line);border-radius:999px;color:#9fa99f;cursor:pointer;font-size:10px}.avoid-item input:checked+span{background:var(--lime);border-color:var(--lime);color:#10150e;font-weight:800}.quick-prompts{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}.quick-prompts button{background:#151f16;color:#aeb9af;border:1px solid var(--line);border-radius:999px;padding:7px 10px;font-size:9px;cursor:pointer}.quick-prompts button:hover{border-color:var(--lime);color:var(--lime)}.toggle{display:flex;align-items:center;gap:9px;margin-top:15px;padding:12px 14px;border:1px solid var(--line);border-radius:11px;background:#0a0f0b;color:#9fa99f;font-size:10px;cursor:pointer}.toggle input{accent-color:var(--lime)}.generate{margin-top:18px;width:100%;background:var(--lime);color:#0b0f0c;border:0;border-radius:11px;padding:14px 18px;font-weight:950;cursor:pointer}.generate:disabled{opacity:.65;cursor:wait}.ai-understanding,.ai-explanation{display:none;margin-top:14px;padding:14px;border:1px solid #35452f;border-radius:14px;background:#0d150f}.ai-understanding.show,.ai-explanation.show{display:block}.ai-understanding>b,.ai-explanation>b{font-size:10px;color:var(--lime);letter-spacing:.7px}.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.tag{padding:6px 8px;border-radius:999px;background:#182219;color:#cce58b;font-size:9px}.results{display:none;margin-top:35px}.results.show{display:block}.result-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:16px}.result-head h2{font-size:34px;letter-spacing:-1px;margin:6px 0}.intro{color:#9fa99f;line-height:1.5}.score-pill{padding:8px 11px;border:1px solid #3d493b;border-radius:999px;color:var(--lime);font-size:9px;white-space:nowrap}.ai-explanation p{color:#aab4aa;font-size:11px;line-height:1.55;margin:8px 0 0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.place{padding:18px;border:1px solid var(--line);border-radius:16px;background:#101711;position:relative}.place:first-child{border-color:#6c8239}.rank{position:absolute;right:13px;top:13px;color:var(--lime);font-weight:900;font-size:11px}.place .category{color:var(--lime);font-size:9px;font-weight:950;letter-spacing:1.5px}.place h3{margin:8px 0 4px;font-size:16px}.place>small{color:#7f8b80;font-size:9px}.score{font-size:27px;font-weight:950;margin-top:10px}.score small{font-size:9px;font-weight:700;margin-left:4px}.score-breakdown{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:10px}.factor{display:flex;justify-content:space-between;color:#7e897f;font-size:9px}.factor b{color:#b8d76c}.why{margin:11px 0 0;padding-top:10px;border-top:1px solid #273128;color:#b7c0b7;font-size:10px;line-height:1.45}.note{color:#7d897f;font-size:9px;line-height:1.45}.place>.note{display:none}.add-trip{margin-top:10px;border:1px solid #3b4934;background:transparent;color:var(--lime);padding:8px 10px;border-radius:8px;font-size:9px;cursor:pointer}.itinerary{margin-top:24px;display:grid;gap:12px}.day{padding:19px;border:1px solid var(--line);border-radius:16px;background:#101711}.day h3{margin:0 0 10px;color:var(--lime);font-size:13px}.day-place{display:flex;gap:12px;padding:11px 0;border-top:1px solid #252e27}.time{min-width:65px;color:var(--lime);font-weight:900;font-size:10px}.day-place b{font-size:11px}.day-place small{color:#818d82;font-size:9px}.day-place p{margin:4px 0 0;color:#818d82;font-size:9px;line-height:1.4}.route-meta{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}.route-meta span{padding:6px 8px;border-radius:999px;background:#182119;border:1px solid #2c382e;color:#aab5ab;font-size:8px}.map-btn{display:inline-block;margin-top:16px;background:var(--lime);color:#0b0f0c;text-decoration:none;padding:11px 15px;border-radius:9px;font-size:10px;font-weight:950}.planner-card>.note{margin-top:10px}.engine-status{display:none}.hint{display:none}@media(max-width:900px){.focus-grid{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:1fr 1fr}}@media(max-width:700px){.page{padding-top:90px}.form-grid,.cards{grid-template-columns:1fr}.result-head{display:block}.score-pill{display:inline-block;margin-top:5px}.planner-card{padding:20px}}@media(max-width:480px){.focus-grid{grid-template-columns:1fr}.hero h1{letter-spacing:-2.5px}}</style><link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a href="discover.html">Discover</a><a href="india-cities.html">🇮🇳 India</a><a href="stay.html">Stay</a><a class="active" href="planner.html">AI Planner</a><a href="tripideas.html">Trip Ideas</a></nav><button type="button" onclick="location.href='index.html'">Home</button></header><main class="page"><section class="hero"><p class="eyebrow">✦ AI TRAVEL PLANNER</p><h1>Plan around<br><em>what you love.</em></h1><p>Choose your interests, trip details and constraints. UnseenGo builds a practical discovery plan from available destination data.</p></section><section class="planner-card"><span class="section-label">01 · YOUR INTERESTS</span><div class="focus-grid"><label class="focus"><input type="checkbox" value="Temples" name="focus"><span class="focus-card"><strong>🛕 Temples</strong><small>Spiritual and ancient places</small></span></label><label class="focus"><input type="checkbox" value="Forts" name="focus"><span class="focus-card"><strong>🏰 Forts</strong><small>Historic architecture</small></span></label><label class="focus"><input type="checkbox" value="Nature" name="focus"><span class="focus-card"><strong>🌿 Nature</strong><small>Scenic and outdoor places</small></span></label><label class="focus"><input type="checkbox" value="Heritage" name="focus"><span class="focus-card"><strong>🏛 Heritage</strong><small>History and culture</small></span></label><label class="focus"><input type="checkbox" value="Culture" name="focus"><span class="focus-card"><strong>🎨 Culture</strong><small>Arts and local life</small></span></label><label class="focus"><input type="checkbox" value="Food" name="focus"><span class="focus-card"><strong>🍛 Food</strong><small>Local cuisine</small></span></label><label class="focus"><input type="checkbox" value="Adventure" name="focus"><span class="focus-card"><strong>🥾 Adventure</strong><small>Outdoor experiences</small></span></label><label class="focus"><input type="checkbox" value="Photography" name="focus"><span class="focus-card"><strong>📸 Photography</strong><small>Distinctive places</small></span></label></div><div class="secondary"><div class="form-grid"><div class="field"><label for="city">CITY</label><select id="city"><option value="">All available cities</option></select></div><div class="field"><label for="days">DURATION</label><select id="days"><option value="1">1 day</option><option value="2" selected>2 days</option><option value="3">3 days</option><option value="4">4 days</option><option value="5">5 days</option><option value="7">7 days</option></select></div><div class="field"><label for="budget">BUDGET</label><select id="budget"><option value="low">Budget-friendly</option><option value="medium" selected>Comfort</option><option value="high">Premium</option></select></div><div class="field"><label for="pace">PACE</label><select id="pace"><option value="slow">Relaxed</option><option value="balanced" selected>Balanced</option><option value="fast">Packed</option></select></div><div class="field"><label for="intent">YOUR TRIP <span style="opacity:.6">· OPTIONAL</span></label><textarea id="intent" class="intent" placeholder="e.g. 3 days in Kurnool for temples, nature and photography, no crowds."></textarea><div class="quick-prompts"><button type="button" data-prompt="2 days in Kurnool for temples and heritage, relaxed pace">Kurnool temples</button><button type="button" data-prompt="3 days in Hyderabad for food, culture and heritage">Hyderabad culture</button><button type="button" data-prompt="2 days in Bengaluru for nature and photography">Bengaluru nature</button></div></div><div class="field"><label>AVOID</label><div class="avoid"><label class="avoid-item"><input type="checkbox" value="crowds"><span>👥 Crowds</span></label><label class="avoid-item"><input type="checkbox" value="long-travel"><span>🚗 Long travel</span></label><label class="avoid-item"><input type="checkbox" value="long-walk"><span>🚶 Long walks</span></label><label class="avoid-item"><input type="checkbox" value="high-cost"><span>💸 High cost</span></label><label class="avoid-item"><input type="checkbox" value="tourist-traps"><span>🎯 Tourist traps</span></label><label class="avoid-item"><input type="checkbox" value="early"><span>🌅 Early mornings</span></label></div></div></div></div><label class="toggle"><input id="diversify" type="checkbox"> Add diverse experiences</label><div class="ai-understanding" id="aiUnderstanding"><b>✦ PLAN UNDERSTOOD</b><div class="tags" id="understoodTags"></div></div><button class="generate" id="generate" type="button">✦ Generate my plan</button><p id="plannerMessage" class="note"></p></section><section class="results" id="results" aria-live="polite"><div class="result-head"><div><p class="eyebrow">✦ YOUR PLAN</p><h2 id="resultTitle"></h2><p id="resultSummary" class="intro" style="font-size:12px"></p></div><div class="score-pill">UnseenGo Score</div></div><div class="ai-explanation" id="aiExplanation"><b>WHY THESE PLACES</b><p id="aiExplanationText"></p></div><div class="cards" id="recommendations"></div><div class="itinerary" id="itinerary"></div><a id="mapLink" href="#" class="map-btn" target="_blank" rel="noopener noreferrer">📍 Open route in Google Maps</a></section></main><footer><b>✦ UnseenGo AI</b><span>Discover the places nobody told you about.</span><span>© 2026</span></footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="supabase-config.js?v=20260827"></script><script src="supabase-client.js?v=20260827"></script><script src="app.js?v=20260827"></script><script src="unseen-engine.js?v=20260827"></script><script src="route-engine.js?v=20260827"></script><script src="planner-ui.js?v=20260827"></script><script src="planner-reality.js?v=20260827"></script><script src="live-route.js?v=20260827"></script><script src="weather-api.js?v=20260827"></script><script src="nav.js?v=20260827"></script><script>document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('[data-prompt]').forEach(function(b){b.addEventListener('click',function(){const t=document.getElementById('intent');t.value=b.dataset.prompt;t.focus()})})});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Plan realistic, interest-driven AI travel itineraries across India with UnseenGo AI. Real destinations, road timings, opening hours, and hidden gems.">
+  <title>AI Travel Planner — UnseenGo AI</title>
+  
+  <!-- Core Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <style>
+    :root {
+      --ug-lime: #d8ff4d;
+      --ug-lime-hover: #c5ef38;
+      --ug-lime-soft: rgba(216, 255, 77, 0.12);
+      --ug-lime-glow: rgba(216, 255, 77, 0.25);
+      --ug-bg: #070d09;
+      --ug-bg-alt: #0a130d;
+      --ug-panel: #0e1711;
+      --ug-panel-elevated: #132017;
+      --ug-panel-border: #233427;
+      --ug-panel-border-hover: #3b5440;
+      --ug-text-primary: #f5f8f5;
+      --ug-text-secondary: #9cb0a2;
+      --ug-text-muted: #6f8275;
+      --ug-emerald: #10b981;
+      --ug-amber: #f59e0b;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 20px;
+      --radius-xl: 28px;
+      --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: var(--ug-bg);
+      color: var(--ug-text-primary);
+      font-family: var(--font-display);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Page container */
+    .planner-page {
+      width: min(1200px, calc(100% - 36px));
+      margin: 0 auto;
+      padding: 100px 0 80px;
+    }
+
+    /* Step flow bar */
+    .journey-stepper-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .journey-stepper {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(14, 23, 17, 0.85);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: 9999px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      max-width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .journey-stepper::-webkit-scrollbar { display: none; }
+
+    .stepper-step {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--ug-text-muted);
+      text-decoration: none;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .stepper-step:hover {
+      color: var(--ug-text-primary);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    .stepper-step.active {
+      background: var(--ug-lime-soft);
+      color: var(--ug-lime);
+      border: 1px solid rgba(216, 255, 77, 0.3);
+    }
+    .stepper-arrow {
+      color: var(--ug-panel-border);
+      font-size: 0.7rem;
+      user-select: none;
+    }
+
+    /* Hero section */
+    .planner-hero {
+      text-align: center;
+      max-width: 860px;
+      margin: 0 auto 2.5rem;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--ug-lime);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: rgba(216, 255, 77, 0.08);
+      border: 1px solid rgba(216, 255, 77, 0.2);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1rem;
+    }
+
+    .planner-hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .planner-hero h1 em {
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ug-lime);
+      letter-spacing: -1px;
+    }
+
+    .planner-hero p {
+      color: var(--ug-text-secondary);
+      font-size: 1.08rem;
+      line-height: 1.65;
+      max-width: 680px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .hero-features-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .feature-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--ug-panel);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: 999px;
+      padding: 0.35rem 0.8rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ug-text-secondary);
+    }
+    .feature-chip span { color: var(--ug-lime); font-size: 0.85rem; }
+
+    /* Studio Card */
+    .planner-card {
+      background: linear-gradient(160deg, #101912 0%, #0a110c 100%);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-xl);
+      padding: 2.25rem;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .section-title-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--ug-lime);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .section-helper-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .counter-badge {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--ug-panel-border);
+      color: var(--ug-text-secondary);
+      font-size: 0.72rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .quick-link-btn {
+      background: transparent;
+      border: 0;
+      color: var(--ug-lime);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0.2rem 0.4rem;
+    }
+    .quick-link-btn:hover { color: #fff; }
+
+    /* Passions Grid (Step 1) */
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
+    }
+
+    .focus-item {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .focus-item input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .focus-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      padding: 1rem 0.9rem;
+      background: var(--ug-panel);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-md);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      height: 100%;
+      user-select: none;
+    }
+
+    .focus-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--ug-panel-border-hover);
+      background: var(--ug-panel-elevated);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .focus-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--ug-text-primary);
+      font-size: 0.9rem;
+      font-weight: 800;
+    }
+
+    .focus-card small {
+      color: var(--ug-text-muted);
+      font-size: 0.72rem;
+      line-height: 1.35;
+    }
+
+    .focus-item input:checked + .focus-card {
+      background: var(--ug-lime);
+      border-color: var(--ug-lime);
+      color: #0b110c;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px var(--ug-lime-glow);
+    }
+
+    .focus-item input:checked + .focus-card .focus-icon-title,
+    .focus-item input:checked + .focus-card small {
+      color: #0b110c;
+      font-weight: 700;
+    }
+
+    /* Step 2: Trip Parameters */
+    .trip-config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .config-field {
+      background: rgba(14, 23, 17, 0.6);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem;
+    }
+
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--ug-text-secondary);
+      font-size: 0.75rem;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .field-label span.desc {
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: var(--ug-text-muted);
+      text-transform: none;
+      letter-spacing: normal;
+    }
+
+    /* City picker */
+    .city-select-wrap {
+      position: relative;
+    }
+
+    .styled-select {
+      width: 100%;
+      background: #09120c;
+      color: var(--ug-text-primary);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      font: inherit;
+      font-size: 0.9rem;
+      font-weight: 600;
+      outline: none;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .styled-select:focus {
+      border-color: var(--ug-lime);
+      box-shadow: 0 0 0 3px var(--ug-lime-soft);
+    }
+
+    .quick-city-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+    }
+
+    .city-chip-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--ug-panel-border);
+      color: var(--ug-text-secondary);
+      border-radius: 999px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .city-chip-btn:hover {
+      border-color: var(--ug-lime);
+      color: var(--ug-lime);
+      background: rgba(216, 255, 77, 0.06);
+    }
+
+    .city-chip-btn.active {
+      background: var(--ug-lime);
+      border-color: var(--ug-lime);
+      color: #0a110c;
+      font-weight: 800;
+    }
+
+    /* Duration Pills */
+    .duration-pills-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.45rem;
+    }
+
+    .duration-pill {
+      background: #09120c;
+      border: 1px solid var(--ug-panel-border);
+      color: var(--ug-text-secondary);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.3rem;
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    .duration-pill:hover {
+      border-color: var(--ug-panel-border-hover);
+      color: #fff;
+    }
+
+    .duration-pill.active {
+      background: var(--ug-lime);
+      border-color: var(--ug-lime);
+      color: #0b110c;
+      box-shadow: 0 4px 15px var(--ug-lime-glow);
+    }
+
+    /* Visual Choices (Pace & Budget) */
+    .visual-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.55rem;
+    }
+
+    .pace-card-choice, .budget-card-choice {
+      background: #09120c;
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 0.6rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .pace-card-choice strong, .budget-card-choice strong {
+      font-size: 0.82rem;
+      color: var(--ug-text-primary);
+    }
+
+    .pace-card-choice small, .budget-card-choice small {
+      font-size: 0.68rem;
+      color: var(--ug-text-muted);
+      line-height: 1.25;
+    }
+
+    .pace-card-choice:hover, .budget-card-choice:hover {
+      border-color: var(--ug-panel-border-hover);
+      background: #0e1a11;
+    }
+
+    .pace-card-choice.active, .budget-card-choice.active {
+      background: rgba(216, 255, 77, 0.12);
+      border-color: var(--ug-lime);
+    }
+
+    .pace-card-choice.active strong, .budget-card-choice.active strong {
+      color: var(--ug-lime);
+    }
+
+    /* Step 3: Natural Language Prompt */
+    .intent-section {
+      margin-bottom: 2rem;
+      background: rgba(14, 23, 17, 0.6);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-lg);
+      padding: 1.2rem;
+    }
+
+    .intent-textarea {
+      width: 100%;
+      min-height: 75px;
+      background: #09120c;
+      color: var(--ug-text-primary);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1rem;
+      font: inherit;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+      transition: border 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .intent-textarea:focus {
+      border-color: var(--ug-lime);
+      box-shadow: 0 0 0 3px var(--ug-lime-soft);
+    }
+
+    .intent-textarea::placeholder {
+      color: var(--ug-text-muted);
+    }
+
+    .quick-prompts-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 0.75rem;
+      align-items: center;
+    }
+
+    .prompt-chip {
+      background: #111e14;
+      color: var(--ug-text-secondary);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: 999px;
+      padding: 0.35rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .prompt-chip:hover {
+      border-color: var(--ug-lime);
+      color: var(--ug-lime);
+      background: rgba(216, 255, 77, 0.08);
+      transform: translateY(-1px);
+    }
+
+    /* Step 4: Avoidances & Smart Toggles */
+    .avoid-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .avoid-item {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .avoid-item input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .avoid-item span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.45rem 0.85rem;
+      border: 1px solid var(--ug-panel-border);
+      border-radius: 999px;
+      color: var(--ug-text-secondary);
+      background: #09120c;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .avoid-item:hover span {
+      border-color: var(--ug-panel-border-hover);
+      color: #fff;
+    }
+
+    .avoid-item input:checked + span {
+      background: var(--ug-lime);
+      border-color: var(--ug-lime);
+      color: #09110c;
+      font-weight: 800;
+      box-shadow: 0 4px 12px var(--ug-lime-glow);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      background: #09120c;
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-md);
+      color: var(--ug-text-secondary);
+      font-size: 0.82rem;
+      cursor: pointer;
+      user-select: none;
+      margin-bottom: 2rem;
+    }
+
+    .toggle-row input {
+      accent-color: var(--ug-lime);
+      width: 17px;
+      height: 17px;
+      cursor: pointer;
+    }
+
+    /* Step 5: Feasibility & Reality Layer */
+    .reality-inputs {
+      margin-bottom: 2rem;
+      padding: 1.35rem;
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-lg);
+      background: rgba(14, 23, 17, 0.6);
+    }
+
+    .reality-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .reality-title b {
+      color: var(--ug-lime);
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .reality-title span {
+      font-size: 0.72rem;
+      color: var(--ug-text-muted);
+    }
+
+    .reality-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.9rem;
+    }
+
+    .reality-field label {
+      display: block;
+      color: var(--ug-text-secondary);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .reality-field input, .reality-field select {
+      width: 100%;
+      background: #09120c;
+      color: var(--ug-text-primary);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-sm);
+      padding: 0.7rem 0.85rem;
+      font: inherit;
+      font-size: 0.82rem;
+      outline: none;
+    }
+
+    .reality-field input:focus, .reality-field select:focus {
+      border-color: var(--ug-lime);
+    }
+
+    .location-row {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .location-row input {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .location-row button {
+      border: 1px solid var(--ug-panel-border);
+      background: #152217;
+      color: var(--ug-lime);
+      border-radius: var(--radius-sm);
+      padding: 0 0.85rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .location-row button:hover {
+      background: var(--ug-lime);
+      color: #0b110c;
+    }
+
+    .reality-hint {
+      margin-top: 0.75rem;
+      color: var(--ug-text-muted);
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    /* AI Understanding Box */
+    .ai-understanding {
+      display: none;
+      margin-bottom: 1.5rem;
+      padding: 1.1rem 1.25rem;
+      border: 1px solid rgba(216, 255, 77, 0.3);
+      border-radius: var(--radius-md);
+      background: rgba(216, 255, 77, 0.05);
+    }
+
+    .ai-understanding.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .ai-understanding-head {
+      color: var(--ug-lime);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 1.2px;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .tags-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tag-pill {
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #132216;
+      border: 1px solid rgba(216, 255, 77, 0.25);
+      color: #d6f279;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Primary Generate Button */
+    .generate-btn {
+      width: 100%;
+      background: var(--ug-lime);
+      color: #070e09;
+      border: 0;
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.8rem;
+      font-size: 1.05rem;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      box-shadow: 0 12px 35px rgba(216, 255, 77, 0.22);
+    }
+
+    .generate-btn:hover:not(:disabled) {
+      background: var(--ug-lime-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 45px rgba(216, 255, 77, 0.35);
+    }
+
+    .generate-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none;
+    }
+
+    .spin {
+      display: inline-block;
+      animation: spin 1s infinite linear;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .planner-message {
+      margin-top: 0.85rem;
+      font-size: 0.8rem;
+      text-align: center;
+      color: var(--ug-text-muted);
+      min-height: 1.2rem;
+    }
+
+    .planner-message.success { color: #4ade80; }
+    .planner-message.warning { color: #fbbf24; }
+    .planner-message.error { color: #f87171; }
+
+    /* =======================================
+       RESULTS SECTION
+       ======================================= */
+    .results-section {
+      display: none;
+      margin-top: 3.5rem;
+    }
+
+    .results-section.show {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    /* Result Header Banner */
+    .result-banner-card {
+      background: linear-gradient(145deg, #122017 0%, #0b140e 100%);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .result-banner-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+
+    .result-banner-top h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 900;
+      letter-spacing: -1px;
+      color: #fff;
+      margin: 0.35rem 0 0.5rem;
+    }
+
+    .result-summary-text {
+      color: var(--ug-text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      max-width: 700px;
+    }
+
+    /* Action Toolbar */
+    .result-action-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      align-items: center;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.75rem 1.15rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 0;
+    }
+
+    .action-btn.primary {
+      background: var(--ug-lime);
+      color: #070e09;
+      box-shadow: 0 6px 20px var(--ug-lime-glow);
+    }
+    .action-btn.primary:hover {
+      background: var(--ug-lime-hover);
+      transform: translateY(-2px);
+    }
+
+    .action-btn.secondary {
+      background: #162419;
+      color: var(--ug-lime);
+      border: 1px solid rgba(216, 255, 77, 0.3);
+    }
+    .action-btn.secondary:hover {
+      background: rgba(216, 255, 77, 0.15);
+      border-color: var(--ug-lime);
+    }
+
+    .action-btn.accent {
+      background: #10b981;
+      color: #051a10;
+      font-weight: 900;
+    }
+    .action-btn.accent:hover {
+      background: #34d399;
+      transform: translateY(-2px);
+    }
+
+    .action-btn.ghost {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--ug-text-secondary);
+      border: 1px solid var(--ug-panel-border);
+    }
+    .action-btn.ghost:hover {
+      color: #fff;
+      border-color: var(--ug-panel-border-hover);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .save-itin-status {
+      font-size: 0.78rem;
+      color: var(--ug-lime);
+      font-weight: 700;
+    }
+
+    /* AI Explanation Accordion */
+    .ai-explanation-card {
+      background: rgba(14, 23, 17, 0.7);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .ai-explanation-card b {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--ug-lime);
+      font-size: 0.78rem;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .ai-explanation-card p {
+      color: var(--ug-text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-top: 0.5rem;
+    }
+
+    /* Results Tabs Bar */
+    .results-nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--ug-panel-border);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .results-tab-btn {
+      background: transparent;
+      border: 0;
+      color: var(--ug-text-muted);
+      font-size: 0.88rem;
+      font-weight: 800;
+      padding: 0.65rem 1.2rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .results-tab-btn:hover {
+      color: var(--ug-text-primary);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .results-tab-btn.active {
+      color: var(--ug-lime);
+      background: var(--ug-lime-soft);
+      border: 1px solid rgba(216, 255, 77, 0.25);
+    }
+
+    /* Tab Panes */
+    .tab-content-pane {
+      display: none;
+    }
+
+    .tab-content-pane.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    /* Tab 1: Itinerary Timeline */
+    .route-engine-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #0d1710;
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--ug-text-secondary);
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .route-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--ug-lime);
+      font-weight: 800;
+    }
+
+    .timeline-container {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .timeline-day-block {
+      background: var(--ug-panel);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+    }
+
+    .day-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .day-num-badge {
+      background: var(--ug-lime);
+      color: #070d09;
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      letter-spacing: 0.5px;
+    }
+
+    .day-header h4 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .timeline-stops {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .timeline-stop-item {
+      display: flex;
+      gap: 1.1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .timeline-stop-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .stop-left {
+      min-width: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.4rem;
+    }
+
+    .stop-time-pill {
+      color: var(--ug-lime);
+      font-size: 0.75rem;
+      font-weight: 900;
+      background: #111f14;
+      border: 1px solid rgba(216, 255, 77, 0.2);
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      white-space: nowrap;
+    }
+
+    .stop-content {
+      flex: 1;
+    }
+
+    .stop-title-row {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.35rem;
+    }
+
+    .stop-title-row h5 {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .stop-cat-tag {
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--ug-text-secondary);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+    }
+
+    .stop-transit-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin: 0.4rem 0;
+    }
+
+    .transit-chip {
+      background: #101c13;
+      border: 1px solid var(--ug-panel-border);
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      font-size: 0.7rem;
+      color: var(--ug-text-secondary);
+    }
+    .transit-chip.good { color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+    .transit-chip.warn { color: #fbbf24; border-color: rgba(251, 191, 36, 0.3); }
+
+    .stop-why {
+      color: var(--ug-text-secondary);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      margin-top: 0.35rem;
+    }
+    .stop-why strong { color: var(--ug-text-muted); }
+
+    /* Tab 2: Place Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .place-card {
+      background: var(--ug-panel);
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-lg);
+      padding: 1.35rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .place-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--ug-panel-border-hover);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .place-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .place-rank {
+      color: var(--ug-lime);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .place-category-badge {
+      color: var(--ug-lime);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(216, 255, 77, 0.08);
+      border: 1px solid rgba(216, 255, 77, 0.2);
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+    }
+
+    .place-score-badge {
+      text-align: right;
+    }
+    .place-score-badge strong {
+      color: var(--ug-lime);
+      font-size: 1.25rem;
+      font-weight: 950;
+    }
+    .place-score-badge small {
+      color: var(--ug-text-muted);
+      font-size: 0.7rem;
+    }
+
+    .place-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .place-location {
+      color: var(--ug-text-muted);
+      font-size: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .place-description {
+      color: var(--ug-text-secondary);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .score-breakdown-box {
+      background: #09120c;
+      border: 1px solid var(--ug-panel-border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem;
+      display: grid;
+      gap: 0.35rem;
+      margin-bottom: 1rem;
+    }
+
+    .factor-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--ug-text-muted);
+    }
+    .factor-row b { color: #b8d76c; }
+
+    .place-why-box {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .place-why-box b {
+      color: var(--ug-lime);
+      font-size: 0.72rem;
+      letter-spacing: 0.5px;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .place-why-box p {
+      color: var(--ug-text-secondary);
+      font-size: 0.78rem;
+      line-height: 1.45;
+    }
+
+    .place-meta-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .verified-tag {
+      font-size: 0.68rem;
+      color: #4ade80;
+      font-weight: 700;
+    }
+
+    .add-trip-btn {
+      background: transparent;
+      border: 1px solid var(--ug-panel-border);
+      color: var(--ug-lime);
+      border-radius: var(--radius-sm);
+      padding: 0.4rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .add-trip-btn:hover {
+      background: var(--ug-lime);
+      color: #0b110c;
+      border-color: var(--ug-lime);
+    }
+
+    /* Toast Notification */
+    .planner-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      background: #122217;
+      border: 1px solid var(--ug-lime);
+      color: #fff;
+      padding: 0.85rem 1.35rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      font-size: 0.88rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      transform: translateY(100px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .planner-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1024px) {
+      .focus-grid { grid-template-columns: repeat(3, 1fr); }
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 768px) {
+      .planner-page { padding-top: 85px; }
+      .focus-grid { grid-template-columns: repeat(2, 1fr); }
+      .trip-config-grid { grid-template-columns: 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .reality-grid { grid-template-columns: 1fr; }
+      .result-banner-top { flex-direction: column; }
+      .planner-card { padding: 1.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .focus-grid { grid-template-columns: 1fr; }
+      .duration-pills-row { grid-template-columns: repeat(3, 1fr); }
+      .planner-hero h1 { letter-spacing: -1.5px; }
+      .timeline-stop-item { flex-direction: column; gap: 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link active" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link active" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Planner Container -->
+  <main class="planner-page">
+    
+    <!-- Step Journey Navigation -->
+    <div class="journey-stepper-wrap">
+      <nav class="journey-stepper" aria-label="Trip planning workflow">
+        <a class="stepper-step" href="discover.html"><span>🔎</span> 1. Discover</a>
+        <span class="stepper-arrow">→</span>
+        <a class="stepper-step" href="place.html"><span>📍</span> 2. Destinations</a>
+        <span class="stepper-arrow">→</span>
+        <a class="stepper-step" href="map.html"><span>🗺️</span> 3. Explore Map</a>
+        <span class="stepper-arrow">→</span>
+        <span class="stepper-step active"><span>🤖</span> 4. AI Itinerary</span>
+        <span class="stepper-arrow">→</span>
+        <a class="stepper-step" href="my-travel.html"><span>🧳</span> 5. My Travel</a>
+      </nav>
+    </div>
+
+    <!-- Hero Header -->
+    <section class="planner-hero">
+      <span class="hero-eyebrow">✦ UNSEENGO INTELLIGENT TRIP ARCHITECT</span>
+      <h1>Personalized travel plans,<br><em>grounded in reality.</em></h1>
+      <p>Select your passions, set your pace, and let our explainable algorithm curate realistic day-by-day routes with verified hidden gems, road timings, and opening hours.</p>
+      
+      <div class="hero-features-bar">
+        <span class="feature-chip"><span>🎯</span> 100% Explainable Scores</span>
+        <span class="feature-chip"><span>🚗</span> Route Proximity Optimized</span>
+        <span class="feature-chip"><span>⏱️</span> Verified Open Times</span>
+        <span class="feature-chip"><span>💾</span> 1-Click Sync to My Travel</span>
+      </div>
+    </section>
+
+    <!-- Interactive Planner Card -->
+    <section class="planner-card">
+      
+      <!-- STEP 01: Passions & Interests -->
+      <div class="section-header">
+        <span class="section-title-tag">01 · Choose Your Focus & Passions</span>
+        <div class="section-helper-action">
+          <span id="interestCounter" class="counter-badge">None selected</span>
+          <button id="selectAllInterests" type="button" class="quick-link-btn">Select All</button>
+        </div>
+      </div>
+
+      <div class="focus-grid">
+        <label class="focus-item">
+          <input type="checkbox" value="Temples" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🛕 Temples</span>
+            <small>Spiritual & ancient sacred sites</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Forts" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🏰 Forts</span>
+            <small>Historic citadels & royal palaces</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Nature" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🌿 Nature</span>
+            <small>Waterfalls, hills & scenic valleys</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Heritage" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🏛 Heritage</span>
+            <small>Centuries-old monuments & ruins</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Culture" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🎨 Culture</span>
+            <small>Folk traditions, arts & local life</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Food" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🍛 Local Food</span>
+            <small>Authentic regional cuisine & delicacies</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Adventure" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🥾 Adventure</span>
+            <small>Treks, trails & outdoor excursions</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Photography" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">📸 Photography</span>
+            <small>Scenic viewpoints & visual gems</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Shopping" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🛍️ Markets</span>
+            <small>Handicrafts, bazaars & local weave</small>
+          </span>
+        </label>
+
+        <label class="focus-item">
+          <input type="checkbox" value="Stays" name="focus">
+          <span class="focus-card">
+            <span class="focus-icon-title">🏕️ Stays</span>
+            <small>Heritage homestays & retreats</small>
+          </span>
+        </label>
+      </div>
+
+      <!-- STEP 02: Trip Fundamentals -->
+      <div class="section-header">
+        <span class="section-title-tag">02 · Trip Fundamentals</span>
+      </div>
+
+      <div class="trip-config-grid">
+        
+        <!-- City Selector -->
+        <div class="config-field">
+          <label class="field-label" for="city">
+            <span>Destination City</span>
+            <span class="desc">75+ Indian hubs</span>
+          </label>
+          <div class="city-select-wrap">
+            <select id="city" class="styled-select">
+              <option value="">All available cities</option>
+            </select>
+          </div>
+          
+          <div class="quick-city-chips">
+            <button type="button" class="city-chip-btn" data-city="Kurnool">Kurnool</button>
+            <button type="button" class="city-chip-btn" data-city="Hyderabad">Hyderabad</button>
+            <button type="button" class="city-chip-btn" data-city="Hampi">Hampi</button>
+            <button type="button" class="city-chip-btn" data-city="Bengaluru">Bengaluru</button>
+            <button type="button" class="city-chip-btn" data-city="Varanasi">Varanasi</button>
+            <button type="button" class="city-chip-btn" data-city="Jaipur">Jaipur</button>
+            <button type="button" class="city-chip-btn" data-city="Goa">Goa</button>
+            <button type="button" class="city-chip-btn" data-city="">All India</button>
+          </div>
+        </div>
+
+        <!-- Duration Picker -->
+        <div class="config-field">
+          <label class="field-label" for="days">
+            <span>Trip Duration</span>
+            <span class="desc">Days of exploration</span>
+          </label>
+          <select id="days" style="display:none;">
+            <option value="1">1 day</option>
+            <option value="2" selected>2 days</option>
+            <option value="3">3 days</option>
+            <option value="4">4 days</option>
+            <option value="5">5 days</option>
+            <option value="7">7 days</option>
+          </select>
+          <div class="duration-pills-row">
+            <div class="duration-pill" data-days="1">1 Day</div>
+            <div class="duration-pill active" data-days="2">2 Days</div>
+            <div class="duration-pill" data-days="3">3 Days</div>
+            <div class="duration-pill" data-days="4">4 Days</div>
+            <div class="duration-pill" data-days="5">5 Days</div>
+            <div class="duration-pill" data-days="7">7 Days</div>
+          </div>
+        </div>
+
+        <!-- Pace Selector -->
+        <div class="config-field">
+          <label class="field-label" for="pace">
+            <span>Travel Pace</span>
+            <span class="desc">Stops per day</span>
+          </label>
+          <select id="pace" style="display:none;">
+            <option value="slow">Relaxed</option>
+            <option value="balanced" selected>Balanced</option>
+            <option value="fast">Packed</option>
+          </select>
+          <div class="visual-choice-grid">
+            <div class="pace-card-choice" data-pace="slow">
+              <strong>🍃 Relaxed</strong>
+              <small>1–2 stops / day</small>
+            </div>
+            <div class="pace-card-choice active" data-pace="balanced">
+              <strong>⚖️ Balanced</strong>
+              <small>~3 stops / day</small>
+            </div>
+            <div class="pace-card-choice" data-pace="fast">
+              <strong>⚡ Packed</strong>
+              <small>4+ stops / day</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Budget Selector -->
+        <div class="config-field">
+          <label class="field-label" for="budget">
+            <span>Budget Level</span>
+            <span class="desc">Entry & expenses</span>
+          </label>
+          <select id="budget" style="display:none;">
+            <option value="low">Budget-friendly</option>
+            <option value="medium" selected>Comfort</option>
+            <option value="high">Premium</option>
+          </select>
+          <div class="visual-choice-grid">
+            <div class="budget-card-choice" data-budget="low">
+              <strong>🏷️ Budget</strong>
+              <small>Modest & free entry</small>
+            </div>
+            <div class="budget-card-choice active" data-budget="medium">
+              <strong>🛡️ Comfort</strong>
+              <small>Balanced comfort</small>
+            </div>
+            <div class="budget-card-choice" data-budget="high">
+              <strong>✨ Premium</strong>
+              <small>Curated experiences</small>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- STEP 03: Natural Language Prompt -->
+      <div class="section-header">
+        <span class="section-title-tag">03 · Custom Intent & Prompt</span>
+        <span class="counter-badge">Optional AI Input</span>
+      </div>
+
+      <div class="intent-section">
+        <textarea id="intent" class="intent-textarea" placeholder="Tell AI your dream trip... e.g. 3 days in Kurnool for ancient temples, scenic forts and photography with no crowds."></textarea>
+        
+        <div class="quick-prompts-bar">
+          <span style="font-size:0.75rem; color:var(--ug-text-muted); font-weight:700;">Try quick prompts:</span>
+          <button type="button" class="prompt-chip" data-prompt="2 days in Kurnool for ancient temples and scenic forts, relaxed pace">Kurnool heritage & forts</button>
+          <button type="button" class="prompt-chip" data-prompt="3 days in Hyderabad focusing on street food, heritage and no crowds">Hyderabad food & culture</button>
+          <button type="button" class="prompt-chip" data-prompt="2 days in Bengaluru for nature photography and relaxed cafes">Bengaluru nature & cafes</button>
+          <button type="button" class="prompt-chip" data-prompt="3 days in Hampi for historic ruins, sunset viewpoints and quiet spots">Hampi ruins & sunsets</button>
+        </div>
+      </div>
+
+      <!-- STEP 04: Avoidances & Preferences -->
+      <div class="section-header">
+        <span class="section-title-tag">04 · Intelligent Avoidance & Preferences</span>
+      </div>
+
+      <div class="avoid-grid">
+        <label class="avoid-item">
+          <input type="checkbox" value="crowds">
+          <span>👥 Avoid Crowds</span>
+        </label>
+        <label class="avoid-item">
+          <input type="checkbox" value="long-travel">
+          <span>🚗 Avoid Long Travel</span>
+        </label>
+        <label class="avoid-item">
+          <input type="checkbox" value="long-walk">
+          <span>🚶 Avoid Long Walks</span>
+        </label>
+        <label class="avoid-item">
+          <input type="checkbox" value="high-cost">
+          <span>💸 Avoid High Entry Costs</span>
+        </label>
+        <label class="avoid-item">
+          <input type="checkbox" value="tourist-traps">
+          <span>🎯 Avoid Tourist Traps</span>
+        </label>
+        <label class="avoid-item">
+          <input type="checkbox" value="early">
+          <span>🌅 Avoid Early Mornings</span>
+        </label>
+      </div>
+
+      <label class="toggle-row">
+        <input id="diversify" type="checkbox">
+        <span>🎲 <strong>Diversify experiences</strong> — Mix hidden cultural and culinary surprises into your itinerary.</span>
+      </label>
+
+      <!-- STEP 05: Reality & Feasibility Layer -->
+      <section id="realityInputs" class="reality-inputs">
+        <div class="reality-title">
+          <b>05 · Reality & Feasibility Layer</b>
+          <span>Time-window & transit calculation</span>
+        </div>
+        <div class="reality-grid">
+          <div class="reality-field">
+            <label for="travelDate">Travel Start Date</label>
+            <input id="travelDate" type="date">
+          </div>
+          <div class="reality-field">
+            <label for="startTime">Departure Time</label>
+            <input id="startTime" type="time" value="09:00">
+          </div>
+          <div class="reality-field">
+            <label for="transportMode">Transport Mode</label>
+            <select id="transportMode">
+              <option value="car">Car / Taxi</option>
+              <option value="bike">Motorcycle / Bike</option>
+              <option value="public">Public Transit</option>
+              <option value="walk">Walking</option>
+            </select>
+          </div>
+          <div class="reality-field">
+            <label for="startPoint">Starting Point</label>
+            <div class="location-row">
+              <input id="startPoint" placeholder="Hotel, Station or Area">
+              <button id="useLocation" type="button">📍 GPS</button>
+            </div>
+          </div>
+          <div class="reality-field">
+            <label for="maxTravel">Max Single Transfer</label>
+            <select id="maxTravel">
+              <option value="30">30 minutes</option>
+              <option value="60" selected>60 minutes</option>
+              <option value="90">90 minutes</option>
+              <option value="120">120 minutes</option>
+            </select>
+          </div>
+          <div class="reality-field">
+            <label for="buffer">Day Time Buffer</label>
+            <select id="buffer">
+              <option value="30">30 min buffer</option>
+              <option value="60" selected>1 hour buffer</option>
+              <option value="90">1.5 hours buffer</option>
+              <option value="120">2 hours buffer</option>
+            </select>
+          </div>
+        </div>
+        <p class="reality-hint">Calculations use verified coordinates, recorded visit durations, and opening windows. Final routes open seamlessly in Google Maps for live navigation.</p>
+      </section>
+
+      <!-- AI Understanding Tag Box -->
+      <div class="ai-understanding" id="aiUnderstanding">
+        <div class="ai-understanding-head">✦ AI UNDERSTANDING APPLIED</div>
+        <div class="tags-cloud" id="understoodTags"></div>
+      </div>
+
+      <!-- Primary Action CTA -->
+      <button class="generate-btn" id="generate" type="button">
+        <span>✦</span> Generate My AI Discovery Plan
+      </button>
+
+      <p id="plannerMessage" class="planner-message"></p>
+
+    </section>
+
+    <!-- RESULTS DISPLAY SECTION -->
+    <section class="results-section" id="results" aria-live="polite">
+      
+      <!-- Result Banner Card -->
+      <div class="result-banner-card">
+        <div class="result-banner-top">
+          <div>
+            <span class="hero-eyebrow">✦ YOUR CUSTOM JOURNEY</span>
+            <h2 id="resultTitle">Kurnool · AI Discovery Plan</h2>
+            <p id="resultSummary" class="result-summary-text"></p>
+          </div>
+        </div>
+
+        <!-- Action Toolbar -->
+        <div class="result-action-bar">
+          <a id="mapLink" href="#" class="action-btn primary" target="_blank" rel="noopener noreferrer">
+            <span>📍</span> Open Route in Google Maps
+          </a>
+          <button id="saveItineraryBtn" type="button" class="action-btn secondary">
+            <span>❤️</span> Save Itinerary to My Travel
+          </button>
+          <a id="openMyTravelBtn" href="my-travel.html?tab=itineraries" class="action-btn accent">
+            <span>🧳</span> Step 5: Open in My Travel (Next) →
+          </a>
+          <button id="copyItineraryBtn" type="button" class="action-btn ghost">
+            <span>📋</span> Copy Plan
+          </button>
+          <button id="printItineraryBtn" type="button" class="action-btn ghost">
+            <span>🖨️</span> Print / PDF
+          </button>
+          <span id="saveItinMsg" class="save-itin-status" style="display:none;"></span>
+        </div>
+      </div>
+
+      <!-- AI Scoring Explanation -->
+      <div class="ai-explanation-card" id="aiExplanation">
+        <b>✦ Why These Places Were Selected</b>
+        <p id="aiExplanationText"></p>
+      </div>
+
+      <!-- Results Tab Navigation -->
+      <div class="results-nav-tabs">
+        <button type="button" class="results-tab-btn active" data-tab="itinerary">
+          <span>📅</span> Day-by-Day Route Itinerary
+        </button>
+        <button type="button" class="results-tab-btn" data-tab="places">
+          <span>💎</span> Curated Hidden Gems & Scores
+        </button>
+      </div>
+
+      <!-- Tab 1: Itinerary Timeline -->
+      <div id="tabPane-itinerary" class="tab-content-pane active">
+        <div id="itinerary" class="itinerary-wrapper"></div>
+      </div>
+
+      <!-- Tab 2: Curated Places Cards -->
+      <div id="tabPane-places" class="tab-content-pane">
+        <div class="cards-grid" id="recommendations"></div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Toast Container -->
+  <div id="plannerToast" class="planner-toast"></div>
+
+  <!-- Footer -->
+  <footer style="border-top:1px solid var(--ug-panel-border); padding:35px 20px; text-align:center; color:var(--ug-text-muted); font-size:0.85rem;">
+    <p><strong style="color:var(--ug-lime);">✦ UnseenGo AI</strong> — Discover the places nobody told you about.</p>
+    <p style="margin-top:0.4rem; font-size:0.75rem;">© 2026 UnseenGo AI. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js?v=20260827"></script>
+  <script src="supabase-client.js?v=20260827"></script>
+  <script src="app.js?v=20260827"></script>
+  <script src="unseen-engine.js?v=20260827"></script>
+  <script src="route-engine.js?v=20260827"></script>
+  <script src="planner-ui.js?v=20260827"></script>
+  <script src="planner-reality.js?v=20260827"></script>
+  <script src="live-route.js?v=20260827"></script>
+  <script src="weather-api.js?v=20260827"></script>
+  <script src="src/scripts/navigation.js"></script>
+
+</body>
+</html>

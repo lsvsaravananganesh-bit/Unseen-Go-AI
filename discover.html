@@ -1,63 +1,3892 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Discover India's hidden gems with UnseenGo AI — personalized places, stories, maps and journeys.">
-<title>Discover India — UnseenGo AI</title>
-<link rel="stylesheet" href="styles.css?v=20260826">
-<link rel="stylesheet" href="responsive.css?v=20260826">
-<link rel="stylesheet" href="bright-theme.css?v=20260826">
-<link rel="stylesheet" href="discover-experience.css?v=20260826">
-<link rel="stylesheet" href="place-details-page.css?v=20260826">
-<link rel="stylesheet" href="unseengo-suite.css?v=20260826">
-<style>
-:root{--ug-bg:#07100b;--ug-panel:#0d1911;--ug-panel2:#101f15;--ug-line:#2d4032;--ug-text:#f1f5ef;--ug-muted:#9eaca1;--ug-accent:#d8f36a;--ug-dark:#081009}
-*{box-sizing:border-box}.discover-page{margin:0;background:var(--ug-bg)!important;color:var(--ug-text)!important;font-family:inherit}.discover-page a{color:inherit}.discover-wrap{width:min(1240px,calc(100% - 40px));margin:auto}.eyebrow{font-size:10px;letter-spacing:1.7px;font-weight:900;color:var(--ug-accent);text-transform:uppercase}.discover-nav{position:sticky;top:0;z-index:100;background:rgba(7,16,11,.9)!important;border-bottom:1px solid #223127!important;backdrop-filter:blur(18px)}.discover-nav .nav{min-height:72px;background:transparent!important;border:0!important;display:flex;align-items:center;gap:24px}.discover-nav .brand{font-size:20px;font-weight:900;text-decoration:none;color:#fff!important;margin-right:auto}.discover-nav .brand b{color:var(--ug-accent)}.discover-nav nav{display:flex;gap:20px;align-items:center}.discover-nav nav a{font-size:12px;text-decoration:none;color:#aeb9af!important}.discover-nav nav a:hover,.discover-nav nav a.active{color:var(--ug-accent)!important}.discover-nav>div>div>button{border:0;border-radius:9px;padding:11px 15px;background:var(--ug-accent);color:var(--ug-dark);font-weight:900;cursor:pointer}
-.hero{min-height:650px;position:relative;display:flex;align-items:flex-end;overflow:hidden;background:linear-gradient(180deg,#07100b18 15%,#07100bf2 100%),linear-gradient(90deg,#07100bdd 0%,#07100b48 65%,#07100ba8 100%),url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2200&q=88') center/cover}.hero-inner{padding:100px 0 75px;position:relative;z-index:2;max-width:980px}.hero h1{font-size:clamp(50px,8vw,94px);line-height:.9;letter-spacing:-5px;margin:12px 0 20px;color:#fff}.hero h1 em{font-family:Georgia,serif;font-weight:400;color:var(--ug-accent)}.hero-copy{max-width:760px;color:#d0d9d1;line-height:1.75;font-size:15px;margin:0}.hero-search{display:flex;gap:9px;margin-top:28px;max-width:920px}.city-search-box{position:relative;flex:1}.city-search-box input{width:100%;height:58px;border:1px solid #617060;border-radius:12px;background:#09150edd!important;color:#fff!important;padding:0 48px;font:inherit;outline:none}.city-search-box input:focus{border-color:var(--ug-accent);box-shadow:0 0 0 3px #d8f36a18}.city-search-box input::placeholder{color:#8e9b91}.search-icon{position:absolute;left:17px;top:16px;color:var(--ug-accent);font-size:22px}.clear-city-search{position:absolute;right:6px;top:8px;width:42px;height:42px;background:transparent;border:0;color:#aab6aa;font-size:22px;cursor:pointer}.hero-search>button{height:58px;border:0;border-radius:12px;background:var(--ug-accent);color:var(--ug-dark);padding:0 22px;font-weight:950;cursor:pointer;white-space:nowrap}.city-suggestions{display:none;position:absolute;left:0;right:0;top:65px;z-index:30;background:#101b14;border:1px solid #344536;border-radius:12px;overflow:hidden;box-shadow:0 20px 50px #0009}.city-suggestions a{display:block;padding:13px 15px;text-decoration:none;color:#eaf0e8;border-bottom:1px solid #26362a}.city-suggestions a:hover{background:#18271b;color:var(--ug-accent)}.quick-city-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:13px;color:#89978d;font-size:10px}.quick-city-row button,.quick-city-row a{border:1px solid #3a4b3e;background:#0b160f;color:#ccd5cd;border-radius:999px;padding:8px 11px;font-size:10px;text-decoration:none;cursor:pointer}.quick-city-row button:hover,.quick-city-row a:hover{border-color:var(--ug-accent);color:var(--ug-accent)}
-.category-strip{width:min(1240px,calc(100% - 40px));margin:-23px auto 0;position:relative;z-index:8;display:flex;gap:8px;overflow:auto;padding:9px 0 20px;scrollbar-width:none}.category-strip::-webkit-scrollbar{display:none}.category-pill{white-space:nowrap;border:1px solid #344536!important;background:#101b14!important;color:#b6c1b7!important;border-radius:999px!important;padding:10px 15px!important;text-decoration:none}.category-pill:hover,.category-pill.active{background:var(--ug-accent)!important;color:var(--ug-dark)!important;border-color:var(--ug-accent)!important}
-.section{padding:82px 0}.section.alt{background:#0a150e}.section-head{display:flex;justify-content:space-between;align-items:end;gap:35px;margin-bottom:28px}.section-head h2{font-size:clamp(34px,4.5vw,52px);line-height:.98;letter-spacing:-2.5px;margin:7px 0;color:#fff}.section-head p{max-width:580px;color:var(--ug-muted);line-height:1.7;margin:0;font-size:13px}.experience-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.experience-card{min-height:370px;position:relative;overflow:hidden;border:1px solid var(--ug-line);border-radius:19px;text-decoration:none;color:#fff;padding:25px;display:flex;align-items:end;background:#122217;transition:.3s}.experience-card:hover{transform:translateY(-5px);border-color:#7e9a50}.experience-card .visual{position:absolute;inset:0;background:center/cover;opacity:.5;transition:.35s}.experience-card:hover .visual{transform:scale(1.05);opacity:.62}.experience-card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#00000000 25%,#000d 100%)}.experience-copy{position:relative;z-index:2}.experience-copy h3{font-size:27px;letter-spacing:-1px;margin:7px 0}.experience-copy p{font-size:12px;line-height:1.65;color:#c4cec6;margin:0}.experience-copy span{display:inline-block;margin-top:15px;color:var(--ug-accent);font-size:11px;font-weight:900}
-.ai-panel{margin-top:20px;padding:26px;border:1px solid #334536;border-radius:18px;background:linear-gradient(135deg,#0d1b11,#13271a);display:grid;grid-template-columns:1fr auto;gap:25px;align-items:center}.ai-panel h3{font-size:25px;margin:7px 0}.ai-panel p{color:#aab6ad;line-height:1.6;margin:0;font-size:12px}.preference-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.preference{padding:8px 10px;border:1px solid #3b4d3f;border-radius:999px;color:#cdd6ce;font-size:10px}.ai-status{padding:16px;border-radius:13px;background:#09140d;border:1px solid #2e4032;min-width:230px}.ai-status b{color:var(--ug-accent);font-size:12px}.ai-status div{margin-top:8px;color:#91a096;font-size:10px}
-.india-banner{padding:38px;border:1px solid var(--ug-line);border-radius:20px;background:linear-gradient(135deg,#0d1c12,#102116);display:flex;justify-content:space-between;align-items:center;gap:30px}.india-banner h2{font-size:clamp(32px,4vw,48px);line-height:1;margin:8px 0}.india-banner p{max-width:750px;color:#aeb9af;line-height:1.7;font-size:13px}.primary-btn{display:inline-block;background:var(--ug-accent);color:var(--ug-dark)!important;padding:14px 18px;border-radius:10px;text-decoration:none;font-weight:950;white-space:nowrap}.outline-btn{display:inline-block;border:1px solid #405143;color:#dce5dd!important;padding:13px 17px;border-radius:10px;text-decoration:none;font-weight:850}
-.catalog-section{padding:85px 0}.catalog-layout{width:min(1240px,calc(100% - 40px));margin:auto;display:grid;grid-template-columns:235px minmax(0,1fr);gap:28px}.filters{position:sticky;top:92px;height:max-content;border:1px solid var(--ug-line)!important;border-radius:17px!important;background:#0d1911!important;padding:18px!important}.filters h3{color:#fff!important;margin:0 0 15px}.filter-group{border-top:1px solid #26362a!important;padding:15px 0}.filter-group strong{display:block;color:var(--ug-accent);font-size:11px;margin-bottom:10px}.filter-option{display:flex!important;gap:8px;align-items:center;color:#aeb9ae!important;font-size:11px;margin:9px 0}.clear-filters{width:100%;background:#111e15!important;border:1px solid #3b4b3d!important;color:#d0d8d0!important;border-radius:9px;padding:10px;cursor:pointer}.results-toolbar{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:20px}.results-toolbar h2{font-size:36px;margin:7px 0;color:#fff}.results-toolbar p{color:#8e9a91;margin:0;font-size:11px}.sort-select,.map-toggle{background:#101b14!important;color:#dce4dc!important;border:1px solid #3a4a3c!important;border-radius:9px;padding:10px 12px;cursor:pointer}.map-toggle{font-weight:850}.catalog-map{display:none;min-height:220px;margin-bottom:16px;border:1px solid #334235;border-radius:16px;background:radial-gradient(circle at 30% 35%,#203e28 0 1px,transparent 2px),radial-gradient(circle at 68% 55%,#55724b 0 1px,transparent 2px),#101d14;position:relative;overflow:hidden}.catalog-map.is-open{display:block}.map-caption{position:absolute;left:12px;bottom:12px;background:#0b160f;color:var(--ug-accent);border:1px solid #304234;padding:8px 10px;border-radius:8px;font-size:10px}.attraction-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.attraction-card{background:#0e1912!important;border:1px solid #2c3b30!important;border-radius:17px!important;overflow:hidden!important}.attraction-card .card-image,.attraction-card img{min-height:180px}.attraction-body{padding:16px}.attraction-body h3,.attraction-body h3 a{color:#fff!important}.attraction-body p,.type-label,.rating-row{color:#9da99f!important}.meta-chip{background:#17231a!important;color:#aeb9af!important}.score-badge{background:#e5f5ae!important;color:#26380c!important}.card-action{border-color:#26362a!important}.card-action a{color:var(--ug-accent)!important}.empty-results{color:#99a59b!important;border-color:#465448!important}
-.reason-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px}.reason-card{border:1px solid var(--ug-line);border-radius:18px;padding:28px;background:#0d1911}.reason-card h3{font-size:28px;margin:8px 0}.reason-card p{color:#aab6ad;line-height:1.7;font-size:12px}.match-bars{display:grid;gap:12px;margin-top:18px}.match-bar{display:grid;grid-template-columns:110px 1fr 40px;align-items:center;gap:10px;font-size:10px;color:#aeb9af}.bar{height:7px;background:#1c2b20;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ug-accent);border-radius:99px}.story-card{min-height:260px;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:end;border:1px solid var(--ug-line);background:linear-gradient(145deg,#183020,#0b150e)}.story-card h3{font-size:29px;margin:8px 0}.story-card p{color:#aeb9af;line-height:1.65;font-size:12px;margin:0}.story-card a{color:var(--ug-accent);font-size:11px;font-weight:900;text-decoration:none;margin-top:15px}.story-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px}.story-small{background:#0d1b12}.journey-strip{margin-top:16px;padding:25px;border:1px solid #334536;border-radius:17px;background:#101f15;display:flex;justify-content:space-between;align-items:center;gap:20px}.journey-strip h3{margin:0 0 6px;font-size:22px}.journey-strip p{margin:0;color:#9eaca1;font-size:11px}.season-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.season-card{padding:20px;border:1px solid var(--ug-line);border-radius:15px;background:#0d1911;text-decoration:none}.season-card b{display:block;color:#fff;margin-bottom:7px}.season-card span{font-size:10px;color:#98a69c}.planner-cta{width:min(1240px,calc(100% - 40px));margin:0 auto 70px;padding:44px;border-radius:21px;background:var(--ug-accent);color:var(--ug-dark);display:flex;justify-content:space-between;align-items:center;gap:25px}.planner-cta h2{font-size:clamp(34px,4vw,52px);line-height:.95;letter-spacing:-2px;margin:8px 0}.planner-cta p{max-width:680px;line-height:1.6;font-size:13px}.planner-cta a{background:var(--ug-dark);color:var(--ug-accent)!important;padding:14px 18px;border-radius:10px;text-decoration:none;font-weight:950;white-space:nowrap}.bottom-links{width:min(1240px,calc(100% - 40px));margin:0 auto 70px;padding:35px;border-radius:18px;border:1px solid var(--ug-line);background:#0d1911}.bottom-links h2{font-size:35px;margin:8px 0 20px}.bottom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.bottom-grid a{padding:18px;border:1px solid var(--ug-line);border-radius:12px;text-decoration:none;background:#101c14}.bottom-grid b{display:block;color:var(--ug-accent);margin-bottom:6px}.bottom-grid span{font-size:10px;color:#94a197}.discover-page footer{background:#07100b!important;border-top:1px solid #243329!important;color:#87948a!important;padding:28px 20px;display:flex;justify-content:center;gap:22px;flex-wrap:wrap}.discover-page footer b{color:#fff!important}
-@media(max-width:900px){.discover-nav nav{display:none}.catalog-layout{grid-template-columns:1fr}.filters{position:static}.experience-grid{grid-template-columns:1fr 1fr}.ai-panel{grid-template-columns:1fr}.reason-grid,.story-grid{grid-template-columns:1fr}.season-grid{grid-template-columns:1fr 1fr}.planner-cta{display:block}.planner-cta a{display:inline-block;margin-top:15px}}
-@media(max-width:650px){.discover-wrap,.catalog-layout,.planner-cta,.bottom-links{width:calc(100% - 28px)}.hero{min-height:700px}.hero-inner{padding:95px 0 55px}.hero h1{font-size:52px;letter-spacing:-3px}.hero-search{display:grid}.hero-search>button{height:52px}.category-strip{width:calc(100% - 28px)}.section,.catalog-section{padding:58px 0}.section-head{display:block}.experience-grid,.attraction-grid{grid-template-columns:1fr!important}.experience-card{min-height:300px}.india-banner{display:block;padding:28px}.india-banner .primary-btn{margin-top:10px}.results-toolbar{display:block}.results-toolbar>div:last-child{margin-top:12px}.season-grid{grid-template-columns:1fr 1fr}.journey-strip{display:block}.planner-cta{padding:30px}.bottom-grid{grid-template-columns:1fr}.bottom-links{padding:28px}.discover-nav .nav{min-height:62px}}
-</style>
-<link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head>
-<body class="discover-page">
-<header class="discover-nav"><div class="discover-wrap"><div class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a class="active" href="discover.html">Discover</a><a href="india-cities.html">🇮🇳 India</a><a href="tripideas.html">Trip Ideas</a><a href="transport.html">Transport</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a></nav><button onclick="location.href='index.html'">Home</button></div></div></header>
-<main>
-<section class="hero"><div class="discover-wrap hero-inner"><div class="eyebrow">✦ INDIA · AI DISCOVERY ENGINE</div><h1>Discover India<br><em>beyond the obvious.</em></h1><p class="hero-copy">Tell UnseenGo where you are going, what you love, or the kind of experience you want. Find places that fit — then understand the story, location and journey behind them.</p><form id="citySearch" class="hero-search" autocomplete="off"><div class="city-search-box"><span class="search-icon">⌕</span><input id="citySearchInput" placeholder="Try: quiet historical places in Kurnool…" aria-label="Search city, state or destination" autocomplete="off"><button id="clearCitySearch" class="clear-city-search" type="button" aria-label="Clear">×</button><div id="citySuggestions" class="city-suggestions"></div></div><button type="submit">Discover →</button></form><div class="quick-city-row"><span>Try a city:</span><button type="button" data-quick-city="Kurnool">Kurnool</button><button type="button" data-quick-city="Hyderabad">Hyderabad</button><button type="button" data-quick-city="Bengaluru">Bengaluru</button><button type="button" data-quick-city="Vijayawada">Vijayawada</button><button type="button" data-quick-city="Tirupati">Tirupati</button><a href="india-cities.html">🇮🇳 Explore all India →</a></div></div></section>
-<div id="categoryStrip" class="category-strip"></div>
-<section class="section"><div class="discover-wrap"><div class="section-head"><div><div class="eyebrow">EXPERIENCES WORTH THE DETOUR</div><h2>Explore India your way.</h2></div><p>Start with a feeling instead of a checklist. Choose an experience and discover the places that make it memorable.</p></div><div class="experience-grid"><a class="experience-card" href="discover.html?category=Heritage"><div class="visual" style="background-image:url('https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=1100&q=85')"></div><div class="experience-copy"><div class="eyebrow">HISTORY · HERITAGE</div><h3>Stories written in stone.</h3><p>Forts, temples, monuments, old streets and places with a story worth knowing.</p><span>Explore heritage →</span></div></a><a class="experience-card" href="discover.html?category=Nature"><div class="visual" style="background-image:url('https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1100&q=85')"></div><div class="experience-copy"><div class="eyebrow">NATURE · QUIET ESCAPES</div><h3>Find the quieter India.</h3><p>Waterfalls, forests, valleys, lakes, beaches and places away from the usual crowds.</p><span>Explore nature →</span></div></a><a class="experience-card" href="discover.html?category=Food"><div class="visual" style="background-image:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1100&q=85')"></div><div class="experience-copy"><div class="eyebrow">FOOD · CULTURE</div><h3>Taste the local story.</h3><p>Markets, cuisine, crafts, festivals and traditions that make a city feel alive.</p><span>Explore culture →</span></div></a></div><div class="ai-panel"><div><div class="eyebrow">✦ NATURAL-LANGUAGE DISCOVERY</div><h3>Describe the trip. UnseenGo finds the fit.</h3><p>Example: “I have one day in Kurnool. I like history, photography and quiet places.”</p><div class="preference-row"><span class="preference">📍 Kurnool</span><span class="preference">🏛 Heritage</span><span class="preference">📸 Photography</span><span class="preference">🌿 Quiet</span><span class="preference">⏱ 1 day</span></div></div><div class="ai-status"><b>✨ UnseenGo Match</b><div>Understanding preferences → finding relevant places</div></div></div></div></section>
-<section class="section alt"><div class="discover-wrap"><div class="section-head"><div><div class="eyebrow">INDIA DISCOVERY GRAPH</div><h2>One country.<br>Thousands of stories.</h2></div><p>Move from region → state → city, then go deeper into heritage, nature, food, culture and experiences.</p></div><div class="india-banner"><div><div class="eyebrow">🇮🇳 THE INDIA HUB</div><h2>From Kurnool to Kashmir.</h2><p>Use the India directory to explore cities across the country. UnseenGo turns a city name into a starting point for discovery.</p></div><a class="primary-btn" href="india-cities.html">Explore India →</a></div></div></section>
-<section class="catalog-section"><div class="catalog-layout"><aside class="filters" aria-label="Discovery filters"><h3>Filter discovery</h3><div class="filter-group"><strong>Good for</strong><label class="filter-option"><input type="checkbox" id="nearbyOnly"> Near the city</label><label class="filter-option"><input type="checkbox" id="verifiedMode"> Verified listings only</label></div><div class="filter-group"><strong>UnseenGo match</strong><label class="filter-option"><input type="radio" name="score" data-score value="0" checked> Any match</label><label class="filter-option"><input type="radio" name="score" data-score value="90"> 90+ match</label><label class="filter-option"><input type="radio" name="score" data-score value="95"> 95+ match</label></div><button id="clearFilters" class="clear-filters" type="button">Clear filters</button></aside><section><div class="results-toolbar"><div><div class="eyebrow">PERSONALIZED DISCOVERIES</div><h2 id="placesHeading">Places to explore</h2><p id="resultCount">Loading discoveries…</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button id="mapToggle" class="map-toggle" type="button">Show map</button><select id="sortPlaces" class="sort-select" aria-label="Sort places"><option value="score">Sort: UnseenGo match</option><option value="name">Sort: A–Z</option><option value="category">Sort: Category</option></select></div></div><div id="catalogMap" class="catalog-map"><span class="map-caption">Map preview · open a place for its real location.</span></div><div id="attractionGrid" class="attraction-grid"></div></section></div></section>
-<section class="section alt"><div class="discover-wrap"><div class="section-head"><div><div class="eyebrow">EXPLAINABLE RECOMMENDATIONS</div><h2>Why this place?</h2></div><p>A good recommendation should explain itself. Show users which preferences influenced the match instead of simply saying “AI recommended it.”</p></div><div class="reason-grid"><div class="reason-card"><div class="eyebrow">EXAMPLE · UNS EENGO MATCH</div><h3>Built around what you care about.</h3><p>If the traveller chooses heritage, photography and quiet places, the recommendation can make those signals visible.</p><div class="match-bars"><div class="match-bar"><span>Heritage</span><div class="bar"><i style="width:97%"></i></div><b>97</b></div><div class="match-bar"><span>Photography</span><div class="bar"><i style="width:92%"></i></div><b>92</b></div><div class="match-bar"><span>Quiet</span><div class="bar"><i style="width:88%"></i></div><b>88</b></div></div></div><div class="reason-card"><div class="eyebrow">THE DECISION LAYER</div><h3>From place → reason → journey.</h3><p>Discover a place, understand why it fits, open its real location and then turn it into a practical day or weekend plan.</p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:18px"><span class="preference">Discover</span><span class="preference">Understand</span><span class="preference">Map</span><span class="preference">Plan</span></div></div></div></div></section>
-<section class="section"><div class="discover-wrap"><div class="section-head"><div><div class="eyebrow">EVERY PLACE HAS A STORY</div><h2>Don't just visit.<br>Understand it.</h2></div><p>Discovery becomes more meaningful when the destination has context — history, people, architecture, food and local culture.</p></div><div class="story-grid"><div class="story-card"><div class="eyebrow">PLACE STORY</div><h3>Go beyond the pin on the map.</h3><p>Open a destination to explore its story, photos, location, nearby experiences and the next places worth adding to your route.</p><a href="india-cities.html">Explore city stories →</a></div><div class="story-card story-small"><div class="eyebrow">AUDIO · PHOTOS · MAP</div><h3>See more. Hear more. Know more.</h3><p>Keep rich destination details behind the place page instead of crowding the discovery card.</p><a href="india-cities.html">Browse India →</a></div></div><div class="journey-strip"><div><h3>Found a place you love?</h3><p>Turn one discovery into a complete route with nearby places and trip ideas.</p></div><a class="outline-btn" href="tripideas.html">Build around this place →</a></div></div></section>
-<section class="section alt"><div class="discover-wrap"><div class="section-head"><div><div class="eyebrow">RIGHT PLACE · RIGHT TIME</div><h2>Seasonal discoveries.</h2></div><p>Make the discovery engine feel alive with experiences that naturally fit the season. Only label information as live or verified when authoritative data is connected.</p></div><div class="season-grid"><a class="season-card" href="discover.html?category=Nature"><b>🌧 Monsoon</b><span>Waterfalls · green valleys · misty landscapes</span></a><a class="season-card" href="discover.html?category=Heritage"><b>🌤 Winter</b><span>Heritage walks · outdoor exploration · forts</span></a><a class="season-card" href="discover.html?category=Food"><b>🍜 Food & culture</b><span>Markets · local cuisine · crafts · traditions</span></a><a class="season-card" href="major-events.html"><b>🎉 Events</b><span>Culture · sports · nature and major experiences</span></a></div></div></section>
-<section class="planner-cta"><div><div class="eyebrow">✦ UNSEENGO AI PLANNER</div><h2>Found a place?<br>Make it your journey.</h2><p>Choose your interests, time, pace, budget and transport. Turn discoveries into a personalized itinerary.</p></div><a href="planner.html">Build my journey →</a></section>
-<section class="bottom-links"><div class="eyebrow">✦ KEEP EXPLORING INDIA</div><h2>Your next story starts here.</h2><div class="bottom-grid"><a href="india-cities.html"><b>🇮🇳 India</b><span>Browse states, cities and destinations →</span></a><a href="planner.html"><b>✦ AI Planner</b><span>Build a personalized journey →</span></a><a href="tripideas.html"><b>💡 Trip Ideas</b><span>Find a journey that fits you →</span></a></div></section>
-</main>
-<footer><b>✦ UnseenGo AI</b><span>Discover places. Understand stories. Build better journeys.</span><span>© 2026</span></footer>
-<script src="app.js?v=20260826"></script>
-<script src="india-state-directory.js?v=20260826"></script>
-<script src="kurnool-data.js?v=20260826"></script>
-<script src="kurnool-temples.js?v=20260826"></script>
-<script src="india-discovery-framework.js?v=20260826"></script>
-<script src="discover-experience.js?v=20260826"></script>
-<script src="discover-google-photos.js?v=20260826"></script>
-<script src="live-google-places.js?v=20260826"></script>
-<script>
-(function(){
- const d=window.INDIA_DIRECTORY||{};const input=document.getElementById('citySearchInput');const suggestions=document.getElementById('citySuggestions');const form=document.getElementById('citySearch');const clear=document.getElementById('clearCitySearch');
- const all=[];Object.keys(d).forEach(state=>(d[state]||[]).forEach(city=>all.push({city,state})));
- function esc(s){return String(s).replace(/[&<>\"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;',"'":'&#39;'}[m]));}
- function render(q){q=q.trim().toLowerCase();if(!q){suggestions.innerHTML='';suggestions.style.display='none';return}const m=all.filter(x=>x.city.toLowerCase().includes(q)||x.state.toLowerCase().includes(q)).slice(0,8);suggestions.innerHTML=m.map(x=>`<a href="discover.html?city=${encodeURIComponent(x.city)}"><strong>${esc(x.city)}</strong> · ${esc(x.state)}</a>`).join('');suggestions.style.display=m.length?'block':'none';}
- if(input){input.addEventListener('input',()=>render(input.value));clear.addEventListener('click',()=>{input.value='';render('');input.focus()});form.addEventListener('submit',e=>{e.preventDefault();const q=input.value.trim();if(q)location.href='discover.html?city='+encodeURIComponent(q)});document.querySelectorAll('[data-quick-city]').forEach(b=>b.addEventListener('click',()=>location.href='discover.html?city='+encodeURIComponent(b.dataset.quickCity)));document.addEventListener('click',e=>{if(!e.target.closest('.city-search-box'))suggestions.style.display='none'});}
- const mapToggle=document.getElementById('mapToggle'),map=document.getElementById('catalogMap');if(mapToggle&&map)mapToggle.addEventListener('click',()=>{const open=map.classList.toggle('is-open');mapToggle.textContent=open?'Hide map':'Show map';});
- const params=new URLSearchParams(location.search);const category=params.get('category');if(category){document.querySelectorAll('.experience-card').forEach(c=>c.classList.toggle('active',c.href.includes('category='+category)));}
-})();
-</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discover India's famous destinations, cities, temples, forts, cultural spots, nature wonders, and food trails with live GPS location, photos, and historical background.">
+  <title>Destination & City Explorer Search Engine — UnseenGo AI</title>
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <!-- Leaflet CSS for Live City Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+  <style>
+    :root {
+      --ug-lime: #d8ff4d;
+      --ug-lime-soft: rgba(216, 255, 77, 0.12);
+      --ug-gold: #f59e0b;
+      --ug-gold-soft: rgba(245, 158, 11, 0.15);
+      --ug-emerald: #10b981;
+      --ug-emerald-soft: rgba(16, 185, 129, 0.15);
+      --ug-orange: #fb923c;
+      --ug-orange-soft: rgba(251, 146, 60, 0.15);
+      --ug-red: #ef4444;
+      --ug-red-soft: rgba(239, 68, 68, 0.15);
+      --ug-purple: #a855f7;
+      --ug-purple-soft: rgba(168, 85, 247, 0.15);
+      --ug-bg: #070d09;
+      --ug-surface: #0e1711;
+      --ug-surface-elevated: #132017;
+      --ug-border: #233427;
+      --ug-border-glow: #38563d;
+      --ug-text-primary: #f5f8f5;
+      --ug-text-secondary: #9cb0a2;
+      --ug-text-muted: #6f8275;
+    }
+
+    body {
+      background: var(--ug-bg);
+      color: var(--ug-text-primary);
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+    }
+
+    .ug-wrap {
+      width: min(1280px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .discover-hero {
+      position: relative;
+      padding: 3.8rem 0 3rem;
+      background: radial-gradient(circle at 50% 0%, rgba(216, 255, 77, 0.08) 0%, rgba(7, 13, 9, 0) 70%),
+                  linear-gradient(180deg, #09130c 0%, #070d09 100%);
+      border-bottom: 1px solid var(--ug-border);
+      overflow: hidden;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(216, 255, 77, 0.1);
+      border: 1px solid rgba(216, 255, 77, 0.25);
+      color: var(--ug-lime);
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    .discover-hero h1 {
+      font-size: clamp(2.3rem, 4.8vw, 4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      color: #fff;
+      margin: 0 0 0.85rem;
+    }
+
+    .discover-hero h1 em {
+      font-family: Georgia, serif;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--ug-lime);
+    }
+
+    .discover-hero p.hero-subtitle {
+      max-width: 720px;
+      color: var(--ug-text-secondary);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 0 0 1.75rem;
+    }
+
+    /* Universal Search Engine Box */
+    .hero-search-wrapper {
+      position: relative;
+      max-width: 860px;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-search-box {
+      display: flex;
+      align-items: center;
+      background: #0f1c13;
+      border: 1px solid #314a37;
+      border-radius: 14px;
+      padding: 0.45rem 0.6rem 0.45rem 1.25rem;
+      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+      transition: all 0.2s ease;
+    }
+    .hero-search-box:focus-within {
+      border-color: var(--ug-lime);
+      box-shadow: 0 0 0 3px rgba(216, 255, 77, 0.15), 0 12px 36px rgba(0, 0, 0, 0.5);
+    }
+
+    .search-icon {
+      font-size: 1.25rem;
+      color: var(--ug-lime);
+      margin-right: 0.75rem;
+    }
+
+    .hero-search-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-size: 1.02rem;
+      color: #fff;
+      font-family: inherit;
+      padding: 0.5rem 0;
+    }
+    .hero-search-box input::placeholder {
+      color: var(--ug-text-muted);
+    }
+
+    .clear-search-btn {
+      background: transparent;
+      border: none;
+      color: var(--ug-text-muted);
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      display: none;
+    }
+    .clear-search-btn:hover {
+      color: #fff;
+    }
+
+    .search-submit-btn {
+      background: var(--ug-lime);
+      color: #070d09;
+      border: none;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 0.75rem 1.4rem;
+      border-radius: 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .search-submit-btn:hover {
+      background: #e6ff80;
+      transform: translateY(-1px);
+    }
+
+    /* Auto-suggest dropdown */
+    .city-suggestions-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #0f1c13;
+      border: 1px solid #314a37;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+      z-index: 50;
+      max-height: 340px;
+      overflow-y: auto;
+      display: none;
+    }
+    .city-suggestions-dropdown.visible {
+      display: block;
+    }
+
+    .suggest-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.1rem;
+      border-bottom: 1px solid #1a2c1f;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .suggest-item:hover, .suggest-item.active {
+      background: #182a1d;
+      color: var(--ug-lime);
+    }
+    .suggest-item:last-child {
+      border-bottom: none;
+    }
+    .suggest-city {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .suggest-state {
+      font-size: 0.75rem;
+      color: var(--ug-text-secondary);
+    }
+    .suggest-badge {
+      font-size: 0.68rem;
+      background: rgba(216, 255, 77, 0.12);
+      color: var(--ug-lime);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    /* Quick City Starting Hubs */
+    .quick-chips-row {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      font-size: 0.76rem;
+      color: var(--ug-text-muted);
+    }
+    .chip-btn {
+      background: #0d1810;
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      border-radius: 999px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .chip-btn:hover {
+      border-color: var(--ug-lime);
+      color: var(--ug-lime);
+      background: #142418;
+    }
+    .chip-btn.active {
+      background: var(--ug-lime);
+      color: #070d09;
+      border-color: var(--ug-lime);
+    }
+
+    /* City Spotlight Hero Banner (when city selected) */
+    .city-spotlight-banner {
+      background: linear-gradient(135deg, rgba(216,255,77,0.12) 0%, rgba(14,23,17,0.95) 100%);
+      border: 1px solid rgba(216,255,77,0.3);
+      border-radius: 20px;
+      padding: 1.75rem 2rem;
+      margin: 2rem 0 2.5rem;
+      display: none;
+    }
+    .city-spotlight-banner.visible {
+      display: block;
+    }
+
+    .city-spotlight-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .city-spotlight-title {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .city-spotlight-location {
+      font-size: 0.85rem;
+      color: var(--ug-lime);
+      font-weight: 700;
+    }
+    .city-spotlight-desc {
+      color: #c4d4c7;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      max-width: 820px;
+      margin: 0 0 1.25rem;
+    }
+
+    .city-stat-pills {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .city-stat-pill {
+      background: #09130c;
+      border: 1px solid var(--ug-border);
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ug-text-secondary);
+    }
+    .city-stat-pill b {
+      color: #fff;
+    }
+
+    /* Live City Interactive Map Container */
+    .city-live-map-wrapper {
+      margin-top: 1.25rem;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--ug-border);
+      background: #09120c;
+    }
+    .city-live-map-header {
+      padding: 0.65rem 1rem;
+      background: #0d1a11;
+      border-bottom: 1px solid var(--ug-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--ug-lime);
+    }
+    .city-map-container {
+      height: 320px;
+      width: 100%;
+    }
+
+    /* Category Navigation Bar */
+    .category-tabs-row {
+      display: flex;
+      gap: 0.4rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      margin-bottom: 2rem;
+      padding-bottom: 0.35rem;
+    }
+    .category-tabs-row::-webkit-scrollbar { display: none; }
+
+    .cat-tab-btn {
+      white-space: nowrap;
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      border-radius: 999px;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+    .cat-tab-btn:hover {
+      border-color: var(--ug-lime);
+      color: #fff;
+    }
+    .cat-tab-btn.active {
+      background: var(--ug-lime);
+      color: #070d09;
+      border-color: var(--ug-lime);
+      font-weight: 800;
+    }
+
+    /* Catalog Layout */
+    .catalog-section {
+      padding: 2rem 0 5rem;
+    }
+
+    .catalog-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* Filter Sidebar */
+    .filter-sidebar {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      position: sticky;
+      top: 90px;
+    }
+
+    .sidebar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--ug-border);
+    }
+    .sidebar-head h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+    }
+    .reset-filters-btn {
+      background: transparent;
+      border: none;
+      color: var(--ug-lime);
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .reset-filters-btn:hover {
+      text-decoration: underline;
+    }
+
+    .filter-group-block {
+      margin-bottom: 1.25rem;
+    }
+    .filter-group-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--ug-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .state-filter-select {
+      width: 100%;
+      background: #09130c;
+      border: 1px solid var(--ug-border);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      color: #fff;
+      font: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+    }
+    .state-filter-select:focus {
+      border-color: var(--ug-lime);
+    }
+    .state-filter-select optgroup {
+      background: #112015;
+      color: var(--ug-lime);
+      font-weight: 800;
+    }
+    .state-filter-select option {
+      background: #09130c;
+      color: #fff;
+    }
+
+    .theme-checkbox-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .theme-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--ug-text-secondary);
+      cursor: pointer;
+      user-select: none;
+    }
+    .theme-checkbox-item input {
+      accent-color: var(--ug-lime);
+      cursor: pointer;
+    }
+    .theme-checkbox-item:hover {
+      color: #fff;
+    }
+
+    /* Results Header & Grid */
+    .results-head-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--ug-border);
+    }
+
+    .results-title-group h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 0.25rem;
+    }
+    .results-count-text {
+      font-size: 0.8rem;
+      color: var(--ug-text-secondary);
+      margin: 0;
+    }
+
+    .results-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .sort-dropdown {
+      background: #0d1810;
+      border: 1px solid var(--ug-border);
+      border-radius: 8px;
+      padding: 0.45rem 0.75rem;
+      color: #fff;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+    }
+    .sort-dropdown:focus {
+      border-color: var(--ug-lime);
+    }
+
+    .view-map-link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: #142418;
+      border: 1px solid var(--ug-border);
+      color: var(--ug-lime);
+      padding: 0.45rem 0.85rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .view-map-link-btn:hover {
+      background: var(--ug-lime);
+      color: #070d09;
+      border-color: var(--ug-lime);
+    }
+
+    /* Destination Cards Grid */
+    .destinations-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+
+    .dest-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .dest-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--ug-border-glow);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+    }
+    .dest-card.temple-border { border-top: 3px solid var(--ug-gold); }
+    .dest-card.heritage-border { border-top: 3px solid var(--ug-orange); }
+    .dest-card.nature-border { border-top: 3px solid var(--ug-emerald); }
+    .dest-card.food-border { border-top: 3px solid var(--ug-red); }
+    .dest-card.culture-border { border-top: 3px solid var(--ug-purple); }
+    .dest-card.tourist-border { border-top: 3px solid var(--ug-lime); }
+
+    .dest-card-media {
+      position: relative;
+      height: 190px;
+      background: #121e15;
+      overflow: hidden;
+    }
+    .dest-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .dest-card:hover .dest-card-img {
+      transform: scale(1.05);
+    }
+
+    .dest-category-pill {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+    .dest-category-pill.temple { background: rgba(245, 158, 11, 0.85); color: #070d09; }
+    .dest-category-pill.heritage { background: rgba(251, 146, 60, 0.85); color: #070d09; }
+    .dest-category-pill.nature { background: rgba(16, 185, 129, 0.85); color: #070d09; }
+    .dest-category-pill.food { background: rgba(239, 68, 68, 0.85); color: #fff; }
+    .dest-category-pill.culture { background: rgba(168, 85, 247, 0.85); color: #fff; }
+    .dest-category-pill.tourist { background: rgba(216, 255, 77, 0.85); color: #070d09; }
+
+    .dest-score-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(7, 13, 9, 0.85);
+      border: 1px solid rgba(216, 255, 77, 0.35);
+      color: var(--ug-lime);
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 800;
+    }
+
+    .dest-card-body {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .dest-card-location {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--ug-lime);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .dest-card-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 0.35rem;
+      line-height: 1.3;
+    }
+    
+    /* Line History of Place */
+    .dest-card-history {
+      font-size: 0.76rem;
+      color: #cbdad0;
+      line-height: 1.45;
+      background: #09130c;
+      border-left: 2px solid var(--ug-lime);
+      padding: 0.4rem 0.6rem;
+      border-radius: 0 6px 6px 0;
+      margin: 0.4rem 0 0.6rem;
+    }
+    .dest-card-history b {
+      color: #fff;
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 2px;
+    }
+
+    .dest-card-desc {
+      font-size: 0.78rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.45;
+      margin: 0 0 0.65rem;
+    }
+
+    .dest-gps-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      color: var(--ug-text-muted);
+      margin-bottom: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: #09120c;
+      border-radius: 6px;
+      border: 1px solid var(--ug-border);
+    }
+    .dest-gps-coord {
+      color: var(--ug-lime);
+      font-weight: 700;
+      font-family: monospace;
+    }
+    .dest-gps-link {
+      color: var(--ug-lime);
+      text-decoration: none;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .dest-gps-link:hover {
+      text-decoration: underline;
+    }
+
+    .dest-tags-row {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.85rem;
+    }
+    .dest-mini-tag {
+      background: #09130c;
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-muted);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .dest-card-actions {
+      display: flex;
+      gap: 0.4rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #18281b;
+      align-items: center;
+    }
+    .dest-btn-plan {
+      flex: 1;
+      text-align: center;
+      background: var(--ug-lime);
+      color: #070d09;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.15s ease;
+    }
+    .dest-btn-plan:hover {
+      background: #e6ff80;
+    }
+    .dest-btn-sub {
+      background: #111e14;
+      border: 1px solid var(--ug-border);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .dest-btn-sub:hover {
+      border-color: var(--ug-lime);
+      color: var(--ug-lime);
+    }
+
+    /* Leaflet popup customization */
+    .ug-city-marker {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #0e1711;
+      border: 2px solid var(--ug-lime);
+      color: #fff;
+      font-size: 14px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+    .ug-city-marker.temple { border-color: var(--ug-gold); }
+    .ug-city-marker.heritage { border-color: var(--ug-orange); }
+    .ug-city-marker.nature { border-color: var(--ug-emerald); }
+    .ug-city-marker.food { border-color: var(--ug-red); }
+
+    .leaflet-popup-content-wrapper {
+      background: #0e1711 !important;
+      color: #fff !important;
+      border: 1px solid #283d2c !important;
+      border-radius: 12px !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+    .leaflet-popup-content {
+      margin: 0 !important;
+    }
+    .city-popup-box {
+      width: 240px;
+      padding: 10px;
+      font-family: inherit;
+    }
+    .city-popup-img {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    .city-popup-title {
+      font-size: 12px;
+      font-weight: 800;
+      margin: 0 0 3px;
+      color: #fff;
+    }
+    .city-popup-history {
+      font-size: 10px;
+      color: #b0c2b5;
+      line-height: 1.35;
+      margin: 0 0 6px;
+    }
+    .city-popup-nav {
+      display: block;
+      background: var(--ug-lime);
+      color: #070d09;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+      padding: 4px;
+      border-radius: 4px;
+      text-decoration: none;
+    }
+
+    /* Empty state */
+    .empty-dest-results {
+      grid-column: span 2;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      background: var(--ug-surface);
+      border: 1px dashed var(--ug-border);
+      border-radius: 16px;
+      color: var(--ug-text-muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 960px) {
+      .catalog-layout {
+        grid-template-columns: 1fr;
+      }
+      .filter-sidebar {
+        position: static;
+      }
+    }
+
+    /* All-India Directory Section */
+    .ic-directory-section {
+      margin-top: 3.5rem;
+      padding: 3.5rem 0 4rem;
+      border-top: 1px solid var(--ug-border);
+      background: radial-gradient(circle at 50% 0%, rgba(216, 255, 77, 0.05) 0%, rgba(7, 13, 9, 0) 70%),
+                  linear-gradient(180deg, #09130c 0%, #070d09 100%);
+    }
+
+    .ic-directory-header {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 2.5rem;
+    }
+    .ic-directory-header h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 0.6rem;
+      letter-spacing: -1px;
+    }
+    .ic-directory-header h2 em {
+      font-family: Georgia, serif;
+      font-style: italic;
+      color: var(--ug-lime);
+    }
+    .ic-directory-header p {
+      color: var(--ug-text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .ic-region-tabs {
+      display: flex;
+      gap: 0.6rem;
+      overflow-x: auto;
+      padding-bottom: 0.75rem;
+      margin-bottom: 2rem;
+      scrollbar-width: none;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .ic-region-tabs::-webkit-scrollbar { display: none; }
+
+    .ic-region-tab {
+      white-space: nowrap;
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.6rem 1.25rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--ug-text-secondary);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+    .ic-region-tab:hover {
+      border-color: var(--ug-lime);
+      color: #fff;
+    }
+    .ic-region-tab.active {
+      background: var(--ug-lime);
+      color: #070d09;
+      border-color: var(--ug-lime);
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(216, 255, 77, 0.25);
+    }
+
+    .ic-explorer-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .ic-explorer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.5rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--ug-border);
+      flex-wrap: wrap;
+    }
+    .ic-explorer-header h3 {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 0.35rem;
+    }
+    .ic-explorer-header p {
+      color: var(--ug-text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 680px;
+    }
+    .ic-counter-badge {
+      background: rgba(216, 255, 77, 0.12);
+      color: var(--ug-lime);
+      border: 1px solid rgba(216, 255, 77, 0.25);
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .ic-state-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .ic-state-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.2rem;
+      background: #09130c;
+      border: 1px solid var(--ug-border);
+      border-radius: 12px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .ic-state-btn:hover, .ic-state-btn.active {
+      background: var(--ug-surface-elevated);
+      border-color: var(--ug-lime);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+    .ic-state-btn strong {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.15rem;
+    }
+    .ic-state-btn span {
+      display: block;
+      font-size: 0.74rem;
+      color: var(--ug-text-secondary);
+      font-weight: 600;
+    }
+    .ic-state-btn .arrow {
+      color: var(--ug-lime);
+      font-weight: 800;
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+    .ic-state-btn:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .ic-city-panel {
+      display: none;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--ug-border);
+      animation: icFadeIn 0.3s ease;
+    }
+    .ic-city-panel.show {
+      display: block;
+    }
+    @keyframes icFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ic-city-panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .ic-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--ug-text-muted);
+    }
+    .ic-breadcrumbs b {
+      color: var(--ug-lime);
+    }
+    .ic-city-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0.25rem 0 0;
+    }
+
+    .ic-city-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .ic-city-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      background: #0a140d;
+      border: 1px solid var(--ug-border);
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .ic-city-card:hover {
+      background: var(--ug-surface-elevated);
+      border-color: var(--ug-lime);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(216, 255, 77, 0.15);
+    }
+    .ic-city-card strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.15rem;
+    }
+    .ic-city-card span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--ug-text-secondary);
+    }
+    .ic-city-card .arrow {
+      color: var(--ug-lime);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .ic-back-btn {
+      background: #112015;
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .ic-back-btn:hover {
+      border-color: var(--ug-lime);
+      color: #fff;
+    }
+
+    @media (max-width: 640px) {
+      .ic-state-grid {
+        grid-template-columns: 1fr;
+      }
+      .ic-city-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link active" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link active" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+          <a class="ug-drawer-link" href="india-cities.html"><span class="icon">📍</span><span>India Directory</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="discover-hero">
+      <div class="ug-wrap">
+        <div class="hero-eyebrow">✦ India Destination & City Search Engine</div>
+        <h1>Search Any City or Destination<br><em>with live location & line history.</em></h1>
+        <p class="hero-subtitle">Click or search any city to explore its famous temples, royal heritage, culture, natural wonders, tourist spots, and food trails with live GPS navigation.</p>
+
+        <!-- Search Bar -->
+        <div class="hero-search-wrapper">
+          <form id="heroSearchForm" class="hero-search-box" autocomplete="off">
+            <span class="search-icon">⌕</span>
+            <input type="text" id="heroSearchInput" placeholder="Search any city or place: Kurnool, Jaipur, Hyderabad, Varanasi, Hampi, Kochi..." aria-label="Search city or destination">
+            <button type="button" id="heroClearBtn" class="clear-search-btn" aria-label="Clear search">✕</button>
+            <button type="submit" class="search-submit-btn">Search City →</button>
+          </form>
+
+          <!-- Autocomplete Dropdown -->
+          <div id="citySuggestionsBox" class="city-suggestions-dropdown"></div>
+        </div>
+
+        <!-- Quick Suggestions Chips -->
+        <div class="quick-chips-row">
+          <span>Explore Famous Cities:</span>
+          <button type="button" class="chip-btn" data-city-chip="Kurnool">📍 Kurnool</button>
+          <button type="button" class="chip-btn" data-city-chip="Tirupati">📍 Tirupati</button>
+          <button type="button" class="chip-btn" data-city-chip="Vijayawada">📍 Vijayawada</button>
+          <button type="button" class="chip-btn" data-city-chip="Hyderabad">📍 Hyderabad</button>
+          <button type="button" class="chip-btn" data-city-chip="Jaipur">📍 Jaipur</button>
+          <button type="button" class="chip-btn" data-city-chip="Udaipur">📍 Udaipur</button>
+          <button type="button" class="chip-btn" data-city-chip="Delhi">📍 Delhi</button>
+          <button type="button" class="chip-btn" data-city-chip="Agra">📍 Agra</button>
+          <button type="button" class="chip-btn" data-city-chip="Varanasi">📍 Varanasi</button>
+          <button type="button" class="chip-btn" data-city-chip="Ayodhya">📍 Ayodhya</button>
+          <button type="button" class="chip-btn" data-city-chip="Amritsar">📍 Amritsar</button>
+          <button type="button" class="chip-btn" data-city-chip="Bengaluru">📍 Bengaluru</button>
+          <button type="button" class="chip-btn" data-city-chip="Hampi">📍 Hampi</button>
+          <button type="button" class="chip-btn" data-city-chip="Mysuru">📍 Mysuru</button>
+          <button type="button" class="chip-btn" data-city-chip="Chennai">📍 Chennai</button>
+          <button type="button" class="chip-btn" data-city-chip="Madurai">📍 Madurai</button>
+          <button type="button" class="chip-btn" data-city-chip="Thanjavur">📍 Thanjavur</button>
+          <button type="button" class="chip-btn" data-city-chip="Kochi">📍 Kochi</button>
+          <button type="button" class="chip-btn" data-city-chip="Mumbai">📍 Mumbai</button>
+          <button type="button" class="chip-btn" data-city-chip="Pune">📍 Pune</button>
+          <button type="button" class="chip-btn" data-city-chip="Kolkata">📍 Kolkata</button>
+          <button type="button" class="chip-btn" data-city-chip="Puri">📍 Puri</button>
+          <button type="button" class="chip-btn" data-city-chip="Bhubaneswar">📍 Bhubaneswar</button>
+          <button type="button" class="chip-btn" data-city-chip="Ujjain">📍 Ujjain</button>
+          <button type="button" class="chip-btn" data-city-chip="Rishikesh">📍 Rishikesh</button>
+          <button type="button" class="chip-btn" data-city-chip="Goa">📍 Goa</button>
+          <button type="button" class="chip-btn" data-city-chip="all" style="color:var(--ug-lime); border-color:var(--ug-lime);">🌟 All India</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- City Spotlight Hero Banner (Dynamically shown when a city is selected) -->
+    <div class="ug-wrap">
+      <section id="citySpotlightBanner" class="city-spotlight-banner">
+        <div class="city-spotlight-header">
+          <div>
+            <h2 id="spotlightCityTitle" class="city-spotlight-title">📍 City Name</h2>
+            <div id="spotlightCityLocation" class="city-spotlight-location">State · Region</div>
+          </div>
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <a id="spotlightPlanBtn" href="planner.html" class="search-submit-btn" style="padding:0.45rem 0.9rem; font-size:0.78rem;">
+              🤖 Plan City Trip →
+            </a>
+            <button type="button" id="clearCityViewBtn" class="chip-btn" style="padding:0.45rem 0.9rem; font-size:0.78rem;">
+              ✕ View All India
+            </button>
+          </div>
+        </div>
+        <p id="spotlightCityDesc" class="city-spotlight-desc">City summary description...</p>
+        
+        <div class="city-stat-pills" id="spotlightStatPills">
+          <!-- Populated dynamically -->
+        </div>
+
+        <!-- Live City Interactive Leaflet Map -->
+        <div class="city-live-map-wrapper">
+          <div class="city-live-map-header">
+            <span>🗺️ Live GPS Locations in <span id="mapCityNameLabel">City</span> (<span id="mapPinsCount">0</span> Places)</span>
+            <span style="font-size:0.68rem; color:var(--ug-text-secondary);">Click any pin to inspect history & GPS navigation</span>
+          </div>
+          <div id="cityMapView" class="city-map-container"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Category Tabs Bar -->
+    <div class="ug-wrap" style="margin-top: 1.5rem;">
+      <div class="category-tabs-row" id="categoryTabsRow">
+        <button type="button" class="cat-tab-btn active" data-category="all">🌟 All Categories</button>
+        <button type="button" class="cat-tab-btn" data-category="Temples">🛕 Temples & Sacred Shrines</button>
+        <button type="button" class="cat-tab-btn" data-category="Heritage">🏰 Heritage & Forts</button>
+        <button type="button" class="cat-tab-btn" data-category="Culture">🎭 Culture & Traditions</button>
+        <button type="button" class="cat-tab-btn" data-category="Tourist">📍 Famous Tourist Spots</button>
+        <button type="button" class="cat-tab-btn" data-category="Nature">🌿 Nature & Waterfalls</button>
+        <button type="button" class="cat-tab-btn" data-category="Food">🍛 Cultural Food Trails</button>
+      </div>
+    </div>
+
+    <!-- Catalog Section with Multi-Facet Filters -->
+    <section class="catalog-section">
+      <div class="ug-wrap catalog-layout">
+        
+        <!-- Left Filter Sidebar -->
+        <aside class="filter-sidebar" aria-label="Catalog filters">
+          <div class="sidebar-head">
+            <h3>Filter Discovery</h3>
+            <button type="button" id="resetFiltersBtn" class="reset-filters-btn">Reset All</button>
+          </div>
+
+          <!-- State Filter -->
+          <div class="filter-group-block">
+            <label class="filter-group-label" for="stateFilterSelect">Filter by State / UT</label>
+            <select id="stateFilterSelect" class="state-filter-select">
+              <option value="all">🌟 All States & Union Territories</option>
+            </select>
+          </div>
+
+          <!-- Featured Themes -->
+          <div class="filter-group-block">
+            <label class="filter-group-label">Featured Themes</label>
+            <div class="theme-checkbox-list">
+              <label class="theme-checkbox-item">
+                <input type="checkbox" class="theme-checkbox" value="unesco"> 🏛️ UNESCO Heritage
+              </label>
+              <label class="theme-checkbox-item">
+                <input type="checkbox" class="theme-checkbox" value="jyotirlinga"> 🔱 12 Jyotirlingas
+              </label>
+              <label class="theme-checkbox-item">
+                <input type="checkbox" class="theme-checkbox" value="chardham"> ⛰️ Char Dham
+              </label>
+              <label class="theme-checkbox-item">
+                <input type="checkbox" class="theme-checkbox" value="shaktipeetha"> 🌺 Shakti Peethas
+              </label>
+              <label class="theme-checkbox-item">
+                <input type="checkbox" class="theme-checkbox" value="waterfall"> 💦 Waterfalls
+              </label>
+              <label class="theme-checkbox-item">
+                <input type="checkbox" class="theme-checkbox" value="fort"> 🏰 Hill Forts & Palaces
+              </label>
+            </div>
+          </div>
+
+          <!-- Score match -->
+          <div class="filter-group-block">
+            <label class="filter-group-label">Match Score</label>
+            <div class="theme-checkbox-list">
+              <label class="theme-checkbox-item">
+                <input type="radio" name="scoreRadio" value="0" checked> Any score match
+              </label>
+              <label class="theme-checkbox-item">
+                <input type="radio" name="scoreRadio" value="95"> ✦ 95%+ Iconic matches
+              </label>
+              <label class="theme-checkbox-item">
+                <input type="radio" name="scoreRadio" value="98"> ✦ 98%+ Top Tier gems
+              </label>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Right Results Area -->
+        <div>
+          <!-- Results Head Bar -->
+          <div class="results-head-bar">
+            <div class="results-title-group">
+              <h2 id="catalogHeading">Destinations to Explore</h2>
+              <p class="results-count-text" id="catalogCount">Loading discoveries...</p>
+            </div>
+            <div class="results-actions-group">
+              <a href="map.html" id="interactiveMapBtn" class="view-map-link-btn">
+                🗺️ Full Pan-India Map →
+              </a>
+              <select id="sortDropdown" class="sort-dropdown" aria-label="Sort destinations">
+                <option value="score">Sort: UnseenGo Match (High → Low)</option>
+                <option value="name">Sort: A to Z</option>
+                <option value="category">Sort: Category</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Destinations Cards Grid -->
+          <div id="destinationsGrid" class="destinations-grid">
+            <!-- Populated dynamically via JS -->
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- All-India Destination & State/City Directory Section -->
+    <section class="ic-directory-section" id="stateCityDirectory">
+      <div class="ug-wrap">
+        <div class="ic-directory-header">
+          <span class="hero-eyebrow">🇮🇳 28 States & 8 Union Territories · 300+ Cities</span>
+          <h2>All-India <em>State & City</em> Directory</h2>
+          <p>Explore India by geographic region, state, and city. Click any city to load its live GPS map, temples, heritage forts, scenic nature wonders, and cultural food trails directly.</p>
+        </div>
+
+        <!-- Region Tabs -->
+        <div class="ic-region-tabs" id="icRegionTabs">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Region Explorer Card -->
+        <div class="ic-explorer-card">
+          <div class="ic-explorer-header">
+            <div>
+              <h3 id="icRegionTitle">South India</h3>
+              <p id="icRegionDesc">Temple towns, dynastic architecture, coastal landscapes, food and living traditions.</p>
+            </div>
+            <span class="ic-counter-badge" id="icRegionCount">✦ Loading states...</span>
+          </div>
+
+          <!-- States Grid -->
+          <div class="ic-state-grid" id="icStateGrid">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- City Expansion Panel -->
+          <div class="ic-city-panel" id="icCityPanel">
+            <div class="ic-city-panel-head">
+              <div>
+                <div class="ic-breadcrumbs">
+                  <span id="icCrumbRegion">South India</span> <span>›</span> <b id="icCrumbState">Andhra Pradesh</b>
+                </div>
+                <h4 class="ic-city-title" id="icCityTitle">Cities in Andhra Pradesh</h4>
+              </div>
+              <button type="button" class="ic-back-btn" id="icBackStates">← Close City View</button>
+            </div>
+
+            <!-- Cities Grid -->
+            <div class="ic-city-grid" id="icCityGrid">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer" style="border-top:1px solid var(--ug-border); padding:2rem 0; background:#070d09; text-align:center; font-size:0.8rem; color:var(--ug-text-secondary);">
+    <div class="ug-wrap">
+      <p style="margin:0 0 0.5rem; color:#fff; font-weight:700;">✦ UnseenGo AI — Destination & City Search Engine with Live GPS Locations</p>
+      <p style="margin:0; font-size:0.75rem; color:var(--ug-text-muted);">© 2026 UnseenGo AI. Real-time geocoded places across all Indian states and cities.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="india-state-directory.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Comprehensive City-Wise Destination Database & Search Engine -->
+  <script>
+    (function() {
+      'use strict';
+
+            // 1. City Metadata Catalog
+      const CITY_METADATA = {
+        "Kurnool": {
+                "state": "Andhra Pradesh",
+                "region": "South",
+                "desc": "Gateway to Rayalaseema on the banks of Tungabhadra & Handri rivers, famed for Vijayanagara bastions, subterranean caves, Nava Narasimha shrines, and fiery cuisine.",
+                "lat": 15.8281,
+                "lng": 78.0373
+        },
+        "Tirupati": {
+                "state": "Andhra Pradesh",
+                "region": "South",
+                "desc": "Spiritual capital of Andhra Pradesh nestled at the sacred Seven Hills of Tirumala, abode of Lord Sri Venkateswara Swamy.",
+                "lat": 13.6288,
+                "lng": 79.4192
+        },
+        "Vijayawada": {
+                "state": "Andhra Pradesh",
+                "region": "South",
+                "desc": "Commercial hub on the banks of Krishna River, home to Goddess Kanaka Durga atop Indrakeeladri Hill, rock caves, and Kondapalli crafts.",
+                "lat": 16.5062,
+                "lng": 80.648
+        },
+        "Visakhapatnam": {
+                "state": "Andhra Pradesh",
+                "region": "South",
+                "desc": "The Jewel of the East Coast, featuring natural harbors, pristine beaches, Araku valley hill views, and the ancient Simhachalam temple.",
+                "lat": 17.6868,
+                "lng": 83.2185
+        },
+        "Hyderabad": {
+                "state": "Telangana",
+                "region": "South",
+                "desc": "City of Pearls and Nizams, renowned for the 16th-century Charminar, acoustic Golconda Fort citadel, royal Qutb Shahi tombs, and aromatic Dum Biryani.",
+                "lat": 17.385,
+                "lng": 78.4867
+        },
+        "Warangal": {
+                "state": "Telangana",
+                "region": "South",
+                "desc": "Historic capital of the Kakatiya Dynasty, famed for the Thousand Pillar Temple, iconic Kala Thoranam stone gateways, and UNESCO Ramappa Kshetra.",
+                "lat": 17.9689,
+                "lng": 79.5941
+        },
+        "Jaipur": {
+                "state": "Rajasthan",
+                "region": "North",
+                "desc": "The UNESCO-listed Pink City, famous for majestic Aravalli hill forts, the honeycomb facade of Hawa Mahal, opulent City Palace, and royal feasts.",
+                "lat": 26.9124,
+                "lng": 75.7873
+        },
+        "Udaipur": {
+                "state": "Rajasthan",
+                "region": "North",
+                "desc": "City of Lakes and Venice of the East, famed for Lake Pichola, floating Jag Mandir, the colossal City Palace complex, and sunset boat cruises.",
+                "lat": 24.5854,
+                "lng": 73.7125
+        },
+        "Jodhpur": {
+                "state": "Rajasthan",
+                "region": "North",
+                "desc": "The Blue City and Sun City of India, crowned by the colossal Mehrangarh Fort towering 400ft above the blue-washed old city rooftops.",
+                "lat": 26.2389,
+                "lng": 73.0243
+        },
+        "Jaisalmer": {
+                "state": "Rajasthan",
+                "region": "North",
+                "desc": "The Golden City in the heart of the Thar Desert, renowned for its living yellow sandstone fort, ornate havelis, and Sam sand dunes.",
+                "lat": 26.9157,
+                "lng": 70.9083
+        },
+        "Varanasi": {
+                "state": "Uttar Pradesh",
+                "region": "North",
+                "desc": "The spiritual capital of India on the holy River Ganga, famed for the golden spires of Kashi Vishwanath, sacred evening Ghat Aartis, and Sarnath.",
+                "lat": 25.3176,
+                "lng": 82.9739
+        },
+        "Agra": {
+                "state": "Uttar Pradesh",
+                "region": "North",
+                "desc": "Historic Mughal capital on the Yamuna, world-renowned for the ivory-white marble Taj Mahal, Agra Fort citadel, and Fatehpur Sikri.",
+                "lat": 27.1767,
+                "lng": 78.0081
+        },
+        "Lucknow": {
+                "state": "Uttar Pradesh",
+                "region": "North",
+                "desc": "City of Nawabs, renowned for exquisite Awadhi architecture, Bara Imambara, delicate Chikankari embroidery, and legendary Galouti Kebabs.",
+                "lat": 26.8467,
+                "lng": 80.9462
+        },
+        "Ayodhya": {
+                "state": "Uttar Pradesh",
+                "region": "North",
+                "desc": "Sacred birthplace of Lord Sri Rama on the banks of holy Sarayu River, featuring the grand Ram Janmabhoomi Mandir and ancient Hanuman Garhi.",
+                "lat": 26.7922,
+                "lng": 82.1998
+        },
+        "Delhi": {
+                "state": "Delhi",
+                "region": "North",
+                "desc": "Historic and vibrant national capital blending medieval Mughal monuments like Red Fort & Qutub Minar with bustling street food bazaars.",
+                "lat": 28.6139,
+                "lng": 77.209
+        },
+        "Amritsar": {
+                "state": "Punjab",
+                "region": "North",
+                "desc": "Spiritual center of Sikhism, home to the resplendent Golden Temple (Sri Harmandir Sahib), historic Jallianwala Bagh, and Amritsari Kulcha.",
+                "lat": 31.634,
+                "lng": 74.8723
+        },
+        "Bengaluru": {
+                "state": "Karnataka",
+                "region": "South",
+                "desc": "Garden City and tech capital, featuring Tipu Sultan’s summer palace, Bangalore Palace, sprawling botanical gardens, and legendary filter coffee trails.",
+                "lat": 12.9716,
+                "lng": 77.5946
+        },
+        "Hampi": {
+                "state": "Karnataka",
+                "region": "South",
+                "desc": "UNESCO World Heritage city of the Vijayanagara Empire, strewn with boulder-strewn hills, stone chariots, musical stone pillars, and riverside ruins.",
+                "lat": 15.335,
+                "lng": 76.46
+        },
+        "Mysuru": {
+                "state": "Karnataka",
+                "region": "South",
+                "desc": "Heritage cultural capital of Karnataka, world-famous for the illuminated Mysore Palace, Chamundeshwari Temple, and royal Mysore Pak.",
+                "lat": 12.2958,
+                "lng": 76.6394
+        },
+        "Chennai": {
+                "state": "Tamil Nadu",
+                "region": "South",
+                "desc": "Gateway to South India on the Coromandel Coast, famed for ancient Dravidian temples of Mylapore, Marina Beach, and classical Carnatic arts.",
+                "lat": 13.0827,
+                "lng": 80.2707
+        },
+        "Madurai": {
+                "state": "Tamil Nadu",
+                "region": "South",
+                "desc": "Ancient temple city on the Vaigai River, centered around the 14 multi-storey sculpted gopurams of the historic Meenakshi Sundareswarar Temple.",
+                "lat": 9.9252,
+                "lng": 78.1198
+        },
+        "Thanjavur": {
+                "state": "Tamil Nadu",
+                "region": "South",
+                "desc": "The Rice Bowl of Tamil Nadu and Chola imperial capital, home to the 1000-year-old UNESCO Brihadeeswarar Temple and classical Thanjavur paintings.",
+                "lat": 10.787,
+                "lng": 79.1378
+        },
+        "Kochi": {
+                "state": "Kerala",
+                "region": "South",
+                "desc": "Queen of the Arabian Sea, known for 14th-century Chinese fishing nets, Portuguese Mattancherry palace, Jewish synagogue, and spicy Malabar seafood.",
+                "lat": 9.9312,
+                "lng": 76.2673
+        },
+        "Thiruvananthapuram": {
+                "state": "Kerala",
+                "region": "South",
+                "desc": "Capital of God’s Own Country, home to the sacred Sree Padmanabhaswamy Temple, Kovalam crescent beaches, and lush tropical greenery.",
+                "lat": 8.5241,
+                "lng": 76.9366
+        },
+        "Mumbai": {
+                "state": "Maharashtra",
+                "region": "West",
+                "desc": "The City of Dreams and financial capital, featuring colonial Victorian architecture, Gateway of India, Marine Drive promenade, and lively street food.",
+                "lat": 18.922,
+                "lng": 72.8347
+        },
+        "Pune": {
+                "state": "Maharashtra",
+                "region": "West",
+                "desc": "Cultural capital of Maharashtra and seat of the Peshwas, renowned for historic Maratha hill forts, Shaniwar Wada, and spicy Misal Pav trails.",
+                "lat": 18.5204,
+                "lng": 73.8567
+        },
+        "Kolkata": {
+                "state": "West Bengal",
+                "region": "East",
+                "desc": "City of Joy on the Hooghly River, famed for the grand marble Victoria Memorial, Howrah Bridge, Dakshineswar Kali temple, and rich sweets.",
+                "lat": 22.5726,
+                "lng": 88.3639
+        },
+        "Puri": {
+                "state": "Odisha",
+                "region": "East",
+                "desc": "Sacred coastal Char Dham pilgrimage city, famed for the colossal Puri Jagannath Temple, annual Ratha Yatra, Golden Beach, and Mahaprasad.",
+                "lat": 19.8135,
+                "lng": 85.8312
+        },
+        "Bhubaneswar": {
+                "state": "Odisha",
+                "region": "East",
+                "desc": "Temple City of India, featuring hundreds of 8th to 12th-century Kalinga-style stone temples including the soaring 180ft Lingaraj spire.",
+                "lat": 20.2961,
+                "lng": 85.8245
+        },
+        "Ujjain": {
+                "state": "Madhya Pradesh",
+                "region": "Central",
+                "desc": "Ancient holy city on the Shipra River, home to Mahakaleshwar Jyotirlinga (Lord of Time), sacred Bhasma Aarti, and the Mahakal Lok corridor.",
+                "lat": 23.1765,
+                "lng": 75.7885
+        },
+        "Rishikesh": {
+                "state": "Uttarakhand",
+                "region": "North",
+                "desc": "Yoga Capital of the World nestled in the Himalayan foothills along the crystal-clear Ganga River, famed for suspension bridges and evening aartis.",
+                "lat": 30.0869,
+                "lng": 78.2676
+        },
+        "Goa": {
+                "state": "Goa",
+                "region": "West",
+                "desc": "Sun-kissed coastal paradise renowned for UNESCO Portuguese cathedrals, 17th-century coastal forts, Dudhsagar waterfalls, and vibrant beach shacks.",
+                "lat": 15.4909,
+                "lng": 73.8278
+        }
+};
+
+      // 2. Comprehensive Destination Database with Line History, Coordinates, and Category
+      const ALL_DESTINATIONS = [
+        {
+                "id": "knl-kondareddy",
+                "name": "Konda Reddy Buruju Fort",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 98,
+                "lat": 15.8281,
+                "lng": 78.0373,
+                "distance": "City Center · 0 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "12th-century circular bastion built during Vijayanagara rule; immortalized by ruler Konda Reddy who escaped imprisonment through subterranean tunnels.",
+                "desc": "Iconic monumental watchtower bastion in the heart of Kurnool city with sweeping 360-degree views of the old city and River Tungabhadra."
+        },
+        {
+                "id": "knl-yaganti",
+                "name": "Yaganti Uma Maheshwara Swamy Temple",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "heritage",
+                        "sacred"
+                ],
+                "score": 99,
+                "lat": 15.3484,
+                "lng": 78.1406,
+                "distance": "Banaganapalle · 85 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "15th-century Vijayanagara shrine constructed by King Harihara Bukka Rayalu; home to a growing monolithic Nandi and natural Agastya rock caves.",
+                "desc": "Ancient temple nestled amidst striking rock cliffs, famous for its perennial natural Pushkarini pool and the absence of crows due to Sage Agastya’s boon."
+        },
+        {
+                "id": "knl-belum",
+                "name": "Belum Caves (Subterranean Karst Network)",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Nature",
+                "tags": [
+                        "nature",
+                        "caves",
+                        "tourist"
+                ],
+                "score": 99,
+                "lat": 15.1028,
+                "lng": 78.1111,
+                "distance": "Kolimigundla · 105 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Formed millions of years ago by underground river currents; ancient Buddhist & Jain monks meditated in its Pataalaganga chambers.",
+                "desc": "Second longest cave network in the Indian subcontinent (3.22 km) featuring illuminated stalactite and stalagmite limestone formations."
+        },
+        {
+                "id": "knl-orvakal",
+                "name": "Orvakal Rock Garden & Silica Canyon",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Nature",
+                "tags": [
+                        "nature",
+                        "scenic",
+                        "tourist"
+                ],
+                "score": 96,
+                "lat": 15.6833,
+                "lng": 78.2167,
+                "distance": "NH 40 Highway · 22 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Prehistoric silica and quartz rock formations dating back millions of years with evidence of Paleolithic cave art.",
+                "desc": "Dramatic natural rock sculpture garden spread over 50 acres around a serene lake, ideal for hiking and sunset viewpoints."
+        },
+        {
+                "id": "knl-ahobilam",
+                "name": "Ahobilam Nava Narasimha Kshetras",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "pilgrimage"
+                ],
+                "score": 99,
+                "lat": 15.1328,
+                "lng": 78.7247,
+                "distance": "Allagadda · 130 km",
+                "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80",
+                "history": "Puranic spot where Lord Vishnu took the Narasimha avatar to slay Hiranyakashipu; home to 9 distinct rock-cut shrines across Garudadri hills.",
+                "desc": "Supreme Nava Narasimha Kshetra split into Lower and Upper Ahobilam nestled in dense Nallamala jungle treks and waterfalls."
+        },
+        {
+                "id": "knl-mahanandi",
+                "name": "Mahanandi Temple & Spring Pushkarini",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "nature"
+                ],
+                "score": 98,
+                "lat": 15.4833,
+                "lng": 78.6167,
+                "distance": "Nandyal · 80 km",
+                "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80",
+                "history": "10th-century Badami Chalukya shrine consecrated as the head of the Nava Nandi shrines around Nallamala forest.",
+                "desc": "Famous for its mineral-rich perennial spring water tank that stays at a crystal-clear constant temperature across all seasons."
+        },
+        {
+                "id": "knl-alampur",
+                "name": "Alampur Jogulamba 5th Maha Shakti Peetha",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "shaktipeetha",
+                        "temple",
+                        "heritage"
+                ],
+                "score": 98,
+                "lat": 15.8778,
+                "lng": 78.1306,
+                "distance": "Tungabhadra Bank · 25 km",
+                "image": "https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80",
+                "history": "7th-century Western Chalukya architectural gem housing the upper teeth of Goddess Sati and Nava Brahma stone temples.",
+                "desc": "One of the 18 Maha Shakti Peethas located at the holy confluence of Tungabhadra and Krishna rivers, known as Dakshina Kashi."
+        },
+        {
+                "id": "knl-gandikota",
+                "name": "Gandikota Grand Canyon & Bastions",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Tourist",
+                "tags": [
+                        "tourist",
+                        "nature",
+                        "canyon",
+                        "fort"
+                ],
+                "score": 100,
+                "lat": 14.8143,
+                "lng": 78.2862,
+                "distance": "Jammalamadugu · 110 km",
+                "image": "https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=600&q=80",
+                "history": "1123 CE fort fortress established by Kapa Raja overlooking the 300ft gorge carved by River Penna over millennia.",
+                "desc": "Known as the Grand Canyon of India, featuring dramatic red sandstone cliffs, Madhavaraya temple, Raghunatha shrine, and camping grounds."
+        },
+        {
+                "id": "knl-food-mudda",
+                "name": "Rayalaseema Ragi Mudda & Natukodi Pulusu Trail",
+                "city": "Kurnool",
+                "state": "Andhra Pradesh",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "andhra",
+                        "cultural"
+                ],
+                "score": 97,
+                "lat": 15.8281,
+                "lng": 78.0373,
+                "distance": "Old Town Kurnool · 1 km",
+                "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80",
+                "history": "Centuries-old staple diet of Rayalaseema agrarian warriors, perfected with country chicken and wood-fired stone mortars.",
+                "desc": "Steaming finger-millet balls served with fiery red country chicken curry, gongura pachadi, and local spicy uggani bajji."
+        },
+        {
+                "id": "tpt-balaji",
+                "name": "Sri Venkateswara Swamy Temple (Tirumala)",
+                "city": "Tirupati",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "pilgrimage",
+                        "chardham"
+                ],
+                "score": 100,
+                "lat": 13.6833,
+                "lng": 79.35,
+                "distance": "Tirumala Hills · 22 km",
+                "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80",
+                "history": "Ancient Dravidian masterpiece atop the Seven Hills of Seshachalam, patronized by Pallavas, Cholas, and Vijayanagara Emperor Sri Krishnadevaraya.",
+                "desc": "Kaliyuga Vaikuntha where millions seek darshan of Lord Venkateswara; world-famous for the sacred Ananda Nilayam vimanam."
+        },
+        {
+                "id": "tpt-padmavathi",
+                "name": "Sri Padmavathi Ammavari Temple (Tiruchanur)",
+                "city": "Tirupati",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "heritage"
+                ],
+                "score": 98,
+                "lat": 13.6133,
+                "lng": 79.45,
+                "distance": "Tiruchanur · 5 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "Historic temple dedicated to Goddess Padmavathi (Alamelu Manga), consort of Lord Venkateswara, appearing on a golden lotus in Padma Sarovaram.",
+                "desc": "Custom demands visiting Tiruchanur after Tirumala to complete the pilgrimage pilgrimage."
+        },
+        {
+                "id": "tpt-kapila",
+                "name": "Kapila Theertham & Holy Waterfall",
+                "city": "Tirupati",
+                "state": "Andhra Pradesh",
+                "category": "Nature",
+                "tags": [
+                        "nature",
+                        "temple",
+                        "waterfall"
+                ],
+                "score": 96,
+                "lat": 13.65,
+                "lng": 79.42,
+                "distance": "Foot of Hills · 3 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Named after Sage Kapila Maharishi who meditated here before Lord Kapileswara Shiva lingam.",
+                "desc": "Spectacular natural waterfall cascading directly into the temple pushkarini pool at the base of the Tirumala hill range."
+        },
+        {
+                "id": "tpt-chandragiri",
+                "name": "Chandragiri Fort & Raja Mahal Palace",
+                "city": "Tirupati",
+                "state": "Andhra Pradesh",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "palace",
+                        "heritage"
+                ],
+                "score": 97,
+                "lat": 13.5833,
+                "lng": 79.3167,
+                "distance": "Chandragiri · 14 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "11th-century fort that served as the 4th capital of the Vijayanagara Empire after the fall of Hampi in 1565 CE.",
+                "desc": "Indo-Saracenic royal Raja Mahal and Rani Mahal constructed without timber, surrounded by eight ruined temples and a sound-and-light show."
+        },
+        {
+                "id": "tpt-food-laddu",
+                "name": "Tirupati Laddu Prasadam & Andhra Ghee Pulihora Trail",
+                "city": "Tirupati",
+                "state": "Andhra Pradesh",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "prasadam",
+                        "culture"
+                ],
+                "score": 100,
+                "lat": 13.6288,
+                "lng": 79.4192,
+                "distance": "City Center · 0 km",
+                "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
+                "history": "Introduced in August 1715 CE, the world-famous GI-tagged Tirupati Laddu uses pure desi ghee, cashews, cardamom, and raisins in Potu ovens.",
+                "desc": "Tasting the sacred Srivari Laddu, aromatic tamarind Pulihora, pepper Pongal, and steaming filter coffee across Tirupati."
+        },
+        {
+                "id": "vja-kanakadurga",
+                "name": "Kanaka Durga Temple (Indrakeeladri Hill)",
+                "city": "Vijayawada",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "shaktipeetha"
+                ],
+                "score": 100,
+                "lat": 16.5167,
+                "lng": 80.6083,
+                "distance": "Indrakeeladri · 2 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "Svayambhu (self-manifested) shrine mentioned in Kalika Purana where Arjuna received the Pashupatastra after penance to Lord Shiva.",
+                "desc": "Majestic golden temple overlooking the Krishna River, celebrated for the resplendent Navratri celebrations attracting millions."
+        },
+        {
+                "id": "vja-undavalli",
+                "name": "Undavalli Rock-Cut Cave Temples",
+                "city": "Vijayawada",
+                "state": "Andhra Pradesh",
+                "category": "Heritage",
+                "tags": [
+                        "caves",
+                        "heritage",
+                        "unesco-tentative"
+                ],
+                "score": 98,
+                "lat": 16.4967,
+                "lng": 80.58,
+                "distance": "Undavalli · 6 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "7th-century monolithic rock-cut cave monument excavated by Vishnukundina kings, later adapted with a colossal 5m reclining Vishnu Anantasayana.",
+                "desc": "Four-storied sandstone cave facade with intricate Gupta-style stone pillars and panoramic vistas of the surrounding paddy fields."
+        },
+        {
+                "id": "vja-prakasam",
+                "name": "Prakasam Barrage & Bhavani Island",
+                "city": "Vijayawada",
+                "state": "Andhra Pradesh",
+                "category": "Nature",
+                "tags": [
+                        "nature",
+                        "scenic",
+                        "tourist"
+                ],
+                "score": 96,
+                "lat": 16.5083,
+                "lng": 80.605,
+                "distance": "Riverfront · 1 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "1223m barrage across River Krishna completed in 1957, creating an upstream lake enclosing the 133-acre verdant Bhavani Island.",
+                "desc": "River island retreat featuring speed-boat cruises, adventure sports, water villas, and sunset strolls along the illuminated barrage."
+        },
+        {
+                "id": "vja-food-punugulu",
+                "name": "Vijayawada Punugulu & Spicy Gongura Pachadi Trail",
+                "city": "Vijayawada",
+                "state": "Andhra Pradesh",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "andhra",
+                        "spicy"
+                ],
+                "score": 97,
+                "lat": 16.5062,
+                "lng": 80.648,
+                "distance": "Besant Road · 1 km",
+                "image": "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80",
+                "history": "Iconic coastal Andhra street snacks perfected along Besant Road and Bandar Road evening night markets.",
+                "desc": "Golden crispy rice-batter fritters (Punugulu) served with fiery peanut and tomato-ginger chutneys, followed by authentic Andhra banana leaf thalis."
+        },
+        {
+                "id": "viz-kailasagiri",
+                "name": "Kailasagiri Hilltop Park & Giant Shiva-Parvati",
+                "city": "Visakhapatnam",
+                "state": "Andhra Pradesh",
+                "category": "Tourist",
+                "tags": [
+                        "tourist",
+                        "scenic",
+                        "nature"
+                ],
+                "score": 98,
+                "lat": 17.7472,
+                "lng": 83.3422,
+                "distance": "Hilltop · 8 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "360ft hilltop development commissioned with a 40-foot tall monolithic white statue of Lord Shiva and Goddess Parvati overlooking the sea.",
+                "desc": "Accessible by ropeway cable cars, offering panoramic 360-degree vistas of the Bay of Bengal coastline, toy train tracks, and landscaped gardens."
+        },
+        {
+                "id": "viz-submarine",
+                "name": "INS Kursura Submarine Museum",
+                "city": "Visakhapatnam",
+                "state": "Andhra Pradesh",
+                "category": "Heritage",
+                "tags": [
+                        "museum",
+                        "naval",
+                        "heritage"
+                ],
+                "score": 97,
+                "lat": 17.7167,
+                "lng": 83.3333,
+                "distance": "RK Beach · 4 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Soviet-built Kalvari-class diesel-electric submarine decommissioned in 2001 after 31 years of naval service, including the 1971 Indo-Pak war.",
+                "desc": "Asia’s first submarine turned museum preserved right on the sands of Ramakrishna Beach, guided by real retired naval personnel."
+        },
+        {
+                "id": "viz-simhachalam",
+                "name": "Simhachalam Sri Varaha Lakshmi Narasimha Temple",
+                "city": "Visakhapatnam",
+                "state": "Andhra Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "heritage"
+                ],
+                "score": 99,
+                "lat": 17.7667,
+                "lng": 83.25,
+                "distance": "Simhachalam Hill · 16 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "11th-century temple blending Kalinga, Chalukya, and Chola stone architecture where Lord Narasimha idol remains covered in sandalwood paste year-round.",
+                "desc": "The original form of the deity is revealed only once a year during the sacred Chandanotsavam festival."
+        },
+        {
+                "id": "viz-borra",
+                "name": "Borra Caves & Katiki Waterfalls",
+                "city": "Visakhapatnam",
+                "state": "Andhra Pradesh",
+                "category": "Nature",
+                "tags": [
+                        "nature",
+                        "caves",
+                        "waterfall"
+                ],
+                "score": 99,
+                "lat": 18.2833,
+                "lng": 83.0833,
+                "distance": "Ananthagiri Hills · 90 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Discovered in 1807 by William King; limestone caves created by the Gosthani River plunging 80m into deep karst formations.",
+                "desc": "One of the deepest caves in India featuring natural Shiva-Parvati stalagmite formations illuminated with colorful ambient lighting."
+        },
+        {
+                "id": "hyd-golconda",
+                "name": "Golconda Fort & Acoustic Citadel",
+                "city": "Hyderabad",
+                "state": "Telangana",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 17.3833,
+                "lng": 78.4011,
+                "distance": "Golconda · 11 km",
+                "image": "https://images.unsplash.com/photo-1609137144822-26d03cf1e97f?auto=format&fit=crop&w=600&q=80",
+                "history": "13th-century Kakatiya mud fort transformed into an impregnable granite citadel by the Qutb Shahi kings in 1518 CE.",
+                "desc": "World-famous for acoustic clapping echoes at Fateh Darwaza heard 1 km away at Bala Hissar, and vaults that traded the Koh-i-Noor diamond."
+        },
+        {
+                "id": "hyd-charminar",
+                "name": "Charminar & Chowmahalla Palace",
+                "city": "Hyderabad",
+                "state": "Telangana",
+                "category": "Culture",
+                "tags": [
+                        "heritage",
+                        "culture",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 17.3616,
+                "lng": 78.4747,
+                "distance": "Old City · 6 km",
+                "image": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80",
+                "history": "Erected in 1591 CE by Sultan Muhammad Quli Qutb Shah to commemorate the eradication of a deadly plague.",
+                "desc": "Iconic four-minaret square gateway flanked by bustling Laad Bazaar bangle markets and the Nizam’s 18th-century palace."
+        },
+        {
+                "id": "hyd-birla",
+                "name": "Birla Mandir (Venkateswara Temple on Naubat Pahad)",
+                "city": "Hyderabad",
+                "state": "Telangana",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "tourist"
+                ],
+                "score": 98,
+                "lat": 17.4062,
+                "lng": 78.4691,
+                "distance": "Hilltop · 3 km",
+                "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80",
+                "history": "Built in 1976 using 2,000 tons of pure white Rajasthani Makrana marble blending Utkal and South Indian temple architecture.",
+                "desc": "Perched atop a 280-foot high hillock providing panoramic vistas of Hussain Sagar lake and twin cities with evening chants."
+        },
+        {
+                "id": "hyd-food-biryani",
+                "name": "Hyderabad Dum Biryani & Nimrah Irani Chai Trail",
+                "city": "Hyderabad",
+                "state": "Telangana",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "biryani",
+                        "heritage"
+                ],
+                "score": 100,
+                "lat": 17.3616,
+                "lng": 78.4747,
+                "distance": "Charminar Arc · 6 km",
+                "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80",
+                "history": "Developed in royal kitchens of the Asaf Jahi Nizams combining Persian and Deccani spice traditions.",
+                "desc": "Slow-cooked Basmati rice with tender spiced mutton sealed with dough (Dum), paired with hot Irani chai and buttery Osmania biscuits."
+        },
+        {
+                "id": "jpr-amber",
+                "name": "Amber Fort & Sheesh Mahal (UNESCO)",
+                "city": "Jaipur",
+                "state": "Rajasthan",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "unesco",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 26.9855,
+                "lng": 75.8513,
+                "distance": "Amer Hill · 11 km",
+                "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80",
+                "history": "1592 CE fortress founded by Raja Man Singh I; famed for the mirror-mosaic Sheesh Mahal reflecting a single candle into starry skies.",
+                "desc": "Opulent Rajput hilltop palace citadel overlooking Maota Lake, connected by underground tunnels to Jaigarh Fort."
+        },
+        {
+                "id": "jpr-hawamahal",
+                "name": "Hawa Mahal (Palace of the Winds)",
+                "city": "Jaipur",
+                "state": "Rajasthan",
+                "category": "Tourist",
+                "tags": [
+                        "tourist",
+                        "heritage"
+                ],
+                "score": 100,
+                "lat": 26.9239,
+                "lng": 75.8267,
+                "distance": "Badi Choupad · 2 km",
+                "image": "https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80",
+                "history": "1799 CE five-storey pink sandstone facade built by Maharaja Sawai Pratap Singh resembling the crown of Lord Krishna.",
+                "desc": "Famous for its 953 honeycomb jharokha casements engineered to circulate cool mountain breeze."
+        },
+        {
+                "id": "jpr-food-dalbaati",
+                "name": "Jaipur Dal Baati Churma & Rawat Pyaaz Kachori Trail",
+                "city": "Jaipur",
+                "state": "Rajasthan",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "rajasthani",
+                        "culture"
+                ],
+                "score": 99,
+                "lat": 26.9209,
+                "lng": 75.8243,
+                "distance": "Johari Bazaar · 2 km",
+                "image": "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80",
+                "history": "Originated during Mewar kingdom as a durable war ration roasted in sand pits and crushed with pure ghee.",
+                "desc": "Crisp baked wheat dumplings drowned in desi ghee, spicy panchmel dal, sweet crumbled churma, and steaming pyaaz kachoris."
+        },
+        {
+                "id": "udp-citypalace",
+                "name": "Udaipur City Palace & Lake Pichola",
+                "city": "Udaipur",
+                "state": "Rajasthan",
+                "category": "Heritage",
+                "tags": [
+                        "palace",
+                        "heritage",
+                        "lake"
+                ],
+                "score": 100,
+                "lat": 24.5764,
+                "lng": 73.6835,
+                "distance": "Lakefront · 1 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Commenced in 1559 CE by Maharana Udai Singh II over four centuries on the eastern banks of Lake Pichola.",
+                "desc": "Rajasthan’s largest palace complex, featuring mirror courtyards, marble balconies, and sunset boat rides to Jag Mandir."
+        },
+        {
+                "id": "udp-jagmandir",
+                "name": "Jag Mandir Island Palace (Lake Garden)",
+                "city": "Udaipur",
+                "state": "Rajasthan",
+                "category": "Tourist",
+                "tags": [
+                        "palace",
+                        "lake",
+                        "tourist"
+                ],
+                "score": 98,
+                "lat": 24.5683,
+                "lng": 73.6783,
+                "distance": "Lake Pichola · 2 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "17th-century island sanctuary built by three Maharanas; provided asylum to Prince Khurram (later Emperor Shah Jahan).",
+                "desc": "Flanked by life-sized stone elephants, lush garden courtyards, and royal marble pavilions in the center of the lake."
+        },
+        {
+                "id": "del-redfort",
+                "name": "Red Fort (Lal Qila - UNESCO)",
+                "city": "Delhi",
+                "state": "Delhi",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "unesco",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 28.6562,
+                "lng": 77.241,
+                "distance": "Old Delhi · 4 km",
+                "image": "https://images.unsplash.com/photo-1585136917195-2cfc8a82d066?auto=format&fit=crop&w=600&q=80",
+                "history": "Constructed in 1638 CE by Mughal Emperor Shah Jahan when he shifted the capital from Agra to Shahjahanabad.",
+                "desc": "Massive red sandstone fortification housing the Diwan-i-Aam, Diwan-i-Khas, Lahori Gate, and Sound & Light shows."
+        },
+        {
+                "id": "del-qutub",
+                "name": "Qutub Minar & Iron Pillar (UNESCO)",
+                "city": "Delhi",
+                "state": "Delhi",
+                "category": "Heritage",
+                "tags": [
+                        "unesco",
+                        "heritage",
+                        "monument"
+                ],
+                "score": 100,
+                "lat": 28.5245,
+                "lng": 77.1855,
+                "distance": "Mehrauli · 14 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Commenced in 1192 CE by Qutb-ud-din Aibak; 72.5m fluted red sandstone victory minaret beside the 1600-year-old rust-resistant Gupta iron pillar.",
+                "desc": "World’s tallest brick minaret adorned with intricate geometric carvings and Quranic inscriptions."
+        },
+        {
+                "id": "del-indiagate",
+                "name": "India Gate & Kartavya Path",
+                "city": "Delhi",
+                "state": "Delhi",
+                "category": "Tourist",
+                "tags": [
+                        "monument",
+                        "tourist",
+                        "culture"
+                ],
+                "score": 98,
+                "lat": 28.6129,
+                "lng": 77.2295,
+                "distance": "Central Vista · 2 km",
+                "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=600&q=80",
+                "history": "42-meter triumphal arch designed by Sir Edwin Lutyens in 1921 honoring 84,000 soldiers of the British Indian Army.",
+                "desc": "Lush parklands and fountain promenades illuminated at night with the Amar Jawan Jyoti and National War Memorial."
+        },
+        {
+                "id": "del-food-chandni",
+                "name": "Chandni Chowk Paranthe Wali Gali & Karim's Trail",
+                "city": "Delhi",
+                "state": "Delhi",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "mughlai",
+                        "delhi"
+                ],
+                "score": 100,
+                "lat": 28.6506,
+                "lng": 77.2303,
+                "distance": "Old Delhi · 4 km",
+                "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
+                "history": "Bustling bazaar established in 1650 CE by Princess Jahanara; home to historic shallow-fried paratha shops and royal Mughal recipe heirs.",
+                "desc": "Crispy stuffed parathas with sweet pumpkin chutney, mutton burra kebabs, Daulat ki Chaat foam, and rich jalebis."
+        },
+        {
+                "id": "agr-taj",
+                "name": "Taj Mahal (UNESCO World Wonder)",
+                "city": "Agra",
+                "state": "Uttar Pradesh",
+                "category": "Heritage",
+                "tags": [
+                        "unesco",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 27.1751,
+                "lng": 78.0421,
+                "distance": "Taj East Gate · 4 km",
+                "image": "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80",
+                "history": "1632 CE ivory-white marble mausoleum commissioned by Shah Jahan for Mumtaz Mahal, requiring 20,000 master artisans over 22 years.",
+                "desc": "The jewel of Muslim art in India and universally admired masterpiece of world heritage on the banks of Yamuna River."
+        },
+        {
+                "id": "agr-fort",
+                "name": "Agra Fort Citadel & Jahangiri Mahal",
+                "city": "Agra",
+                "state": "Uttar Pradesh",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "unesco",
+                        "heritage"
+                ],
+                "score": 99,
+                "lat": 27.1795,
+                "lng": 78.0211,
+                "distance": "City Center · 2 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Main residence of the Mughal emperors until 1638, fortified in red sandstone by Emperor Akbar in 1565 CE.",
+                "desc": "Sprawling 94-acre fortress complex housing the Musamman Burj where Shah Jahan was imprisoned gazing at the Taj Mahal."
+        },
+        {
+                "id": "vns-vishwanath",
+                "name": "Kashi Vishwanath Temple & Ganga Corridor",
+                "city": "Varanasi",
+                "state": "Uttar Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "jyotirlinga",
+                        "temple",
+                        "sacred"
+                ],
+                "score": 100,
+                "lat": 25.3109,
+                "lng": 83.0107,
+                "distance": "Vishwanath Gali · 4 km",
+                "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=600&q=80",
+                "history": "One of the 12 sacred Jyotirlingas of Shiva; restored in 1780 CE by Queen Ahilyabai Holkar and expanded with a grand riverfront corridor in 2021.",
+                "desc": "Spiritual epicentre of Sanatana Dharma crowned with 800 kg gold-plated spires, connecting directly to Manikarnika Ghat."
+        },
+        {
+                "id": "vns-ghats",
+                "name": "Dashashwamedh Ghat & Evening Maha Aarti",
+                "city": "Varanasi",
+                "state": "Uttar Pradesh",
+                "category": "Culture",
+                "tags": [
+                        "culture",
+                        "sacred",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 25.306,
+                "lng": 83.0104,
+                "distance": "Ganga Bank · 4 km",
+                "image": "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=600&q=80",
+                "history": "According to legend, Lord Brahma created this ghat to welcome Lord Shiva and performed the Dasa-Ashwamedha yajna.",
+                "desc": "Spectacular daily ritual where saffron-robed priests elevate multi-tiered brass oil lamps in sync with conch shells and Vedic hymns."
+        },
+        {
+                "id": "vns-food-chaat",
+                "name": "Varanasi Tamatar Chaat, Malaiyo & Banarasi Paan",
+                "city": "Varanasi",
+                "state": "Uttar Pradesh",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "banarasi",
+                        "culture"
+                ],
+                "score": 99,
+                "lat": 25.309,
+                "lng": 83.006,
+                "distance": "Godowlia · 4 km",
+                "image": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80",
+                "history": "Centuries of royal and ascetic culinary evolution, perfected by Kashi Chat Bhandar and Banarasi betel leaf masters.",
+                "desc": "Clay-pot hot tomato mash chaat drizzled with sugar syrup, winter saffron dew foam Malaiyo, and silver-foiled Banarasi Meetha Paan."
+        },
+        {
+                "id": "ayd-rammandir",
+                "name": "Shri Ram Janmabhoomi Mandir",
+                "city": "Ayodhya",
+                "state": "Uttar Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "heritage",
+                        "culture"
+                ],
+                "score": 100,
+                "lat": 26.7922,
+                "lng": 82.1998,
+                "distance": "Ramkot · 1 km",
+                "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80",
+                "history": "Grand Nagara-style stone temple erected at the sacred birthplace of Lord Rama, constructed using pink Bansi Paharpur stone without iron reinforcement.",
+                "desc": "Monumental 3-storied spiritual complex with 392 intricately carved pillars and five mandapas on the holy soil of Ayodhya."
+        },
+        {
+                "id": "ayd-hanumangarhi",
+                "name": "Hanuman Garhi Fort Temple",
+                "city": "Ayodhya",
+                "state": "Uttar Pradesh",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "temple",
+                        "heritage"
+                ],
+                "score": 98,
+                "lat": 26.795,
+                "lng": 82.202,
+                "distance": "City Center · 1 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "10th-century custom-built fort temple featuring 76 steps leading to Lord Hanuman’s guardian bastion of Ayodhya.",
+                "desc": "Custom mandates taking blessings of Lord Hanuman here before proceeding to the Ram Janmabhoomi complex."
+        },
+        {
+                "id": "asr-goldentemple",
+                "name": "Sri Harmandir Sahib (Golden Temple)",
+                "city": "Amritsar",
+                "state": "Punjab",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "sacred",
+                        "unesco-tentative",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 31.62,
+                "lng": 74.8765,
+                "distance": "Old Amritsar · 2 km",
+                "image": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?auto=format&fit=crop&w=600&q=80",
+                "history": "Founded in 1577 by Guru Ram Das; gilded with 500 kg of pure gold foil by Maharaja Ranjit Singh in 1830 CE surrounded by the holy Amrit Sarovar.",
+                "desc": "Supreme spiritual seat of Sikhism, serving over 100,000 free meals daily in the world’s largest community kitchen (Guru ka Langar)."
+        },
+        {
+                "id": "asr-jallianwala",
+                "name": "Jallianwala Bagh Memorial & Eternal Flame",
+                "city": "Amritsar",
+                "state": "Punjab",
+                "category": "Heritage",
+                "tags": [
+                        "monument",
+                        "heritage",
+                        "national"
+                ],
+                "score": 99,
+                "lat": 31.6206,
+                "lng": 74.8803,
+                "distance": "Near Golden Temple · 0.5 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Sacred national memorial preserving the bullet marks of the historic April 13, 1919 massacre that galvanized India’s independence movement.",
+                "desc": "Features the Martyrs’ Well, Amar Jyoti flame, and a museum detailing the courageous sacrifice of thousands of peaceful freedom fighters."
+        },
+        {
+                "id": "asr-food-kulcha",
+                "name": "Amritsari Stuffed Kulcha & Kesar Da Dhaba Trail",
+                "city": "Amritsar",
+                "state": "Punjab",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "punjabi",
+                        "culture"
+                ],
+                "score": 100,
+                "lat": 31.625,
+                "lng": 74.873,
+                "distance": "Heritage Street · 1 km",
+                "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
+                "history": "Kesar Da Dhaba established in 1916 in Lahore, relocating to Amritsar post-partition, slow-cooking black dal makhani for 12 hours.",
+                "desc": "Flaky tandoor-baked potato-paneer kulchas dripping with homemade butter, served with spicy chole, imli chutney, and thick creamy lassi."
+        },
+        {
+                "id": "blr-palace",
+                "name": "Bangalore Palace (Tudor Architecture)",
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "category": "Heritage",
+                "tags": [
+                        "palace",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 98,
+                "lat": 12.9988,
+                "lng": 77.5921,
+                "distance": "Vasanth Nagar · 4 km",
+                "image": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80",
+                "history": "1878 CE royal residence constructed by Chamaraja Wadiyar modeled after England’s Windsor Castle.",
+                "desc": "Features fortified towers, battlements, Gothic stained-glass windows, and personal galleries of Raja Ravi Varma paintings."
+        },
+        {
+                "id": "blr-lalbagh",
+                "name": "Lalbagh Botanical Garden & Glass House",
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "category": "Nature",
+                "tags": [
+                        "nature",
+                        "scenic",
+                        "tourist"
+                ],
+                "score": 97,
+                "lat": 12.9507,
+                "lng": 77.5844,
+                "distance": "South Bengaluru · 5 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Commissioned in 1760 CE by Hyder Ali and completed by Tipu Sultan with 240 acres of rare tropical flora.",
+                "desc": "Renowned for its London Crystal Palace-inspired Glass House, 3000-million-year-old Peninsular Gneiss rock, and biannual flower shows."
+        },
+        {
+                "id": "blr-food-mtr",
+                "name": "Bengaluru VV Puram Food Street & MTR Filter Coffee Trail",
+                "city": "Bengaluru",
+                "state": "Karnataka",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "southindian",
+                        "culture"
+                ],
+                "score": 99,
+                "lat": 12.9553,
+                "lng": 77.5857,
+                "distance": "Basavanagudi · 5 km",
+                "image": "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80",
+                "history": "Mavalli Tiffin Room (MTR) established in 1924, renowned for inventing the Rava Idli during WWII grain shortages.",
+                "desc": "Crisp ghee Benne Dosa, steaming Rava Idli with pure melted ghee, Akki Roti, and foaming Chikmagalur brass-tumbler filter coffee."
+        },
+        {
+                "id": "hmp-virupaksha",
+                "name": "Virupaksha Temple & Hampi Bazaar",
+                "city": "Hampi",
+                "state": "Karnataka",
+                "category": "Temples",
+                "tags": [
+                        "unesco",
+                        "temple",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 15.335,
+                "lng": 76.46,
+                "distance": "Hampi Core · 0 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "7th-century holy Shiva temple with unbroken worship spanning Chalukya, Hoysala, and Vijayanagara golden eras.",
+                "desc": "Soaring 50-meter 9-tiered Rajagopuram facing ancient stone bazaar colonnades beside the holy Tungabhadra River."
+        },
+        {
+                "id": "hmp-vittala",
+                "name": "Vijaya Vittala Temple & Stone Chariot (UNESCO)",
+                "city": "Hampi",
+                "state": "Karnataka",
+                "category": "Heritage",
+                "tags": [
+                        "unesco",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 15.3394,
+                "lng": 76.4794,
+                "distance": "Vittala Complex · 3 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "15th-century pinnacle of Vijayanagara stone masonry dedicated to Lord Vishnu with musical SaReGaMa acoustic pillars.",
+                "desc": "The iconic monolithic stone chariot shrine representing Garuda, featured on the Indian ₹50 currency note."
+        },
+        {
+                "id": "mys-palace",
+                "name": "Mysore Palace (Amba Vilas)",
+                "city": "Mysuru",
+                "state": "Karnataka",
+                "category": "Heritage",
+                "tags": [
+                        "palace",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 12.3052,
+                "lng": 76.6552,
+                "distance": "City Center · 0 km",
+                "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80",
+                "history": "Commissioned by Krishnaraja Wadiyar IV and designed by Lord Henry Irwin in Indo-Saracenic grandeur, completed in 1912.",
+                "desc": "Illuminated by 100,000 electric bulbs on Sundays and Dussehra, with stained glass ceilings and golden royal thrones."
+        },
+        {
+                "id": "mys-chamundi",
+                "name": "Chamundeshwari Temple (Chamundi Hill)",
+                "city": "Mysuru",
+                "state": "Karnataka",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "shaktipeetha",
+                        "scenic"
+                ],
+                "score": 98,
+                "lat": 12.275,
+                "lng": 76.671,
+                "distance": "Chamundi Hill · 13 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "12th-century Hoysala shrine celebrating Goddess Chamundeshwari who vanquished the demon king Mahishasura.",
+                "desc": "Features a 1000-step ancient stone stairway guarded midway by a monolithic 15-foot black granite Nandi."
+        },
+        {
+                "id": "mdu-meenakshi",
+                "name": "Meenakshi Sundareswarar Temple",
+                "city": "Madurai",
+                "state": "Tamil Nadu",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "heritage",
+                        "shaktipeetha",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 9.9195,
+                "lng": 78.1193,
+                "distance": "Old Madurai · 0 km",
+                "image": "https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80",
+                "history": "6th-century BCE Sangam root renovated into a monumental 14-gopuram marvel by the Nayak rulers between 1623 and 1655 CE.",
+                "desc": "Housing the Hall of Thousand Pillars (985 musical sculpted columns) and the sacred Golden Lotus tank (Porthamarai Kulam)."
+        },
+        {
+                "id": "mdu-nayakkar",
+                "name": "Thirumalai Nayakkar Mahal",
+                "city": "Madurai",
+                "state": "Tamil Nadu",
+                "category": "Heritage",
+                "tags": [
+                        "palace",
+                        "heritage",
+                        "culture"
+                ],
+                "score": 97,
+                "lat": 9.915,
+                "lng": 78.1236,
+                "distance": "City Center · 2 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Constructed in 1636 CE by King Tirumala Nayaka with help from Italian architects blending Dravidian and Islamic palace styles.",
+                "desc": "Famous for colossal 82ft tall white stone pillars, celestial pavilion (Swarga Vilasam), and evening sound-and-light spectacle."
+        },
+        {
+                "id": "chn-kapaleeshwarar",
+                "name": "Kapaleeshwarar Temple (Mylapore)",
+                "city": "Chennai",
+                "state": "Tamil Nadu",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "heritage",
+                        "sacred"
+                ],
+                "score": 99,
+                "lat": 13.0336,
+                "lng": 80.2697,
+                "distance": "Mylapore · 6 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "7th-century CE Pallava stone shrine dedicated to Lord Shiva; rebuilt in Vijayanagara Dravidian architecture in the 16th century.",
+                "desc": "37m high sculpted multi-color Gopuram facing the vast holy temple tank, surrounded by traditional silk and bronze stores."
+        },
+        {
+                "id": "chn-marinabeach",
+                "name": "Marina Beach Promenade & Lighthouse",
+                "city": "Chennai",
+                "state": "Tamil Nadu",
+                "category": "Tourist",
+                "tags": [
+                        "tourist",
+                        "beach",
+                        "nature"
+                ],
+                "score": 97,
+                "lat": 13.05,
+                "lng": 80.2824,
+                "distance": "Coastline · 4 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "World’s second longest natural urban sandy beach (13 km), transformed by Governor Mountstuart Elphinstone Grant Duff in 1884.",
+                "desc": "Lively seaside promenade with historical statue memorials, evening sundal and fresh fish fry stalls, and lighthouse panoramic decks."
+        },
+        {
+                "id": "tjv-bigtemple",
+                "name": "Brihadeeswarar Temple (Great Chola Temple - UNESCO)",
+                "city": "Thanjavur",
+                "state": "Tamil Nadu",
+                "category": "Temples",
+                "tags": [
+                        "unesco",
+                        "temple",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 10.7828,
+                "lng": 79.1319,
+                "distance": "Old Town · 1 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "Completed in 1010 CE by Emperor Raja Raja Chola I; crowned by a single 80-tonne monolithic granite Kumbam apex.",
+                "desc": "World’s first complete granite temple with a soaring 216ft Vimana tower whose shadow never touches the ground at noon."
+        },
+        {
+                "id": "koc-nets",
+                "name": "Fort Kochi & Chinese Fishing Nets (Cheena Vala)",
+                "city": "Kochi",
+                "state": "Kerala",
+                "category": "Culture",
+                "tags": [
+                        "culture",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 99,
+                "lat": 9.9656,
+                "lng": 76.2422,
+                "distance": "Fort Kochi Beach · 12 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Introduced by 14th-century Chinese explorer Zheng He’s merchants from the court of Kublai Khan.",
+                "desc": "Massive cantilevered shore-operated fishing rigs creating iconic sunset silhouettes along the Arabian Sea entrance."
+        },
+        {
+                "id": "koc-mattancherry",
+                "name": "Mattancherry Dutch Palace & Jew Town",
+                "city": "Kochi",
+                "state": "Kerala",
+                "category": "Heritage",
+                "tags": [
+                        "palace",
+                        "heritage",
+                        "museum"
+                ],
+                "score": 97,
+                "lat": 9.9583,
+                "lng": 76.2592,
+                "distance": "Jew Town · 10 km",
+                "image": "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80",
+                "history": "Built in 1555 by the Portuguese as a gift to King Veera Kerala Varma, later renovated with Kerala wood murals by the Dutch in 1663.",
+                "desc": "Exquisite Ramayana and Mahabharata wall frescoes, antique spice warehouses, and the 1568 Paradesi Synagogue."
+        },
+        {
+                "id": "bom-gateway",
+                "name": "Gateway of India & Taj Mahal Palace",
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "category": "Heritage",
+                "tags": [
+                        "monument",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 18.922,
+                "lng": 72.8347,
+                "distance": "Colaba · 2 km",
+                "image": "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=600&q=80",
+                "history": "26m yellow basalt triumphal arch built in 1924 to commemorate King George V’s visit; where the last British troops departed in 1948.",
+                "desc": "Iconic harbor landmark facing the Arabian Sea, flanked by the 1903 heritage Taj Mahal Palace Hotel and Elephanta ferry docks."
+        },
+        {
+                "id": "bom-marinedrive",
+                "name": "Marine Drive & Queen's Necklace",
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "category": "Tourist",
+                "tags": [
+                        "tourist",
+                        "scenic",
+                        "sunset"
+                ],
+                "score": 99,
+                "lat": 18.9432,
+                "lng": 72.823,
+                "distance": "South Mumbai · 3 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "3.6 km C-shaped coastal boulevard built on land reclaimed from Back Bay in the 1920s with Art Deco heritage apartments.",
+                "desc": "Shimmers like a pearl necklace at night under golden street lamps, ideal for breezy sea-view evening walks and cutting chai."
+        },
+        {
+                "id": "bom-food-vadapav",
+                "name": "Mumbai Vada Pav, Pav Bhaji & Juhu Chowpatty Trail",
+                "city": "Mumbai",
+                "state": "Maharashtra",
+                "category": "Food",
+                "tags": [
+                        "foodtrail",
+                        "mumbai",
+                        "streetfood"
+                ],
+                "score": 100,
+                "lat": 19.0988,
+                "lng": 72.8267,
+                "distance": "Juhu Beach · 15 km",
+                "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
+                "history": "Invented in 1966 by Ashok Vaidya outside Dadar station as quick nourishment for Mumbai’s mill workers.",
+                "desc": "Spicy potato fritter encased in soft pav with garlic chutney, sizzling butter pav bhaji, pani puri, and kulfi falooda."
+        },
+        {
+                "id": "pun-shaniwarwada",
+                "name": "Shaniwar Wada Peshwa Bastions",
+                "city": "Pune",
+                "state": "Maharashtra",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "heritage",
+                        "history"
+                ],
+                "score": 98,
+                "lat": 18.5196,
+                "lng": 73.8553,
+                "distance": "Old Pune · 1 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "1732 CE seat of the Peshwa prime ministers of the Maratha Empire, constructed by Peshwa Baji Rao I.",
+                "desc": "Massive teak Dilli Darwaza spiked with iron elephant defense spikes, lotus fountains, and royal fortified stone ramparts."
+        },
+        {
+                "id": "ccu-victoria",
+                "name": "Victoria Memorial Hall & Gardens",
+                "city": "Kolkata",
+                "state": "West Bengal",
+                "category": "Heritage",
+                "tags": [
+                        "monument",
+                        "museum",
+                        "heritage",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 22.5448,
+                "lng": 88.3426,
+                "distance": "Maidan · 3 km",
+                "image": "https://images.unsplash.com/photo-1558431382-27e303142255?auto=format&fit=crop&w=600&q=80",
+                "history": "Magnificent white Makrana marble monument designed by Sir William Emerson, built between 1906 and 1921.",
+                "desc": "Surrounded by 64 acres of manicured gardens and reflecting ponds, housing 25 galleries of rare historical paintings."
+        },
+        {
+                "id": "ccu-howrah",
+                "name": "Howrah Bridge (Rabindra Setu)",
+                "city": "Kolkata",
+                "state": "West Bengal",
+                "category": "Tourist",
+                "tags": [
+                        "tourist",
+                        "heritage",
+                        "engineering"
+                ],
+                "score": 99,
+                "lat": 22.5851,
+                "lng": 88.3468,
+                "distance": "River Hooghly · 4 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Balanced cantilever bridge constructed in 1943 without a single nut or bolt, held entirely by rivets and high-tensile steel.",
+                "desc": "World’s busiest cantilever bridge connecting Kolkata to Howrah, buzzing with yellow vintage taxis and flower market ferries."
+        },
+        {
+                "id": "pur-jagannath",
+                "name": "Shree Jagannath Temple (Char Dham)",
+                "city": "Puri",
+                "state": "Odisha",
+                "category": "Temples",
+                "tags": [
+                        "chardham",
+                        "temple",
+                        "sacred",
+                        "pilgrimage"
+                ],
+                "score": 100,
+                "lat": 19.8049,
+                "lng": 85.8179,
+                "distance": "Grand Road · 1 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "12th-century Kalinga marvel established by King Anantavarman Chodaganga Deva; one of the four supreme Char Dham kshetras.",
+                "desc": "Home to the divine triad Lord Jagannath, Balabhadra, and Subhadra; famous for the world’s largest wooden Ratha Yatra chariots."
+        },
+        {
+                "id": "pur-goldenbeach",
+                "name": "Puri Golden Beach (Blue Flag Certified)",
+                "city": "Puri",
+                "state": "Odisha",
+                "category": "Nature",
+                "tags": [
+                        "beach",
+                        "nature",
+                        "scenic"
+                ],
+                "score": 96,
+                "lat": 19.7983,
+                "lng": 85.8242,
+                "distance": "Coast · 2 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Ancient sacred sea-bath spot where Chaitanya Mahaprabhu immersed in devotional ecstasy along the Bay of Bengal.",
+                "desc": "Clean international Blue Flag certified golden beach featuring sand art sculptures by Padma Shri Sudarsan Pattnaik."
+        },
+        {
+                "id": "bbi-lingaraj",
+                "name": "Lingaraj Temple (180ft Kalinga Spire)",
+                "city": "Bhubaneswar",
+                "state": "Odisha",
+                "category": "Temples",
+                "tags": [
+                        "temple",
+                        "heritage",
+                        "sacred"
+                ],
+                "score": 100,
+                "lat": 20.2382,
+                "lng": 85.8338,
+                "distance": "Old Town · 3 km",
+                "image": "https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80",
+                "history": "11th-century pinnacle of Kalinga architecture built by Somavamsi King Jajati Keshari, dedicated to Harihara (combined Shiva-Vishnu).",
+                "desc": "Soaring 55-meter Deula tower with 150 subsidiary shrines surrounding the sacred Bindusagar lake."
+        },
+        {
+                "id": "ujn-mahakaleshwar",
+                "name": "Mahakaleshwar Jyotirlinga & Bhasma Aarti",
+                "city": "Ujjain",
+                "state": "Madhya Pradesh",
+                "category": "Temples",
+                "tags": [
+                        "jyotirlinga",
+                        "temple",
+                        "sacred",
+                        "pilgrimage"
+                ],
+                "score": 100,
+                "lat": 23.1827,
+                "lng": 75.7682,
+                "distance": "Old Ujjain · 2 km",
+                "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80",
+                "history": "Only south-facing (Dakshinmurti) Swayambhu Jyotirlinga among the 12 sacred shrines of Lord Shiva, worshipped with fresh holy ash.",
+                "desc": "Sacred seat of Mahakaal (Lord of Time and Death), expanded with the grand 900m Mahakal Lok corridor showcasing 108 Shiva murals."
+        },
+        {
+                "id": "rsh-jhula",
+                "name": "Laxman Jhula, Ram Jhula & Parmarth Ganga Aarti",
+                "city": "Rishikesh",
+                "state": "Uttarakhand",
+                "category": "Culture",
+                "tags": [
+                        "culture",
+                        "sacred",
+                        "nature",
+                        "tourist"
+                ],
+                "score": 100,
+                "lat": 30.126,
+                "lng": 78.3248,
+                "distance": "Tapovan · 3 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Historic iron suspension bridges across the torrential Ganga river where Lord Rama and Lakshmana crossed on jute ropes.",
+                "desc": "World capital of Yoga, offering transcendental sunset Ganga Aartis at Triveni Ghat and Parmarth Niketan amidst Himalayan air."
+        },
+        {
+                "id": "goa-bomjesus",
+                "name": "Basilica of Bom Jesus (UNESCO)",
+                "city": "Goa",
+                "state": "Goa",
+                "category": "Heritage",
+                "tags": [
+                        "unesco",
+                        "heritage",
+                        "church"
+                ],
+                "score": 100,
+                "lat": 15.5009,
+                "lng": 73.9116,
+                "distance": "Old Goa · 9 km",
+                "image": "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80",
+                "history": "Consecrated in 1605 CE; Jesuit baroque masterpiece enshrining the incorrupt body of Saint Francis Xavier inside a silver casket.",
+                "desc": "Unplastered red laterite facade, gilded altars, and marble flooring representing the finest Renaissance architecture in India."
+        },
+        {
+                "id": "goa-aguada",
+                "name": "Fort Aguada & 17th Century Lighthouse",
+                "city": "Goa",
+                "state": "Goa",
+                "category": "Heritage",
+                "tags": [
+                        "fort",
+                        "beach",
+                        "scenic",
+                        "heritage"
+                ],
+                "score": 98,
+                "lat": 15.4925,
+                "lng": 73.7736,
+                "distance": "Sinquerim · 14 km",
+                "image": "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80",
+                "history": "Constructed in 1612 by the Portuguese to guard against Dutch fleets; held 79 cannons and a freshwater spring (Aguada).",
+                "desc": "Commanding hilltop bastion overlooking Sinquerim beach and the vast Arabian Sea with a 4-storey historic lighthouse."
+        }
+];
+
+      // Extract unique states
+      const ALL_STATES = [...new Set(ALL_DESTINATIONS.map(p => p.state))].sort();
+
+      let activeCity = '';
+      let activeCategory = 'all';
+      let activeState = 'all';
+      let activeThemes = new Set();
+      let minScore = 0;
+      let searchQuery = '';
+      let sortBy = 'score';
+
+      let cityMap = null;
+      let cityMarkers = [];
+
+      // 3. Populate State Dropdown
+      function populateStateDropdown() {
+        const sel = document.getElementById('stateFilterSelect');
+        if (!sel) return;
+
+        ALL_STATES.forEach(st => {
+          const count = ALL_DESTINATIONS.filter(p => p.state === st).length;
+          const opt = document.createElement('option');
+          opt.value = st;
+          opt.textContent = `📍 ${st} (${count} places)`;
+          sel.appendChild(opt);
+        });
+      }
+
+      // 4. Initialize or update City Interactive Map
+      function updateCityLiveMap(places, centerCoords) {
+        const mapContainer = document.getElementById('cityMapView');
+        if (!mapContainer) return;
+
+        if (!cityMap) {
+          cityMap = L.map('cityMapView', {
+            zoomControl: true,
+            attributionControl: false
+          }).setView(centerCoords || [15.8281, 78.0373], 10);
+
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 18
+          }).addTo(cityMap);
+        } else {
+          cityMap.setView(centerCoords || [15.8281, 78.0373], 10);
+        }
+
+        cityMarkers.forEach(m => cityMap.removeLayer(m));
+        cityMarkers = [];
+
+        const bounds = [];
+        places.forEach(p => {
+          bounds.push([p.lat, p.lng]);
+
+          let catClass = 'heritage';
+          let icon = '📍';
+          if (p.category === 'Temples') { catClass = 'temple'; icon = '🛕'; }
+          else if (p.category === 'Heritage') { catClass = 'heritage'; icon = '🏰'; }
+          else if (p.category === 'Nature') { catClass = 'nature'; icon = '🌿'; }
+          else if (p.category === 'Food') { catClass = 'food'; icon = '🍛'; }
+
+          const customIcon = L.divIcon({
+            html: `<div class="ug-city-marker ${catClass}">${icon}</div>`,
+            className: '',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+          });
+
+          const marker = L.marker([p.lat, p.lng], { icon: customIcon }).addTo(cityMap);
+          const navUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ', ' + p.city + ', ' + p.state)}`;
+
+          marker.bindPopup(`
+            <div class="city-popup-box">
+              <img class="city-popup-img" src="${p.image}" alt="${p.name}">
+              <h4 class="city-popup-title">${p.name}</h4>
+              <p class="city-popup-history"><b>📜 History:</b> ${p.history || p.desc}</p>
+              <div style="font-size:9px; color:#8ea293; margin-bottom:6px;">📍 ${p.lat.toFixed(4)}, ${p.lng.toFixed(4)}</div>
+              <a href="${navUrl}" target="_blank" rel="noopener" class="city-popup-nav">🧭 Open Live GPS Navigation ↗</a>
+            </div>
+          `);
+
+          cityMarkers.push(marker);
+        });
+
+        if (bounds.length > 0) {
+          setTimeout(() => {
+            cityMap.invalidateSize();
+            cityMap.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
+          }, 200);
+        }
+      }
+
+      // 5. Render Spotlight Banner & Cards
+      function renderCatalog() {
+        const grid = document.getElementById('destinationsGrid');
+        const countEl = document.getElementById('catalogCount');
+        const headingEl = document.getElementById('catalogHeading');
+        const spotlightBanner = document.getElementById('citySpotlightBanner');
+        if (!grid) return;
+
+        // Filter by City if active
+        let filtered = ALL_DESTINATIONS.filter(p => {
+          const cityMatch = !activeCity || (p.city.toLowerCase() === activeCity.toLowerCase());
+          const catMatch = (activeCategory === 'all') || (p.category === activeCategory);
+          const stateMatch = (activeState === 'all') || (p.state === activeState);
+          const scoreMatch = p.score >= minScore;
+          
+          let themeMatch = true;
+          if (activeThemes.size > 0) {
+            themeMatch = [...activeThemes].some(t => (p.tags || []).includes(t));
+          }
+
+          let searchMatch = true;
+          if (searchQuery) {
+            const q = searchQuery.toLowerCase();
+            searchMatch = p.name.toLowerCase().includes(q) ||
+                          p.city.toLowerCase().includes(q) ||
+                          p.state.toLowerCase().includes(q) ||
+                          p.category.toLowerCase().includes(q) ||
+                          p.desc.toLowerCase().includes(q) ||
+                          (p.history && p.history.toLowerCase().includes(q)) ||
+                          (p.tags || []).some(t => t.toLowerCase().includes(q));
+          }
+
+          return cityMatch && catMatch && stateMatch && scoreMatch && themeMatch && searchMatch;
+        });
+
+        // Sort places
+        if (sortBy === 'name') {
+          filtered.sort((a, b) => a.name.localeCompare(b.name));
+        } else if (sortBy === 'category') {
+          filtered.sort((a, b) => a.category.localeCompare(b.category) || b.score - a.score);
+        } else {
+          filtered.sort((a, b) => b.score - a.score);
+        }
+
+        // City Spotlight Banner management
+        if (activeCity && CITY_METADATA[activeCity] && spotlightBanner) {
+          spotlightBanner.classList.add('visible');
+          const meta = CITY_METADATA[activeCity];
+          const cityPlaces = ALL_DESTINATIONS.filter(p => p.city.toLowerCase() === activeCity.toLowerCase());
+
+          document.getElementById('spotlightCityTitle').innerHTML = `📍 ${activeCity}`;
+          document.getElementById('spotlightCityLocation').textContent = `${meta.state} · ${meta.region} India`;
+          document.getElementById('spotlightCityDesc').textContent = meta.desc;
+          document.getElementById('mapCityNameLabel').textContent = activeCity;
+          document.getElementById('mapPinsCount').textContent = cityPlaces.length;
+
+          const planBtn = document.getElementById('spotlightPlanBtn');
+          if (planBtn) planBtn.href = `planner.html?destination=${encodeURIComponent(activeCity)}`;
+
+          const tCount = cityPlaces.filter(p => p.category === 'Temples').length;
+          const hCount = cityPlaces.filter(p => p.category === 'Heritage').length;
+          const cCount = cityPlaces.filter(p => p.category === 'Culture').length;
+          const nCount = cityPlaces.filter(p => p.category === 'Nature').length;
+          const fCount = cityPlaces.filter(p => p.category === 'Food').length;
+          const tourCount = cityPlaces.filter(p => p.category === 'Tourist').length;
+
+          document.getElementById('spotlightStatPills').innerHTML = `
+            <span class="city-stat-pill">Total: <b>${cityPlaces.length} Destinations</b></span>
+            ${tCount ? `<span class="city-stat-pill">🛕 <b>${tCount} Temples</b></span>` : ''}
+            ${hCount ? `<span class="city-stat-pill">🏰 <b>${hCount} Forts</b></span>` : ''}
+            ${cCount ? `<span class="city-stat-pill">🎭 <b>${cCount} Culture</b></span>` : ''}
+            ${nCount ? `<span class="city-stat-pill">🌿 <b>${nCount} Scenic</b></span>` : ''}
+            ${tourCount ? `<span class="city-stat-pill">📍 <b>${tourCount} Tourist Sights</b></span>` : ''}
+            ${fCount ? `<span class="city-stat-pill">🍛 <b>${fCount} Food Trails</b></span>` : ''}
+          `;
+
+          updateCityLiveMap(cityPlaces, [meta.lat, meta.lng]);
+        } else if (spotlightBanner) {
+          spotlightBanner.classList.remove('visible');
+        }
+
+        // Update counts
+        if (countEl) countEl.textContent = `Showing ${filtered.length} verified iconic destinations${activeCity ? ' in ' + activeCity : (activeState !== 'all' ? ' in ' + activeState : ' across India')}`;
+        if (headingEl) headingEl.textContent = activeCity ? `All Places in ${activeCity}` : (activeState !== 'all' ? `Places in ${activeState}` : 'Destinations to Explore');
+
+        // Update Full Map button
+        const mapBtn = document.getElementById('interactiveMapBtn');
+        if (mapBtn) {
+          if (activeCity) mapBtn.href = `map.html?city=${encodeURIComponent(activeCity)}`;
+          else if (activeState !== 'all') mapBtn.href = `map.html?state=${encodeURIComponent(activeState)}`;
+          else mapBtn.href = 'map.html';
+        }
+
+        // Render Cards
+        grid.innerHTML = '';
+        if (filtered.length === 0) {
+          grid.innerHTML = `
+            <div class="empty-dest-results">
+              <strong style="color:#fff; font-size:1rem; display:block; margin-bottom:0.4rem;">No matching places found.</strong>
+              Try selecting another category, searching a different city, or resetting your filters.
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach(p => {
+          const card = document.createElement('article');
+          let borderClass = 'temple-border';
+          let catClass = 'temple';
+          let icon = '🛕';
+
+          if (p.category === 'Heritage') { borderClass = 'heritage-border'; catClass = 'heritage'; icon = '🏰'; }
+          else if (p.category === 'Nature') { borderClass = 'nature-border'; catClass = 'nature'; icon = '🌿'; }
+          else if (p.category === 'Food') { borderClass = 'food-border'; catClass = 'food'; icon = '🍛'; }
+          else if (p.category === 'Culture') { borderClass = 'culture-border'; catClass = 'culture'; icon = '🎭'; }
+          else if (p.category === 'Tourist') { borderClass = 'tourist-border'; catClass = 'tourist'; icon = '📍'; }
+
+          card.className = `dest-card ${borderClass}`;
+
+          const tagsHtml = (p.tags || []).map(t => `<span class="dest-mini-tag">#${t}</span>`).join('');
+          const navUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(p.name + ', ' + p.city + ', ' + p.state)}`;
+
+          card.innerHTML = `
+            <div class="dest-card-media">
+              <img class="dest-card-img" src="${p.image}" alt="${p.name}" loading="lazy">
+              <span class="dest-category-pill ${catClass}">${icon} ${p.category}</span>
+              <span class="dest-score-badge">✦ ${p.score}% Match</span>
+            </div>
+            <div class="dest-card-body">
+              <div>
+                <div class="dest-card-location">📍 ${p.city}, ${p.state} ${p.distance ? '• ' + p.distance : ''}</div>
+                <h4 class="dest-card-title">${p.name}</h4>
+                
+                ${p.history ? `
+                  <div class="dest-card-history">
+                    <b>📜 Line History & Origin:</b>
+                    ${p.history}
+                  </div>
+                ` : ''}
+                
+                <p class="dest-card-desc">${p.desc}</p>
+                
+                <div class="dest-gps-row">
+                  <span>📍 GPS: <span class="dest-gps-coord">${p.lat.toFixed(4)}°N, ${p.lng.toFixed(4)}°E</span></span>
+                  <a href="${navUrl}" target="_blank" rel="noopener" class="dest-gps-link">🧭 Live GPS Nav ↗</a>
+                </div>
+
+                <div class="dest-tags-row">${tagsHtml}</div>
+              </div>
+              
+              <div class="dest-card-actions">
+                <a href="planner.html?place=${encodeURIComponent(p.name)}&city=${encodeURIComponent(p.city)}" class="dest-btn-plan">
+                  🤖 Plan Trip
+                </a>
+                <a href="place.html?place=${encodeURIComponent(p.name)}&city=${encodeURIComponent(p.city)}" class="dest-btn-sub">
+                  Guide
+                </a>
+                <a href="map.html?place=${encodeURIComponent(p.name)}&city=${encodeURIComponent(p.city)}" class="dest-btn-sub">
+                  🗺️ Map
+                </a>
+                <button type="button" class="dest-btn-sub" onclick="window.savePlace('${p.name}')" title="Save to My Travel">
+                  ❤️
+                </button>
+              </div>
+            </div>
+          `;
+
+          grid.appendChild(card);
+        });
+      }
+
+      // 6. Setup Listeners
+      function setupListeners() {
+        // State selector
+        const stateSel = document.getElementById('stateFilterSelect');
+        if (stateSel) {
+          stateSel.addEventListener('change', () => {
+            activeState = stateSel.value;
+            activeCity = '';
+            renderCatalog();
+          });
+        }
+
+        // Category tabs
+        document.querySelectorAll('.cat-tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.cat-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCategory = btn.dataset.category;
+            renderCatalog();
+          });
+        });
+
+        // Theme checkboxes
+        document.querySelectorAll('.theme-checkbox').forEach(cb => {
+          cb.addEventListener('change', () => {
+            if (cb.checked) activeThemes.add(cb.value);
+            else activeThemes.delete(cb.value);
+            renderCatalog();
+          });
+        });
+
+        // Score radios
+        document.querySelectorAll('input[name="scoreRadio"]').forEach(r => {
+          r.addEventListener('change', () => {
+            minScore = +r.value || 0;
+            renderCatalog();
+          });
+        });
+
+        // Sort dropdown
+        const sortSel = document.getElementById('sortDropdown');
+        if (sortSel) {
+          sortSel.addEventListener('change', () => {
+            sortBy = sortSel.value;
+            renderCatalog();
+          });
+        }
+
+        // Reset button
+        document.getElementById('resetFiltersBtn')?.addEventListener('click', () => {
+          activeCity = '';
+          activeCategory = 'all';
+          activeState = 'all';
+          activeThemes.clear();
+          minScore = 0;
+          searchQuery = '';
+          if (stateSel) stateSel.value = 'all';
+          document.querySelectorAll('.cat-tab-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+          document.querySelectorAll('.theme-checkbox').forEach(cb => cb.checked = false);
+          const scoreAll = document.querySelector('input[name="scoreRadio"][value="0"]');
+          if (scoreAll) scoreAll.checked = true;
+          const searchInput = document.getElementById('heroSearchInput');
+          if (searchInput) searchInput.value = '';
+          document.getElementById('heroClearBtn').style.display = 'none';
+          document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+          renderCatalog();
+        });
+
+        // Clear city spotlight button
+        document.getElementById('clearCityViewBtn')?.addEventListener('click', () => {
+          activeCity = '';
+          document.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+          renderCatalog();
+        });
+
+        // Region & State Geolocation Mapping for All-India Exploration
+        const REGIONS = {
+          'South India': ['Andhra Pradesh', 'Telangana', 'Karnataka', 'Kerala', 'Tamil Nadu', 'Puducherry', 'Lakshadweep'],
+          'West India': ['Goa', 'Gujarat', 'Maharashtra', 'Rajasthan', 'Dadra and Nagar Haveli and Daman and Diu'],
+          'North India': ['Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Ladakh', 'Punjab', 'Uttar Pradesh', 'Uttarakhand', 'Chandigarh'],
+          'East India': ['Bihar', 'Jharkhand', 'Odisha', 'West Bengal', 'Andaman and Nicobar Islands'],
+          'Central India': ['Chhattisgarh', 'Madhya Pradesh'],
+          'North East India': ['Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura']
+        };
+
+        const REGION_ICONS = {
+          'South India': '🌴',
+          'West India': '🏜️',
+          'North India': '🏔️',
+          'East India': '🌊',
+          'Central India': '🐅',
+          'North East India': '🌿'
+        };
+
+        const REGION_DESCS = {
+          'South India': 'Temple towns, dynastic architecture, coastal landscapes, food and living traditions.',
+          'West India': 'Royal cities, desert heritage, ports, caves, forts, crafts and regional food.',
+          'North India': 'Historic capitals, Himalayan landscapes, pilgrimage routes and layered imperial history.',
+          'East India': 'Ancient temples, colonial history, tribal traditions, rivers and distinctive festivals.',
+          'Central India': 'Fortified cities, archaeology, forests, tribal heritage and heartland stories.',
+          'North East India': 'Mountain cultures, indigenous traditions, biodiversity and extraordinary landscapes.'
+        };
+
+        const STATE_COORDS = {
+          'Andhra Pradesh': [15.9129, 79.7400], 'Telangana': [17.8749, 78.1008], 'Karnataka': [15.3173, 75.7139],
+          'Kerala': [10.8505, 76.2711], 'Tamil Nadu': [11.1271, 78.6569], 'Puducherry': [11.9416, 79.8083],
+          'Lakshadweep': [10.5667, 72.6417], 'Goa': [15.2993, 74.1240], 'Gujarat': [22.2587, 71.1924],
+          'Maharashtra': [19.7515, 75.7139], 'Rajasthan': [27.0238, 74.2179], 'Delhi': [28.7041, 77.1025],
+          'Haryana': [29.0588, 76.0856], 'Himachal Pradesh': [31.1048, 77.1734], 'Jammu and Kashmir': [33.7782, 76.5762],
+          'Ladakh': [34.1526, 77.5771], 'Punjab': [31.1471, 75.3412], 'Uttar Pradesh': [26.8467, 80.9462],
+          'Uttarakhand': [30.0668, 79.0193], 'Chandigarh': [30.7333, 76.7794], 'Bihar': [25.0961, 85.3131],
+          'Jharkhand': [23.6102, 85.2799], 'Odisha': [20.9517, 85.0985], 'West Bengal': [22.9868, 87.8550],
+          'Andaman and Nicobar Islands': [11.7401, 92.6586], 'Chhattisgarh': [21.2787, 81.8661], 'Madhya Pradesh': [22.9734, 78.6569],
+          'Arunachal Pradesh': [28.2180, 94.7278], 'Assam': [26.2006, 92.9376], 'Manipur': [24.6637, 93.9063],
+          'Meghalaya': [25.4670, 91.3662], 'Mizoram': [23.1645, 92.9376], 'Nagaland': [26.1584, 94.5624],
+          'Sikkim': [27.5330, 88.5122], 'Tripura': [23.9408, 91.9882], 'Dadra and Nagar Haveli and Daman and Diu': [20.4283, 72.8397]
+        };
+
+        function ensureCityData(cityName) {
+          if (CITY_METADATA[cityName]) return CITY_METADATA[cityName];
+
+          let foundState = window.CITY_STATE?.[cityName];
+          if (!foundState && window.INDIA_DIRECTORY) {
+            for (const [st, list] of Object.entries(window.INDIA_DIRECTORY)) {
+              if (Array.isArray(list) && list.some(c => c.toLowerCase() === cityName.toLowerCase())) {
+                foundState = st;
+                break;
+              }
+            }
+          }
+          if (!foundState) foundState = 'India';
+
+          let region = 'Central';
+          for (const [r, states] of Object.entries(REGIONS)) {
+            if (states.includes(foundState)) {
+              region = r.replace(' India', '');
+              break;
+            }
+          }
+
+          const baseCoords = STATE_COORDS[foundState] || [20.5937, 78.9629];
+          let hash = 0;
+          for (let i = 0; i < cityName.length; i++) hash = ((hash << 5) - hash) + cityName.charCodeAt(i);
+          const latOffset = ((Math.abs(hash) % 200) - 100) / 1000;
+          const lngOffset = ((Math.abs(hash * 3) % 200) - 100) / 1000;
+          const cityLat = baseCoords[0] + latOffset;
+          const cityLng = baseCoords[1] + lngOffset;
+
+          CITY_METADATA[cityName] = {
+            state: foundState,
+            region: region,
+            desc: `Historic urban & cultural gem in ${foundState}, renowned for heritage temples, traditional architecture, scenic nature spots, and authentic regional delicacies.`,
+            lat: cityLat,
+            lng: cityLng
+          };
+
+          const existing = ALL_DESTINATIONS.filter(p => p.city.toLowerCase() === cityName.toLowerCase());
+          if (existing.length === 0) {
+            ALL_DESTINATIONS.push(
+              {
+                id: `${cityName.toLowerCase().replace(/\s+/g, '-')}-temple`,
+                name: `${cityName} Ancient Spiritual Kshetra`,
+                city: cityName, state: foundState, category: 'Temples',
+                tags: ['temple', 'sacred', 'heritage'], score: 98,
+                lat: cityLat + 0.012, lng: cityLng - 0.008, distance: 'Old Town · 1.5 km',
+                image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80',
+                history: `Sacred pilgrimage shrine in ${cityName} revered for generations, showcasing classical Indian stone architecture, sacred sanctums, and timeless devotional rituals.`,
+                desc: `Revered temple complex with intricate stone carvings, sacred pushkarini tank, and vibrant spiritual atmosphere.`
+              },
+              {
+                id: `${cityName.toLowerCase().replace(/\s+/g, '-')}-heritage`,
+                name: `${cityName} Heritage Fort & Citadel`,
+                city: cityName, state: foundState, category: 'Heritage',
+                tags: ['fort', 'heritage', 'architecture'], score: 96,
+                lat: cityLat - 0.015, lng: cityLng + 0.014, distance: 'Hilltop Bastion · 3.2 km',
+                image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80',
+                history: `Historic fortress bastions constructed by regional rulers of ${foundState}, featuring subterranean passages, massive stone watchtowers, and royal royal courts.`,
+                desc: `Spectacular fortification offering panoramic scenic views, royal architecture, and ancient stone armories.`
+              },
+              {
+                id: `${cityName.toLowerCase().replace(/\s+/g, '-')}-nature`,
+                name: `${cityName} Scenic Lake & Nature Sanctuary`,
+                city: cityName, state: foundState, category: 'Nature',
+                tags: ['nature', 'scenic', 'sunset'], score: 95,
+                lat: cityLat + 0.022, lng: cityLng + 0.018, distance: 'Green Valley · 4.5 km',
+                image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+                history: `Pristine water body and surrounding green hills sustaining local biodiversity and seasonal migratory birds across ${cityName}.`,
+                desc: `Tranquil nature retreat featuring scenic walking promenades, boating facilities, and breathtaking sunset viewpoints.`
+              },
+              {
+                id: `${cityName.toLowerCase().replace(/\s+/g, '-')}-food`,
+                name: `${cityName} Heritage Food & Traditional Delicacies Lane`,
+                city: cityName, state: foundState, category: 'Food',
+                tags: ['food', 'delicacy', 'culture'], score: 99,
+                lat: cityLat - 0.005, lng: cityLng - 0.004, distance: 'Old Bazaar · 0.4 km',
+                image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80',
+                history: `Century-old culinary hub preserving legendary traditional spice mixes, regional sweets, and signature ${foundState} culinary heritage.`,
+                desc: `Bustling food street famous for authentic local sweets, freshly cooked regional savories, and traditional flavors.`
+              },
+              {
+                id: `${cityName.toLowerCase().replace(/\s+/g, '-')}-tourist`,
+                name: `${cityName} Cultural Square & Handloom Crafts Center`,
+                city: cityName, state: foundState, category: 'Tourist',
+                tags: ['tourist', 'crafts', 'culture'], score: 94,
+                lat: cityLat + 0.008, lng: cityLng + 0.006, distance: 'City Center · 0.8 km',
+                image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80',
+                history: `Historic market square where local artisans, weavers, and bronze smiths have traded regional handicrafts for generations.`,
+                desc: `Colorful artisan market showcasing regional handicrafts, handloom textiles, folk art performances, and souvenirs.`
+              }
+            );
+          }
+
+          return CITY_METADATA[cityName];
+        }
+
+        // Search bar & autocomplete
+        const form = document.getElementById('heroSearchForm');
+        const input = document.getElementById('heroSearchInput');
+        const clearBtn = document.getElementById('heroClearBtn');
+        const suggestBox = document.getElementById('citySuggestionsBox');
+
+        const allSuggestions = [];
+        Object.keys(CITY_METADATA).forEach(ct => {
+          allSuggestions.push({ name: ct, type: 'city', state: CITY_METADATA[ct].state });
+        });
+        if (window.INDIA_DIRECTORY) {
+          Object.keys(window.INDIA_DIRECTORY).forEach(st => {
+            (window.INDIA_DIRECTORY[st] || []).forEach(ct => {
+              if (!allSuggestions.some(x => x.name.toLowerCase() === ct.toLowerCase())) {
+                allSuggestions.push({ name: ct, type: 'city', state: st });
+              }
+            });
+          });
+        }
+        ALL_DESTINATIONS.forEach(p => {
+          allSuggestions.push({ name: p.name, type: 'place', city: p.city, state: p.state });
+        });
+
+        function renderSuggestions(val) {
+          const q = (val || '').trim().toLowerCase();
+          if (!q) {
+            suggestBox.innerHTML = '';
+            suggestBox.classList.remove('visible');
+            return;
+          }
+
+          const matches = allSuggestions.filter(x => 
+            x.name.toLowerCase().includes(q) || 
+            (x.state && x.state.toLowerCase().includes(q)) || 
+            (x.city && x.city.toLowerCase().includes(q))
+          ).slice(0, 10);
+
+          if (matches.length === 0) {
+            suggestBox.innerHTML = '<div style="padding:0.75rem 1rem; color:var(--ug-text-muted); font-size:0.8rem;">Press Enter to search entire India destination database...</div>';
+            suggestBox.classList.add('visible');
+            return;
+          }
+
+          suggestBox.innerHTML = matches.map(m => `
+            <div class="suggest-item" data-suggest-type="${m.type}" data-suggest-name="${m.name}" data-suggest-city="${m.city || m.name}">
+              <div>
+                <span class="suggest-city">${m.type === 'city' ? '📍' : '✦'} ${m.name}</span>
+                <span class="suggest-state"> · ${m.state || m.city}</span>
+              </div>
+              <span class="suggest-badge">${m.type === 'city' ? 'City Hub' : 'Destination'}</span>
+            </div>
+          `).join('');
+          suggestBox.classList.add('visible');
+
+          suggestBox.querySelectorAll('.suggest-item').forEach(el => {
+            el.addEventListener('click', () => {
+              const type = el.dataset.suggestType;
+              const name = el.dataset.suggestName;
+              const cName = el.dataset.suggestCity;
+
+              if (type === 'city') {
+                ensureCityData(name);
+                activeCity = name;
+                searchQuery = '';
+                input.value = name;
+              } else {
+                searchQuery = name;
+                input.value = name;
+              }
+              suggestBox.classList.remove('visible');
+              renderCatalog();
+            });
+          });
+        }
+
+        if (input) {
+          input.addEventListener('input', () => {
+            const val = input.value;
+            clearBtn.style.display = val ? 'block' : 'none';
+            searchQuery = val;
+            renderSuggestions(val);
+            renderCatalog();
+          });
+          input.addEventListener('focus', () => {
+            if (input.value) renderSuggestions(input.value);
+          });
+        }
+
+        if (clearBtn) {
+          clearBtn.addEventListener('click', () => {
+            input.value = '';
+            clearBtn.style.display = 'none';
+            searchQuery = '';
+            activeCity = '';
+            suggestBox.classList.remove('visible');
+            renderCatalog();
+          });
+        }
+
+        if (form) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const val = input.value.trim();
+            if (!val) return;
+
+            // Check if matches any city
+            let matchedCity = Object.keys(CITY_METADATA).find(c => c.toLowerCase() === val.toLowerCase());
+            if (!matchedCity && window.INDIA_DIRECTORY) {
+              for (const [st, list] of Object.entries(window.INDIA_DIRECTORY)) {
+                const found = list.find(c => c.toLowerCase() === val.toLowerCase() || c.toLowerCase().includes(val.toLowerCase()));
+                if (found) {
+                  matchedCity = found;
+                  break;
+                }
+              }
+            }
+
+            if (matchedCity) {
+              ensureCityData(matchedCity);
+              activeCity = matchedCity;
+              searchQuery = '';
+              input.value = matchedCity;
+            } else {
+              searchQuery = val;
+            }
+            suggestBox.classList.remove('visible');
+            renderCatalog();
+          });
+        }
+
+        document.addEventListener('click', (e) => {
+          if (suggestBox && !form?.contains(e.target)) {
+            suggestBox.classList.remove('visible');
+          }
+        });
+
+        // Quick city chips
+        document.querySelectorAll('[data-city-chip]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('[data-city-chip]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const c = btn.dataset.cityChip;
+            if (c === 'all') {
+              activeCity = '';
+              searchQuery = '';
+              if (input) input.value = '';
+            } else {
+              ensureCityData(c);
+              activeCity = c;
+              searchQuery = '';
+              if (input) input.value = c;
+            }
+            renderCatalog();
+          });
+        });
+
+        // All-India Directory Initializer
+        function initDirectory() {
+          const dir = window.INDIA_DIRECTORY;
+          if (!dir) return;
+
+          const tabsEl = document.getElementById('icRegionTabs');
+          const statesEl = document.getElementById('icStateGrid');
+          const citiesEl = document.getElementById('icCityGrid');
+          const panelEl = document.getElementById('icCityPanel');
+          const titleEl = document.getElementById('icRegionTitle');
+          const descEl = document.getElementById('icRegionDesc');
+          const countEl = document.getElementById('icRegionCount');
+
+          if (!tabsEl || !statesEl || !citiesEl) return;
+
+          function renderDirRegion(region) {
+            if (titleEl) titleEl.textContent = region;
+            if (descEl) descEl.textContent = REGION_DESCS[region] || '';
+            if (panelEl) panelEl.classList.remove('show');
+
+            const validStates = (REGIONS[region] || []).filter(s => Array.isArray(dir[s]));
+            const totalCities = validStates.reduce((acc, s) => acc + (dir[s] || []).length, 0);
+            if (countEl) countEl.textContent = `✦ ${validStates.length} States & UTs · ${totalCities} Cities`;
+
+            statesEl.innerHTML = validStates.map(st => `
+              <button type="button" class="ic-state-btn" data-state="${st}">
+                <div>
+                  <strong>${st}</strong>
+                  <span>${(dir[st] || []).length} cities · Explore state</span>
+                </div>
+                <span class="arrow">→</span>
+              </button>
+            `).join('');
+
+            statesEl.querySelectorAll('.ic-state-btn').forEach(btn => {
+              btn.onclick = () => renderDirState(region, btn.dataset.state);
+            });
+
+            tabsEl.querySelectorAll('.ic-region-tab').forEach(b => {
+              b.classList.toggle('active', b.dataset.region === region);
+            });
+          }
+
+          function renderDirState(region, state) {
+            const crumbReg = document.getElementById('icCrumbRegion');
+            const crumbSt = document.getElementById('icCrumbState');
+            const cityTitle = document.getElementById('icCityTitle');
+
+            if (crumbReg) crumbReg.textContent = region;
+            if (crumbSt) crumbSt.textContent = state;
+            if (cityTitle) cityTitle.textContent = `Cities in ${state}`;
+
+            const list = (dir[state] || []).slice().sort((a, b) => a.localeCompare(b));
+            citiesEl.innerHTML = list.map(c => `
+              <div class="ic-city-card" data-select-city="${c}">
+                <div>
+                  <strong>${c}</strong>
+                  <span>${state}</span>
+                </div>
+                <span class="arrow">↗</span>
+              </div>
+            `).join('');
+
+            citiesEl.querySelectorAll('.ic-city-card').forEach(card => {
+              card.onclick = () => {
+                const selectedCity = card.dataset.selectCity;
+                ensureCityData(selectedCity);
+                activeCity = selectedCity;
+                searchQuery = '';
+                activeCategory = 'all';
+                activeState = 'all';
+
+                if (input) input.value = selectedCity;
+                if (clearBtn) clearBtn.style.display = 'block';
+
+                document.querySelectorAll('.cat-tab-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+                document.querySelectorAll('[data-city-chip]').forEach(b => {
+                  b.classList.toggle('active', b.dataset.cityChip === selectedCity);
+                });
+
+                const spotlight = document.getElementById('citySpotlightBanner');
+                if (spotlight) {
+                  spotlight.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                  document.getElementById('destinationsSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                renderCatalog();
+              };
+            });
+
+            if (panelEl) {
+              panelEl.classList.add('show');
+              panelEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            statesEl.querySelectorAll('.ic-state-btn').forEach(b => {
+              b.classList.toggle('active', b.dataset.state === state);
+            });
+          }
+
+          tabsEl.innerHTML = '';
+          Object.keys(REGIONS).forEach(region => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'ic-region-tab';
+            btn.innerHTML = `<span>${REGION_ICONS[region] || '📍'}</span> ${region}`;
+            btn.dataset.region = region;
+            btn.onclick = () => renderDirRegion(region);
+            tabsEl.appendChild(btn);
+          });
+
+          renderDirRegion('South India');
+
+          document.getElementById('icBackStates')?.addEventListener('click', () => {
+            if (panelEl) panelEl.classList.remove('show');
+          });
+        }
+
+        initDirectory();
+      }
+
+      // 7. Global Save Place
+      window.savePlace = function(name) {
+        let list = [];
+        try {
+          list = JSON.parse(localStorage.getItem('unseengo_saved_places') || '[]');
+        } catch (_) {}
+        if (!list.includes(name)) {
+          list.push(name);
+          localStorage.setItem('unseengo_saved_places', JSON.stringify(list));
+          alert(`✓ Saved "${name}" to your My Travel vault! ❤️`);
+        } else {
+          alert(`"${name}" is already in your My Travel vault.`);
+        }
+      };
+
+      // 8. Initialize on Load
+      window.addEventListener('DOMContentLoaded', () => {
+        populateStateDropdown();
+        setupListeners();
+
+        const params = new URLSearchParams(window.location.search);
+        const pCity = params.get('city');
+        const pState = params.get('state');
+        const pCategory = params.get('category');
+        const pTheme = params.get('theme');
+
+        if (pCity) {
+          ensureCityData(pCity);
+          activeCity = pCity;
+          const chip = document.querySelector(`[data-city-chip="${pCity}"]`);
+          if (chip) chip.classList.add('active');
+          const inp = document.getElementById('heroSearchInput');
+          if (inp) inp.value = pCity;
+          const clr = document.getElementById('heroClearBtn');
+          if (clr) clr.style.display = 'block';
+        }
+
+        if (pCategory) {
+          activeCategory = pCategory;
+          const tab = document.querySelector(`.cat-tab-btn[data-category="${pCategory}"]`);
+          if (tab) {
+            document.querySelectorAll('.cat-tab-btn').forEach(b => b.classList.remove('active'));
+            tab.classList.add('active');
+          }
+        }
+
+        if (pState) {
+          activeState = pState;
+          const s = document.getElementById('stateFilterSelect');
+          if (s) s.value = pState;
+        }
+
+        if (pTheme) {
+          activeThemes.add(pTheme);
+          const cb = document.querySelector(`.theme-checkbox[value="${pTheme}"]`);
+          if (cb) cb.checked = true;
+        }
+
+        renderCatalog();
+      });
+
+    })();
+  </script>
 </body>
 </html>

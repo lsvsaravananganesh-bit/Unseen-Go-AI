@@ -1,33 +1,729 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UnseenGo AI — Travel Decision Engine</title>
-<meta name="description" content="India's AI Hidden-Gem Discovery and Travel Decision Engine.">
-<style>
-:root{--ink:#101510;--muted:#68736a;--lime:#d8f36a;--dark:#07100b;--cream:#f5f4ed;--line:#dfe4dc;--card:#fff}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}.wrap{width:min(1180px,calc(100% - 32px));margin:auto}.nav{height:72px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #dfe4dc}.brand{font-weight:950;font-size:20px}.brand b{color:#76921f}.back{font-size:12px;font-weight:850;color:#536056}.hero{padding:72px 0 46px;background:#09120c;color:#fff}.eyebrow{color:var(--lime);font-size:10px;letter-spacing:2px;font-weight:950}.hero h1{font-size:clamp(42px,7vw,76px);line-height:.95;letter-spacing:-4px;max-width:900px;margin:15px 0}.hero p{color:#c6d0c7;max-width:760px;line-height:1.7}.pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}.pillar{border:1px solid #304033;border-radius:14px;padding:18px;background:#111d14}.pillar b{display:block;font-size:14px;margin-bottom:7px}.pillar span{font-size:11px;color:#aeb9b0;line-height:1.5}.workspace{padding:45px 0 80px}.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px;margin-bottom:16px;box-shadow:0 12px 35px rgba(0,0,0,.05)}.panel h2{margin:0 0 7px;font-size:26px;letter-spacing:-1px}.panel>p{margin:0 0 20px;color:var(--muted);font-size:13px;line-height:1.6}.controls{display:grid;grid-template-columns:1.5fr .7fr .7fr .8fr auto;gap:8px}.control{border:1px solid var(--line);background:#f7f8f5;border-radius:10px;padding:10px 12px}.control label{display:block;font-size:9px;font-weight:950;color:#7a857c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.7px}.control input,.control select{width:100%;border:0;background:transparent;outline:0;font:inherit;font-size:13px;font-weight:750}.run{border:0;border-radius:10px;background:#172217;color:#fff;font-weight:950;padding:0 20px;cursor:pointer}.status{display:flex;gap:10px;align-items:center;margin-top:14px;font-size:11px;color:#59645c}.dot{width:8px;height:8px;border-radius:50%;background:#91aa3e;box-shadow:0 0 0 6px #edf4dc}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.results{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.place{border:1px solid var(--line);border-radius:13px;padding:16px;background:#fff}.place .topline{display:flex;justify-content:space-between;gap:10px}.place h3{font-size:17px;margin:0}.score{background:#eef5dc;color:#314414;border-radius:999px;padding:6px 8px;font-size:10px;font-weight:950;white-space:nowrap}.place small{color:#68736a;font-size:10px}.place p{font-size:11px;color:#667168;line-height:1.55}.why{border-top:1px solid #e8ece6;padding-top:10px;font-size:10px;color:#536056;line-height:1.55}.breakdown{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:11px}.metric{background:#f5f7f3;border-radius:8px;padding:8px}.metric span{display:block;color:#7a857c;font-size:8px}.metric b{font-size:11px}.decision{background:#09120c;color:#fff}.decision .live{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:16px 0}.livebox{border:1px solid #304033;border-radius:10px;padding:11px}.livebox span{display:block;color:#aeb9b0;font-size:9px}.livebox b{display:block;margin-top:5px;font-size:13px}.decision-card{border:1px solid #344235;background:#111d14;border-radius:13px;padding:17px}.decision-card h3{margin:0 0 8px;font-size:20px}.decision-card p{color:#c0cbc1;font-size:11px;line-height:1.6}.tags{display:flex;flex-wrap:wrap;gap:6px}.tag{border:1px solid #3a4939;border-radius:999px;padding:6px 8px;color:#d6ded5;font-size:9px}.maplink{display:inline-block;margin-top:12px;color:var(--lime);font-size:11px;font-weight:950}.graph{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.node{background:#f6f8f3;border:1px solid var(--line);border-radius:11px;padding:13px}.node b{display:block;font-size:11px}.node span{display:block;color:var(--muted);font-size:9px;line-height:1.5;margin-top:5px}.empty{padding:24px;text-align:center;color:var(--muted);border:1px dashed #ccd5c9;border-radius:12px;font-size:12px}@media(max-width:900px){.controls{grid-template-columns:1fr 1fr}.run{min-height:52px}.pillars,.results{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.decision .live{grid-template-columns:1fr 1fr}.graph{grid-template-columns:1fr 1fr}}@media(max-width:560px){.hero{padding-top:45px}.hero h1{letter-spacing:-2px}.panel{padding:18px}.controls{grid-template-columns:1fr}.decision .live,.graph{grid-template-columns:1fr}.workspace{padding-top:28px}}
-</style>
-<link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UnseenGo AI — Real-time travel decision engine and explainable scoring for India's hidden gems.">
+  <title>UnseenGo AI — Travel Decision Engine</title>
+
+  <!-- Warm Cultural Heritage Design System -->
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .de-hero {
+      background: radial-gradient(circle at 80% 20%, rgba(229, 142, 38, 0.18) 0%, transparent 60%),
+                  radial-gradient(circle at 10% 80%, rgba(200, 90, 50, 0.15) 0%, transparent 60%),
+                  var(--ug-indigo-950);
+      color: #ffffff;
+      padding: 4rem 0 3.5rem;
+      border-bottom: 1px solid var(--ug-indigo-border);
+    }
+    .de-hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      line-height: 1.1;
+      margin: 1rem 0;
+    }
+    .de-hero p {
+      color: var(--ug-text-light-muted);
+      max-width: 780px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+    .de-pillars {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .de-pillar {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid var(--ug-indigo-border);
+      border-radius: 14px;
+      padding: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+    .de-pillar b {
+      display: block;
+      color: var(--ug-saffron);
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .de-pillar span {
+      font-size: 0.88rem;
+      color: var(--ug-text-light-muted);
+      line-height: 1.5;
+    }
+    .de-workspace {
+      padding: 3.5rem 0 5rem;
+    }
+    .de-panel {
+      background: #ffffff;
+      border: 1px solid var(--ug-border-warm);
+      border-radius: 18px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--ug-shadow-sm);
+    }
+    .de-panel h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      color: var(--ug-text-ink);
+    }
+    .de-panel > p {
+      color: var(--ug-text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+    .de-controls {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 0.8fr 1fr auto;
+      gap: 0.85rem;
+      align-items: flex-end;
+    }
+    .de-control {
+      background: var(--ug-bg-warm);
+      border: 1.5px solid var(--ug-border-subtle);
+      border-radius: 10px;
+      padding: 0.65rem 0.85rem;
+      display: flex;
+      flex-direction: column;
+    }
+    .de-control label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ug-text-muted);
+      margin-bottom: 0.25rem;
+    }
+    .de-control input, .de-control select {
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--ug-text-ink);
+    }
+    .de-status {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: var(--ug-text-secondary);
+    }
+    .de-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ug-saffron);
+      box-shadow: 0 0 0 4px var(--ug-saffron-glow);
+    }
+    .de-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.25rem;
+    }
+    .de-place {
+      background: var(--ug-bg-warm);
+      border: 1px solid var(--ug-border-subtle);
+      border-radius: 14px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      transition: var(--ug-transition);
+    }
+    .de-place:hover {
+      border-color: var(--ug-terracotta);
+      background: #ffffff;
+      box-shadow: var(--ug-shadow-md);
+      transform: translateY(-2px);
+    }
+    .de-place .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+    .de-place h3 {
+      font-size: 1.2rem;
+      color: var(--ug-text-ink);
+    }
+    .de-place small {
+      font-size: 0.8rem;
+      color: var(--ug-terracotta);
+      font-weight: 600;
+    }
+    .de-place p {
+      font-size: 0.88rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.5;
+    }
+    .de-why {
+      border-top: 1px solid var(--ug-border-warm);
+      padding-top: 0.65rem;
+      font-size: 0.84rem;
+      color: var(--ug-text-ink);
+      line-height: 1.5;
+      background: rgba(229, 142, 38, 0.05);
+      border-radius: 6px;
+      padding: 0.5rem;
+    }
+    .de-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+    }
+    .de-metric {
+      background: #ffffff;
+      border: 1px solid var(--ug-border-subtle);
+      border-radius: 8px;
+      padding: 0.45rem 0.65rem;
+    }
+    .de-metric span {
+      display: block;
+      font-size: 0.65rem;
+      color: var(--ug-text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .de-metric b {
+      font-size: 0.9rem;
+      color: var(--ug-text-ink);
+    }
+    .de-decision-panel {
+      background: var(--ug-indigo-950);
+      color: #ffffff;
+      border: 1px solid var(--ug-indigo-border);
+    }
+    .de-decision-panel h2 {
+      color: #ffffff;
+    }
+    .de-decision-panel > p {
+      color: var(--ug-text-light-muted);
+    }
+    .de-live-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin: 1.5rem 0;
+    }
+    .de-livebox {
+      background: rgba(30, 41, 59, 0.8);
+      border: 1px solid var(--ug-indigo-border);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+    }
+    .de-livebox span {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--ug-text-light-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .de-livebox b {
+      display: block;
+      margin-top: 0.35rem;
+      font-size: 1.1rem;
+      color: var(--ug-saffron);
+    }
+    .de-action-card {
+      background: var(--ug-indigo-900);
+      border: 1.5px solid var(--ug-terracotta);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+    .de-action-card h3 {
+      font-size: 1.45rem;
+      margin-bottom: 0.6rem;
+      color: #ffffff;
+    }
+    .de-action-card p {
+      font-size: 0.95rem;
+      color: var(--ug-text-light-muted);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .de-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .de-tag {
+      background: rgba(229, 142, 38, 0.15);
+      border: 1px solid rgba(229, 142, 38, 0.35);
+      border-radius: 9999px;
+      padding: 0.3rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ug-saffron-gold);
+    }
+    .de-graph-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .de-node {
+      background: var(--ug-bg-warm);
+      border: 1px solid var(--ug-border-subtle);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .de-node b {
+      font-size: 0.95rem;
+      color: var(--ug-text-ink);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+    .de-node span {
+      font-size: 0.82rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.5;
+    }
+    @media (max-width: 900px) {
+      .de-controls {
+        grid-template-columns: 1fr 1fr;
+      }
+      .de-live-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 600px) {
+      .de-controls {
+        grid-template-columns: 1fr;
+      }
+      .de-live-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
 <body>
-<header><div class="wrap nav"><div class="brand">Unseen<b>Go</b> AI</div><a class="back" href="index.html">← Back to UnseenGo</a></div></header>
-<section class="hero"><div class="wrap"><div class="eyebrow">INDIA'S AI HIDDEN-GEM DISCOVERY & TRAVEL DECISION ENGINE</div><h1>Don't just find places.<br><span style="color:var(--lime)">Decide what to do next.</span></h1><p>Three connected systems turn India's discovery data into explainable recommendations and a context-aware decision for the traveler.</p><div class="pillars"><div class="pillar"><b>🇮🇳 India Discovery Graph</b><span>Places → stories → culture → food → experiences → events, connected by city, region and category.</span></div><div class="pillar"><b>🧠 UnseenGo Personalization</b><span>Every recommendation gets a transparent score and a human-readable explanation of why it fits.</span></div><div class="pillar"><b>⚡ Real-Time Decision Engine</b><span>Time, weather, location, budget, pace and practical constraints change what should happen now.</span></div></div></div></section>
-<main class="wrap workspace">
-<section class="panel"><h2>1. India Discovery Graph</h2><p>Start with a city or discover across the India dataset. Each place becomes a structured node that the recommendation engine can rank.</p><div class="graph"><div class="node"><b>📍 City</b><span id="graphCities">Loading…</span></div><div class="node"><b>🏛 Place</b><span id="graphPlaces">Loading…</span></div><div class="node"><b>🎭 Culture / Food / Nature</b><span>Category and experience signals</span></div><div class="node"><b>🧩 Context</b><span>Budget, pace, crowd and photography fit</span></div></div></section>
-<section class="panel"><h2>2. UnseenGo Personalization Engine</h2><p>Tell the engine what kind of traveler you are. The score is deliberately explainable instead of being a black-box number.</p><div class="controls"><div class="control"><label>City / multi-city</label><select id="city"><option value="">All India discovery</option></select></div><div class="control"><label>Interests</label><select id="interest"><option>Heritage</option><option>Nature</option><option>Food</option><option>Culture</option><option>Adventure</option><option>Photography</option></select></div><div class="control"><label>Days</label><input id="days" type="number" min="1" max="14" value="2"></div><div class="control"><label>Budget</label><select id="budget"><option value="low">Budget</option><option value="medium" selected>Moderate</option><option value="high">Premium</option></select></div><button class="run" id="run">Rank my places</button></div><div id="status" class="status"><i class="dot"></i><span>Ready — choose a profile and rank destinations.</span></div></section>
-<section class="panel"><h2>Top matches — with the reason</h2><div id="results" class="results"><div class="empty">Run the personalization engine to see ranked hidden gems.</div></div></section>
-<section class="panel decision"><h2>3. Real-Time Travel Decision Engine</h2><p>Recommendations are not enough. This layer answers: <strong>“Given the conditions right now, what should I do?”</strong></p><div class="live"><div class="livebox"><span>LOCAL TIME</span><b id="clock">—</b></div><div class="livebox"><span>LOCATION</span><b id="location">Not shared</b></div><div class="livebox"><span>WEATHER</span><b id="weather">Waiting…</b></div><div class="livebox"><span>CONTEXT</span><b id="context">Waiting…</b></div></div><div class="decision-card"><h3 id="decisionTitle">Run the engine first</h3><p id="decisionText">The decision layer combines the selected destination with live weather/time signals and your travel preferences. Browser location is optional.</p><div class="tags" id="decisionTags"><span class="tag">Time-aware</span><span class="tag">Weather-aware</span><span class="tag">Budget-aware</span><span class="tag">Preference-aware</span></div><a id="maps" class="maplink" href="#" target="_blank" rel="noopener" style="display:none">Open route in Google Maps →</a></div></section>
-<section class="panel"><h2>How the three layers connect</h2><p>The product architecture is intentionally different from a generic travel chatbot: data first, explainable ranking second, real-world decision third.</p><div class="graph"><div class="node"><b>01 · Discover</b><span>India Discovery Graph supplies structured place and story signals.</span></div><div class="node"><b>02 · Understand</b><span>Traveler preferences become score components.</span></div><div class="node"><b>03 · Context</b><span>Current time, weather and location modify suitability.</span></div><div class="node"><b>04 · Decide</b><span>Return the best next action, not just a list.</span></div></div></section>
-</main>
-<script src="app.js"></script><script src="unseen-engine.js"></script>
-<script>
-const $=id=>document.getElementById(id);let lastResult=null;let live={lat:null,lon:null,temp:null,weather:'Unavailable'};
-function init(){const names=UnseenGoAI.getCityNames();$('graphCities').textContent=`${names.length} city records currently connected`;$('graphPlaces').textContent=`${UnseenGoAI.collectAllPlaces().length}+ structured place records`;names.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;$('city').appendChild(o)});setInterval(()=>{$('clock').textContent=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});},1000);requestLocation();}
-async function requestLocation(){if(!navigator.geolocation){$('location').textContent='Unavailable';return}navigator.geolocation.getCurrentPosition(async p=>{live.lat=p.coords.latitude;live.lon=p.coords.longitude;$('location').textContent=`${p.coords.latitude.toFixed(2)}, ${p.coords.longitude.toFixed(2)}`;await weather(p.coords.latitude,p.coords.longitude)},()=>{$('location').textContent='Not shared'});}
-async function weather(lat,lon){try{const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,precipitation&timezone=auto`);const d=await r.json();live.temp=d.current.temperature_2m;live.weather=`${Math.round(live.temp)}°C · ${weatherLabel(d.current.weather_code)}`;$('weather').textContent=live.weather}catch(e){$('weather').textContent='Unavailable'}}
-function weatherLabel(c){if(c===0)return'Clear';if(c<=3)return'Partly cloudy';if(c<=48)return'Cloudy/fog';if(c<=67)return'Rain';if(c<=82)return'Showers';return'Stormy'}
-function render(recs){$('results').innerHTML=recs.slice(0,6).map(p=>`<article class="place"><div class="topline"><div><h3>${esc(p.name)}</h3><small>${esc(p.city)} · ${esc(p.category)}</small></div><span class="score">${p.unseenScore}/100</span></div><p>${esc(p.description)}</p><div class="why"><b>Why it matches:</b> ${esc(p.why)}</div><div class="breakdown"><div class="metric"><span>Interest</span><b>${p.interestPercent}/100</b></div><div class="metric"><span>Budget fit</span><b>${p.budgetFit}/100</b></div><div class="metric"><span>Hiddenness</span><b>${p.hiddenness}/25</b></div><div class="metric"><span>Local experience</span><b>${p.localExperience}/20</b></div></div></article>`).join('')||'<div class="empty">No matching places found.</div>';}
-function run(){const city=$('city').value;const interest=$('interest').value;const p={interests:[interest],days:Number($('days').value)||2,budget:$('budget').value,pace:'balanced',diversify:true,avoid:[]};lastResult=UnseenGoAI.generate(city,p);render(lastResult.recommendations);$('status').innerHTML='<i class="dot"></i><span>Ranked using hiddenness + interest + local experience + budget + pace.</span>';decide(lastResult);}
-function decide(r){const first=r.recommendations[0];if(!first)return;$('context').textContent=`${$('budget').selectedOptions[0].text} · ${$('days').value} day(s)`;let action='Best next action';let reason=`${first.name} is currently your strongest match at ${first.unseenScore}/100.`;const h=new Date().getHours();const raining=live.weather.includes('Rain')||live.weather.includes('Showers')||live.weather.includes('Stormy');if(raining&&['Nature','Adventure'].includes(first.category)){action='Choose a culture / food experience now';reason=`Live weather is ${live.weather}. Outdoor suitability is reduced, so the engine recommends a stronger indoor alternative rather than blindly following the top nature result.`}else if(h>=17&&first.category==='Food'){action=`Go now: ${first.name}`;reason=`It is evening and your top match is food-focused, so the engine prioritizes a time-appropriate experience.`}else if(h<8&&first.category==='Nature'){action=`Plan ${first.name} for the morning`;reason=`It is early and your top match is nature-focused; the engine preserves it as a high-value morning option.`}else{action=`Go next: ${first.name}`;reason+=` It fits your ${$('interest').value.toLowerCase()} preference, budget and balanced pace.`}$('decisionTitle').textContent=action;$('decisionText').textContent=reason;const m=$('maps');m.href=r.mapsUrl;m.style.display='inline-block';}
-function esc(v){return String(v??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]))}$('run').addEventListener('click',run);init();
-</script>
-</body></html>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          UNSEEN<span class="ug-brand-badge">GO</span>
+          <span class="ug-brand-sub">Decision Engine</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">Discover Gems</a></li>
+            <li><a class="ug-nav-link" href="india-cities.html">Destinations</a></li>
+            <li><a class="ug-nav-link" href="planner.html">Trip Planner</a></li>
+            <li><a class="ug-nav-link" href="stories.html">Stories</a></li>
+            <li><a class="ug-nav-link active" href="decision-engine.html">⚡ AI Decision</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span style="font-size: 0.7rem; opacity: 0.6;">▾</span>
+          </button>
+          
+          <a class="ug-btn-secondary" href="index.html">← Back Home</a>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          UNSEEN<span class="ug-brand-badge">GO</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏛️</span> Home</a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">✨</span> Discover Gems</a>
+          <a class="ug-drawer-link" href="india-cities.html"><span class="icon">📍</span> Destinations</a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🗺️</span> Trip Planner</a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span> Stories</a>
+          <a class="ug-drawer-link active" href="decision-engine.html"><span class="icon">⚡</span> AI Decision Engine</a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- City Selector Modal -->
+  <div class="ug-city-modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="ug-city-modal-box">
+      <div class="ug-city-modal-head">
+        <h3><span>📍</span> Select Destination Hub</h3>
+        <button type="button" class="ug-city-modal-close ug-drawer-close" aria-label="Close city selector">✕</button>
+      </div>
+      <div class="ug-city-search-wrap">
+        <input type="text" class="ug-city-search-input" placeholder="Search cities or regions...">
+      </div>
+      <div class="ug-city-list"></div>
+    </div>
+  </div>
+
+  <!-- Hero Header -->
+  <section class="de-hero">
+    <div class="ug-container">
+      <div class="ug-kicker saffron">INDIA'S AI HIDDEN-GEM DISCOVERY & TRAVEL DECISION ENGINE</div>
+      <h1>Don't just find places.<br><span style="color: var(--ug-saffron-gold);">Decide what to do next.</span></h1>
+      <p>Three connected layers turn India's structured discovery graph into explainable recommendations and context-aware action decisions.</p>
+      
+      <div class="de-pillars">
+        <div class="de-pillar">
+          <b>🇮🇳 01. India Discovery Graph</b>
+          <span>Places → stories → culture → sacred geography → food trails, organized into structured nodes.</span>
+        </div>
+        <div class="de-pillar">
+          <b>🧠 02. UnseenGo Personalization</b>
+          <span>Transparent UnseenGo Score explaining hiddenness, cultural value, and budget fit.</span>
+        </div>
+        <div class="de-pillar">
+          <b>⚡ 03. Real-Time Decision Layer</b>
+          <span>Local time, weather, and practical constraints adjust recommendations into immediate travel actions.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Workspace -->
+  <main class="ug-container de-workspace">
+    <!-- Panel 1: Graph Status -->
+    <section class="de-panel">
+      <div class="ug-kicker">Layer 1</div>
+      <h2>India Discovery Graph</h2>
+      <p>Select a city or explore across India. Every destination is a verified node with scoring attributes.</p>
+      <div class="de-graph-grid">
+        <div class="de-node">
+          <b>📍 City Hubs</b>
+          <span id="graphCities">Loading…</span>
+        </div>
+        <div class="de-node">
+          <b>🏛 Place Records</b>
+          <span id="graphPlaces">Loading…</span>
+        </div>
+        <div class="de-node">
+          <b>🎭 Experience Attributes</b>
+          <span>Heritage, Sacred Nature, Regional Food, Living Crafts</span>
+        </div>
+        <div class="de-node">
+          <b>🧩 Practical Constraints</b>
+          <span>Budget, travel pace, crowd levels, and photography suitability</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel 2: Personalization Controls -->
+    <section class="de-panel">
+      <div class="ug-kicker">Layer 2</div>
+      <h2>UnseenGo Personalization Engine</h2>
+      <p>Configure your traveler profile. The score is deterministic and fully explainable.</p>
+      
+      <div class="de-controls">
+        <div class="de-control">
+          <label for="city">City / Region Hub</label>
+          <select id="city">
+            <option value="">All India Discovery</option>
+          </select>
+        </div>
+
+        <div class="de-control">
+          <label for="interest">Core Interest</label>
+          <select id="interest">
+            <option value="Heritage">Heritage & Architecture</option>
+            <option value="Nature">Sacred Nature</option>
+            <option value="Food">Regional Food</option>
+            <option value="Culture">Living Culture</option>
+            <option value="Adventure">Adventure & Treks</option>
+            <option value="Photography">Photography</option>
+          </select>
+        </div>
+
+        <div class="de-control">
+          <label for="days">Days</label>
+          <input id="days" type="number" min="1" max="14" value="2">
+        </div>
+
+        <div class="de-control">
+          <label for="budget">Budget Level</label>
+          <select id="budget">
+            <option value="low">Budget (₹)</option>
+            <option value="medium" selected>Moderate (₹₹)</option>
+            <option value="high">Premium (₹₹₹)</option>
+          </select>
+        </div>
+
+        <button type="button" class="ug-btn-primary" id="run" style="min-height: 48px;">
+          ✦ Rank Places
+        </button>
+      </div>
+
+      <div id="status" class="de-status">
+        <i class="de-dot"></i>
+        <span>Ready — select a travel profile and rank destinations.</span>
+      </div>
+    </section>
+
+    <!-- Panel 3: Ranked Recommendations -->
+    <section class="de-panel">
+      <div class="ug-kicker">Results</div>
+      <h2>Top Matches — With Transparent Rationale</h2>
+      <div id="results" class="de-results">
+        <div style="grid-column: 1 / -1; padding: 2.5rem; text-align: center; color: var(--ug-text-muted); border: 1px dashed var(--ug-border-warm); border-radius: 14px;">
+          Run the personalization engine above to view ranked hidden gems.
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel 4: Real-Time Decision Engine -->
+    <section class="de-panel de-decision-panel">
+      <div class="ug-kicker saffron">Layer 3</div>
+      <h2>Real-Time Context & Next Best Action</h2>
+      <p>Given live weather, current time of day, and traveler constraints, what should you do right now?</p>
+
+      <div class="de-live-grid">
+        <div class="de-livebox">
+          <span>LOCAL TIME</span>
+          <b id="clock">—</b>
+        </div>
+        <div class="de-livebox">
+          <span>LOCATION</span>
+          <b id="location">Not shared</b>
+        </div>
+        <div class="de-livebox">
+          <span>LIVE WEATHER</span>
+          <b id="weather">Waiting…</b>
+        </div>
+        <div class="de-livebox">
+          <span>ACTIVE CONTEXT</span>
+          <b id="context">Waiting…</b>
+        </div>
+      </div>
+
+      <div class="de-action-card">
+        <h3 id="decisionTitle">Run the engine first</h3>
+        <p id="decisionText">The decision engine combines your top destination match with real-time weather and time context to recommend the smartest next action.</p>
+        
+        <div class="de-tags" id="decisionTags">
+          <span class="de-tag">Time-Aware</span>
+          <span class="de-tag">Weather-Aware</span>
+          <span class="de-tag">Budget-Aware</span>
+          <span class="de-tag">Explainable</span>
+        </div>
+
+        <a id="maps" class="ug-btn-primary" href="#" target="_blank" rel="noopener noreferrer" style="display:none; font-size: 0.9rem; padding: 0.6rem 1.25rem;">
+          🗺️ Open Route in Google Maps →
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-bottom" style="border-top: none; padding-top: 0;">
+        <div><b>UNSEENGO AI</b> — India's Hidden Heritage & Cultural Travel Explorer.</div>
+        <div><a href="index.html" style="color: var(--ug-saffron); text-decoration: none;">Return to Home →</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="data/destination-registry.js"></script>
+  <script src="core/unseengo-core.js"></script>
+  <script src="unseen-engine.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    const $ = id => document.getElementById(id);
+    let lastResult = null;
+    let live = { lat: null, lon: null, temp: null, weather: 'Unavailable' };
+
+    function init() {
+      const names = UnseenGoAI.getCityNames();
+      if ($('graphCities')) $('graphCities').textContent = `${names.length} city hubs connected`;
+      if ($('graphPlaces')) $('graphPlaces').textContent = `${UnseenGoAI.collectAllPlaces().length}+ verified place records`;
+      
+      const citySelect = $('city');
+      if (citySelect) {
+        citySelect.innerHTML = '<option value="">All India Discovery</option>';
+        names.forEach(n => {
+          const o = document.createElement('option');
+          o.value = n;
+          o.textContent = n;
+          citySelect.appendChild(o);
+        });
+
+        // Sync with global city selection if any
+        const savedCity = localStorage.getItem('unseengo_city');
+        if (savedCity && names.includes(savedCity)) {
+          citySelect.value = savedCity;
+        }
+      }
+
+      setInterval(() => {
+        if ($('clock')) {
+          $('clock').textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+      }, 1000);
+
+      requestLocation();
+    }
+
+    async function requestLocation() {
+      if (!navigator.geolocation) {
+        if ($('location')) $('location').textContent = 'Unavailable';
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        async p => {
+          live.lat = p.coords.latitude;
+          live.lon = p.coords.longitude;
+          if ($('location')) $('location').textContent = `${p.coords.latitude.toFixed(2)}, ${p.coords.longitude.toFixed(2)}`;
+          await weather(p.coords.latitude, p.coords.longitude);
+        },
+        () => {
+          if ($('location')) $('location').textContent = 'Not shared';
+        }
+      );
+    }
+
+    async function weather(lat, lon) {
+      try {
+        const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,precipitation&timezone=auto`);
+        const d = await r.json();
+        live.temp = d.current.temperature_2m;
+        live.weather = `${Math.round(live.temp)}°C · ${weatherLabel(d.current.weather_code)}`;
+        if ($('weather')) $('weather').textContent = live.weather;
+      } catch (e) {
+        if ($('weather')) $('weather').textContent = 'Unavailable';
+      }
+    }
+
+    function weatherLabel(c) {
+      if (c === 0) return 'Clear skies';
+      if (c <= 3) return 'Partly cloudy';
+      if (c <= 48) return 'Cloudy/mist';
+      if (c <= 67) return 'Rain showers';
+      if (c <= 82) return 'Heavy showers';
+      return 'Stormy';
+    }
+
+    function render(recs) {
+      const container = $('results');
+      if (!container) return;
+
+      if (!recs || !recs.length) {
+        container.innerHTML = '<div style="grid-column: 1 / -1; padding: 2rem; text-align: center; color: var(--ug-text-muted);">No matching destinations found. Try choosing a different city or interest.</div>';
+        return;
+      }
+
+      container.innerHTML = recs.slice(0, 6).map(p => `
+        <article class="de-place">
+          <div class="topline">
+            <div>
+              <h3>${esc(p.name)}</h3>
+              <small>📍 ${esc(p.city)} · ${esc(p.category)}</small>
+            </div>
+            <span class="ug-score-pill">✦ ${p.unseenScore}/100</span>
+          </div>
+          <p>${esc(p.description)}</p>
+          <div class="de-why"><b>Why it matches:</b> ${esc(p.why)}</div>
+          <div class="de-breakdown">
+            <div class="de-metric"><span>Interest Fit</span><b>${p.interestPercent}/100</b></div>
+            <div class="de-metric"><span>Budget Fit</span><b>${p.budgetFit}/100</b></div>
+            <div class="de-metric"><span>Hiddenness</span><b>${p.hiddenness}/25</b></div>
+            <div class="de-metric"><span>Local Value</span><b>${p.localExperience}/20</b></div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function run() {
+      const city = $('city').value;
+      const interest = $('interest').value;
+      const p = {
+        interests: [interest],
+        days: Number($('days').value) || 2,
+        budget: $('budget').value,
+        pace: 'balanced',
+        diversify: true,
+        avoid: []
+      };
+      lastResult = UnseenGoAI.generate(city, p);
+      render(lastResult.recommendations);
+      $('status').innerHTML = '<i class="de-dot"></i><span>Ranked using explainable hiddenness + cultural value + budget fit + pace.</span>';
+      decide(lastResult);
+    }
+
+    function decide(r) {
+      const first = r.recommendations[0];
+      if (!first) return;
+
+      $('context').textContent = `${$('budget').selectedOptions[0].text} · ${$('days').value} day(s)`;
+      let action = 'Best next action';
+      let reason = `${first.name} is currently your strongest match at ${first.unseenScore}/100 Unseen Score.`;
+      
+      const h = new Date().getHours();
+      const raining = live.weather.includes('Rain') || live.weather.includes('showers') || live.weather.includes('Stormy');
+
+      if (raining && ['Nature', 'Adventure'].includes(first.category)) {
+        action = 'Choose an indoor cultural / temple experience now';
+        reason = `Live weather is ${live.weather}. Outdoor trail suitability is reduced, so the engine prioritizes cultural architecture and indoor heritage rather than an outdoor hike.`;
+      } else if (h >= 17 && first.category === 'Food') {
+        action = `Evening Food Walk: ${first.name}`;
+        reason = `It is evening and your top recommendation is food-focused. The engine prioritizes local dinner trails and night bazaars.`;
+      } else if (h < 8 && first.category === 'Nature') {
+        action = `Plan ${first.name} for the morning sunrise`;
+        reason = `It is early and your top match is nature-focused; the engine preserves early-morning light and quiet views.`;
+      } else {
+        action = `Next stop: ${first.name}`;
+        reason += ` It fits your ${$('interest').value.toLowerCase()} preference, balanced pace, and selected budget.`;
+      }
+
+      $('decisionTitle').textContent = action;
+      $('decisionText').textContent = reason;
+
+      const m = $('maps');
+      if (m && r.mapsUrl) {
+        m.href = r.mapsUrl;
+        m.style.display = 'inline-flex';
+      }
+    }
+
+    function esc(v) {
+      return String(v ?? '').replace(/[&<>"']/g, x => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      }[x]));
+    }
+
+    $('run').addEventListener('click', run);
+    init();
+  </script>
+</body>
+</html>

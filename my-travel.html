@@ -1,0 +1,1321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="My Travel Vault — Curate and manage saved hidden gems, custom expedition routes, AI-generated itineraries, and travel history on UnseenGo AI.">
+  <title>My Travel Vault — UnseenGo AI</title>
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <style>
+    /* Scoped Luxury Styles for My Travel Vault */
+    .ug-vault-hero {
+      margin-bottom: 2.25rem;
+    }
+
+    .ug-vault-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .ug-vault-breadcrumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-glass);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 1.15rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ug-text-muted);
+      backdrop-filter: blur(12px);
+    }
+
+    .ug-vault-breadcrumb a {
+      color: var(--ug-text-secondary);
+      text-decoration: none;
+      transition: var(--ug-transition);
+    }
+
+    .ug-vault-breadcrumb a:hover {
+      color: var(--ug-primary);
+    }
+
+    .ug-vault-breadcrumb .sep {
+      color: var(--ug-text-muted);
+      opacity: 0.6;
+    }
+
+    .ug-vault-breadcrumb .current {
+      color: var(--ug-primary);
+      font-weight: 700;
+    }
+
+    .ug-vault-sync-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--ug-text-muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .ug-vault-sync-status::before {
+      content: '';
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+    }
+
+    /* Guest Banner */
+    .ug-guest-banner {
+      background: linear-gradient(135deg, rgba(216, 255, 77, 0.08) 0%, rgba(16, 22, 17, 0.85) 100%);
+      border: 1px solid rgba(216, 255, 77, 0.25);
+      border-radius: 18px;
+      padding: 1.25rem 1.75rem;
+      margin-bottom: 2.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--ug-shadow-sm);
+    }
+
+    .ug-guest-banner-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .ug-guest-banner-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(216, 255, 77, 0.15);
+      border: 1px solid rgba(216, 255, 77, 0.3);
+      color: var(--ug-primary);
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ug-guest-banner h4 {
+      font-size: 1.05rem;
+      margin: 0 0 0.25rem;
+      color: var(--ug-text-primary);
+    }
+
+    .ug-guest-banner p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Vault Stats Grid */
+    .ug-vault-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .ug-vault-stat-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 18px;
+      padding: 1.35rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      cursor: pointer;
+      transition: var(--ug-transition);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--ug-shadow-sm);
+      text-decoration: none;
+    }
+
+    .ug-vault-stat-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: transparent;
+      transition: var(--ug-transition);
+    }
+
+    .ug-vault-stat-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(216, 255, 77, 0.4);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+    }
+
+    .ug-vault-stat-card:hover::after {
+      background: var(--ug-primary);
+    }
+
+    .ug-vault-stat-val {
+      font-family: var(--ug-font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--ug-primary);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .ug-vault-stat-label {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--ug-text-primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .ug-vault-stat-desc {
+      font-size: 0.78rem;
+      color: var(--ug-text-muted);
+    }
+
+    .ug-vault-stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--ug-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      flex-shrink: 0;
+      transition: var(--ug-transition);
+    }
+
+    .ug-vault-stat-card:hover .ug-vault-stat-icon {
+      background: rgba(216, 255, 77, 0.12);
+      border-color: rgba(216, 255, 77, 0.3);
+      color: var(--ug-primary);
+    }
+
+    /* Tabs Bar Enhancement */
+    .ug-tab-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--ug-text-secondary);
+      margin-left: 0.45rem;
+      transition: var(--ug-transition);
+    }
+
+    .ug-tab-btn.active .ug-tab-badge {
+      background: #080d09;
+      color: var(--ug-primary);
+    }
+
+    /* Empty State Styling */
+    .ug-vault-empty-state {
+      grid-column: 1 / -1;
+      padding: 4.5rem 2rem;
+      text-align: center;
+      background: var(--ug-surface);
+      border: 1px dashed var(--ug-border);
+      border-radius: 20px;
+      box-shadow: var(--ug-shadow-sm);
+    }
+
+    .ug-vault-empty-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 4px 12px var(--ug-primary-glow));
+    }
+
+    .ug-vault-empty-title {
+      font-size: 1.35rem;
+      margin-bottom: 0.5rem;
+      color: var(--ug-text-primary);
+    }
+
+    .ug-vault-empty-desc {
+      color: var(--ug-text-secondary);
+      max-width: 480px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* Custom Trip Card */
+    .ug-trip-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: var(--ug-shadow-sm);
+      transition: var(--ug-transition);
+    }
+
+    .ug-trip-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(216, 255, 77, 0.4);
+      box-shadow: var(--ug-shadow-md);
+    }
+
+    .ug-trip-card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+
+    .ug-trip-card-title {
+      font-size: 1.25rem;
+      margin: 0 0 0.4rem;
+      color: var(--ug-text-primary);
+      font-weight: 700;
+    }
+
+    .ug-trip-card-hub {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--ug-primary);
+      margin-bottom: 0.75rem;
+    }
+
+    .ug-trip-card-notes {
+      font-size: 0.88rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .ug-trip-card-actions {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      border-top: 1px solid var(--ug-border-subtle);
+      padding-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* AI Itinerary Card */
+    .ug-itinerary-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--ug-shadow-sm);
+      transition: var(--ug-transition);
+    }
+
+    .ug-itinerary-card:hover {
+      border-color: rgba(216, 255, 77, 0.35);
+      box-shadow: var(--ug-shadow-md);
+    }
+
+    .ug-itin-day-card {
+      background: var(--ug-bg-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .ug-itin-day-title {
+      font-size: 1.05rem;
+      color: var(--ug-primary);
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+
+    .ug-itin-stops-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      position: relative;
+      padding-left: 1.25rem;
+    }
+
+    .ug-itin-stops-list::before {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--ug-border);
+    }
+
+    .ug-itin-stop-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      font-size: 0.88rem;
+    }
+
+    .ug-itin-stop-item::before {
+      content: '';
+      position: absolute;
+      left: -1.25rem;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ug-primary);
+      border: 2px solid var(--ug-surface);
+      box-shadow: 0 0 6px var(--ug-primary-glow);
+    }
+
+    .ug-itin-stop-time {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ug-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Modal Form Enhancement */
+    .ug-form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .ug-form-label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+      color: var(--ug-text-primary);
+    }
+
+    .ug-form-input, .ug-form-select, .ug-form-textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--ug-border);
+      background: var(--ug-surface-subtle);
+      border-radius: 12px;
+      color: var(--ug-text-primary);
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: var(--ug-transition);
+    }
+
+    .ug-form-input:focus, .ug-form-select:focus, .ug-form-textarea:focus {
+      outline: none;
+      border-color: var(--ug-primary);
+      box-shadow: 0 0 0 3px var(--ug-primary-glow);
+    }
+
+    @media (max-width: 900px) {
+      .ug-vault-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 580px) {
+      .ug-vault-stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .ug-vault-top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link active" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link active" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+          <a class="ug-drawer-link" href="india-cities.html"><span class="icon">📍</span><span>Destinations Directory</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Page Content -->
+  <main class="ug-section" style="padding-top: 3rem; padding-bottom: 4rem;">
+    <div class="ug-container">
+
+      <!-- Breadcrumb Bar & Sync Indicator -->
+      <div class="ug-vault-top-bar">
+        <nav class="ug-vault-breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">Home</a>
+          <span class="sep">/</span>
+          <a href="discover.html">Discover</a>
+          <span class="sep">/</span>
+          <span class="current">My Travel Vault</span>
+        </nav>
+        <div class="ug-vault-sync-status">
+          Local Storage Sync Active
+        </div>
+      </div>
+
+      <!-- Guest Prompt Banner -->
+      <div id="guestPromptBanner" class="ug-guest-banner" style="display: none;">
+        <div class="ug-guest-banner-left">
+          <div class="ug-guest-banner-icon">✦</div>
+          <div>
+            <h4>Save destinations & access across all devices</h4>
+            <p>Sign in to permanently sync your bookmarked gems, custom trips, and AI itineraries.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+          <a href="login.html" class="ug-btn-primary" style="padding: 0.55rem 1.25rem; font-size: 0.85rem; min-height: unset; text-decoration: none;">
+            Sign In ↗
+          </a>
+          <button type="button" id="dismissGuestPrompt" class="ug-btn-secondary" style="padding: 0.55rem 1rem; font-size: 0.85rem; min-height: unset;">
+            Dismiss
+          </button>
+        </div>
+      </div>
+
+      <!-- Vault Hero Header -->
+      <div class="ug-vault-hero">
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem;">
+          <div>
+            <div class="ug-kicker"><span class="ug-sparkle">✦</span> PERSONAL TRAVEL VAULT</div>
+            <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin: 0.5rem 0 0.65rem; letter-spacing: -0.025em; line-height: 1.15;">
+              My Travel <span class="ug-serif" style="color: var(--ug-primary);">Vault</span>
+            </h1>
+            <p style="color: var(--ug-text-secondary); max-width: 620px; margin: 0; line-height: 1.6; font-size: 1rem;">
+              Your private collection of hand-picked hidden gems, custom expedition routes, AI-generated itineraries, and recent discoveries across India.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+            <a href="planner.html" class="ug-btn-secondary" style="font-size: 0.88rem; padding: 0.65rem 1.25rem; min-height: 44px; text-decoration: none;">
+              🤖 AI Planner ↗
+            </a>
+            <button type="button" class="ug-btn-primary" id="openTripModalBtn" style="font-size: 0.88rem; padding: 0.65rem 1.35rem; min-height: 44px;">
+              ➕ Plan New Trip
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Luxury Stats Bar (4 Quick Jumps) -->
+      <div class="ug-vault-stats-grid">
+        <div class="ug-vault-stat-card" data-stat-target="tab-saved" title="View Saved Places">
+          <div>
+            <div class="ug-vault-stat-val" id="statSavedPlaces">0</div>
+            <div class="ug-vault-stat-label">Saved Places</div>
+            <div class="ug-vault-stat-desc">Bookmarked gems & monuments</div>
+          </div>
+          <div class="ug-vault-stat-icon">❤️</div>
+        </div>
+
+        <div class="ug-vault-stat-card" data-stat-target="tab-trips" title="View Planned Trips">
+          <div>
+            <div class="ug-vault-stat-val" id="statPlannedTrips">0</div>
+            <div class="ug-vault-stat-label">Custom Trips</div>
+            <div class="ug-vault-stat-desc">Self-designed road journeys</div>
+          </div>
+          <div class="ug-vault-stat-icon">🧳</div>
+        </div>
+
+        <div class="ug-vault-stat-card" data-stat-target="tab-itineraries" title="View AI Itineraries">
+          <div>
+            <div class="ug-vault-stat-val" id="statItineraries">0</div>
+            <div class="ug-vault-stat-label">AI Itineraries</div>
+            <div class="ug-vault-stat-desc">Saved day-by-day travel plans</div>
+          </div>
+          <div class="ug-vault-stat-icon">📜</div>
+        </div>
+
+        <div class="ug-vault-stat-card" data-stat-target="tab-recent" title="View Recently Viewed">
+          <div>
+            <div class="ug-vault-stat-val" id="statRecentlyViewed">0</div>
+            <div class="ug-vault-stat-label">Recently Viewed</div>
+            <div class="ug-vault-stat-desc">Destinations browsed this session</div>
+          </div>
+          <div class="ug-vault-stat-icon">🕒</div>
+        </div>
+      </div>
+
+      <!-- Tab Navigation (4 Core Branches) -->
+      <div class="ug-tabs-bar">
+        <button type="button" class="ug-tab-btn active" data-tab="tab-saved">
+          ❤️ Saved Places <span class="ug-tab-badge" id="tabCountSaved">0</span>
+        </button>
+        <button type="button" class="ug-tab-btn" data-tab="tab-trips">
+          🧳 Custom Trips <span class="ug-tab-badge" id="tabCountTrips">0</span>
+        </button>
+        <button type="button" class="ug-tab-btn" data-tab="tab-itineraries">
+          📜 AI Itineraries <span class="ug-tab-badge" id="tabCountItineraries">0</span>
+        </button>
+        <button type="button" class="ug-tab-btn" data-tab="tab-recent">
+          🕒 Recently Viewed <span class="ug-tab-badge" id="tabCountRecent">0</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: SAVED PLACES -->
+      <div id="tab-saved" class="ug-tab-pane active">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div style="display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.25rem;" id="savedCategoryFilters">
+            <button type="button" class="ug-filter-btn active" data-save-filter="all">All Saved</button>
+            <button type="button" class="ug-filter-btn" data-save-filter="heritage">🏛️ Heritage</button>
+            <button type="button" class="ug-filter-btn" data-save-filter="nature">🌿 Nature</button>
+            <button type="button" class="ug-filter-btn" data-save-filter="temple">🛕 Temples</button>
+            <button type="button" class="ug-filter-btn" data-save-filter="canyon">⛰️ Canyons</button>
+          </div>
+          <a href="discover.html" class="ug-btn-secondary" style="font-size: 0.85rem; padding: 0.55rem 1.15rem; min-height: unset; text-decoration: none;">
+            + Discover More Gems ↗
+          </a>
+        </div>
+
+        <div class="ug-gems-grid" id="savedPlacesGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- TAB 2: CUSTOM TRIPS -->
+      <div id="tab-trips" class="ug-tab-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.3rem;">Custom Expeditions & Road Trips</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.88rem; color: var(--ug-text-secondary);">Manage multi-day road journeys and travel notes you designed.</p>
+          </div>
+          <button type="button" class="ug-btn-primary" onclick="document.getElementById('tripModal').classList.add('open')">
+            ➕ Create Trip
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;" id="customTripsGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- TAB 3: ITINERARIES -->
+      <div id="tab-itineraries" class="ug-tab-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.3rem;">AI-Generated Itineraries</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.88rem; color: var(--ug-text-secondary);">Day-by-day travel plans saved from the AI Itinerary Planner.</p>
+          </div>
+          <a href="planner.html" class="ug-btn-primary" style="text-decoration: none;">
+            ✨ Generate New Plan
+          </a>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;" id="savedItinerariesList">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- TAB 4: RECENTLY VIEWED -->
+      <div id="tab-recent" class="ug-tab-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.3rem;">Recently Visited Destinations</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.88rem; color: var(--ug-text-secondary);">History of places and city guides you browsed.</p>
+          </div>
+          <button type="button" class="ug-btn-secondary" id="clearRecentBtn" style="font-size: 0.82rem; color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
+            🗑️ Clear History
+          </button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;" id="recentlyViewedGrid">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Create New Trip Modal Dialog -->
+  <div class="ug-modal-overlay" id="tripModal">
+    <div class="ug-modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--ug-border);">
+        <h3 style="margin: 0; font-size: 1.35rem; color: var(--ug-text-primary);">Plan a Custom Expedition</h3>
+        <button type="button" style="background: none; border: 0; font-size: 1.3rem; cursor: pointer; color: var(--ug-text-muted);" onclick="document.getElementById('tripModal').classList.remove('open')">✕</button>
+      </div>
+
+      <form id="newTripForm">
+        <div class="ug-form-group">
+          <label class="ug-form-label" for="tripTitle">Trip Title</label>
+          <input type="text" id="tripTitle" class="ug-form-input" placeholder="e.g. Weekend Rayalaseema Canyon Escape" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="ug-form-group">
+            <label class="ug-form-label" for="tripDestination">Destination Hub</label>
+            <input type="text" id="tripDestination" class="ug-form-input" placeholder="e.g. Kurnool & Gandikota" required>
+          </div>
+          <div class="ug-form-group">
+            <label class="ug-form-label" for="tripDays">Duration</label>
+            <select id="tripDays" class="ug-form-select">
+              <option value="1">1 Day</option>
+              <option value="2" selected>2 Days</option>
+              <option value="3">3 Days</option>
+              <option value="4">4 Days</option>
+              <option value="5">5+ Days</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ug-form-group">
+          <label class="ug-form-label" for="tripNotes">Key Stops & Expedition Highlights</label>
+          <textarea id="tripNotes" class="ug-form-textarea" rows="3" placeholder="Key stops: Gandikota sunset, Belum cave exploration, local Andhra spicy meals..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.75rem;">
+          <button type="button" class="ug-btn-secondary" onclick="document.getElementById('tripModal').classList.remove('open')">Cancel</button>
+          <button type="submit" class="ug-btn-primary">Save Expedition</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+            <li><a href="profile.html">Traveler Profile</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h5>Signature Gems</h5>
+          <ul class="ug-footer-links">
+            <li><a href="place.html?place=Gandikota">Gandikota Canyon</a></li>
+            <li><a href="place.html?place=Lepakshi">Lepakshi Monoliths</a></li>
+            <li><a href="place.html?place=Agumbe">Agumbe Rainforest</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      // Sample Data Catalogs for initial graceful display
+      const SAMPLE_SAVED = [
+        {
+          name: 'Gandikota Canyon & Fort',
+          city: 'Kadapa, Andhra Pradesh',
+          category: 'heritage canyon',
+          score: 95,
+          image: 'https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=600&q=80',
+          desc: 'Dramatic red sandstone gorge sculpted by the Penna River, crowned by ancient fort walls and medieval granaries.'
+        },
+        {
+          name: 'Lepakshi Hanging Pillar',
+          city: 'Sri Sathya Sai, Andhra Pradesh',
+          category: 'heritage temple',
+          score: 96,
+          image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80',
+          desc: 'Vijayanagara architectural marvel with a monolithic hanging pillar, colossal Nandi bull, and intricate ceiling murals.'
+        },
+        {
+          name: 'Paigah Tombs',
+          city: 'Hyderabad, Telangana',
+          category: 'heritage',
+          score: 96,
+          image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80',
+          desc: 'Exquisite lime-and-mortar stucco jaali work blending Rajput, Asaf Jahi, Persian, and European neoclassical styles.'
+        }
+      ];
+
+      const SAMPLE_TRIPS = [
+        {
+          id: 'trip-1',
+          title: 'Rayalaseema Heritage & Canyon Trail',
+          destination: 'Kurnool & Gandikota',
+          days: '3',
+          notes: 'Cover Gandikota sunset, morning subterranean exploration at Belum Caves, and sacred architecture at Yaganti rock temple.',
+          created: '2 days ago'
+        },
+        {
+          id: 'trip-2',
+          title: 'Western Ghats Monsoon Canopy',
+          destination: 'Agumbe & Malnad',
+          days: '4',
+          notes: 'High canopy walks, quiet rainforest homestays, Barkana waterfall trek, and local Malnad culinary tasting.',
+          created: '1 week ago'
+        }
+      ];
+
+      const SAMPLE_ITINERARIES = [
+        {
+          id: 'itin-1',
+          title: '2-Day Kurnool & Gandikota AI Journey',
+          pace: 'Balanced',
+          budget: '₹5,500 Comfort',
+          days: [
+            {
+              dayNum: 1,
+              title: 'Day 1: Ancient Forts & River Canyon Sunset',
+              stops: [
+                { time: '09:00 AM', name: 'Konda Reddy Buruju', note: 'Historic bastion in the heart of Kurnool old quarter' },
+                { time: '01:30 PM', name: 'Rayalaseema Ruchulu', note: 'Authentic local spicy thali lunch' },
+                { time: '04:45 PM', name: 'Gandikota Canyon Gorge', note: 'Golden hour sunset over the Penna river canyon cliffs' }
+              ]
+            },
+            {
+              dayNum: 2,
+              title: 'Day 2: Subterranean Caves & Sacred Geology',
+              stops: [
+                { time: '09:30 AM', name: 'Belum Caves System', note: 'Deep limestone natural cave passages & musical chamber' },
+                { time: '02:00 PM', name: 'Yaganti Rock Temple', note: 'Ancient Pushkarini springs and natural boulder sanctuary' }
+              ]
+            }
+          ]
+        }
+      ];
+
+      const SAMPLE_RECENT = [
+        { name: 'Gandikota Canyon', city: 'Kadapa, Andhra Pradesh', category: 'Canyon', time: '10 mins ago', image: 'https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=300&q=80' },
+        { name: 'Belum Caves', city: 'Kurnool, Andhra Pradesh', category: 'Geology', time: '1 hour ago', image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=300&q=80' },
+        { name: 'Hampi Outskirts', city: 'Vijayanagara, Karnataka', category: 'Heritage', time: 'Yesterday', image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=300&q=80' }
+      ];
+
+      // Tab Switching Function
+      function activateTab(tabId) {
+        document.querySelectorAll('.ug-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.ug-tab-pane').forEach(p => p.classList.remove('active'));
+        
+        const btn = document.querySelector(`.ug-tab-btn[data-tab="${tabId}"]`);
+        const pane = document.getElementById(tabId);
+        
+        if (btn) btn.classList.add('active');
+        if (pane) pane.classList.add('active');
+      }
+
+      document.querySelectorAll('.ug-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activateTab(btn.dataset.tab);
+        });
+      });
+
+      // Stat Cards Click to Jump
+      document.querySelectorAll('[data-stat-target]').forEach(card => {
+        card.addEventListener('click', () => {
+          const target = card.dataset.statTarget;
+          activateTab(target);
+          const tabBtn = document.querySelector(`.ug-tab-btn[data-tab="${target}"]`);
+          if (tabBtn) tabBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+      });
+
+      // 1. Render Saved Places
+      function renderSavedPlaces(filter = 'all') {
+        let saved = [];
+        try {
+          saved = JSON.parse(localStorage.getItem('unseengo_saved_places') || localStorage.getItem('unseengo-saved-places') || '[]');
+        } catch (_) {}
+
+        let placesList = [];
+        if (!saved || saved.length === 0) {
+          placesList = SAMPLE_SAVED;
+        } else {
+          placesList = saved.map(item => {
+            const name = typeof item === 'string' ? (item.includes('|') ? item.split('|')[1] : item) : item.name;
+            const match = SAMPLE_SAVED.find(s => s.name.toLowerCase().includes(name.toLowerCase()));
+            return match || {
+              name: name,
+              city: 'India Destination',
+              category: 'heritage',
+              score: 94,
+              image: 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=600&q=80',
+              desc: 'Bookmarked destination in your personal travel collection.'
+            };
+          });
+        }
+
+        const filtered = placesList.filter(p => filter === 'all' || (p.category && p.category.includes(filter)));
+        const grid = document.getElementById('savedPlacesGrid');
+        grid.innerHTML = '';
+
+        document.getElementById('statSavedPlaces').textContent = placesList.length;
+        document.getElementById('tabCountSaved').textContent = placesList.length;
+
+        if (filtered.length === 0) {
+          grid.innerHTML = `
+            <div class="ug-vault-empty-state">
+              <span class="ug-vault-empty-icon">❤️</span>
+              <h3 class="ug-vault-empty-title">No saved places found</h3>
+              <p class="ug-vault-empty-desc">
+                ${filter !== 'all' ? `No saved destinations match the "${filter}" category.` : 'Explore hidden gems and tap the heart bookmark to save them to your personal vault.'}
+              </p>
+              <a href="discover.html" class="ug-btn-primary" style="text-decoration: none;">
+                Explore Hidden Gems →
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        filtered.forEach(p => {
+          const card = document.createElement('div');
+          card.className = 'ug-gem-card';
+          card.innerHTML = `
+            <div class="ug-gem-thumb">
+              <img src="${p.image}" alt="${p.name}" loading="lazy">
+              <span class="ug-gem-score-tag">✦ ${p.score} Unseen Score</span>
+              <span class="ug-gem-cat-tag">Saved</span>
+            </div>
+            <div class="ug-gem-body">
+              <h3>${p.name}</h3>
+              <div class="ug-gem-location">📍 ${p.city}</div>
+              <p class="ug-gem-desc">${p.desc}</p>
+              <div style="display: flex; gap: 0.5rem; margin-top: 1rem; border-top: 1px solid var(--ug-border-subtle); padding-top: 0.85rem; align-items: center;">
+                <a href="place.html?place=${encodeURIComponent(p.name)}" class="ug-btn-secondary" style="flex: 1; font-size: 0.82rem; justify-content: center; text-decoration: none;">
+                  View Guide ↗
+                </a>
+                <a href="map.html?place=${encodeURIComponent(p.name)}&navigate=true" class="ug-btn-primary" style="font-size: 0.82rem; text-decoration: none; padding: 0.6rem 1rem;" title="Start GPS Navigation">
+                  🧭 Navigate
+                </a>
+                <button type="button" class="ug-btn-secondary remove-saved-btn" data-remove="${p.name}" style="font-size: 0.85rem; padding: 0.6rem 0.85rem; color: #ef4444;" title="Remove bookmark">
+                  ✕
+                </button>
+              </div>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        // Bind Remove buttons
+        grid.querySelectorAll('.remove-saved-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const toRemove = btn.dataset.remove;
+            let current = [];
+            try {
+              current = JSON.parse(localStorage.getItem('unseengo_saved_places') || '[]');
+            } catch (_) {}
+            current = current.filter(x => (typeof x === 'string' ? !x.includes(toRemove) : x.name !== toRemove));
+            localStorage.setItem('unseengo_saved_places', JSON.stringify(current));
+            renderSavedPlaces(filter);
+          });
+        });
+      }
+
+      // Filter category pills in Saved
+      document.querySelectorAll('[data-save-filter]').forEach(b => {
+        b.addEventListener('click', () => {
+          document.querySelectorAll('[data-save-filter]').forEach(x => x.classList.remove('active'));
+          b.classList.add('active');
+          renderSavedPlaces(b.dataset.saveFilter);
+        });
+      });
+
+      // 2. Render Custom Trips
+      function renderCustomTrips() {
+        let trips = [];
+        try {
+          trips = JSON.parse(localStorage.getItem('unseengo_custom_trips') || '[]');
+        } catch (_) {}
+        if (!trips.length) trips = SAMPLE_TRIPS;
+
+        document.getElementById('statPlannedTrips').textContent = trips.length;
+        document.getElementById('tabCountTrips').textContent = trips.length;
+
+        const grid = document.getElementById('customTripsGrid');
+        grid.innerHTML = '';
+
+        if (trips.length === 0) {
+          grid.innerHTML = `
+            <div class="ug-vault-empty-state">
+              <span class="ug-vault-empty-icon">🧳</span>
+              <h3 class="ug-vault-empty-title">No custom trips yet</h3>
+              <p class="ug-vault-empty-desc">
+                Design custom road trips, weekend getaways, and multi-day expedition notes with our trip builder.
+              </p>
+              <button type="button" class="ug-btn-primary" onclick="document.getElementById('tripModal').classList.add('open')">
+                ➕ Create Your First Trip
+              </button>
+            </div>
+          `;
+          return;
+        }
+
+        trips.forEach((t, idx) => {
+          const card = document.createElement('article');
+          card.className = 'ug-trip-card';
+          card.innerHTML = `
+            <div>
+              <div class="ug-trip-card-head">
+                <span class="ug-score-pill" style="font-size: 0.75rem;">🧳 ${t.days} Days Journey</span>
+                <span style="font-size: 0.75rem; color: var(--ug-text-muted);">${t.created || 'Recently'}</span>
+              </div>
+              <h3 class="ug-trip-card-title">${t.title}</h3>
+              <div class="ug-trip-card-hub">
+                <span>📍 Hub:</span>
+                <strong>${t.destination}</strong>
+              </div>
+              <p class="ug-trip-card-notes">
+                ${t.notes || 'Custom trip planned with UnseenGo AI.'}
+              </p>
+            </div>
+            <div class="ug-trip-card-actions">
+              <a href="planner.html?city=${encodeURIComponent(t.destination)}" class="ug-btn-secondary" style="flex: 1; font-size: 0.82rem; justify-content: center; text-decoration: none;">
+                AI Planner ↗
+              </a>
+              <a href="map.html?place=${encodeURIComponent(t.destination)}&navigate=true" class="ug-btn-primary" style="flex: 1.2; font-size: 0.82rem; justify-content: center; text-decoration: none;">
+                🧭 Start Navigation →
+              </a>
+              <button type="button" class="ug-btn-secondary delete-trip-btn" data-index="${idx}" style="color: #ef4444; padding: 0.6rem 0.85rem;" title="Delete Trip">
+                🗑️
+              </button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+
+        grid.querySelectorAll('.delete-trip-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const index = Number(btn.dataset.index);
+            let current = [];
+            try { current = JSON.parse(localStorage.getItem('unseengo_custom_trips') || '[]'); } catch (_) {}
+            if (!current.length) current = [...SAMPLE_TRIPS];
+            current.splice(index, 1);
+            localStorage.setItem('unseengo_custom_trips', JSON.stringify(current));
+            renderCustomTrips();
+          });
+        });
+      }
+
+      // New Trip Form Submit
+      document.getElementById('openTripModalBtn')?.addEventListener('click', () => {
+        document.getElementById('tripModal').classList.add('open');
+      });
+
+      document.getElementById('newTripForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('tripTitle').value.trim();
+        const destination = document.getElementById('tripDestination').value.trim();
+        const days = document.getElementById('tripDays').value;
+        const notes = document.getElementById('tripNotes').value.trim();
+
+        let current = [];
+        try { current = JSON.parse(localStorage.getItem('unseengo_custom_trips') || '[]'); } catch (_) {}
+        if (!current.length) current = [...SAMPLE_TRIPS];
+
+        current.unshift({
+          id: 'trip-' + Date.now(),
+          title,
+          destination,
+          days,
+          notes,
+          created: 'Just now'
+        });
+
+        localStorage.setItem('unseengo_custom_trips', JSON.stringify(current));
+        document.getElementById('tripModal').classList.remove('open');
+        document.getElementById('newTripForm').reset();
+        renderCustomTrips();
+
+        // Switch to trips tab
+        activateTab('tab-trips');
+      });
+
+      // 3. Render Itineraries
+      function renderItineraries() {
+        let itins = [];
+        try {
+          itins = JSON.parse(localStorage.getItem('unseengo_saved_itineraries') || '[]');
+        } catch (_) {}
+        if (!itins.length) itins = SAMPLE_ITINERARIES;
+
+        document.getElementById('statItineraries').textContent = itins.length;
+        document.getElementById('tabCountItineraries').textContent = itins.length;
+
+        const list = document.getElementById('savedItinerariesList');
+        list.innerHTML = '';
+
+        if (itins.length === 0) {
+          list.innerHTML = `
+            <div class="ug-vault-empty-state">
+              <span class="ug-vault-empty-icon">📜</span>
+              <h3 class="ug-vault-empty-title">No saved itineraries yet</h3>
+              <p class="ug-vault-empty-desc">
+                Generate tailored, time-optimized day plans using our AI Travel Planner and save them for instant offline access.
+              </p>
+              <a href="planner.html" class="ug-btn-primary" style="text-decoration: none;">
+                Launch AI Planner →
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        itins.forEach((itin) => {
+          const card = document.createElement('article');
+          card.className = 'ug-itinerary-card';
+
+          let daysHtml = '';
+          (itin.days || []).forEach(d => {
+            daysHtml += `
+              <div class="ug-itin-day-card">
+                <div class="ug-itin-day-title">
+                  <span class="ug-score-pill" style="font-size: 0.72rem; padding: 0.2rem 0.55rem;">Day ${d.dayNum || '1'}</span>
+                  <span>${d.title}</span>
+                </div>
+                <div class="ug-itin-stops-list">
+                  ${(d.stops || []).map(s => `
+                    <div class="ug-itin-stop-item">
+                      <span class="ug-itin-stop-time">${s.time}</span>
+                      <div>
+                        <strong style="color: var(--ug-text-primary); font-size: 0.92rem;">${s.name}</strong>
+                        <span style="color: var(--ug-text-secondary); margin-left: 0.35rem;">— ${s.note}</span>
+                      </div>
+                      <div style="margin-top: 0.25rem;">
+                        <a href="map.html?place=${encodeURIComponent(s.name)}&navigate=true" style="font-size: 0.75rem; color: var(--ug-primary); text-decoration: none; font-weight: 700;">
+                          🧭 Navigate here →
+                        </a>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          });
+
+          card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; border-bottom: 1px solid var(--ug-border-subtle); padding-bottom: 1.25rem;">
+              <div>
+                <span class="ug-score-pill" style="font-size: 0.72rem; margin-bottom: 0.4rem;">AI GENERATED PLAN</span>
+                <h3 style="margin: 0.4rem 0 0.3rem; font-size: 1.35rem; color: var(--ug-text-primary);">${itin.title}</h3>
+                <span style="font-size: 0.85rem; color: var(--ug-text-muted);">Pace: <b style="color: var(--ug-text-secondary);">${itin.pace || 'Balanced'}</b> · Budget: <b style="color: var(--ug-text-secondary);">${itin.budget || 'Comfort'}</b></span>
+              </div>
+              <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <button type="button" class="ug-btn-secondary" onclick="window.print()" style="font-size: 0.82rem; padding: 0.55rem 1rem;">
+                  🖨️ Print / Save PDF
+                </button>
+                <a href="map.html?place=${encodeURIComponent(itin.days?.[0]?.stops?.[0]?.name || itin.title)}&navigate=true" class="ug-btn-primary" style="font-size: 0.82rem; padding: 0.55rem 1.25rem; text-decoration: none;">
+                  🧭 Start Turn-by-Turn GPS Navigation →
+                </a>
+              </div>
+            </div>
+            <div style="margin-top: 1.25rem;">
+              ${daysHtml}
+            </div>
+          `;
+          list.appendChild(card);
+        });
+      }
+
+      // 4. Render Recently Viewed
+      function renderRecentlyViewed() {
+        let recents = [];
+        try {
+          recents = JSON.parse(localStorage.getItem('unseengo_recently_viewed') || '[]');
+        } catch (_) {}
+        if (!recents.length) recents = SAMPLE_RECENT;
+
+        document.getElementById('statRecentlyViewed').textContent = recents.length;
+        document.getElementById('tabCountRecent').textContent = recents.length;
+
+        const grid = document.getElementById('recentlyViewedGrid');
+        grid.innerHTML = '';
+
+        if (recents.length === 0) {
+          grid.innerHTML = `
+            <div class="ug-vault-empty-state">
+              <span class="ug-vault-empty-icon">🕒</span>
+              <h3 class="ug-vault-empty-title">No recent destinations</h3>
+              <p class="ug-vault-empty-desc">
+                Places and cities you browse will automatically appear here for quick reference during your journey.
+              </p>
+              <a href="discover.html" class="ug-btn-primary" style="text-decoration: none;">
+                Browse Destinations →
+              </a>
+            </div>
+          `;
+          return;
+        }
+
+        recents.forEach(r => {
+          const item = document.createElement('div');
+          item.className = 'ug-map-poi-card';
+          item.innerHTML = `
+            <img class="ug-map-poi-img" src="${r.image || 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=300&q=80'}" alt="${r.name}">
+            <div class="ug-map-poi-info">
+              <h4>${r.name}</h4>
+              <div class="ug-map-poi-meta">
+                <span>📍 ${r.city || 'India'}</span>
+                <span>•</span>
+                <span>${r.category || 'Heritage'}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.65rem;">
+                <span style="font-size: 0.72rem; color: var(--ug-text-muted);">${r.time || 'Recently'}</span>
+                <div style="display: flex; gap: 0.5rem;">
+                  <a href="place.html?place=${encodeURIComponent(r.name)}" style="color: var(--ug-primary); font-size: 0.78rem; text-decoration: none; font-weight: 700;">
+                    Revisit Guide ↗
+                  </a>
+                  <span style="color: var(--ug-border);">|</span>
+                  <a href="map.html?place=${encodeURIComponent(r.name)}" style="color: var(--ug-text-secondary); font-size: 0.78rem; text-decoration: none; font-weight: 600;">
+                    Map 🗺️
+                  </a>
+                </div>
+              </div>
+            </div>
+          `;
+          grid.appendChild(item);
+        });
+
+        document.getElementById('clearRecentBtn')?.addEventListener('click', () => {
+          localStorage.removeItem('unseengo_recently_viewed');
+          renderRecentlyViewed();
+        });
+      }
+
+      // Guest Banner Check
+      function checkGuestBanner() {
+        const user = (window.UnseenGoNav && window.UnseenGoNav.getAuthUser) 
+          ? window.UnseenGoNav.getAuthUser() 
+          : JSON.parse(localStorage.getItem('unseengo_user') || localStorage.getItem('unseengo_demo_user') || 'null');
+        const guestBanner = document.getElementById('guestPromptBanner');
+        if (guestBanner) {
+          if (!user && !sessionStorage.getItem('dismiss_guest_prompt')) {
+            guestBanner.style.display = 'flex';
+          } else {
+            guestBanner.style.display = 'none';
+          }
+          const dismissBtn = document.getElementById('dismissGuestPrompt');
+          if (dismissBtn) {
+            dismissBtn.onclick = () => {
+              guestBanner.style.display = 'none';
+              sessionStorage.setItem('dismiss_guest_prompt', 'true');
+            };
+          }
+        }
+      }
+
+      // Initialize all 4 branches with URL tab support
+      window.addEventListener('DOMContentLoaded', () => {
+        checkGuestBanner();
+        renderSavedPlaces('all');
+        renderCustomTrips();
+        renderItineraries();
+        renderRecentlyViewed();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab');
+        if (tab) {
+          activateTab(`tab-${tab}`);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

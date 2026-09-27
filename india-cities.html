@@ -1,57 +1,747 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="Explore India by region, state and city with UnseenGo AI.">
-<title>Explore India — UnseenGo AI</title>
-<link rel="stylesheet" href="styles.css?v=20260826"><link rel="stylesheet" href="responsive.css?v=20260826"><link rel="stylesheet" href="bright-theme.css?v=20260826"><link rel="stylesheet" href="unseengo-suite.css?v=20260826">
-<style>
-:root{--g:#08140c;--lime:#d8f36a;--cream:#f5f2e9;--muted:#68736b;--line:#dce3da}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:#172019;font-family:Inter,system-ui,sans-serif}.wrap{width:min(1240px,calc(100% - 40px));margin:auto}.top{background:var(--g);color:#fff}.nav{height:76px;display:flex;align-items:center;gap:25px}.brand{font-size:21px;font-weight:950;white-space:nowrap}.brand b{color:var(--lime)}nav{display:flex;gap:20px;margin-left:auto}nav a{color:#fff;text-decoration:none;font-size:12px;font-weight:850}nav a.active,nav a:hover{color:var(--lime)}.home{border:1px solid #ffffff55;background:transparent;color:#fff;border-radius:8px;padding:10px 14px;font-weight:900}.hero{min-height:500px;color:#fff;display:flex;align-items:flex-end;background:linear-gradient(90deg,rgba(4,12,7,.93),rgba(4,12,7,.5)),url('https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=2200&q=90') center/cover}.hero-inner{padding:80px 0 65px;max-width:900px}.eyebrow{color:var(--lime);font-size:10px;font-weight:950;letter-spacing:2.5px}.hero h1{font-size:clamp(48px,7vw,88px);line-height:.92;letter-spacing:-5px;margin:15px 0}.hero h1 em{font-family:Georgia,serif;color:var(--lime);font-weight:400}.hero p{max-width:740px;color:#e0e8df;line-height:1.75;font-size:16px}.search{display:flex;gap:8px;margin-top:25px}.search input{flex:1;min-height:52px;border:1px solid #ffffff55;border-radius:9px;background:#0006;color:#fff;padding:0 15px;font:inherit;outline:none}.search button{border:0;border-radius:9px;background:var(--lime);color:#10170d;padding:0 19px;font-weight:950}.section{padding:75px 0}.section.light{background:#fff}.head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:27px}.head h2{font-size:40px;letter-spacing:-2px;line-height:1;margin:7px 0}.head p{max-width:600px;color:var(--muted);line-height:1.7}.region-tabs{display:flex;gap:8px;overflow:auto;padding-bottom:6px;margin-bottom:18px}.region-tabs button{white-space:nowrap;border:1px solid #ccd5c9;background:#fff;border-radius:999px;padding:11px 16px;font-size:11px;font-weight:900;cursor:pointer}.region-tabs button.active{background:#e2edc5;border-color:#aabd72;color:#253512}.explorer{background:var(--g);color:#fff;border-radius:22px;padding:32px}.explorer-top{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:23px}.explorer-top h3{font-size:34px;letter-spacing:-1.5px;margin:7px 0}.explorer-top p{color:#aeb9af;line-height:1.6;max-width:650px;margin:0}.counter{color:var(--lime);font-size:10px;font-weight:950;white-space:nowrap}.state-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.state{display:block;padding:19px;background:#132219;border:1px solid #304034;border-radius:14px;color:#fff;text-decoration:none;cursor:pointer;transition:.25s}.state:hover,.state.active{border-color:#b6d264;background:#18291c;transform:translateY(-2px)}.state strong{display:block;font-size:15px}.state span{display:block;margin-top:6px;color:#92a097;font-size:10px}.state-arrow{float:right;color:var(--lime);font-weight:900}.city-panel{display:none;margin-top:24px;padding-top:24px;border-top:1px solid #304034}.city-panel.show{display:block}.city-panel-head{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:13px}.city-panel-head h4{font-size:22px;margin:0}.back-states{border:1px solid #405043;background:transparent;color:#dfe8de;border-radius:8px;padding:9px 12px;font-size:10px;font-weight:900;cursor:pointer}.city-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.city{display:block;text-decoration:none;color:#fff;background:#101c14;border:1px solid #2c3c30;border-radius:11px;padding:14px}.city:hover{border-color:#b5d261}.city strong{display:block;font-size:12px}.city span{font-size:9px;color:#829087}.city-arrow{float:right;color:var(--lime)}.crumb{display:flex;gap:7px;align-items:center;flex-wrap:wrap;color:#758279;font-size:10px;margin-bottom:15px}.crumb b{color:#314514}.category-preview{margin-top:20px;display:grid;grid-template-columns:repeat(6,1fr);gap:9px}.cat{padding:16px 10px;text-align:center;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:11px;font-weight:900}.cat span{display:block;font-size:20px;margin-bottom:6px}.how{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.how article{background:#fff;border:1px solid var(--line);border-radius:15px;padding:22px}.how b{font-size:24px}.how h3{font-size:15px;margin:10px 0 6px}.how p{color:var(--muted);font-size:11px;line-height:1.55;margin:0}.cta{background:var(--g);color:#fff;border-radius:22px;padding:42px;display:flex;justify-content:space-between;align-items:center;gap:25px}.cta h2{font-size:38px;margin:8px 0}.cta p{color:#aeb9af;max-width:680px;line-height:1.65}.cta a{background:var(--lime);color:#10170d;padding:14px 18px;border-radius:9px;text-decoration:none;font-weight:950;white-space:nowrap}footer{padding:30px 5%;display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap;color:#68736b;font-size:11px}footer b{color:#172019}@media(max-width:900px){nav{display:none}.state-grid{grid-template-columns:repeat(2,1fr)}.city-grid{grid-template-columns:repeat(3,1fr)}.category-preview{grid-template-columns:repeat(3,1fr)}.how{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.wrap{width:calc(100% - 28px)}.hero h1{font-size:50px;letter-spacing:-3px}.search{display:grid}.search button{min-height:50px}.section{padding:55px 0}.explorer{padding:22px}.state-grid,.city-grid,.how{grid-template-columns:1fr}.category-preview{grid-template-columns:repeat(2,1fr)}.explorer-top,.head{display:block}.counter{display:block;margin-top:10px}.cta{display:block;padding:28px}.cta a{display:inline-block;margin-top:12px}}
-</style>
-<link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore India by region, state, and city with UnseenGo AI — find hidden gems, temples, heritage, nature, and food trails across 300+ Indian cities.">
+  <title>All-India Destination & City Directory — UnseenGo AI</title>
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <style>
+    :root {
+      --ug-lime: #d8ff4d;
+      --ug-lime-soft: rgba(216, 255, 77, 0.12);
+      --ug-gold: #f59e0b;
+      --ug-emerald: #10b981;
+      --ug-orange: #fb923c;
+      --ug-bg: #070d09;
+      --ug-surface: #0e1711;
+      --ug-surface-elevated: #132017;
+      --ug-border: #233427;
+      --ug-border-glow: #38563d;
+      --ug-text-primary: #f5f8f5;
+      --ug-text-secondary: #9cb0a2;
+      --ug-text-muted: #6f8275;
+    }
+
+    body {
+      background: var(--ug-bg);
+      color: var(--ug-text-primary);
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+    }
+
+    .ug-wrap {
+      width: min(1280px, calc(100% - 3rem));
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .ic-hero {
+      position: relative;
+      background: radial-gradient(circle at 85% 15%, rgba(216, 255, 77, 0.08) 0%, transparent 55%),
+                  linear-gradient(180deg, #09130c 0%, #070d09 100%);
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--ug-border);
+      overflow: hidden;
+    }
+    .ic-hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .ic-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(216, 255, 77, 0.1);
+      border: 1px solid rgba(216, 255, 77, 0.25);
+      color: var(--ug-lime);
+      padding: 0.3rem 0.85rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .ic-hero-title {
+      font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin: 0 0 1rem;
+      color: #fff;
+    }
+    .ic-hero-title em {
+      font-style: italic;
+      font-family: Georgia, serif;
+      color: var(--ug-lime);
+    }
+    .ic-hero-copy {
+      font-size: 1rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.6;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Search Bar */
+    .ic-search-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 16px;
+      padding: 0.85rem 1.1rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+    .ic-search-row {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+    }
+    .ic-search-input-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: #09130c;
+      border: 1px solid var(--ug-border);
+      border-radius: 10px;
+      padding: 0.65rem 1rem;
+    }
+    .ic-search-input-wrap .icon {
+      font-size: 1.1rem;
+      color: var(--ug-lime);
+    }
+    .ic-search-input {
+      width: 100%;
+      border: none;
+      background: transparent;
+      outline: none;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+    .ic-search-input::placeholder {
+      color: var(--ug-text-muted);
+    }
+    .ic-search-submit {
+      background: var(--ug-lime);
+      color: #070d09;
+      border: none;
+      padding: 0.7rem 1.3rem;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 0.88rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+    .ic-search-submit:hover {
+      background: #e6ff80;
+    }
+
+    .ic-quick-chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 0.85rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--ug-border);
+      font-size: 0.76rem;
+    }
+    .ic-quick-chips-label {
+      font-weight: 800;
+      color: var(--ug-text-muted);
+      text-transform: uppercase;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+    }
+    .ic-quick-chip {
+      background: #09130c;
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--ug-text-secondary);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .ic-quick-chip:hover {
+      border-color: var(--ug-lime);
+      color: var(--ug-lime);
+      background: #122016;
+    }
+
+    /* Directory Container */
+    .ic-directory-section {
+      padding: 3rem 0 5rem;
+    }
+
+    /* Region Tabs */
+    .ic-region-tabs {
+      display: flex;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      margin-bottom: 2rem;
+      scrollbar-width: none;
+    }
+    .ic-region-tabs::-webkit-scrollbar { display: none; }
+
+    .ic-region-tab {
+      white-space: nowrap;
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.65rem 1.25rem;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--ug-text-secondary);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .ic-region-tab:hover {
+      border-color: var(--ug-lime);
+      color: #fff;
+    }
+    .ic-region-tab.active {
+      background: var(--ug-lime);
+      color: #070d09;
+      border-color: var(--ug-lime);
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(216, 255, 77, 0.2);
+    }
+
+    /* Explorer Card */
+    .ic-explorer-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+
+    .ic-explorer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--ug-border);
+      flex-wrap: wrap;
+    }
+    .ic-explorer-header h3 {
+      font-size: 1.75rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 0.35rem;
+    }
+    .ic-explorer-header p {
+      color: var(--ug-text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.5;
+      margin: 0;
+      max-width: 680px;
+    }
+    .ic-counter-badge {
+      background: rgba(216, 255, 77, 0.12);
+      color: var(--ug-lime);
+      border: 1px solid rgba(216, 255, 77, 0.25);
+      padding: 0.4rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* States Grid */
+    .ic-state-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .ic-state-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.15rem 1.3rem;
+      background: #09130c;
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+    }
+    .ic-state-btn:hover, .ic-state-btn.active {
+      background: var(--ug-surface-elevated);
+      border-color: var(--ug-lime);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+    .ic-state-btn strong {
+      display: block;
+      font-size: 1rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+    .ic-state-btn span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--ug-text-secondary);
+      font-weight: 600;
+    }
+    .ic-state-btn .arrow {
+      color: var(--ug-lime);
+      font-weight: 800;
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+    .ic-state-btn:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    /* City Expansion Panel */
+    .ic-city-panel {
+      display: none;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px dashed var(--ug-border);
+      animation: icFadeIn 0.3s ease;
+    }
+    .ic-city-panel.show {
+      display: block;
+    }
+    @keyframes icFadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ic-city-panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .ic-breadcrumbs {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--ug-text-muted);
+    }
+    .ic-breadcrumbs b {
+      color: var(--ug-lime);
+    }
+    .ic-city-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0.25rem 0 0;
+    }
+
+    .ic-city-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .ic-city-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 1.1rem;
+      background: #0a140d;
+      border: 1px solid var(--ug-border);
+      border-radius: 12px;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.18s ease;
+    }
+    .ic-city-card:hover {
+      background: var(--ug-surface-elevated);
+      border-color: var(--ug-lime);
+      transform: translateY(-2px);
+    }
+    .ic-city-card strong {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.15rem;
+    }
+    .ic-city-card span {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--ug-text-secondary);
+    }
+    .ic-city-card .arrow {
+      color: var(--ug-lime);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .ic-back-btn {
+      background: #112015;
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      border-radius: 8px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .ic-back-btn:hover {
+      border-color: var(--ug-lime);
+      color: #fff;
+    }
+
+    @media (max-width: 640px) {
+      .ic-search-row {
+        flex-direction: column;
+      }
+      .ic-search-submit {
+        width: 100%;
+      }
+      .ic-state-grid {
+        grid-template-columns: 1fr;
+      }
+      .ic-city-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+</head>
 <body>
-<header class="top"><div class="wrap"><div class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a class="active" href="india-cities.html">🇮🇳 India</a><a href="discover.html">Discover</a><a href="tripideas.html">Trip Ideas</a><a href="transport.html">Transport</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a></nav><button class="home" onclick="location.href='index.html'">Home</button></div></div></header>
-<main>
-<section class="hero"><div class="wrap hero-inner"><div class="eyebrow">✦ EXPLORE INDIA · REGION → STATE → CITY</div><h1>One country.<br><em>Thousands of places.</em></h1><p>Explore India the way a real traveller would: choose a region, open a state, select a city, then explore its famous places, temples, culture, heritage, shopping, theatres, food, nature and more.</p><form class="search" id="searchForm"><input id="searchInput" placeholder="Search any Indian city or state…" autocomplete="off"><button>Explore →</button></form></div></section>
-<section class="section light"><div class="wrap"><div class="head"><div><div class="eyebrow" style="color:#64773f">MAP INDIA'S STORY</div><h2>Explore by region,<br>then go local.</h2></div><p>Start broad and progressively discover the places inside each region. No giant city list — just a clean path from <b>Region → State → City → Places.</b></p></div><div class="region-tabs" id="regionTabs"></div><div class="explorer"><div class="explorer-top"><div><div class="eyebrow">SELECT A REGION</div><h3 id="regionTitle">South India</h3><p id="regionDesc"></p></div><span class="counter" id="regionCount"></span></div><div id="stateGrid" class="state-grid"></div><div id="cityPanel" class="city-panel"><div class="city-panel-head"><div><div class="crumb"><span>India</span><b>›</b><span id="crumbRegion"></span><b>›</b><b id="crumbState"></b></div><h4 id="cityTitle">Cities</h4></div><button class="back-states" id="backStates">← All states</button></div><div id="cityGrid" class="city-grid"></div></div></div></div></section>
-<section class="section"><div class="wrap"><div class="head"><div><div class="eyebrow" style="color:#64773f">AFTER YOU SELECT A CITY</div><h2>Go beyond a<br>city name.</h2></div><p>Every city opens the UnseenGo City Explorer with place categories, stories, real coordinates, map navigation and photo sources.</p></div><div class="category-preview"><div class="cat"><span>🏛</span>Famous places</div><div class="cat"><span>🛕</span>Temples</div><div class="cat"><span>🎭</span>Culture</div><div class="cat"><span>🏰</span>Heritage</div><div class="cat"><span>🛍</span>Shopping</div><div class="cat"><span>🎬</span>Theatres</div><div class="cat"><span>🍛</span>Food</div><div class="cat"><span>🌿</span>Nature</div><div class="cat"><span>🎉</span>Festivals</div><div class="cat"><span>📸</span>Photography</div><div class="cat"><span>🏨</span>Stays</div><div class="cat"><span>🚗</span>Transport</div></div></div></section>
-<section class="section light"><div class="wrap"><div class="head"><div><div class="eyebrow" style="color:#64773f">CITY EXPLORER</div><h2>Real place data,<br>not placeholder cards.</h2></div><p>City pages use the existing UnseenGo map layer and Google Maps links. Where configured, live Google Places data supplies coordinates, ratings, opening hours and place photos; city profiles can also source Wikimedia Commons images.</p></div><div class="how"><article><b>📍</b><h3>Real location</h3><p>Open the selected place directly in Google Maps for navigation and live location context.</p></article><article><b>📷</b><h3>Place photos</h3><p>Use available Google Places photos or Wikimedia Commons sources instead of invented tourism imagery.</p></article><article><b>🗺</b><h3>Interactive map</h3><p>City Explorer can plot verified coordinates on its interactive map when the city dataset contains them.</p></article><article><b>✦</b><h3>More than landmarks</h3><p>Explore culture, heritage, temples, shopping, theatres, food, nature and local experiences.</p></article></div></div></section>
-<section class="section"><div class="wrap"><div class="cta"><div><div class="eyebrow">UNSEENGO AI</div><h2>Choose a city.<br>Start discovering.</h2><p>Pick any city above and UnseenGo will take you to its city-level explorer.</p></div><a href="discover.html">Open Discover →</a></div></div></section>
-</main><footer><b>✦ UnseenGo AI</b><span>Discover heritage. Empower communities. Grow local experiences.</span><span>© 2026</span></footer>
-<script src="india-state-directory.js?v=20260826"></script>
-<script>
-(function(){
-'use strict';
-const d=window.INDIA_DIRECTORY||{};
-const regions={
-'South India':['Andhra Pradesh','Telangana','Karnataka','Kerala','Tamil Nadu','Puducherry','Lakshadweep'],
-'West India':['Goa','Gujarat','Maharashtra','Rajasthan','Dadra and Nagar Haveli and Daman and Diu'],
-'North India':['Delhi','Haryana','Himachal Pradesh','Jammu and Kashmir','Ladakh','Punjab','Uttar Pradesh','Uttarakhand','Chandigarh'],
-'East India':['Bihar','Jharkhand','Odisha','West Bengal','Andaman and Nicobar Islands'],
-'Central India':['Chhattisgarh','Madhya Pradesh'],
-'North East India':['Arunachal Pradesh','Assam','Manipur','Meghalaya','Mizoram','Nagaland','Sikkim','Tripura']
-};
-const desc={'South India':'Temple towns, dynastic architecture, coastal landscapes, food and living traditions.','West India':'Royal cities, desert heritage, ports, caves, forts, crafts and regional food.','North India':'Historic capitals, Himalayan landscapes, pilgrimage routes and layered imperial history.','East India':'Ancient temples, colonial history, tribal traditions, rivers and distinctive festivals.','Central India':'Fortified cities, archaeology, forests, tribal heritage and heartland stories.','North East India':'Mountain cultures, indigenous traditions, biodiversity and extraordinary landscapes.'};
-const tabs=document.getElementById('regionTabs'),states=document.getElementById('stateGrid'),cities=document.getElementById('cityGrid'),panel=document.getElementById('cityPanel');
-const title=document.getElementById('regionTitle'),description=document.getElementById('regionDesc'),count=document.getElementById('regionCount');
-const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-function cityList(state){return Array.isArray(d[state])?d[state].slice().sort((a,b)=>a.localeCompare(b)):[]}
-function renderRegion(region){
- title.textContent=region;description.textContent=desc[region]||'';panel.classList.remove('show');
- const valid=regions[region].filter(s=>Array.isArray(d[s]));
- const total=valid.reduce((n,s)=>n+cityList(s).length,0);count.textContent=valid.length+' states / territories · '+total+' cities';
- states.innerHTML=valid.map(s=>`<button class="state" data-state="${esc(s)}"><span class="state-arrow">→</span><strong>${esc(s)}</strong><span>${cityList(s).length} cities · Explore state</span></button>`).join('');
- states.querySelectorAll('.state').forEach(b=>b.onclick=()=>renderState(region,b.dataset.state));
- tabs.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b.dataset.region===region));
-}
-function renderState(region,state){
- document.getElementById('crumbRegion').textContent=region;document.getElementById('crumbState').textContent=state;document.getElementById('cityTitle').textContent='Cities in '+state;
- const list=cityList(state);cities.innerHTML=list.map(c=>`<a class="city" href="city.html?city=${encodeURIComponent(c)}"><span class="city-arrow">↗</span><strong>${esc(c)}</strong><span>${esc(state)} · City Explorer</span></a>`).join('');panel.classList.add('show');states.querySelectorAll('.state').forEach(b=>b.classList.toggle('active',b.dataset.state===state));panel.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-Object.keys(regions).forEach(region=>{const b=document.createElement('button');b.textContent=region;b.dataset.region=region;b.onclick=()=>renderRegion(region);tabs.appendChild(b)});
-renderRegion('South India');
-document.getElementById('backStates').onclick=()=>panel.classList.remove('show');
-document.getElementById('searchForm').onsubmit=e=>{e.preventDefault();const q=document.getElementById('searchInput').value.trim().toLowerCase();if(!q)return;let found=null;for(const state of Object.keys(d)){const list=cityList(state);const city=list.find(c=>c.toLowerCase()===q)||list.find(c=>c.toLowerCase().includes(q));if(city){found=city;break}}if(found){location.href='city.html?city='+encodeURIComponent(found);return}const state=Object.keys(d).find(s=>s.toLowerCase()===q||s.toLowerCase().includes(q));if(state){const region=Object.keys(regions).find(r=>regions[r].includes(state));if(region){renderRegion(region);setTimeout(()=>renderState(region,state),50)}return}alert('Please enter an Indian city or state from the directory.');};
-})();
-</script>
-</body></html>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+          <a class="ug-drawer-link active" href="india-cities.html"><span class="icon">📍</span><span>India Directory</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="ic-hero">
+      <div class="ug-wrap ic-hero-inner">
+        <div class="ic-hero-eyebrow">✦ All-India Geographic Directory</div>
+        <h1 class="ic-hero-title">Every State, City &amp; Destination<br><em>at your fingertips.</em></h1>
+        <p class="ic-hero-copy">Browse India by geographic region and state to discover iconic cities, historic temple towns, hill stations, and royal fortresses.</p>
+
+        <!-- Search Bar -->
+        <div class="ic-search-card">
+          <form id="searchForm" autocomplete="off">
+            <div class="ic-search-row">
+              <div class="ic-search-input-wrap">
+                <span class="icon">⌕</span>
+                <input type="text" id="searchInput" class="ic-search-input" placeholder="Search any Indian city, district or state (e.g. Kurnool, Jaipur, Varanasi)..." aria-label="Search city or state">
+              </div>
+              <button type="submit" class="ic-search-submit">Search Directory →</button>
+            </div>
+            <div class="ic-quick-chips">
+              <span class="ic-quick-chips-label">Popular Hubs:</span>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Kurnool')">📍 Kurnool</button>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Hyderabad')">📍 Hyderabad</button>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Jaipur')">📍 Jaipur</button>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Varanasi')">📍 Varanasi</button>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Bengaluru')">📍 Bengaluru</button>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Kochi')">📍 Kochi</button>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Amritsar')">📍 Amritsar</button>
+              <button type="button" class="ic-quick-chip" onclick="quickSearch('Hampi')">📍 Hampi</button>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Directory Explorer Section -->
+    <section class="ic-directory-section">
+      <div class="ug-wrap">
+        
+        <!-- Region Tabs -->
+        <div class="ic-region-tabs" id="regionTabs">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Explorer Card -->
+        <div class="ic-explorer-card">
+          <div class="ic-explorer-header">
+            <div>
+              <h3 id="regionTitle">South India</h3>
+              <p id="regionDesc">Temple towns, dynastic architecture, coastal landscapes, food and living traditions.</p>
+            </div>
+            <span class="ic-counter-badge" id="regionCount">✦ Loading Directory...</span>
+          </div>
+
+          <!-- States Grid in Region -->
+          <div class="ic-state-grid" id="stateGrid">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- City Expansion Panel -->
+          <div class="ic-city-panel" id="cityPanel">
+            <div class="ic-city-panel-head">
+              <div>
+                <div class="ic-breadcrumbs">
+                  <span id="crumbRegion">South India</span>
+                  <span>/</span>
+                  <b id="crumbState">Andhra Pradesh</b>
+                </div>
+                <h4 class="ic-city-title" id="cityTitle">Cities in Andhra Pradesh</h4>
+              </div>
+              <button type="button" class="ic-back-btn" id="backStates">← Back to States</button>
+            </div>
+
+            <!-- Cities Grid -->
+            <div class="ic-city-grid" id="cityGrid">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer" style="border-top:1px solid var(--ug-border); padding:2rem 0; background:#070d09; text-align:center; font-size:0.8rem; color:var(--ug-text-secondary);">
+    <div class="ug-wrap">
+      <p style="margin:0 0 0.5rem; color:#fff; font-weight:700;">✦ UnseenGo AI — Pan-India City Directory</p>
+      <p style="margin:0; font-size:0.75rem; color:var(--ug-text-muted);">© 2026 UnseenGo AI. Over 300+ cities mapped across all 28 states & 8 UTs.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="india-state-directory.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      const d = window.INDIA_DIRECTORY || {};
+
+      const regions = {
+        'South India': ['Andhra Pradesh', 'Telangana', 'Karnataka', 'Kerala', 'Tamil Nadu', 'Puducherry', 'Lakshadweep'],
+        'West India': ['Goa', 'Gujarat', 'Maharashtra', 'Rajasthan', 'Dadra and Nagar Haveli and Daman and Diu'],
+        'North India': ['Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Ladakh', 'Punjab', 'Uttar Pradesh', 'Uttarakhand', 'Chandigarh'],
+        'East India': ['Bihar', 'Jharkhand', 'Odisha', 'West Bengal', 'Andaman and Nicobar Islands'],
+        'Central India': ['Chhattisgarh', 'Madhya Pradesh'],
+        'North East India': ['Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura']
+      };
+
+      const regionIcons = {
+        'South India': '🌴',
+        'West India': '🏜️',
+        'North India': '🏔️',
+        'East India': '🌊',
+        'Central India': '🐅',
+        'North East India': '🌿'
+      };
+
+      const desc = {
+        'South India': 'Temple towns, dynastic architecture, coastal landscapes, food and living traditions.',
+        'West India': 'Royal cities, desert heritage, ports, caves, forts, crafts and regional food.',
+        'North India': 'Historic capitals, Himalayan landscapes, pilgrimage routes and layered imperial history.',
+        'East India': 'Ancient temples, colonial history, tribal traditions, rivers and distinctive festivals.',
+        'Central India': 'Fortified cities, archaeology, forests, tribal heritage and heartland stories.',
+        'North East India': 'Mountain cultures, indigenous traditions, biodiversity and extraordinary landscapes.'
+      };
+
+      const tabs = document.getElementById('regionTabs');
+      const states = document.getElementById('stateGrid');
+      const cities = document.getElementById('cityGrid');
+      const panel = document.getElementById('cityPanel');
+      const title = document.getElementById('regionTitle');
+      const description = document.getElementById('regionDesc');
+      const count = document.getElementById('regionCount');
+
+      const esc = s => String(s ?? '').replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[m]));
+
+      function cityList(state) {
+        return Array.isArray(d[state]) ? d[state].slice().sort((a, b) => a.localeCompare(b)) : [];
+      }
+
+      function renderRegion(region) {
+        title.textContent = region;
+        description.textContent = desc[region] || '';
+        panel.classList.remove('show');
+
+        const valid = regions[region].filter(s => Array.isArray(d[s]));
+        const total = valid.reduce((n, s) => n + cityList(s).length, 0);
+        count.textContent = `✦ ${valid.length} States & UTs · ${total} Cities`;
+
+        states.innerHTML = valid.map(s => `
+          <button type="button" class="ic-state-btn" data-state="${esc(s)}">
+            <div>
+              <strong>${esc(s)}</strong>
+              <span>${cityList(s).length} cities · Explore state</span>
+            </div>
+            <span class="arrow">→</span>
+          </button>
+        `).join('');
+
+        states.querySelectorAll('.ic-state-btn').forEach(b => {
+          b.onclick = () => renderState(region, b.dataset.state);
+        });
+
+        tabs.querySelectorAll('.ic-region-tab').forEach(b => {
+          b.classList.toggle('active', b.dataset.region === region);
+        });
+      }
+
+      function renderState(region, state) {
+        document.getElementById('crumbRegion').textContent = region;
+        document.getElementById('crumbState').textContent = state;
+        document.getElementById('cityTitle').textContent = 'Cities in ' + state;
+
+        const list = cityList(state);
+        cities.innerHTML = list.map(c => `
+          <a class="ic-city-card" href="discover.html?city=${encodeURIComponent(c)}">
+            <div>
+              <strong>${esc(c)}</strong>
+              <span>${esc(state)}</span>
+            </div>
+            <span class="arrow">↗</span>
+          </a>
+        `).join('');
+
+        panel.classList.add('show');
+        states.querySelectorAll('.ic-state-btn').forEach(b => {
+          b.classList.toggle('active', b.dataset.state === state);
+        });
+        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+
+      Object.keys(regions).forEach(region => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'ic-region-tab';
+        b.innerHTML = `<span>${regionIcons[region] || '📍'}</span> ${region}`;
+        b.dataset.region = region;
+        b.onclick = () => renderRegion(region);
+        tabs.appendChild(b);
+      });
+
+      renderRegion('South India');
+
+      document.getElementById('backStates').onclick = () => panel.classList.remove('show');
+
+      window.quickSearch = function (cityName) {
+        const input = document.getElementById('searchInput');
+        if (input) input.value = cityName;
+        location.href = 'discover.html?city=' + encodeURIComponent(cityName);
+      };
+
+      document.getElementById('searchForm').onsubmit = e => {
+        e.preventDefault();
+        const q = document.getElementById('searchInput').value.trim().toLowerCase();
+        if (!q) return;
+
+        let found = null;
+        for (const state of Object.keys(d)) {
+          const list = cityList(state);
+          const city = list.find(c => c.toLowerCase() === q) || list.find(c => c.toLowerCase().includes(q));
+          if (city) {
+            found = city;
+            break;
+          }
+        }
+
+        if (found) {
+          location.href = 'discover.html?city=' + encodeURIComponent(found);
+          return;
+        }
+
+        const state = Object.keys(d).find(s => s.toLowerCase() === q || s.toLowerCase().includes(q));
+        if (state) {
+          const region = Object.keys(regions).find(r => regions[r].includes(state));
+          if (region) {
+            renderRegion(region);
+            setTimeout(() => renderState(region, state), 50);
+          }
+          return;
+        }
+
+        alert('Please enter an Indian city or state from the directory.');
+      };
+    })();
+  </script>
+</body>
+</html>

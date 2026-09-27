@@ -1,0 +1,1717 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore India's famous places organized state-wise across all 28 states and 8 union territories. Discover famous temples, historic forts, royal palaces, natural scenic wonders, canyons, waterfalls, and cultural food trails on the interactive UnseenGo Map.">
+  <title>India Explorer Map — Famous Places State-Wise (Temples, Forts, Nature & Foods) — UnseenGo AI</title>
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  
+  <style>
+    :root {
+      --ug-lime: #d8ff4d;
+      --ug-lime-soft: rgba(216, 255, 77, 0.15);
+      --ug-gold: #f59e0b;
+      --ug-gold-soft: rgba(245, 158, 11, 0.15);
+      --ug-red: #ef4444;
+      --ug-red-soft: rgba(239, 68, 68, 0.15);
+      --ug-emerald: #10b981;
+      --ug-emerald-soft: rgba(16, 185, 129, 0.15);
+      --ug-orange: #fb923c;
+      --ug-orange-soft: rgba(251, 146, 60, 0.15);
+      --ug-bg: #070d09;
+      --ug-surface: #0e1711;
+      --ug-surface-elevated: #132017;
+      --ug-border: #233427;
+      --ug-border-glow: #38563d;
+      --ug-text-primary: #f5f8f5;
+      --ug-text-secondary: #9cb0a2;
+      --ug-text-muted: #6f8275;
+    }
+
+    body {
+      background: var(--ug-bg);
+      color: var(--ug-text-primary);
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
+    }
+
+    /* Map Layout */
+    .ug-map-layout {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      height: calc(100vh - 74px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .ug-map-sidebar {
+      background: var(--ug-surface);
+      border-right: 1px solid var(--ug-border);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .ug-map-sidebar-head {
+      padding: 1rem 1.25rem 0.8rem;
+      border-bottom: 1px solid var(--ug-border);
+      background: #0a120d;
+    }
+
+    .ug-map-sidebar-head h2 {
+      font-size: 1.3rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      margin: 0.3rem 0 0.2rem;
+      color: #fff;
+    }
+
+    .ug-map-sidebar-head p {
+      color: var(--ug-text-secondary);
+      font-size: 0.76rem;
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    /* Controls Bar */
+    .filter-section {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--ug-border);
+      background: var(--ug-surface);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .control-row-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--ug-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .state-select {
+      width: 100%;
+      background: #08100a;
+      color: var(--ug-text-primary);
+      border: 1px solid var(--ug-border);
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      font: inherit;
+      font-size: 0.82rem;
+      font-weight: 700;
+      outline: none;
+      cursor: pointer;
+    }
+    .state-select:focus {
+      border-color: var(--ug-lime);
+    }
+    .state-select optgroup {
+      background: #0d1a10;
+      color: var(--ug-lime);
+      font-weight: 800;
+    }
+    .state-select option {
+      background: #08100a;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* Experience Themes Strip */
+    .experience-themes-row {
+      display: flex;
+      gap: 0.35rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 0.2rem;
+    }
+    .experience-themes-row::-webkit-scrollbar { display: none; }
+
+    .theme-pill-btn {
+      white-space: nowrap;
+      background: #101c13;
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .theme-pill-btn:hover {
+      border-color: var(--ug-lime);
+      color: #fff;
+    }
+    .theme-pill-btn.active {
+      background: var(--ug-lime);
+      color: #070d09;
+      border-color: var(--ug-lime);
+    }
+
+    /* Region / State Pills Bar */
+    .pill-scroll-row {
+      display: flex;
+      gap: 0.35rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 0.2rem;
+    }
+    .pill-scroll-row::-webkit-scrollbar { display: none; }
+
+    .region-tab-btn {
+      white-space: nowrap;
+      background: #08100a;
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      border-radius: 999px;
+      padding: 0.28rem 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+    .region-tab-btn:hover {
+      border-color: var(--ug-lime);
+      color: var(--ug-lime);
+    }
+    .region-tab-btn.active {
+      background: rgba(216, 255, 77, 0.18);
+      color: var(--ug-lime);
+      border-color: var(--ug-lime);
+      font-weight: 800;
+    }
+
+    /* Layer Toggles */
+    .layer-toggles-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem;
+      padding: 0.6rem 1.25rem;
+      border-bottom: 1px solid var(--ug-border);
+      background: #0a120d;
+    }
+
+    .layer-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      border-radius: 8px;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .layer-btn:hover {
+      border-color: var(--ug-border-glow);
+      color: #fff;
+    }
+    .layer-btn.active {
+      background: var(--ug-lime-soft);
+      border-color: var(--ug-lime);
+      color: var(--ug-lime);
+    }
+    .layer-btn.temple-btn.active {
+      background: var(--ug-gold-soft);
+      border-color: var(--ug-gold);
+      color: #fbbf24;
+    }
+    .layer-btn.fort-btn.active {
+      background: var(--ug-orange-soft);
+      border-color: var(--ug-orange);
+      color: #fb923c;
+    }
+    .layer-btn.nature-btn.active {
+      background: var(--ug-emerald-soft);
+      border-color: var(--ug-emerald);
+      color: #34d399;
+    }
+    .layer-btn.food-btn.active {
+      background: var(--ug-red-soft);
+      border-color: var(--ug-red);
+      color: #f87171;
+    }
+
+    .layer-btn span.badge {
+      background: rgba(255, 255, 255, 0.08);
+      font-size: 0.68rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 999px;
+    }
+    .layer-btn.active span.badge {
+      background: var(--ug-lime);
+      color: #070d09;
+      font-weight: 800;
+    }
+    .layer-btn.temple-btn.active span.badge { background: var(--ug-gold); color: #070d09; }
+    .layer-btn.fort-btn.active span.badge { background: var(--ug-orange); color: #070d09; }
+    .layer-btn.nature-btn.active span.badge { background: var(--ug-emerald); color: #070d09; }
+    .layer-btn.food-btn.active span.badge { background: var(--ug-red); color: #fff; }
+
+    /* Active State Info Card Banner */
+    .active-state-banner {
+      background: linear-gradient(135deg, rgba(216,255,77,0.12), rgba(14,23,17,0.85));
+      border: 1px solid rgba(216,255,77,0.3);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 1.25rem 0.25rem;
+      display: none;
+    }
+    .active-state-banner.visible {
+      display: block;
+    }
+    .state-banner-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+    .state-banner-title {
+      font-size: 0.95rem;
+      font-weight: 900;
+      color: #fff;
+    }
+    .state-banner-region {
+      font-size: 0.68rem;
+      color: var(--ug-lime);
+      font-weight: 800;
+      text-transform: uppercase;
+      background: rgba(216,255,77,0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .state-banner-stats {
+      font-size: 0.73rem;
+      color: var(--ug-text-secondary);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+    .state-plan-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: var(--ug-lime);
+      color: #070d09;
+      font-size: 0.72rem;
+      font-weight: 800;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+
+    /* Scrollable POI Cards Container */
+    .poi-list-header {
+      padding: 0.65rem 1.25rem 0.35rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .view-mode-toggle {
+      display: flex;
+      gap: 4px;
+      background: #08100a;
+      border: 1px solid var(--ug-border);
+      border-radius: 6px;
+      padding: 2px;
+    }
+    .view-mode-btn {
+      background: transparent;
+      border: none;
+      color: var(--ug-text-muted);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .view-mode-btn.active {
+      background: #19271c;
+      color: var(--ug-lime);
+    }
+
+    .search-input-box {
+      border: 1px solid var(--ug-border);
+      background: #08100a;
+      border-radius: 6px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.75rem;
+      color: var(--ug-text-primary);
+      width: 140px;
+      outline: none;
+    }
+    .search-input-box:focus {
+      border-color: var(--ug-lime);
+    }
+
+    .ug-map-poi-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0.5rem 1.25rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    /* State Group Heading */
+    .state-group-section {
+      margin-bottom: 0.75rem;
+    }
+    .state-group-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111d14;
+      border: 1px solid var(--ug-border);
+      padding: 0.45rem 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 0.45rem;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .state-group-header:hover {
+      background: #16261a;
+      border-color: var(--ug-border-glow);
+    }
+    .state-group-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .state-group-count {
+      font-size: 0.68rem;
+      color: var(--ug-lime);
+      font-weight: 700;
+      background: rgba(216,255,77,0.12);
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+    .state-group-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-left: 0.25rem;
+    }
+
+    .poi-card-item {
+      display: flex;
+      gap: 0.75rem;
+      background: #09120c;
+      border: 1px solid var(--ug-border);
+      border-radius: 12px;
+      padding: 0.65rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .poi-card-item:hover {
+      transform: translateY(-2px);
+      border-color: var(--ug-border-glow);
+      background: var(--ug-surface-elevated);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    }
+    .poi-card-item.active {
+      border-color: var(--ug-lime);
+      background: var(--ug-surface-elevated);
+      box-shadow: 0 0 0 1px var(--ug-lime);
+    }
+    .poi-card-item.temple-card { border-left: 3px solid var(--ug-gold); }
+    .poi-card-item.fort-card { border-left: 3px solid var(--ug-orange); }
+    .poi-card-item.nature-card { border-left: 3px solid var(--ug-emerald); }
+    .poi-card-item.food-card { border-left: 3px solid var(--ug-red); }
+
+    .poi-card-img {
+      width: 82px;
+      height: 82px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #111d14;
+    }
+
+    .poi-card-details {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .poi-card-title {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 0.15rem;
+    }
+
+    .poi-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--ug-text-secondary);
+      flex-wrap: wrap;
+    }
+
+    .poi-state-badge {
+      color: var(--ug-lime);
+      font-weight: 700;
+      font-size: 0.68rem;
+    }
+    .poi-tag-badge {
+      background: rgba(255, 255, 255, 0.08);
+      color: #d1d5db;
+      font-size: 0.64rem;
+      font-weight: 700;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
+    }
+    .poi-tag-badge.gold { background: rgba(245, 158, 11, 0.18); color: #fbbf24; }
+    .poi-tag-badge.orange { background: rgba(251, 146, 60, 0.18); color: #fb923c; }
+    .poi-tag-badge.green { background: rgba(16, 185, 129, 0.18); color: #34d399; }
+    .poi-tag-badge.red { background: rgba(239, 68, 68, 0.18); color: #f87171; }
+
+    .poi-score-pill {
+      font-weight: 800;
+      color: #4ade80;
+      font-size: 0.68rem;
+    }
+
+    .poi-action-row {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    .card-mini-btn {
+      padding: 0.2rem 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border-radius: 4px;
+      border: 1px solid var(--ug-border);
+      background: #101c13;
+      color: var(--ug-text-secondary);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .card-mini-btn:hover {
+      color: var(--ug-lime);
+      border-color: var(--ug-lime);
+    }
+
+    /* Map container */
+    .ug-map-container {
+      width: 100%;
+      height: 100%;
+      background: #060b08;
+    }
+
+    /* Leaflet custom marker & popups */
+    .ug-marker-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #0e1711;
+      border: 2px solid var(--ug-lime);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      font-size: 15px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .ug-marker-icon:hover {
+      transform: scale(1.25);
+    }
+    .ug-marker-temple { border-color: #f59e0b; background: #18140a; }
+    .ug-marker-heritage { border-color: #fb923c; background: #191209; }
+    .ug-marker-nature { border-color: #10b981; background: #091710; }
+    .ug-marker-food { border-color: #ef4444; background: #1a0a0a; }
+
+    .leaflet-popup-content-wrapper {
+      background: #0e1711 !important;
+      color: #f5f8f5 !important;
+      border-radius: 14px !important;
+      border: 1px solid #283d2c !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6) !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+    .leaflet-popup-content {
+      margin: 0 !important;
+      line-height: 1.4 !important;
+    }
+    .leaflet-popup-tip {
+      background: #0e1711 !important;
+    }
+
+    .popup-card {
+      width: 280px;
+      font-family: inherit;
+    }
+    .popup-img {
+      width: 100%;
+      height: 135px;
+      object-fit: cover;
+      display: block;
+      background: #152217;
+    }
+    .popup-body {
+      padding: 12px;
+    }
+    .popup-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .popup-cat-badge {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--ug-lime);
+      letter-spacing: 0.5px;
+    }
+    .popup-score-badge {
+      font-size: 10px;
+      font-weight: 800;
+      color: #4ade80;
+      background: rgba(74, 222, 128, 0.1);
+      padding: 1px 6px;
+      border-radius: 999px;
+    }
+    .popup-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin: 2px 0 3px;
+      line-height: 1.3;
+    }
+    .popup-loc {
+      font-size: 11px;
+      color: var(--ug-text-secondary);
+      margin-bottom: 6px;
+    }
+    .popup-desc {
+      font-size: 11px;
+      color: #b0c4b5;
+      line-height: 1.4;
+      margin: 0 0 10px;
+    }
+    .popup-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .popup-btn-primary {
+      display: block;
+      text-align: center;
+      padding: 6px 8px;
+      background: var(--ug-lime);
+      color: #070d09;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 6px;
+      text-decoration: none;
+    }
+    .popup-btn-secondary {
+      display: flex;
+      justify-content: space-between;
+      gap: 5px;
+    }
+    .popup-sub-btn {
+      flex: 1;
+      text-align: center;
+      padding: 5px;
+      background: #152217;
+      border: 1px solid #2c3e2e;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      border-radius: 6px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    @media (max-width: 900px) {
+      .ug-map-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+      .ug-map-sidebar {
+        height: 560px;
+      }
+      .ug-map-container {
+        height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link active" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link active" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Map Layout: Left Sidebar + Right Interactive Map -->
+  <div class="ug-map-layout">
+    
+    <!-- Sidebar -->
+    <aside class="ug-map-sidebar">
+      
+      <div class="ug-map-sidebar-head">
+        <!-- Step Indicator -->
+        <div style="display:inline-flex;align-items:center;gap:0.35rem;background:#08100a;border:1px solid var(--ug-border);border-radius:9999px;padding:0.2rem 0.65rem;margin-bottom:0.4rem;font-size:0.7rem;font-weight:700;">
+          <a href="discover.html" style="color:var(--ug-text-muted);text-decoration:none;">🔎 Discover</a>
+          <span style="color:var(--ug-border);">→</span>
+          <span style="color:var(--ug-lime);font-weight:800;">🗺️ Step 3: State-Wise Explorer</span>
+          <span style="color:var(--ug-border);">→</span>
+          <a href="planner.html" style="color:var(--ug-text-muted);text-decoration:none;">🤖 AI Itinerary</a>
+        </div>
+        
+        <h2>All Famous Places in India</h2>
+        <p>Every State & UT categorized: Famous Temples, Forts & Palaces, Nature & Waterfalls, and Cultural Food Trails.</p>
+      </div>
+
+      <!-- State & Region Selector -->
+      <div class="filter-section">
+        <div class="control-row-label">
+          <span>Filter by State / UT</span>
+          <span id="stateCountBadge" style="color:var(--ug-lime);font-size:0.68rem;">All India (250+ Places)</span>
+        </div>
+        <select id="stateFilterSelect" class="state-select" aria-label="Select Indian State or Union Territory">
+          <option value="all">🌟 All 28 States & 8 Union Territories</option>
+        </select>
+
+        <!-- Experience Theme Quick Pills -->
+        <div class="control-row-label" style="margin-top:0.2rem;">
+          <span style="color:var(--ug-lime);">🎯 Featured Themes & Trails:</span>
+        </div>
+        <div class="experience-themes-row" id="experienceThemesRow">
+          <button type="button" class="theme-pill-btn active" data-theme="all">All Experiences</button>
+          <button type="button" class="theme-pill-btn" data-theme="forts">🏰 Hill Forts & Palaces</button>
+          <button type="button" class="theme-pill-btn" data-theme="scenic">🌿 Canyons & Waterfalls</button>
+          <button type="button" class="theme-pill-btn" data-theme="foodtrail">🍛 Cultural Food Trails</button>
+          <button type="button" class="theme-pill-btn" data-theme="jyotirlinga">🔱 12 Jyotirlingas</button>
+          <button type="button" class="theme-pill-btn" data-theme="chardham">⛰️ Char Dham</button>
+          <button type="button" class="theme-pill-btn" data-theme="shaktipeetha">🌺 Shakti Peethas</button>
+          <button type="button" class="theme-pill-btn" data-theme="unesco">🏛️ UNESCO Heritage</button>
+        </div>
+
+        <div class="control-row-label" style="margin-top:0.2rem;">
+          <span>Geographic Regions:</span>
+        </div>
+        <div class="pill-scroll-row" id="regionPillRow">
+          <button type="button" class="region-tab-btn active" data-region="all">All India</button>
+          <button type="button" class="region-tab-btn" data-region="South">South</button>
+          <button type="button" class="region-tab-btn" data-region="North">North</button>
+          <button type="button" class="region-tab-btn" data-region="West">West</button>
+          <button type="button" class="region-tab-btn" data-region="East">East</button>
+          <button type="button" class="region-tab-btn" data-region="Central">Central</button>
+          <button type="button" class="region-tab-btn" data-region="North East">North East</button>
+          <button type="button" class="region-tab-btn" data-region="Union Territories">UTs & Islands</button>
+        </div>
+      </div>
+
+      <!-- 4 Core Pillars Category Layer Toggles -->
+      <div class="layer-toggles-grid">
+        <button type="button" class="layer-btn temple-btn active" data-layer="Temples">
+          <span>🛕 Temples & Sacred</span>
+          <span class="badge" id="countTemples">0</span>
+        </button>
+        <button type="button" class="layer-btn fort-btn active" data-layer="Heritage">
+          <span>🏰 Forts & Heritage</span>
+          <span class="badge" id="countHeritage">0</span>
+        </button>
+        <button type="button" class="layer-btn nature-btn active" data-layer="Nature">
+          <span>🌿 Nature & Scenic</span>
+          <span class="badge" id="countNature">0</span>
+        </button>
+        <button type="button" class="layer-btn food-btn active" data-layer="Food">
+          <span>🍛 Cultural Foods</span>
+          <span class="badge" id="countFood">0</span>
+        </button>
+      </div>
+
+      <!-- State Overview Banner (appears when state selected) -->
+      <div id="activeStateBanner" class="active-state-banner">
+        <div class="state-banner-header">
+          <div class="state-banner-title" id="stateBannerTitle">State Name</div>
+          <div class="state-banner-region" id="stateBannerRegion">Region</div>
+        </div>
+        <div class="state-banner-stats" id="stateBannerStats">
+          <!-- Populated dynamically -->
+        </div>
+        <a id="stateBannerPlanLink" href="planner.html" class="state-plan-btn">
+          🤖 Plan Complete State Itinerary →
+        </a>
+      </div>
+
+      <!-- POI List Header & Filter -->
+      <div class="poi-list-header">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:0.75rem;font-weight:800;color:var(--ug-text-muted);text-transform:uppercase;">
+            Destinations (<span id="visiblePlacesCount">0</span>)
+          </span>
+          <div class="view-mode-toggle">
+            <button type="button" id="btnGroupState" class="view-mode-btn active" title="Group places by State">State Wise</button>
+            <button type="button" id="btnFlatList" class="view-mode-btn" title="View all in flat list">Flat List</button>
+          </div>
+        </div>
+        <input type="text" id="poiSearchInput" class="search-input-box" placeholder="Search places, foods...">
+      </div>
+
+      <!-- Scrollable POI Cards Container -->
+      <div class="ug-map-poi-list" id="poiCardContainer">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </aside>
+
+    <!-- Map View Container -->
+    <main class="ug-map-container" id="mapView" aria-label="Interactive destinations map">
+      <!-- Leaflet map mounts here -->
+    </main>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="data/destination-registry.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+  <!-- Complete All-India Famous Places Dataset & Map Engine -->
+  <script>
+    (function() {
+      'use strict';
+
+      // 1. Comprehensive State-Wise National Dataset across ALL 28 States & 8 Union Territories
+      const ALL_INDIA_FAMOUS_PLACES = [
+        // =========================================================================
+        // 🚩 ANDHRA PRADESH (South)
+        // =========================================================================
+        { id: 'ap-tirupati', name: 'Tirupati Sri Venkateswara Swamy Temple', city: 'Tirupati', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','sacred','pilgrimage'], lat: 13.6833, lng: 79.3472, score: 100, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'World-renowned sacred hilltop temple atop the Seven Hills of Tirumala (Kali Yuga Vaikuntha).' },
+        { id: 'ap-srisailam', name: 'Srisailam Mallikarjuna Swamy & Bhramaramba', city: 'Srisailam', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['jyotirlinga','shaktipeetha','temple'], lat: 16.0740, lng: 78.8687, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Rare holy shrine combining both one of the 12 sacred Jyotirlingas and 18 Maha Shakti Peethas in Nallamala Hills.' },
+        { id: 'ap-srikalahasti', name: 'Srikalahasti Temple (Vayu Lingam)', city: 'Srikalahasti', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['panchabhoota','temple'], lat: 13.7498, lng: 79.6984, score: 97, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: 'Pancha Bhoota Sthalam representing Wind (Vayu), famed for Rahu-Ketu Sarpa Dosha Nivarana.' },
+        { id: 'ap-lepakshi', name: 'Lepakshi Veerabhadra Temple & Monolithic Nandi', city: 'Lepakshi', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 13.8041, lng: 77.6067, score: 98, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Vijayanagara architectural masterpiece with hanging pillar, colossal monolithic Nandi, and ceiling murals.' },
+        { id: 'ap-ahobilam', name: 'Ahobilam Nava Narasimha Kshetras', city: 'Allagadda', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','pilgrimage'], lat: 15.1328, lng: 78.7247, score: 97, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Sacred Garudadri hill forest housing 9 natural manifestation temples of Lord Narasimha Swamy.' },
+        { id: 'ap-mahanandi', name: 'Mahanandi Temple & Perennial Natural Pushkarini', city: 'Nandyal', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','nature'], lat: 15.4833, lng: 78.6167, score: 96, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: 'Ancient 1,500-year Shiva temple with crystal-clear perennial natural spring pool Pushkarini.' },
+        { id: 'ap-yaganti', name: 'Yaganti Uma Maheshwara Swamy & Growing Nandi', city: 'Banaganapalle', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['temple'], lat: 15.3484, lng: 78.1406, score: 96, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: 'Famous for its mysterious growing stone Nandi, natural spring Pushkarini, and sage Agastya rock caves.' },
+        { id: 'ap-simhachalam', name: 'Simhachalam Varaha Lakshmi Narasimha Temple', city: 'Visakhapatnam', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['temple'], lat: 17.7665, lng: 83.2505, score: 96, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Medieval hilltop temple where the idol is continuously coated with sacred Chandanam sandalwood paste.' },
+        { id: 'ap-kanakaduga', name: 'Kanaka Durga Temple (Indrakeeladri)', city: 'Vijayawada', state: 'Andhra Pradesh', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','shaktipeetha'], lat: 16.5161, lng: 80.6095, score: 97, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'Swayambhu Goddess Durga temple on Indrakeeladri hill overlooking the holy Krishna River.' },
+        { id: 'ap-gandikota-fort', name: 'Gandikota Fort & Penna Canyon Bastions', city: 'Jammalamadugu', state: 'Andhra Pradesh', region: 'South', category: 'Heritage', type: 'heritage', tags: ['fort','heritage','nature'], lat: 14.8143, lng: 78.2862, score: 99, image: 'https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=600&q=80', desc: '12th-century sandstone fortress overlooking the dramatic 300-ft Penna river canyon gorge (Grand Canyon of India).' },
+        { id: 'ap-chandragiri', name: 'Chandragiri Fort & Raja Mahal', city: 'Tirupati', state: 'Andhra Pradesh', region: 'South', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 13.5833, lng: 79.3167, score: 96, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: '11th-century fort palace that served as the 4th capital of the Vijayanagara Empire.' },
+        { id: 'ap-kondareddy', name: 'Konda Reddy Buruju Fort', city: 'Kurnool', state: 'Andhra Pradesh', region: 'South', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 15.8281, lng: 78.0373, score: 95, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Historic Vijayanagara-era circular bastion and watchtower located in the heart of Kurnool city.' },
+        { id: 'ap-gandikota-canyon', name: 'Gandikota Grand Canyon of India', city: 'Kadapa', state: 'Andhra Pradesh', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic','canyon'], lat: 14.8167, lng: 78.2833, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Breathtaking natural red sandstone gorge carved by the Penna River, dubbed India’s Grand Canyon.' },
+        { id: 'ap-belumcaves', name: 'Belum Caves (Subterranean Karst System)', city: 'Kolimigundla', state: 'Andhra Pradesh', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','caves'], lat: 15.1028, lng: 78.1111, score: 98, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Second longest cave network in the Indian subcontinent spanning 3.2 km with subterranean chambers.' },
+        { id: 'ap-borracaves', name: 'Borra Caves & Katiki Waterfalls', city: 'Araku Valley', state: 'Andhra Pradesh', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','caves','waterfall'], lat: 18.2817, lng: 83.0394, score: 98, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Million-year-old limestone karst stalactite caves located in the lush Ananthagiri Hills of Araku.' },
+        { id: 'ap-food-rayalaseema', name: 'Rayalaseema Ragi Mudda & Natukodi Pulusu Trail', city: 'Kurnool', state: 'Andhra Pradesh', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','andhra'], lat: 15.8281, lng: 78.0373, score: 96, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80', desc: 'Fiery Rayalaseema ragi mudda with country chicken natukodi pulusu, gongura pachadi, and uggani bajji.' },
+        { id: 'ap-food-vijayawada', name: 'Vijayawada Punugulu & Gongura Mutton Trail', city: 'Vijayawada', state: 'Andhra Pradesh', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','andhra'], lat: 16.5062, lng: 80.6480, score: 96, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Crispy street punugulu with ginger chutney, spiced mirchi bajji, and traditional Gongura mutton.' },
+
+        // =========================================================================
+        // 🚩 ARUNACHAL PRADESH (North East)
+        // =========================================================================
+        { id: 'ar-tawang', name: 'Tawang Monastery (Galden Namgey Lhatse)', city: 'Tawang', state: 'Arunachal Pradesh', region: 'North East', category: 'Temples', type: 'temple', tags: ['temple','sacred','buddhist'], lat: 27.5861, lng: 91.8594, score: 100, image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80', desc: 'Largest Buddhist monastery in India and second largest in the world, founded in 1680 at 10,000 ft elevation.' },
+        { id: 'ar-itafort', name: 'Ita Fort (Historic Brick Citadel)', city: 'Itanagar', state: 'Arunachal Pradesh', region: 'North East', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 27.0844, lng: 93.6053, score: 95, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '14th-century fortress built using 8 million brick masonry by the Chutiya dynasty.' },
+        { id: 'ar-selapass', name: 'Sela Pass & Frozen Sela Lake (13,700 ft)', city: 'Tawang', state: 'Arunachal Pradesh', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic','lake'], lat: 27.5033, lng: 92.1033, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'High mountain pass in the Eastern Himalayas with dramatic snow peaks and 101 sacred lakes.' },
+        { id: 'ar-ziro', name: 'Ziro Valley (Apatani Pine Plateau, UNESCO Tentative)', city: 'Ziro', state: 'Arunachal Pradesh', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 27.5450, lng: 93.8300, score: 98, image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&q=80', desc: 'Picturesque valley known for its unique rice-fish agricultural system and Apatani tribal culture.' },
+        { id: 'ar-food-monpa', name: 'Tawang Monpa Thukpa, Zan & Butter Tea Trail', city: 'Tawang', state: 'Arunachal Pradesh', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','tribal'], lat: 27.5861, lng: 91.8594, score: 95, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Authentic Himalayan noodle Thukpa, organic finger millet Zan, smoked churpi cheese, and hot yak butter tea.' },
+
+        // =========================================================================
+        // 🚩 ASSAM (North East)
+        // =========================================================================
+        { id: 'as-kamakhya', name: 'Kamakhya Temple (Supreme Shakti Peetha)', city: 'Guwahati', state: 'Assam', region: 'North East', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple'], lat: 26.1664, lng: 91.7061, score: 100, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'One of the oldest and most revered Tantric Shakti Peethas on Nilachal Hill, celebrating Ambubachi Mela.' },
+        { id: 'as-sivasagar', name: 'Rang Ghar & Talatal Ghar (Ahom Royal Amphitheater)', city: 'Sivasagar', state: 'Assam', region: 'North East', category: 'Heritage', type: 'heritage', tags: ['fort','palace','heritage'], lat: 26.9667, lng: 94.6333, score: 98, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Two-storey pavilion that served as the royal sports amphitheater of Ahom kings in 1746 CE.' },
+        { id: 'as-kaziranga', name: 'Kaziranga National Park (One-Horned Rhinos, UNESCO)', city: 'Kaziranga', state: 'Assam', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','wildlife','unesco'], lat: 26.5775, lng: 93.1711, score: 100, image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80', desc: 'UNESCO sanctuary hosting two-thirds of the world’s great Indian one-horned rhinoceroses.' },
+        { id: 'as-majuli', name: 'Majuli River Island (World’s Largest River Island)', city: 'Majuli', state: 'Assam', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic','culture'], lat: 26.9500, lng: 94.2167, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Serene sandbank island on the mighty Brahmaputra River, famous for Neo-Vaishnavite Satras and mask-making.' },
+        { id: 'as-food-assam', name: 'Guwahati Khaar, Duck Curry & Masor Tenga Trail', city: 'Guwahati', state: 'Assam', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','assamese'], lat: 26.1445, lng: 91.7362, score: 97, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80', desc: 'Traditional Assamese thali featuring alkaline Khaar, tangy river fish Masor Tenga with elephant apple, and duck curry.' },
+
+        // =========================================================================
+        // 🚩 BIHAR (East)
+        // =========================================================================
+        { id: 'br-mahabodhi', name: 'Mahabodhi Temple & Sacred Bodhi Tree (UNESCO)', city: 'Bodh Gaya', state: 'Bihar', region: 'East', category: 'Temples', type: 'temple', tags: ['unesco','temple','buddhist'], lat: 24.6960, lng: 84.9913, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Supreme sacred spot where Prince Siddhartha Gautama attained Enlightenment beneath the Bodhi Tree in 531 BCE.' },
+        { id: 'br-nalanda', name: 'Ancient Nalanda Mahavihara University (UNESCO)', city: 'Nalanda', state: 'Bihar', region: 'East', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage'], lat: 25.1357, lng: 85.4449, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'World’s oldest residential university founded in 5th century CE with red brick stupas and monk dormitories.' },
+        { id: 'br-shershah', name: 'Tomb of Sher Shah Suri (Water Mausoleum)', city: 'Sasaram', state: 'Bihar', region: 'East', category: 'Heritage', type: 'heritage', tags: ['heritage','fort'], lat: 24.9547, lng: 84.0150, score: 97, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: 'Magnificent 122-foot red sandstone Indo-Islamic mausoleum standing in the center of an artificial lake.' },
+        { id: 'br-rajgir', name: 'Rajgir Vulture’s Peak & Glass Bridge Nature Walk', city: 'Rajgir', state: 'Bihar', region: 'East', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 25.0167, lng: 85.4167, score: 97, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Sacred Gridhrakuta hill, Japanese Peace Pagoda, Vishwa Shanti Stupa, and modern glass-floor bridge in lush hills.' },
+        { id: 'br-food-litti', name: 'Patna & Gaya Litti Chokha & Anarsa Trail', city: 'Patna', state: 'Bihar', region: 'East', category: 'Food', type: 'food', tags: ['foodtrail','bihari'], lat: 25.5941, lng: 85.1376, score: 98, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Charcoal-roasted spiced sattu stuffed whole wheat balls dunked in pure desi ghee with smoked brinjal chokha.' },
+
+        // =========================================================================
+        // 🚩 CHHATTISGARH (Central)
+        // =========================================================================
+        { id: 'cg-bhoramdeo', name: 'Bhoramdeo Temple (Khajuraho of Chhattisgarh)', city: 'Kawardha', state: 'Chhattisgarh', region: 'Central', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 22.1167, lng: 81.1500, score: 97, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: '11th-century Nagara style temple complex dedicated to Lord Shiva amidst the Maikal mountain range.' },
+        { id: 'cg-danteshwari', name: 'Danteshwari Shakti Peetha Temple', city: 'Dantewada', state: 'Chhattisgarh', region: 'Central', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple'], lat: 18.9000, lng: 81.3500, score: 96, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'Ancient 14th-century Shakti Peetha dedicated to Goddess Danteshwari at the confluence of Shankini and Dhankini rivers.' },
+        { id: 'cg-ratanpur', name: 'Ratanpur Fort & Mahamaya Temple', city: 'Bilaspur', state: 'Chhattisgarh', region: 'Central', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 22.3000, lng: 82.1700, score: 95, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Ancient capital of the Kalachuri kings featuring stone gates, elephant carvings, and Mahamaya shrine.' },
+        { id: 'cg-chitrakote', name: 'Chitrakote Falls (Niagara of India on Indravati)', city: 'Jagdalpur', state: 'Chhattisgarh', region: 'Central', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 19.2000, lng: 81.7000, score: 100, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Widest waterfall in India spanning nearly 300 meters across a dramatic horseshoe cliff on Indravati River.' },
+        { id: 'cg-food-bastar', name: 'Bastar Tribal Chaprah Chutney, Chila & Fara Trail', city: 'Raipur', state: 'Chhattisgarh', region: 'Central', category: 'Food', type: 'food', tags: ['foodtrail','tribal'], lat: 21.2514, lng: 81.6296, score: 95, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Famous red ant chutney (Chaprah), steamed rice dumpling Fara, crispy rice Chila, and Mahua refreshments.' },
+
+        // =========================================================================
+        // 🚩 GOA (West)
+        // =========================================================================
+        { id: 'ga-mangeshi', name: 'Shri Mangeshi Temple (Lord Shiva)', city: 'Ponda', state: 'Goa', region: 'West', category: 'Temples', type: 'temple', tags: ['temple'], lat: 15.4350, lng: 73.9686, score: 98, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: '450-year-old temple showcasing distinctive Goan Hindu architecture with an elegant seven-storey Deepstambha.' },
+        { id: 'ga-bomjesus', name: 'Basilica of Bom Jesus (UNESCO World Heritage)', city: 'Old Goa', state: 'Goa', region: 'West', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage'], lat: 15.5008, lng: 73.9116, score: 99, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '1605 CE Baroque church enshrining the sacred mortal remains of St. Francis Xavier.' },
+        { id: 'ga-aguada', name: 'Fort Aguada & 17th Century Lighthouse', city: 'Candolim', state: 'Goa', region: 'West', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 15.4925, lng: 73.7736, score: 98, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Well-preserved 1612 Portuguese fortress overlooking Sinquerim Beach with subterranean freshwater cisterns.' },
+        { id: 'ga-dudhsagar', name: 'Dudhsagar Waterfalls (Sea of Milk)', city: 'Sanguem', state: 'Goa', region: 'West', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 15.3144, lng: 74.3144, score: 100, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Spectacular 310-meter four-tiered white cascade plunging through Western Ghats tropical forest and railway bridge.' },
+        { id: 'ga-food-goan', name: 'Panaji Goan Prawn Balchão, Fish Thali & Bebinca Trail', city: 'Panaji', state: 'Goa', region: 'West', category: 'Food', type: 'food', tags: ['foodtrail','goan'], lat: 15.4989, lng: 73.8278, score: 98, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80', desc: 'Traditional coconut curry fish thali, spicy prawn balchão, pork vindaloo, and multi-layered coconut Bebinca.' },
+
+        // =========================================================================
+        // 🚩 GUJARAT (West)
+        // =========================================================================
+        { id: 'gj-somnath', name: 'Somnath Jyotirlinga (First of 12 Jyotirlingas)', city: 'Veraval', state: 'Gujarat', region: 'West', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple'], lat: 20.8880, lng: 70.4012, score: 100, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'The First among the Twelve holy Jyotirlinga shrines of Shiva, perched on the shore of the Arabian Sea.' },
+        { id: 'gj-dwarkadhish', name: 'Dwarkadhish Jagat Mandir (Char Dham Pilgrimage)', city: 'Dwarka', state: 'Gujarat', region: 'West', category: 'Temples', type: 'temple', tags: ['chardham','temple'], lat: 22.2376, lng: 68.9678, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: '2,200-year-old Char Dham shrine dedicated to Lord Krishna with a 72-pillar sanctum on holy Gomti creek.' },
+        { id: 'gj-modhera', name: 'Sun Temple Modhera & Surya Kund Stepwell', city: 'Modhera', state: 'Gujarat', region: 'West', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 23.5836, lng: 72.1331, score: 99, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: '1026 CE Solanki dynasty architectural wonder designed so the equinox sun shines directly into the sanctum.' },
+        { id: 'gj-palitana', name: 'Palitana Shatrunjaya Hill (863 Marble Jain Temples)', city: 'Palitana', state: 'Gujarat', region: 'West', category: 'Temples', type: 'temple', tags: ['temple','sacred'], lat: 21.5292, lng: 71.8292, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'World’s only hill with more than 900 exquisitely sculpted white marble Jain shrines climbed via 3,500 stone steps.' },
+        { id: 'gj-ranikivav', name: 'Rani ki Vav Stepwell (UNESCO World Heritage)', city: 'Patan', state: 'Gujarat', region: 'West', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage'], lat: 23.8589, lng: 72.1017, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Seven-level subterranean stepwell designed as an inverted temple with over 500 principal sculptures of Lord Vishnu.' },
+        { id: 'gj-laxmivilas', name: 'Laxmi Vilas Palace (4x Size of Buckingham Palace)', city: 'Vadodara', state: 'Gujarat', region: 'West', category: 'Heritage', type: 'heritage', tags: ['palace','heritage'], lat: 22.2936, lng: 73.1917, score: 98, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80', desc: 'Grand 1890 Indo-Saracenic palace of the Gaekwad Maratha Maharajas with Venetian stained glass and Durbar Hall.' },
+        { id: 'gj-rannofkutch', name: 'Great Rann of Kutch (White Salt Desert)', city: 'Dhordo', state: 'Gujarat', region: 'West', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 23.8347, lng: 69.8373, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Vast 7,500 sq km white salt desert glowing under moonlight during the vibrant cultural Rann Utsav.' },
+        { id: 'gj-gir', name: 'Gir National Park (Sole Home of Asiatic Lions)', city: 'Sasan Gir', state: 'Gujarat', region: 'West', category: 'Nature', type: 'nature', tags: ['nature','wildlife'], lat: 21.1244, lng: 70.7936, score: 99, image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80', desc: 'Only wild habitat on planet Earth where pure Asiatic lions roam free in dry deciduous teak forest.' },
+        { id: 'gj-food-gujarati', name: 'Ahmedabad Manek Chowk & Gujarati Thali, Fafda-Jalebi Trail', city: 'Ahmedabad', state: 'Gujarat', region: 'West', category: 'Food', type: 'food', tags: ['foodtrail','gujarati'], lat: 23.0225, lng: 72.5714, score: 98, image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80', desc: 'Manek Chowk late-night chocolate sandwiches, Gwalior dosa, crispy Sunday Fafda-Jalebi, and 30-item Gujarati Thali.' },
+
+        // =========================================================================
+        // 🚩 HARYANA (North)
+        // =========================================================================
+        { id: 'hr-brahmasarovar', name: 'Brahma Sarovar & Jyotisar Gita Birthplace', city: 'Kurukshetra', state: 'Haryana', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','sacred','pilgrimage'], lat: 29.9650, lng: 76.8350, score: 98, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Ancient water tank where Lord Brahma created the universe and holy Jyotisar banyan tree of Gita discourse.' },
+        { id: 'hr-pinjore', name: 'Pinjore Yadavindra Mughal Gardens', city: 'Panchkula', state: 'Haryana', region: 'North', category: 'Heritage', type: 'heritage', tags: ['heritage','palace'], lat: 30.7961, lng: 76.9150, score: 96, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '17th-century terraced Mughal gardens with illuminated water cascades, pavilions, and mango orchards.' },
+        { id: 'hr-sultanpur', name: 'Sultanpur National Park & Bird Sanctuary', city: 'Gurugram', state: 'Haryana', region: 'North', category: 'Nature', type: 'nature', tags: ['nature','wildlife'], lat: 28.4617, lng: 76.8925, score: 95, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Lush wetland sanctuary attracting over 250 species of migratory birds from Siberia and Central Asia.' },
+        { id: 'hr-food-murthal', name: 'Murthal Amrik Sukhdev Dhaba Stuffed Parathas Trail', city: 'Sonipat', state: 'Haryana', region: 'North', category: 'Food', type: 'food', tags: ['foodtrail','punjabi'], lat: 29.0300, lng: 77.0800, score: 98, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80', desc: 'Legendary highway tandoori Aloo-Pyaz, Paneer and Gobhi parathas served with colossal mounds of white makhan butter.' },
+
+        // =========================================================================
+        // 🚩 HIMACHAL PRADESH (North)
+        // =========================================================================
+        { id: 'hp-hidimba', name: 'Hidimba Devi Ancient Wooden Temple', city: 'Manali', state: 'Himachal Pradesh', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 32.2472, lng: 77.1706, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: '1553 CE four-tiered pagoda-style cedar wooden temple nestled in dense Dhungiri pine forests.' },
+        { id: 'hp-jwalaji', name: 'Jwala Ji Flame Temple (Eternal Blue Flame Shakti Peetha)', city: 'Kangra', state: 'Himachal Pradesh', region: 'North', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple'], lat: 31.8794, lng: 76.3236, score: 98, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'Holy Shakti Peetha where sacred blue natural flames burn eternally from rock fissures without any fuel.' },
+        { id: 'hp-kangrafort', name: 'Kangra Fort (Oldest Fort in India & Katoch Citadel)', city: 'Kangra', state: 'Himachal Pradesh', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 32.0833, lng: 76.2500, score: 98, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Ancient 4th-century BCE fortress at the confluence of Banganga and Majhi rivers mentioned in the Mahabharata.' },
+        { id: 'hp-spitivalley', name: 'Spiti Valley & Key Gompa Monastery (Cold Desert)', city: 'Kaza', state: 'Himachal Pradesh', region: 'North', category: 'Nature', type: 'nature', tags: ['nature','scenic','buddhist'], lat: 32.2980, lng: 78.0120, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Spectacular 1000-year-old fort-monastery perched at 13,668 ft overlooking the turquoise Spiti river valley.' },
+        { id: 'hp-rohtang', name: 'Rohtang Pass & Atal Tunnel (13,058 ft Pir Panjal)', city: 'Manali', state: 'Himachal Pradesh', region: 'North', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 32.3716, lng: 77.2466, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'High mountain pass connecting Kullu with Lahaul and Spiti valleys with year-round snow landscapes.' },
+        { id: 'hp-food-dham', name: 'Kangri Dham & Siddu Mountain Feast Trail', city: 'Dharamshala', state: 'Himachal Pradesh', region: 'North', category: 'Food', type: 'food', tags: ['foodtrail','pahadi'], lat: 32.2190, lng: 76.3234, score: 97, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Traditional royal celebratory feast Dham cooked by Botis, featuring Madra in curd, Khatta chana, and steamed wheat Siddu.' },
+
+        // =========================================================================
+        // 🚩 JHARKHAND (East)
+        // =========================================================================
+        { id: 'jh-baidyanath', name: 'Baidyanath Jyotirlinga Temple (Deoghar)', city: 'Deoghar', state: 'Jharkhand', region: 'East', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple'], lat: 24.4925, lng: 86.7000, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Sacred Jyotirlinga and Shakti Peetha destination of millions during the holy Shravan Kanwar Yatra.' },
+        { id: 'jh-parasnath', name: 'Parasnath Shikharji (Supreme Jain Tirthankara Peak)', city: 'Giridih', state: 'Jharkhand', region: 'East', category: 'Temples', type: 'temple', tags: ['temple','sacred'], lat: 23.9600, lng: 86.1300, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Highest mountain peak in Jharkhand (4,480 ft) where 20 of the 24 Jain Tirthankaras attained Nirvana.' },
+        { id: 'jh-palamu', name: 'Palamu Twin Forts (Chero Dynasty Bastions)', city: 'Betla', state: 'Jharkhand', region: 'East', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 23.8900, lng: 84.2300, score: 95, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '16th-century twin hill fortresses built by Medini Ray deep in the Sal forests of the Auranga river basin.' },
+        { id: 'jh-hundru', name: 'Hundru Waterfalls (320 ft Subarnarekha Cascade)', city: 'Ranchi', state: 'Jharkhand', region: 'East', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 23.4500, lng: 85.6500, score: 97, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Spectacular 320-foot waterfall plunging over polished gneiss rock into a natural frothing pool.' },
+        { id: 'jh-food-dhuska', name: 'Ranchi Dhuska, Ghugni & Rugra Trail', city: 'Ranchi', state: 'Jharkhand', region: 'East', category: 'Food', type: 'food', tags: ['foodtrail','jharkhandi'], lat: 23.3441, lng: 85.3096, score: 96, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Crispy fried rice-lentil Dhuska with spicy black gram Ghugni and wild monsoon mushroom Rugra curry.' },
+
+        // =========================================================================
+        // 🚩 KARNATAKA (South)
+        // =========================================================================
+        { id: 'ka-virupaksha', name: 'Hampi Virupaksha & Vijaya Vittala Stone Chariot', city: 'Hampi', state: 'Karnataka', region: 'South', category: 'Temples', type: 'temple', tags: ['unesco','temple','heritage'], lat: 15.3350, lng: 76.4600, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: 'UNESCO jewel with the iconic Stone Chariot, musical stone pillars, and continuous 7th-century Virupaksha worship.' },
+        { id: 'ka-murudeshwar', name: 'Murudeshwar Temple & Giant Shiva Statue', city: 'Murudeshwar', state: 'Karnataka', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','nature'], lat: 14.0940, lng: 74.4899, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'World’s second tallest Shiva statue (123 ft) on Kanduka Hill, surrounded on three sides by the turquoise Arabian Sea.' },
+        { id: 'ka-belur', name: 'Belur Chennakeshava & Halebidu Hoysala Temples (UNESCO)', city: 'Hassan', state: 'Karnataka', region: 'South', category: 'Temples', type: 'temple', tags: ['unesco','temple','heritage'], lat: 13.1625, lng: 75.8600, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Masterpiece of soapstone star-shaped architecture, featuring Madanika dancing bracket figures and friezes.' },
+        { id: 'ka-udupi', name: 'Udupi Sri Krishna Matha & Kanakana Kindi', city: 'Udupi', state: 'Karnataka', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','sacred'], lat: 13.3409, lng: 74.7421, score: 98, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: '13th-century Vaishnavite shrine founded by Madhvacharya where Lord Krishna is viewed through a silver window.' },
+        { id: 'ka-mysorepalace', name: 'Mysore Palace (Amba Vilas Palace)', city: 'Mysuru', state: 'Karnataka', region: 'South', category: 'Heritage', type: 'heritage', tags: ['palace','heritage'], lat: 12.3051, lng: 76.6551, score: 100, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80', desc: 'Magnificent Indo-Saracenic royal residence with stained-glass peacock pavilion, golden throne, and 100,000 night lights.' },
+        { id: 'ka-golgumbaz', name: 'Gol Gumbaz (World’s 2nd Largest Whispering Dome)', city: 'Vijayapura', state: 'Karnataka', region: 'South', category: 'Heritage', type: 'heritage', tags: ['heritage','fort'], lat: 16.8300, lng: 75.7360, score: 98, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '1656 CE Adil Shahi mausoleum featuring an unsupported dome with an acoustic gallery echoing whispers 11 times.' },
+        { id: 'ka-jogfalls', name: 'Jog Falls (Gersoppa Cataracts on Sharavathi)', city: 'Shivamogga', state: 'Karnataka', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 14.2285, lng: 74.8122, score: 100, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Second-highest plunge waterfall in India dropping 253 meters in four distinct cascades: Raja, Roarer, Rocket and Rani.' },
+        { id: 'ka-coorg', name: 'Coorg Madikeri Coffee Hills & Abbey Falls', city: 'Madikeri', state: 'Karnataka', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 12.4244, lng: 75.7382, score: 98, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'The Scotland of India with mist-covered Western Ghats coffee plantations, spice trails, and Talakaveri origin.' },
+        { id: 'ka-food-bengaluru', name: 'Bengaluru Filter Coffee & MTR Dosa Trail', city: 'Bengaluru', state: 'Karnataka', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','southindian'], lat: 12.9553, lng: 77.5857, score: 99, image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80', desc: 'Mavalli Tiffin Room (MTR) Rava Idli, Vidyarthi Bhavan Crispy Benne Dosa in VV Puram, and Chikmagalur filter coffee.' },
+        { id: 'ka-food-mangaluru', name: 'Mangaluru Ghee Roast & Neer Dosa Trail', city: 'Mangaluru', state: 'Karnataka', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','coastal'], lat: 12.9141, lng: 74.8560, score: 98, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80', desc: 'Kundapura chicken and prawn ghee roast with paper-thin Neer Dosa, Kori Rotti, and Anjal fish fry.' },
+
+        // =========================================================================
+        // 🚩 KERALA (South)
+        // =========================================================================
+        { id: 'kl-padmanabhaswamy', name: 'Sree Padmanabhaswamy Temple (Richest Temple)', city: 'Thiruvananthapuram', state: 'Kerala', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 8.4830, lng: 76.9436, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Gold Gopuram temple enshrining Lord Vishnu in Anantha Sayana posture on the serpent Adishesha.' },
+        { id: 'kl-guruvayur', name: 'Guruvayur Sri Krishna Temple (Bhooloka Vaikuntha)', city: 'Guruvayur', state: 'Kerala', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','pilgrimage'], lat: 10.5947, lng: 76.0408, score: 99, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'Sacred Krishna shrine with traditional elephant sanctuaries (Punnathur Kotta) and classical Sopana Sangeetham.' },
+        { id: 'kl-bekal', name: 'Bekal Fort & Keyhole Observation Beach Bastion', city: 'Kasaragod', state: 'Kerala', region: 'South', category: 'Heritage', type: 'heritage', tags: ['fort','nature'], lat: 12.3925, lng: 75.0328, score: 98, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Largest keyhole-shaped seaside fortress in Kerala jutting into the turquoise Arabian Sea.' },
+        { id: 'kl-athirappilly', name: 'Athirappilly Waterfalls (Niagara of South India)', city: 'Thrissur', state: 'Kerala', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 10.2851, lng: 76.5698, score: 100, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Majestic 80-foot wide waterfall cascading across Chalakudy River through dense tropical Vazhachal rainforest.' },
+        { id: 'kl-alleppey', name: 'Alleppey & Kumarakom Backwaters Houseboat Trail', city: 'Alappuzha', state: 'Kerala', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 9.4981, lng: 76.3388, score: 100, image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&q=80', desc: 'Labyrinth of palm-fringed canals, lagoons, paddy fields, and luxury thatched Kettuvallam houseboats.' },
+        { id: 'kl-munnar', name: 'Munnar Anamudi Tea Hills & Mattupetty Dam', city: 'Munnar', state: 'Kerala', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 10.0889, lng: 77.0595, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Rolling emerald tea plantations rising to South India’s highest peak Anamudi (8,842 ft) and Eravikulam Nilgiri Tahr.' },
+        { id: 'kl-food-malabar', name: 'Thalassery Dum Biryani & Malabar Seafood Trail', city: 'Thalassery', state: 'Kerala', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','malabar'], lat: 11.7500, lng: 75.4900, score: 98, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80', desc: 'Aromatic Khyma rice dum biryani, flaky Malabar parotta, Karimeen Pollichathu wrapped in banana leaf, and Kozhikode halwa.' },
+
+        // =========================================================================
+        // 🚩 MADHYA PRADESH (Central)
+        // =========================================================================
+        { id: 'mp-mahakal', name: 'Ujjain Mahakaleshwar Jyotirlinga (Dakshinmukhi)', city: 'Ujjain', state: 'Madhya Pradesh', region: 'Central', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple'], lat: 23.1828, lng: 75.7682, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'The only south-facing Jyotirlinga (Lord of Time and Death), famed for its sacred pre-dawn Bhasma Aarti.' },
+        { id: 'mp-omkareshwar', name: 'Omkareshwar & Mamleshwar Jyotirlinga (Narmada Island)', city: 'Khandwa', state: 'Madhya Pradesh', region: 'Central', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple'], lat: 22.2450, lng: 76.1500, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Holy island in holy Narmada River shaped like the sacred symbol ॐ (Om), housing twin Jyotirlinga shrines.' },
+        { id: 'mp-khajuraho', name: 'Khajuraho Western Group of Temples (UNESCO)', city: 'Khajuraho', state: 'Madhya Pradesh', region: 'Central', category: 'Temples', type: 'temple', tags: ['unesco','temple','heritage'], lat: 24.8318, lng: 79.9199, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: '10th-century Chandela dynasty stone temples renowned for celestial dancers, musicians, and Nagara shikharas.' },
+        { id: 'mp-sanchi', name: 'Sanchi Great Stupa (UNESCO Buddhist Masterpiece)', city: 'Sanchi', state: 'Madhya Pradesh', region: 'Central', category: 'Temples', type: 'temple', tags: ['unesco','temple','buddhist'], lat: 23.4794, lng: 77.7397, score: 99, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Commissioned by Emperor Ashoka in 3rd century BCE with four intricately carved Torana ceremonial gateways.' },
+        { id: 'mp-gwalior', name: 'Gwalior Fort & Man Mandir Palace (Pearl of Forts)', city: 'Gwalior', state: 'Madhya Pradesh', region: 'Central', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 26.2307, lng: 78.1691, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Impregnable cliff-top fortress with turquoise-tiled outer walls, Sas Bahu temple, and colossal rock-cut Tirthankaras.' },
+        { id: 'mp-mandu', name: 'Mandu Jahaz Mahal (Ship Palace) & Roopmati Pavilion', city: 'Mandu', state: 'Madhya Pradesh', region: 'Central', category: 'Heritage', type: 'heritage', tags: ['palace','heritage'], lat: 22.3667, lng: 75.3000, score: 98, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: 'Medieval city of joy perched atop a 2000-ft plateau, featuring the floating ship palace between two lakes.' },
+        { id: 'mp-bhedaghat', name: 'Bhedaghat Marble Rocks & Dhuandhar Waterfalls', city: 'Jabalpur', state: 'Madhya Pradesh', region: 'Central', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 23.1310, lng: 79.8009, score: 99, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: '100-foot pure marble gorges flanking the holy Narmada River under moonlit boat cruises.' },
+        { id: 'mp-food-indore', name: 'Indore Sarafa Night Food Market & Chappan Dukan', city: 'Indore', state: 'Madhya Pradesh', region: 'Central', category: 'Food', type: 'food', tags: ['foodtrail','streetfood'], lat: 22.7180, lng: 75.8560, score: 100, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'India’s street food capital: Sarafa jewelry street transforms at night into a feast of Bhutte ka Kees, Garadu, and Jaleba.' },
+
+        // =========================================================================
+        // 🚩 MAHARASHTRA (West)
+        // =========================================================================
+        { id: 'mh-trimbakeshwar', name: 'Trimbakeshwar Shiva Temple (Jyotirlinga & Godavari Origin)', city: 'Nashik', state: 'Maharashtra', region: 'West', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple'], lat: 19.9325, lng: 73.5306, score: 100, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: 'Sacred Jyotirlinga at the foot of Brahmagiri Mountain featuring a three-faced lingam of Brahma, Vishnu, and Rudra.' },
+        { id: 'mh-bhimashankar', name: 'Bhimashankar Jyotirlinga Temple & Giant Flying Squirrel Sanctuary', city: 'Pune', state: 'Maharashtra', region: 'West', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple','nature'], lat: 19.0722, lng: 73.5350, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Nagara-style Jyotirlinga in deep Sahyadri rainforest, source of the holy Bhima River.' },
+        { id: 'mh-grishneshwar', name: 'Grishneshwar Jyotirlinga Temple (Near Ellora Caves)', city: 'Verul', state: 'Maharashtra', region: 'West', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple'], lat: 20.0242, lng: 75.1719, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'The 12th and last Jyotirlinga on earth, rebuilt with red rock sculptures by Ahilyabai Holkar.' },
+        { id: 'mh-shirdi', name: 'Shirdi Sai Baba Samadhi Sansthan', city: 'Shirdi', state: 'Maharashtra', region: 'West', category: 'Temples', type: 'temple', tags: ['temple','pilgrimage'], lat: 19.7667, lng: 74.4775, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'World-famous pilgrimage shrine housing the holy Samadhi of Sai Baba, Dwarakamai, and Chavadi.' },
+        { id: 'mh-ajantaellora', name: 'Ajanta & Ellora Rock Cut Caves & Kailasa Temple (UNESCO)', city: 'Chhatrapati Sambhajinagar', state: 'Maharashtra', region: 'West', category: 'Temples', type: 'temple', tags: ['unesco','temple','heritage'], lat: 20.5519, lng: 75.7033, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: 'Kailasa Temple (Cave 16) carved top-down from a single monolithic basalt cliff — largest monolithic rock excavation in the world.' },
+        { id: 'mh-raigad', name: 'Raigad Fort (Capital of Chhatrapati Shivaji)', city: 'Mahad', state: 'Maharashtra', region: 'West', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 18.2347, lng: 73.4414, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Impregnable hill fortress rising 2,700 ft in the Sahyadris where Chhatrapati Shivaji Maharaj was coronated in 1674.' },
+        { id: 'mh-murudjanjira', name: 'Murud-Janjira Island Sea Fort', city: 'Murud', state: 'Maharashtra', region: 'West', category: 'Heritage', type: 'heritage', tags: ['fort','heritage','nature'], lat: 18.3006, lng: 72.9644, score: 98, image: 'https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=600&q=80', desc: 'Unconquered marine fortress standing in the Arabian Sea waves with 22 rounded bastions and Kalalbangadi cannons.' },
+        { id: 'mh-lonar', name: 'Lonar Meteorite Crater Lake (50,000 Year Old Astrobleme)', city: 'Lonar', state: 'Maharashtra', region: 'West', category: 'Nature', type: 'nature', tags: ['nature','scenic','geology'], lat: 19.9750, lng: 76.5050, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'World’s only hyper-velocity meteorite impact crater formed in basalt rock, creating a saline-alkaline lake.' },
+        { id: 'mh-food-mumbai', name: 'Mumbai Vada Pav, Pav Bhaji & Chowpatty Beach Eats', city: 'Mumbai', state: 'Maharashtra', region: 'West', category: 'Food', type: 'food', tags: ['foodtrail','streetfood'], lat: 18.9548, lng: 72.8130, score: 100, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Spicy batata vada in pav with garlic chutney, buttery Sardar Pav Bhaji, Sev Puri at Chowpatty, and Iranian bun maska.' },
+        { id: 'mh-food-kolhapur', name: 'Kolhapur Tambada-Pandhra Rassa & Mutton Thali Trail', city: 'Kolhapur', state: 'Maharashtra', region: 'West', category: 'Food', type: 'food', tags: ['foodtrail','maharashtrian'], lat: 16.7050, lng: 74.2433, score: 98, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Fiery red Tambada Rassa chili soup, soothing coconut milk Pandhra Rassa, Sukka mutton, and spicy Kolhapuri Misal.' },
+
+        // =========================================================================
+        // 🚩 MANIPUR (North East)
+        // =========================================================================
+        { id: 'mn-govindaji', name: 'Shri Govindaji Temple & Kangla Holy Shrines', city: 'Imphal', state: 'Manipur', region: 'North East', category: 'Temples', type: 'temple', tags: ['temple'], lat: 24.8000, lng: 93.9400, score: 96, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Gold-domed Vaishnavite temple with twin domes and classical Manipuri Raas Leela dance performances.' },
+        { id: 'mn-kangla', name: 'Kangla Fort (Ancient Meitei Kingdom Citadel)', city: 'Imphal', state: 'Manipur', region: 'North East', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 24.8083, lng: 93.9417, score: 97, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Historic palace fortress that was the traditional seat of Manipur royal rulers with dragon Kangla Sha colossi.' },
+        { id: 'mn-loktak', name: 'Loktak Lake & Keibul Lamjao (Floating National Park)', city: 'Moirang', state: 'Manipur', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic','wildlife'], lat: 24.5500, lng: 93.7833, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'World’s only floating national park on circular floating islands (Phumdis), habitat of the endangered dancing Sangai deer.' },
+        { id: 'mn-food-imphal', name: 'Imphal Kangshoi, Singju & Eromba Traditional Manipuri Feast', city: 'Imphal', state: 'Manipur', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','manipuri'], lat: 24.8170, lng: 93.9368, score: 95, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Manipuri feast with fermented fish stew Eromba, spicy cabbage-lotus salad Singju, and aromatic Chak-hao black rice kheer.' },
+
+        // =========================================================================
+        // 🚩 MEGHALAYA (North East)
+        // =========================================================================
+        { id: 'ml-nartiang', name: 'Nartiang Monoliths & 500-Year Durga Shakti Peetha', city: 'Jaintia Hills', state: 'Meghalaya', region: 'North East', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple','heritage'], lat: 25.5700, lng: 92.2200, score: 97, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Tallest collection of prehistoric stone monoliths in the world and 500-year-old Jaintia king Shakti Peetha temple.' },
+        { id: 'ml-rootbridge', name: 'Nongriat Double Decker Living Root Bridges', city: 'Cherrapunji', state: 'Meghalaya', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic','unesco-tentative'], lat: 25.2500, lng: 91.6800, score: 100, image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&q=80', desc: 'Centuries-old bio-engineering marvel grown by Khasi tribe from living Ficus elastica tree roots across jungle streams.' },
+        { id: 'ml-nohkalikai', name: 'Nohkalikai Falls (India’s Tallest Plunge, 340m)', city: 'Cherrapunji', state: 'Meghalaya', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 25.2756, lng: 91.7167, score: 100, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Tallest plunge waterfall in India dropping 340 meters straight into a vivid turquoise pool below misty rainforest cliffs.' },
+        { id: 'ml-dawki', name: 'Dawki Umngot Crystal Clear River', city: 'Dawki', state: 'Meghalaya', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 25.1833, lng: 92.0167, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'River so transparent that wooden country boats appear to float in mid-air above crystal pebbles.' },
+        { id: 'ml-food-shillong', name: 'Shillong Jadoh, Dohkhlieh & Tungrymbai Khasi Food Trail', city: 'Shillong', state: 'Meghalaya', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','khasi'], lat: 25.5788, lng: 91.8933, score: 96, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Authentic Khasi red rice Jadoh cooked in pork stock, fresh ginger pork salad Dohkhlieh, and fermented soybean Tungrymbai.' },
+
+        // =========================================================================
+        // 🚩 MIZORAM (North East)
+        // =========================================================================
+        { id: 'mz-solomon', name: 'Solomon’s Temple & KV Paradise', city: 'Aizawl', state: 'Mizoram', region: 'North East', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 23.7300, lng: 92.7000, score: 95, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Magnificent white marble church complex on the outskirts of Aizawl and memorial known as the Taj of Mizoram.' },
+        { id: 'mz-vantawng', name: 'Vantawng Falls (Highest in Mizoram, 750ft)', city: 'Thenzawl', state: 'Mizoram', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 23.2800, lng: 92.7500, score: 98, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Highest waterfall in Mizoram plunging 750 feet in two tiers surrounded by thick bamboo and oak forests.' },
+        { id: 'mz-phawngpui', name: 'Phawngpui Blue Mountain Peak (2,157m)', city: 'Lawngtlai', state: 'Mizoram', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 22.6300, lng: 93.0500, score: 97, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Highest peak in Mizoram (Abode of the Gods) overlooking Myanmar with wild orchids and rhododendrons.' },
+        { id: 'mz-food-aizawl', name: 'Aizawl Bai, Sawhchiar & Smoked Pork Mizo Trail', city: 'Aizawl', state: 'Mizoram', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','mizo'], lat: 23.7271, lng: 92.7176, score: 95, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Mizo meal with vegetable pork stew Bai, slow-cooked meat porridge Sawhchiar, and fiery roasted bamboo shoot relish.' },
+
+        // =========================================================================
+        // 🚩 NAGALAND (North East)
+        // =========================================================================
+        { id: 'nl-dimapur', name: 'Dimapur Kachari Ruins (Monolithic Mushroom Pillars)', city: 'Dimapur', state: 'Nagaland', region: 'North East', category: 'Heritage', type: 'heritage', tags: ['heritage','unesco-tentative'], lat: 25.9000, lng: 93.7300, score: 96, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '10th-century medieval sandstone megalithic mushroom pillars and stone arches of the Kachari Kingdom.' },
+        { id: 'nl-khonoma', name: 'Khonoma Green Village & Angami Fortifications', city: 'Kohima', state: 'Nagaland', region: 'North East', category: 'Heritage', type: 'heritage', tags: ['heritage','nature'], lat: 25.6500, lng: 94.0200, score: 97, image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&q=80', desc: 'Asia’s first green village, known for historical resistance forts against British colonization and terrace ecology.' },
+        { id: 'nl-dzukou', name: 'Dzukou Valley of Flowers & Rolling Mountain Meadows', city: 'Kohima', state: 'Nagaland', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 25.5500, lng: 94.0800, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Fairytale undulating valley at 2,452m altitude carpeted with seasonal Dzukou lilies and crystal meandering streams.' },
+        { id: 'nl-food-naga', name: 'Kohima Smoked Pork with Bhut Jolokia (Raja Mircha) & Axone Trail', city: 'Kohima', state: 'Nagaland', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','naga'], lat: 25.6751, lng: 94.1086, score: 97, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Oak-smoked pork cooked with fermented soybean Axone, spicy ghost pepper Raja Mircha chutney, and boiled organic greens.' },
+
+        // =========================================================================
+        // 🚩 ODISHA (East)
+        // =========================================================================
+        { id: 'od-jagannath', name: 'Puri Jagannath Temple (Char Dham Pilgrimage)', city: 'Puri', state: 'Odisha', region: 'East', category: 'Temples', type: 'temple', tags: ['chardham','temple'], lat: 19.8048, lng: 85.8180, score: 100, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'Char Dham pilgrimage center famed for the world-famous Ratha Yatra, Mahaprasad Ananda Bazaar, and Nilachakra.' },
+        { id: 'od-konark', name: 'Konark Sun Temple (UNESCO Black Pagoda Chariot)', city: 'Konark', state: 'Odisha', region: 'East', category: 'Temples', type: 'temple', tags: ['unesco','temple','heritage'], lat: 19.8876, lng: 86.0945, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: '13th-century Kalinga architectural masterpiece conceived as a colossal 24-wheel chariot of Surya drawn by 7 horses.' },
+        { id: 'od-lingaraj', name: 'Lingaraj & Mukteshwara Temples (Gem of Odisha)', city: 'Bhubaneswar', state: 'Odisha', region: 'East', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 20.2382, lng: 85.8338, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: '11th-century 180-foot high stone Deula representing Harihara (Shiva and Vishnu combined) in the temple city.' },
+        { id: 'od-khandagiri', name: 'Khandagiri & Udayagiri Jain Rock Caves', city: 'Bhubaneswar', state: 'Odisha', region: 'East', category: 'Heritage', type: 'heritage', tags: ['heritage','caves'], lat: 20.2600, lng: 85.7800, score: 97, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '2nd-century BCE rock-cut monk residences of King Kharavela featuring the famous Brahmi Hathigumpha inscription.' },
+        { id: 'od-chilika', name: 'Chilika Lake & Irrawaddy Dolphins (Asia’s Largest Lagoon)', city: 'Chilika', state: 'Odisha', region: 'East', category: 'Nature', type: 'nature', tags: ['nature','scenic','wildlife'], lat: 19.7000, lng: 85.3200, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Vast 1,100 sq km brackish wetland, home to endangered Irrawaddy dolphins, Nalabana bird sanctuary, and Kalijai island.' },
+        { id: 'od-food-puri', name: 'Puri Mahaprasad, Cuttack Dahibara Aloodum & Chhena Poda Trail', city: 'Cuttack', state: 'Odisha', region: 'East', category: 'Food', type: 'food', tags: ['foodtrail','odia'], lat: 20.4625, lng: 85.8828, score: 98, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Clay-pot cooked 56-bhog Mahaprasad, Cuttack spiced Dahibara Aloodum with mint water, and caramelized cheese sweet Chhena Poda.' },
+
+        // =========================================================================
+        // 🚩 PUNJAB (North)
+        // =========================================================================
+        { id: 'pb-goldentemple', name: 'Golden Temple (Sri Harmandir Sahib)', city: 'Amritsar', state: 'Punjab', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','sacred','pilgrimage'], lat: 31.6200, lng: 74.8765, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Spiritual heart of Sikhism with gold-foil sanctum in holy Amrit Sarovar, serving 100,000 in free langar daily.' },
+        { id: 'pb-anandpursahib', name: 'Takht Sri Keshgarh Sahib & Virasat-e-Khalsa', city: 'Anandpur Sahib', state: 'Punjab', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 31.2350, lng: 76.5000, score: 99, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Birthplace of the Khalsa Panth established by Guru Gobind Singh in 1699 and world-renowned museum.' },
+        { id: 'pb-gobindgarh', name: 'Gobindgarh Fort & Toshakhana Coin Museum', city: 'Amritsar', state: 'Punjab', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 31.6270, lng: 74.8600, score: 97, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '18th-century military citadel built by Maharaja Ranjit Singh to guard Amritsar and house the Koh-i-Noor diamond.' },
+        { id: 'pb-wagah', name: 'Wagah Border Beating Retreat Ceremony', city: 'Amritsar', state: 'Punjab', region: 'North', category: 'Nature', type: 'nature', tags: ['scenic','heritage'], lat: 31.6044, lng: 74.5750, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Electric daily border lowering of the flags ceremony with high-stepping military drills between BSF and Pakistan Rangers.' },
+        { id: 'pb-food-amritsar', name: 'Amritsar Kulcha & Kesar Da Dhaba Dal Makhani Trail', city: 'Amritsar', state: 'Punjab', region: 'North', category: 'Food', type: 'food', tags: ['foodtrail','punjabi'], lat: 31.6250, lng: 74.8720, score: 100, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80', desc: 'Crispy tandoori layered Amritsari Kulcha with spicy chole, 12-hour slow-cooked Maa ki Dal in pure ghee, and tall sweet lassi.' },
+
+        // =========================================================================
+        // 🚩 RAJASTHAN (North)
+        // =========================================================================
+        { id: 'rj-brahma', name: 'Brahma Temple & Sacred Pushkar Lake', city: 'Pushkar', state: 'Rajasthan', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','sacred'], lat: 26.4883, lng: 74.5539, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'One of the very few existing temples in the world dedicated to Lord Brahma, surrounded by 52 holy ghats.' },
+        { id: 'rj-dilwara', name: 'Dilwara Jain Temples (Intricate Carved Marble)', city: 'Mount Abu', state: 'Rajasthan', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 24.6000, lng: 72.7200, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: 'Exquisite 11th-century white marble temples known for sheer artistic translucency and ceilings.' },
+        { id: 'rj-ranakpur', name: 'Ranakpur Jain Temple (1444 Unique Carved Pillars)', city: 'Ranakpur', state: 'Rajasthan', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 25.1189, lng: 73.4739, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: '15th-century marble temple dedicated to Tirthankara Adinatha with 1,444 uniquely carved pillar columns.' },
+        { id: 'rj-amber', name: 'Amber Fort & Sheesh Mahal (UNESCO)', city: 'Jaipur', state: 'Rajasthan', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','unesco','heritage'], lat: 26.9855, lng: 75.8513, score: 100, image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80', desc: 'Opulent Rajput hilltop fort with mirror-mosaic Sheesh Mahal, Maota Lake reflections, and elephant pathways.' },
+        { id: 'rj-mehrangarh', name: 'Mehrangarh Fort (400ft Cliff Citadel)', city: 'Jodhpur', state: 'Rajasthan', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 26.2980, lng: 73.0188, score: 100, image: 'https://images.unsplash.com/photo-1588096344356-9a4c00ff8e51?auto=format&fit=crop&w=600&q=80', desc: 'One of the largest fortresses in India, towering 400 feet above the indigo-blue city of Jodhpur.' },
+        { id: 'rj-chittorgarh', name: 'Chittorgarh Fort & Vijay Stambha (Tower of Victory)', city: 'Chittorgarh', state: 'Rajasthan', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','unesco','heritage'], lat: 24.8879, lng: 74.6453, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: 'Largest fort complex in Asia spanning 700 acres atop a 180m hill, immortalized by Rani Padmini and Rajput valor.' },
+        { id: 'rj-jaisalmer', name: 'Jaisalmer Living Golden Fort (Sonar Qila)', city: 'Jaisalmer', state: 'Rajasthan', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','unesco','heritage'], lat: 26.9124, lng: 70.9125, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'A living yellow sandstone fort rising majestically out of the Thar Desert dunes, housing palaces and havelis.' },
+        { id: 'rj-kumbhalgarh', name: 'Kumbhalgarh Fort (World’s 2nd Longest 36km Wall)', city: 'Rajsamand', state: 'Rajasthan', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','unesco','heritage'], lat: 25.1528, lng: 73.5872, score: 99, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Mewar fortress with a continuous 36-km defensive wall encircling 360 temples in the Aravalli hills.' },
+        { id: 'rj-udaipurcity', name: 'Udaipur City Palace on Lake Pichola', city: 'Udaipur', state: 'Rajasthan', region: 'North', category: 'Heritage', type: 'heritage', tags: ['palace','heritage'], lat: 24.5764, lng: 73.6835, score: 100, image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80', desc: 'Granite and marble lakeside palace complex spanning 400 years of Mewar royal architecture with Jag Mandir island.' },
+        { id: 'rj-samdunes', name: 'Thar Desert Sam Sand Dunes & Camel Safari', city: 'Jaisalmer', state: 'Rajasthan', region: 'North', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 26.8300, lng: 70.5000, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Rippling golden desert dunes with sunset camel safaris, Rajasthani folk Kalbelia dances, and stargazing.' },
+        { id: 'rj-food-jaipur', name: 'Jaipur Dal Baati Churma, Rawat Kachori & LMB Ghewar Trail', city: 'Jaipur', state: 'Rajasthan', region: 'North', category: 'Food', type: 'food', tags: ['foodtrail','rajasthani'], lat: 26.9209, lng: 75.8243, score: 100, image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80', desc: 'Royal Rajasthani Thali with Dal Baati Churma, Gatte ki Sabzi, spicy Pyaaz Kachori at Rawat, and saffron honeycomb Ghewar.' },
+
+        // =========================================================================
+        // 🚩 SIKKIM (North East)
+        // =========================================================================
+        { id: 'sk-rumtek', name: 'Rumtek Monastery (Dharma Chakra Centre)', city: 'Gangtok', state: 'Sikkim', region: 'North East', category: 'Temples', type: 'temple', tags: ['temple','buddhist'], lat: 27.3000, lng: 88.5800, score: 99, image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80', desc: 'Largest monastery in Sikkim and seat of the Gyalwang Karmapa, holding sacred golden stupas and Tibetan art.' },
+        { id: 'sk-chardham', name: 'Siddheshwar Dham & Giant Shiva Statue (Char Dham)', city: 'Namchi', state: 'Sikkim', region: 'North East', category: 'Temples', type: 'temple', tags: ['temple','pilgrimage'], lat: 27.1700, lng: 88.3500, score: 98, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Pilgrimage complex featuring an 87-foot Lord Shiva statue and replicas of all four Char Dham temples in the Himalayas.' },
+        { id: 'sk-rabdentse', name: 'Rabdentse Ruins (Ancient Capital of Kingdom of Sikkim)', city: 'Pelling', state: 'Sikkim', region: 'North East', category: 'Heritage', type: 'heritage', tags: ['heritage','fort'], lat: 27.2900, lng: 88.2400, score: 96, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '17th-century archaeological stone ruins of the 2nd capital of Sikkim framing panoramic Kanchenjunga views.' },
+        { id: 'sk-gurudongmar', name: 'Gurudongmar Lake (5,430m, One of World’s Highest)', city: 'Lachen', state: 'Sikkim', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic','lake'], lat: 27.9700, lng: 88.7000, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Sacred high-altitude glacial lake at 17,800 ft blessed by Guru Padmasambhava with crystal azure waters.' },
+        { id: 'sk-tsomgo', name: 'Tsomgo (Changu) Lake & Nathula Pass Border', city: 'Gangtok', state: 'Sikkim', region: 'North East', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 27.3800, lng: 88.7600, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Glacial alpine lake at 12,313 ft reflecting snowy peaks, gateway to the historic Old Silk Route at Nathula.' },
+        { id: 'sk-food-gangtok', name: 'Gangtok MG Marg Momos, Thukpa & Gundruk Trail', city: 'Gangtok', state: 'Sikkim', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','sikkimese'], lat: 27.3389, lng: 88.6065, score: 98, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Juicy steamed beef and cheese momos with spicy red chili chutney, steaming Thukpa, fermented Gundruk, and millet Tongba.' },
+
+        // =========================================================================
+        // 🚩 TAMIL NADU (South)
+        // =========================================================================
+        { id: 'tn-meenakshi', name: 'Madurai Meenakshi Sundareswarar Temple', city: 'Madurai', state: 'Tamil Nadu', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','shaktipeetha','heritage'], lat: 9.9195, lng: 78.1193, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Ancient temple city with 14 colossal gopurams covered in thousands of colorful sculptures and Hall of 1000 Pillars.' },
+        { id: 'tn-thanjavur', name: 'Brihadisvara Temple (UNESCO Big Temple)', city: 'Thanjavur', state: 'Tamil Nadu', region: 'South', category: 'Temples', type: 'temple', tags: ['unesco','temple'], lat: 10.7828, lng: 79.1318, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: '1010 CE Chola architectural marvel with a single granite monolithic dome (kumbam) atop its 66-meter vimana.' },
+        { id: 'tn-rameswaram', name: 'Rameswaram Ramanathaswamy Temple (Char Dham & Jyotirlinga)', city: 'Rameswaram', state: 'Tamil Nadu', region: 'South', category: 'Temples', type: 'temple', tags: ['jyotirlinga','chardham','temple'], lat: 9.2881, lng: 79.3174, score: 100, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: 'Sacred Char Dham & Jyotirlinga temple housing the longest pillared corridor in the world and 22 holy water Theerthams.' },
+        { id: 'tn-srirangam', name: 'Sri Ranganathaswamy Temple (World’s Largest Temple Complex)', city: 'Tiruchirappalli', state: 'Tamil Nadu', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 10.8625, lng: 78.6900, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Spans 156 acres with 21 majestic gopurams including the colossal 236-foot Rajagopuram on the Kaveri river island.' },
+        { id: 'tn-mahabalipuram', name: 'Shore Temple & Pancha Rathas (UNESCO)', city: 'Mahabalipuram', state: 'Tamil Nadu', region: 'South', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage','temple'], lat: 12.6167, lng: 80.1917, score: 100, image: 'https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=600&q=80', desc: '7th-century Pallava coastal monolithic rock-cut shrines, Descent of the Ganges bas-relief, and sea breeze.' },
+        { id: 'tn-gingee', name: 'Gingee Fort (Troy of the East)', city: 'Gingee', state: 'Tamil Nadu', region: 'South', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 12.2500, lng: 79.4200, score: 98, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Unassailable 800-foot fortress spanning three citadel hills: Rajagiri, Krishnagiri, and Chandrayandurg.' },
+        { id: 'tn-ooty', name: 'Nilgiri Mountain Railway Toy Train & Ooty Hills (UNESCO)', city: 'Ooty', state: 'Tamil Nadu', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic','unesco'], lat: 11.4102, lng: 76.6950, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'UNESCO heritage rack-and-pinion steam railway chugging through Blue Mountain tea gardens and bridges.' },
+        { id: 'tn-dhanushkodi', name: 'Dhanushkodi Ghost Town & Ram Setu Point', city: 'Rameswaram', state: 'Tamil Nadu', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic','beach'], lat: 9.1764, lng: 79.4147, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Narrow spit of white sand separating the rough Bay of Bengal and calm Indian Ocean at India’s southern tip.' },
+        { id: 'tn-food-madurai', name: 'Madurai Kari Dosa, Jigarthanda & Bun Parotta Trail', city: 'Madurai', state: 'Tamil Nadu', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','tamil'], lat: 9.9252, lng: 78.1198, score: 99, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80', desc: 'Three-layered spicy mutton Kari Dosa, fluffy layered Bun Parotta, and famous cooling almond-gum Famous Jigarthanda.' },
+        { id: 'tn-food-chettinad', name: 'Karaikudi Chettinad 18-Spice Feast Trail', city: 'Karaikudi', state: 'Tamil Nadu', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','chettinad'], lat: 10.0700, lng: 78.7800, score: 99, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80', desc: 'Stone-ground star anise, kalpasi (black stone flower) pepper chicken roasts served on banana leaves in heritage mansions.' },
+
+        // =========================================================================
+        // 🚩 TELANGANA (South)
+        // =========================================================================
+        { id: 'tg-yadadri', name: 'Yadagirigutta (Yadadri) Lakshmi Narasimha Temple', city: 'Yadagirigutta', state: 'Telangana', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','pilgrimage'], lat: 17.5894, lng: 78.9392, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Magnificent sculpted black granite Dravidian hill temple complex dedicated to Lord Narasimha Swamy.' },
+        { id: 'tg-ramappa', name: 'Ramappa Temple (UNESCO Kakatiya Floating Bricks)', city: 'Palampet', state: 'Telangana', region: 'South', category: 'Temples', type: 'temple', tags: ['unesco','temple'], lat: 18.2653, lng: 79.9439, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '1213 CE Kakatiya masterpiece constructed with lightweight floating bricks and carved black basalt bracket dancers.' },
+        { id: 'tg-bhadrachalam', name: 'Bhadrachalam Sri Sita Ramachandra Swamy Temple', city: 'Bhadrachalam', state: 'Telangana', region: 'South', category: 'Temples', type: 'temple', tags: ['temple','sacred'], lat: 17.6688, lng: 80.8872, score: 98, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Sacred temple on the banks of Godavari River associated with Bhakta Ramadasu and the Ramayana.' },
+        { id: 'tg-alampur', name: 'Alampur Jogulamba (5th Maha Shakti Peetha on Tungabhadra)', city: 'Alampur', state: 'Telangana', region: 'South', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple'], lat: 15.8778, lng: 78.1306, score: 98, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: '7th-century Badami Chalukya Nava Brahma temples and 5th Maha Shakti Peetha at Tungabhadra confluence.' },
+        { id: 'tg-golconda', name: 'Golconda Fort & Diamond Vaults', city: 'Hyderabad', state: 'Telangana', region: 'South', category: 'Heritage', type: 'heritage', tags: ['fort','heritage'], lat: 17.3833, lng: 78.4011, score: 100, image: 'https://images.unsplash.com/photo-1609137144822-26d03cf1e97f?auto=format&fit=crop&w=600&q=80', desc: 'Legendary citadel famous for acoustic clapping echoes, Fateh Darwaza, and vaults that traded Koh-i-Noor & Hope diamonds.' },
+        { id: 'tg-charminar', name: 'Charminar & Chowmahalla Palace', city: 'Hyderabad', state: 'Telangana', region: 'South', category: 'Heritage', type: 'heritage', tags: ['heritage','palace'], lat: 17.3616, lng: 78.4747, score: 100, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80', desc: '1591 CE monumental four-minaret gateway of Hyderabad and opulent Nizam palace of Belgian chandeliers.' },
+        { id: 'tg-kuntala', name: 'Kuntala & Bogatha Waterfalls (Niagara of Telangana)', city: 'Adilabad', state: 'Telangana', region: 'South', category: 'Nature', type: 'nature', tags: ['nature','scenic','waterfall'], lat: 19.3000, lng: 78.4800, score: 97, image: 'https://images.unsplash.com/photo-1432405972618-c60b0225b8f9?auto=format&fit=crop&w=600&q=80', desc: 'Highest waterfall in Telangana (147 ft) cascading over multi-tiered rocky steps amidst dense teak forests.' },
+        { id: 'tg-food-hyderabad', name: 'Hyderabad Dum Biryani, Paradise & Nimrah Irani Chai Trail', city: 'Hyderabad', state: 'Telangana', region: 'South', category: 'Food', type: 'food', tags: ['foodtrail','biryani','heritage'], lat: 17.3616, lng: 78.4747, score: 100, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80', desc: 'World-famous Dum Biryani with saffron and meat, hot Irani chai with Osmania biscuits facing Charminar arches.' },
+
+        // =========================================================================
+        // 🚩 TRIPURA (North East)
+        // =========================================================================
+        { id: 'tr-tripurasundari', name: 'Tripura Sundari Matabari Shakti Peetha Temple', city: 'Udaipur', state: 'Tripura', region: 'North East', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple'], lat: 23.5300, lng: 91.4900, score: 98, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: '1501 CE Kurma-shaped hill shrine dedicated to Goddess Kali, holding sacred Kalyan Sagar tortoise lake.' },
+        { id: 'tr-unakoti', name: 'Unakoti Rock-Cut Colossal Shiva Carvings (99 Lakh Deities)', city: 'Unakoti', state: 'Tripura', region: 'North East', category: 'Temples', type: 'temple', tags: ['heritage','temple','unesco-tentative'], lat: 24.3200, lng: 92.0700, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Ancient Shaivite rock carvings sculpted into jungle hillsides with a colossal 30-foot Unakotiswara Kal Bhairava head.' },
+        { id: 'tr-neermahal', name: 'Neermahal Water Palace (Lake Twijilikma)', city: 'Melaghar', state: 'Tripura', region: 'North East', category: 'Heritage', type: 'heritage', tags: ['palace','heritage','nature'], lat: 23.4900, lng: 91.3300, score: 98, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: 'Only water palace in Eastern India built in 1930 in the middle of Rudrasagar Lake blending Hindu and Islamic styles.' },
+        { id: 'tr-food-agartala', name: 'Agartala Mui Borok, Berma Fish & Chakwi Bamboo Trail', city: 'Agartala', state: 'Tripura', region: 'North East', category: 'Food', type: 'food', tags: ['foodtrail','tripuri'], lat: 23.8315, lng: 91.2868, score: 95, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Traditional Tripuri fermented fish dish Berma, smoked bamboo shoot Chakwi, and aromatic sweet Bangui rice cakes.' },
+
+        // =========================================================================
+        // 🚩 UTTAR PRADESH (North)
+        // =========================================================================
+        { id: 'up-kashivishwanath', name: 'Kashi Vishwanath Temple & Ganga Corridor (Jyotirlinga)', city: 'Varanasi', state: 'Uttar Pradesh', region: 'North', category: 'Temples', type: 'temple', tags: ['jyotirlinga','temple'], lat: 25.3109, lng: 83.0107, score: 100, image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=600&q=80', desc: 'Spiritual heart of Varanasi with gold-plated spires, connecting directly to the holy Ganga Ghats and evening Aarti.' },
+        { id: 'up-ayodhya', name: 'Shri Ram Janmabhoomi Mandir', city: 'Ayodhya', state: 'Uttar Pradesh', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','pilgrimage'], lat: 26.7956, lng: 82.1943, score: 100, image: 'https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=600&q=80', desc: 'Monumental Nagara-style pink sandstone temple marking the sacred birthplace of Lord Rama on holy Saryu River.' },
+        { id: 'up-mathura', name: 'Mathura & Vrindavan Bankey Bihari, Prem Mandir', city: 'Mathura', state: 'Uttar Pradesh', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','pilgrimage'], lat: 27.5050, lng: 77.6700, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Birthplace of Lord Krishna with vibrant Holi celebrations, Bankey Bihari darshan, and Italian marble Prem Mandir.' },
+        { id: 'up-sarnath', name: 'Sarnath Dhamek Stupa & Lion Capital of Ashoka', city: 'Varanasi', state: 'Uttar Pradesh', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','heritage','buddhist'], lat: 25.3811, lng: 83.0214, score: 99, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Where Lord Buddha gave his first sermon (Dhammacakkappavattana Sutta) in the sacred deer park in 528 BCE.' },
+        { id: 'up-tajmahal', name: 'Taj Mahal (UNESCO Wonder of the World)', city: 'Agra', state: 'Uttar Pradesh', region: 'North', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage','palace'], lat: 27.1751, lng: 78.0421, score: 100, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: '1632 CE white marble mausoleum built by Mughal Emperor Shah Jahan for Mumtaz Mahal on the Yamuna riverbank.' },
+        { id: 'up-agrafort', name: 'Agra Fort & Jahangiri Mahal (UNESCO)', city: 'Agra', state: 'Uttar Pradesh', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','unesco','heritage'], lat: 27.1795, lng: 78.0211, score: 99, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: 'Vast red sandstone Mughal imperial fortress with Sheesh Mahal and Musamman Burj overlooking the Taj Mahal.' },
+        { id: 'up-fatehpursikri', name: 'Fatehpur Sikri & Buland Darwaza (UNESCO)', city: 'Agra', state: 'Uttar Pradesh', region: 'North', category: 'Heritage', type: 'heritage', tags: ['fort','unesco','heritage'], lat: 27.0944, lng: 77.6678, score: 99, image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80', desc: 'Emperor Akbar’s capital featuring the 54m Buland Darwaza (Door of Victory) and Sufi Saint Salim Chishti dargah.' },
+        { id: 'up-baraimambara', name: 'Bara Imambara & Bhool Bhulaiya (Labyrinth)', city: 'Lucknow', state: 'Uttar Pradesh', region: 'North', category: 'Heritage', type: 'heritage', tags: ['heritage','palace'], lat: 26.8689, lng: 80.9128, score: 99, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '1784 CE vaulted hall built without a single pillar or beam, famous for its 3D gravity-defying maze.' },
+        { id: 'up-food-lucknow', name: 'Lucknow Awadhi Galouti Kebab & Dum Biryani (Tunday Kababi)', city: 'Lucknow', state: 'Uttar Pradesh', region: 'North', category: 'Food', type: 'food', tags: ['foodtrail','kebabs','heritage'], lat: 26.8500, lng: 80.9200, score: 100, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: '160-spice melting Galouti Kebabs, Sheermal, Ulte Tawe ka Paratha, and Dum Gosht Biryani in historic Aminabad.' },
+        { id: 'up-food-varanasi', name: 'Varanasi Tamatar Chaat, Malaiyo & Banarasi Paan Trail', city: 'Varanasi', state: 'Uttar Pradesh', region: 'North', category: 'Food', type: 'food', tags: ['foodtrail','banarasi'], lat: 25.3090, lng: 83.0060, score: 100, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Clay-pot Tamatar Chaat at Kashi Chat Bhandar, morning Heeng Kachori Sabzi, winter Malaiyo froth, and royal Banarasi Paan.' },
+
+        // =========================================================================
+        // 🚩 UTTARAKHAND (North)
+        // =========================================================================
+        { id: 'uk-kedarnath', name: 'Kedarnath Temple (Highest Jyotirlinga, Char Dham)', city: 'Kedarnath', state: 'Uttarakhand', region: 'North', category: 'Temples', type: 'temple', tags: ['jyotirlinga','chardham','temple'], lat: 30.7346, lng: 79.0669, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Sacred Shiva shrine situated at 3,583m altitude surrounded by snow-capped peaks of the Garhwal Himalayas.' },
+        { id: 'uk-badrinath', name: 'Badrinath Temple (Char Dham Maha Vishnu)', city: 'Badrinath', state: 'Uttarakhand', region: 'North', category: 'Temples', type: 'temple', tags: ['chardham','temple'], lat: 30.7448, lng: 79.4912, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Supreme Char Dham shrine situated between Nar and Narayana mountain ranges beside Alaknanda River.' },
+        { id: 'uk-haridwar', name: 'Har Ki Pauri & Rishikesh Triveni Ghat Ganga Aarti', city: 'Haridwar', state: 'Uttarakhand', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','sacred','pilgrimage'], lat: 29.9560, lng: 78.1700, score: 100, image: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?auto=format&fit=crop&w=600&q=80', desc: 'World-famous Ganga Aarti where thousands of floating leaf lamps illuminate the swirling sacred holy river at sunset.' },
+        { id: 'uk-tungnath', name: 'Tungnath Shiva Temple & Chandrashila (Highest Shiva Shrine, 3,680m)', city: 'Chopta', state: 'Uttarakhand', region: 'North', category: 'Temples', type: 'temple', tags: ['temple','nature'], lat: 30.4886, lng: 79.2169, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Highest Shiva temple in the world (12,073 ft), one of the Panch Kedar shrines with 360° Himalayan views.' },
+        { id: 'uk-valleyofflowers', name: 'Valley of Flowers National Park (UNESCO)', city: 'Chamoli', state: 'Uttarakhand', region: 'North', category: 'Nature', type: 'nature', tags: ['nature','scenic','unesco'], lat: 30.7280, lng: 79.6053, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'High-altitude Himalayan valley carpeted in endemic alpine blooms (Brahmakamal, Blue Poppy) framed by glaciers.' },
+        { id: 'uk-corbett', name: 'Jim Corbett National Park (India’s Oldest Tiger Reserve, 1936)', city: 'Ramnagar', state: 'Uttarakhand', region: 'North', category: 'Nature', type: 'nature', tags: ['nature','wildlife'], lat: 29.5300, lng: 78.7700, score: 99, image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80', desc: 'Pristine Sal forests, Ramganga river valleys, and dense Royal Bengal tiger and elephant territory.' },
+        { id: 'uk-food-pahadi', name: 'Garhwali Kafuli, Kumaoni Chainsoo & Bal Mithai Trail', city: 'Dehradun', state: 'Uttarakhand', region: 'North', category: 'Food', type: 'food', tags: ['foodtrail','pahadi'], lat: 30.3165, lng: 78.0322, score: 97, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Nutrient-rich spinach Kafuli, black gram Chainsoo, Bhatt ki Churkani, and Almora chocolate-fudge Bal Mithai.' },
+
+        // =========================================================================
+        // 🚩 WEST BENGAL (East)
+        // =========================================================================
+        { id: 'wb-kalighat', name: 'Kalighat Kali Temple & Dakshineswar (Maha Shakti Peetha)', city: 'Kolkata', state: 'West Bengal', region: 'East', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple'], lat: 22.5200, lng: 88.3425, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'One of the 51 Shakti Peethas where Sati’s right toes fell, and Ramakrishna’s Dakshineswar 9-spire temple on Hooghly.' },
+        { id: 'wb-victoria', name: 'Victoria Memorial Hall & Marble Palace', city: 'Kolkata', state: 'West Bengal', region: 'East', category: 'Heritage', type: 'heritage', tags: ['palace','heritage'], lat: 22.5448, lng: 88.3426, score: 100, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80', desc: '1921 CE white Makrana marble monument surrounded by lush gardens, galleries of British raj, and bronze Angel of Victory.' },
+        { id: 'wb-bishnupur', name: 'Bishnupur Terracotta Temples & Rasmancha (Malla Kingdom)', city: 'Bishnupur', state: 'West Bengal', region: 'East', category: 'Heritage', type: 'heritage', tags: ['heritage','temple'], lat: 23.0700, lng: 87.3200, score: 98, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '17th-century terracotta temples with burnt-clay tiles portraying scenes from Ramayana, Mahabharata, and Baluchari silks.' },
+        { id: 'wb-darjeeling', name: 'Darjeeling Tiger Hill Sunrise & Himalayan Toy Train (UNESCO)', city: 'Darjeeling', state: 'West Bengal', region: 'East', category: 'Nature', type: 'nature', tags: ['nature','scenic','unesco'], lat: 27.0410, lng: 88.2663, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Panoramic dawn sunrise over Mt. Kanchenjunga and Everest, with 1881 UNESCO narrow-gauge steam toy train loops.' },
+        { id: 'wb-sundarbans', name: 'Sundarbans Mangrove Delta & Royal Bengal Tigers (UNESCO)', city: 'Sundarbans', state: 'West Bengal', region: 'East', category: 'Nature', type: 'nature', tags: ['nature','wildlife','unesco'], lat: 21.9497, lng: 89.1833, score: 100, image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80', desc: 'World’s largest coastal mangrove forest and delta Biosphere Reserve, home to swimming Royal Bengal tigers.' },
+        { id: 'wb-food-kolkata', name: 'Kolkata Kathi Rolls, Puchka & Park Street Delights', city: 'Kolkata', state: 'West Bengal', region: 'East', category: 'Food', type: 'food', tags: ['foodtrail','bengali'], lat: 22.5535, lng: 88.3530, score: 100, image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80', desc: 'Original Nizam’s paratha Kathi Rolls, spicy tamarind water Puchkas, Kosha Mangsho, baked Mishti Doi, and spongy Rosogolla.' },
+
+        // =========================================================================
+        // 🚩 UNION TERRITORIES (8 UTs)
+        // =========================================================================
+        // 1. Andaman & Nicobar Islands
+        { id: 'ut-cellularjail', name: 'Cellular Jail National Memorial (Kala Pani)', city: 'Port Blair', state: 'Andaman and Nicobar Islands', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['heritage','fort'], lat: 11.6739, lng: 92.7478, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Historic 7-wing colonial prison where Indian freedom fighters were incarcerated, featuring evening light and sound shows.' },
+        { id: 'ut-radhanagar', name: 'Radhanagar Beach (Asia’s Best Beach, Havelock Island)', city: 'Havelock Island', state: 'Andaman and Nicobar Islands', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic','beach'], lat: 11.9840, lng: 92.9515, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Pristine crescent of powdery white sand, azure waters, tropical rainforest backdrop and spectacular sunsets.' },
+        { id: 'ut-food-andaman', name: 'Port Blair Coastal Crab Masala & Island Seafood Trail', city: 'Port Blair', state: 'Andaman and Nicobar Islands', region: 'Union Territories', category: 'Food', type: 'food', tags: ['foodtrail','coastal'], lat: 11.6670, lng: 92.7350, score: 96, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80', desc: 'Fresh deep-sea mangrove crab masala, grilled lobster with garlic butter, and coconut fish curry.' },
+
+        // 2. Chandigarh
+        { id: 'ut-rockgarden', name: 'Nek Chand’s Rock Garden & Sukhna Lake', city: 'Chandigarh', state: 'Chandigarh', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','heritage','scenic'], lat: 30.7525, lng: 76.8072, score: 99, image: 'https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=600&q=80', desc: 'Visionary 40-acre sculpture park made entirely from recycled industrial ceramic waste and man-made waterfalls.' },
+        { id: 'ut-capitol', name: 'Capitol Complex & Open Hand Monument (UNESCO)', city: 'Chandigarh', state: 'Chandigarh', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage'], lat: 30.7580, lng: 76.8050, score: 98, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'Le Corbusier modern architectural masterpiece representing the open hand to give and receive peace.' },
+        { id: 'ut-food-chandigarh', name: 'Chandigarh Sector 17 Chole Bhature & Chaat Trail', city: 'Chandigarh', state: 'Chandigarh', region: 'Union Territories', category: 'Food', type: 'food', tags: ['foodtrail','punjabi'], lat: 30.7400, lng: 76.7800, score: 96, image: 'https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80', desc: 'Puffy hot Bhature with spicy pindi chole, paneer tikka rolls, and malai kulfi falooda.' },
+
+        // 3. Dadra & Nagar Haveli and Daman & Diu
+        { id: 'ut-diufort', name: 'Diu Fort & Gangeshwar Seaside Shiva Lingas', city: 'Diu', state: 'Dadra and Nagar Haveli and Daman and Diu', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['fort','heritage','temple'], lat: 20.7133, lng: 70.9850, score: 98, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: '1535 CE Portuguese sea fortress with giant cannons and seaside cave where 5 Shiva Lingams are washed by waves.' },
+        { id: 'ut-motidaman', name: 'Moti Daman Fort & Nagoa Crescent Beach', city: 'Daman', state: 'Dadra and Nagar Haveli and Daman and Diu', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['fort','beach','scenic'], lat: 20.4167, lng: 72.8333, score: 95, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Ramparts over the Daman Ganga river estuary and Hoka palm-lined crescent beach of Diu.' },
+
+        // 4. Delhi
+        { id: 'ut-akshardham', name: 'Swaminarayan Akshardham Monument Complex', city: 'New Delhi', state: 'Delhi', region: 'Union Territories', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 28.6127, lng: 77.2773, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Colossal Rajasthani pink sandstone monument with 20,000 statues, Yagnapurush Kund water show, and boat ride.' },
+        { id: 'ut-redfort', name: 'Red Fort (Lal Qila, UNESCO)', city: 'Old Delhi', state: 'Delhi', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['fort','unesco','heritage'], lat: 28.6562, lng: 77.2410, score: 100, image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80', desc: 'Shah Jahan’s grand red sandstone palace citadel with Diwan-i-Khas, Lahore Gate, and national flag venue.' },
+        { id: 'ut-qutubminar', name: 'Qutub Minar & Iron Pillar of Delhi (UNESCO)', city: 'New Delhi', state: 'Delhi', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage'], lat: 28.5245, lng: 77.1855, score: 100, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: 'World’s tallest brick minaret (72.5m, 1192 CE) and 1,600-year-old rust-resistant Gupta metallurgical iron pillar.' },
+        { id: 'ut-humayun', name: 'Humayun’s Tomb & Sundar Nursery (UNESCO)', city: 'New Delhi', state: 'Delhi', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['unesco','heritage','palace'], lat: 28.5933, lng: 77.2507, score: 99, image: 'https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80', desc: 'Charbagh garden tomb that inspired the Taj Mahal, flanked by the award-winning Sundar Nursery arboretum.' },
+        { id: 'ut-food-delhi', name: 'Old Delhi Chandni Chowk Paranthe Wali Gali & Karim’s Trail', city: 'Old Delhi', state: 'Delhi', region: 'Union Territories', category: 'Food', type: 'food', tags: ['foodtrail','streetfood'], lat: 28.6558, lng: 77.2309, score: 100, image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&w=600&q=80', desc: 'Deep-fried rabri-lemon parathas in Paranthe Wali Gali, 1913 historic Karim’s mutton korma, and Jalebi with Rabri.' },
+
+        // 5. Jammu & Kashmir
+        { id: 'ut-vaishnodevi', name: 'Mata Vaishno Devi Shrine (Trikuta Cave)', city: 'Katra', state: 'Jammu and Kashmir', region: 'Union Territories', category: 'Temples', type: 'temple', tags: ['shaktipeetha','temple'], lat: 33.0308, lng: 74.9490, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Sacred holy cave temple in Trikuta Mountains housing the natural rock Pindies of Maha Kali, Lakshmi & Saraswati.' },
+        { id: 'ut-amarnath', name: 'Amarnath Holy Cave Shrine (Natural Ice Shiva Lingam)', city: 'Pahalgam', state: 'Jammu and Kashmir', region: 'Union Territories', category: 'Temples', type: 'temple', tags: ['temple','sacred'], lat: 34.2156, lng: 75.5039, score: 100, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Ancient high-altitude glacial cave (3,888m) where a natural stalagmite Shiva Lingam forms from ice each summer.' },
+        { id: 'ut-hari-parbat', name: 'Hari Parbat Fort & Shankaracharya Hill', city: 'Srinagar', state: 'Jammu and Kashmir', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['fort','heritage','temple'], lat: 34.0980, lng: 74.8140, score: 98, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '18th-century Durrani fortress atop Hari Parbat hill and 9th-century Shankaracharya stone temple overlooking Dal Lake.' },
+        { id: 'ut-dallake', name: 'Dal Lake Houseboats & Shikara Water Trails', city: 'Srinagar', state: 'Jammu and Kashmir', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 34.0837, lng: 74.7973, score: 100, image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80', desc: 'Jewel of Srinagar with hand-carved cedarwood houseboats, floating vegetable markets, and serene shikara rides.' },
+        { id: 'ut-gulmarg', name: 'Gulmarg Meadow of Flowers & High Gondola Cable Car', city: 'Gulmarg', state: 'Jammu and Kashmir', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 34.0484, lng: 74.3805, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'World’s second highest operating cable car (3,980m) reaching Apharwat peak for world-class skiing and alpine meadows.' },
+        { id: 'ut-food-wazwan', name: 'Srinagar 36-Course Wazwan & Saffron Kahwa Trail', city: 'Srinagar', state: 'Jammu and Kashmir', region: 'Union Territories', category: 'Food', type: 'food', tags: ['foodtrail','kashmiri'], lat: 34.0837, lng: 74.7973, score: 100, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Royal 36-course Wazwan feast prepared by master chefs (Vastas), featuring Rogan Josh, Gushtaba, Rista, and saffron Kahwa.' },
+
+        // 6. Ladakh
+        { id: 'ut-thiksey', name: 'Thiksey Monastery (Mini Potala Palace of Ladakh)', city: 'Leh', state: 'Ladakh', region: 'Union Territories', category: 'Temples', type: 'temple', tags: ['temple','buddhist'], lat: 34.0583, lng: 77.6667, score: 100, image: 'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=600&q=80', desc: '12-storey hilltop monastery resembling Lhasa’s Potala Palace, housing a 49-foot colossal statue of Maitreya Buddha.' },
+        { id: 'ut-diskit', name: 'Diskit Monastery & 106ft Maitreya Buddha (Nubra Valley)', city: 'Nubra Valley', state: 'Ladakh', region: 'Union Territories', category: 'Temples', type: 'temple', tags: ['temple','buddhist'], lat: 34.5428, lng: 77.5619, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Oldest monastery in Nubra Valley crowned with an iconic 106-foot Maitreya Buddha statue facing the Shyok River.' },
+        { id: 'ut-lehpalace', name: 'Leh Royal Palace & Shanti Stupa', city: 'Leh', state: 'Ladakh', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['palace','heritage','buddhist'], lat: 34.1661, lng: 77.5858, score: 99, image: 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=600&q=80', desc: '9-storey 17th-century Tibetan royal citadel overlooking Leh, paired with the panoramic Shanti Stupa peace pagoda.' },
+        { id: 'ut-pangong', name: 'Pangong Tso High-Altitude Lake (4,225m)', city: 'Leh', state: 'Ladakh', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic','lake'], lat: 33.7595, lng: 78.6674, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Enchanting 134-km long saline lake shifting vibrant colors from turquoise to cobalt framed by brown mountains.' },
+        { id: 'ut-nubra', name: 'Nubra Valley & Hunder Double-Humped Bactrian Sand Dunes', city: 'Hunder', state: 'Ladakh', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic'], lat: 34.5800, lng: 77.5600, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'High-altitude cold desert dunes with rare two-humped Bactrian camels along the historic Silk Route trade path.' },
+        { id: 'ut-food-ladakh', name: 'Leh Skyu, Chhurpi Yak Cheese & Butter Tea Trail', city: 'Leh', state: 'Ladakh', region: 'Union Territories', category: 'Food', type: 'food', tags: ['foodtrail','ladakhi'], lat: 34.1526, lng: 77.5771, score: 96, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Traditional thumb-pasta vegetable mutton stew Skyu, freshly steamed Tingmo bread, dried Yak cheese, and salted Gur-Gur chai.' },
+
+        // 7. Lakshadweep
+        { id: 'ut-agatti', name: 'Agatti Island Turquoise Coral Lagoon & Scuba Reefs', city: 'Agatti', state: 'Lakshadweep', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic','beach'], lat: 10.8533, lng: 72.1900, score: 100, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Breathtaking 6-km narrow coral island with crystal-clear aquamarine lagoons, sea turtles, and vibrant coral atolls.' },
+        { id: 'ut-bangaram', name: 'Bangaram Atoll & Bioluminescent Night Waters', city: 'Bangaram', state: 'Lakshadweep', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic','beach'], lat: 10.9400, lng: 72.2900, score: 99, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Uninhabited teardrop atoll surrounded by powdery white sandbars, turquoise waters, and glowing night plankton.' },
+        { id: 'ut-food-lakshadweep', name: 'Kavaratti Rayereha (Spiced Tuna Curry) & Halwa Trail', city: 'Kavaratti', state: 'Lakshadweep', region: 'Union Territories', category: 'Food', type: 'food', tags: ['foodtrail','coastal'], lat: 10.5667, lng: 72.6417, score: 95, image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80', desc: 'Island-special red chili coconut tuna curry (Rayereha), fried skipjack tuna Mus Kavaab, and coconut jaggery halwa.' },
+
+        // 8. Puducherry
+        { id: 'ut-manakula', name: 'Manakula Vinayagar Temple & Auroville Matrimandir', city: 'Puducherry', state: 'Puducherry', region: 'Union Territories', category: 'Temples', type: 'temple', tags: ['temple','heritage'], lat: 11.9360, lng: 79.8335, score: 99, image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80', desc: 'Ancient 15th-century Ganesha temple with gold chariot and futuristic gold-disc meditation sphere Matrimandir in Auroville.' },
+        { id: 'ut-whitetown', name: 'French Quarter (White Town Colonial Mansions & Promenade)', city: 'Puducherry', state: 'Puducherry', region: 'Union Territories', category: 'Heritage', type: 'heritage', tags: ['heritage','palace'], lat: 11.9333, lng: 79.8333, score: 99, image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=600&q=80', desc: 'Cobblestone streets lined with mustard-yellow French colonial villas, bougainvillea gates, and sea Promenade.' },
+        { id: 'ut-paradisebeach', name: 'Paradise Beach & Chunnambar Lagoon', city: 'Puducherry', state: 'Puducherry', region: 'Union Territories', category: 'Nature', type: 'nature', tags: ['nature','scenic','beach'], lat: 11.8700, lng: 79.8200, score: 97, image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80', desc: 'Secluded golden sand beach reached via scenic motorboat cruise across Chunnambar backwater lagoon.' },
+        { id: 'ut-food-puducherry', name: 'White Town French Croissants, Crepes & Franco-Tamil Cafe Trail', city: 'Puducherry', state: 'Puducherry', region: 'Union Territories', category: 'Food', type: 'food', tags: ['foodtrail','french'], lat: 11.9333, lng: 79.8333, score: 98, image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80', desc: 'Artisanal buttery almond croissants at Baker Street, savory buckwheat galettes, and Creole coconut fish curry.' }
+      ];
+
+      // Regional definition mapping for structured dropdown
+      const REGION_STATE_MAP = {
+        'South India': ['Andhra Pradesh', 'Karnataka', 'Kerala', 'Tamil Nadu', 'Telangana'],
+        'North India': ['Delhi', 'Haryana', 'Himachal Pradesh', 'Jammu and Kashmir', 'Punjab', 'Rajasthan', 'Uttar Pradesh', 'Uttarakhand'],
+        'West India': ['Goa', 'Gujarat', 'Maharashtra'],
+        'East India': ['Bihar', 'Jharkhand', 'Odisha', 'West Bengal'],
+        'Central India': ['Chhattisgarh', 'Madhya Pradesh'],
+        'North East India': ['Arunachal Pradesh', 'Assam', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura'],
+        'Union Territories & Islands': ['Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Ladakh', 'Lakshadweep', 'Puducherry']
+      };
+
+      let map = null;
+      let markers = [];
+      let activeLayers = new Set(['Temples', 'Heritage', 'Nature', 'Food']);
+      let activeState = 'all';
+      let activeRegion = 'all';
+      let activeTheme = 'all';
+      let viewMode = 'statewise'; // 'statewise' or 'flat'
+
+      // 2. Initialize Leaflet Map
+      function initMap() {
+        const mapEl = document.getElementById('mapView');
+        if (!mapEl) return;
+
+        map = L.map('mapView', {
+          zoomControl: true,
+          attributionControl: true
+        }).setView([21.8, 79.2], 5);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors · UnseenGo AI India Explorer'
+        }).addTo(map);
+
+        populateStateDropdown();
+        setupFilters();
+        renderMapPlaces();
+      }
+
+      // 3. Populate State Dropdown with Optgroups
+      function populateStateDropdown() {
+        const sel = document.getElementById('stateFilterSelect');
+        if (!sel) return;
+        
+        Object.entries(REGION_STATE_MAP).forEach(([regName, stateList]) => {
+          const optgroup = document.createElement('optgroup');
+          optgroup.label = `📍 ${regName}`;
+          
+          stateList.forEach(st => {
+            const count = ALL_INDIA_FAMOUS_PLACES.filter(p => p.state === st).length;
+            const opt = document.createElement('option');
+            opt.value = st;
+            opt.textContent = `${st} (${count} places)`;
+            optgroup.appendChild(opt);
+          });
+          
+          sel.appendChild(optgroup);
+        });
+      }
+
+      // 4. Render Markers and Sidebar Cards
+      function renderMapPlaces() {
+        if (!map) return;
+
+        markers.forEach(m => map.removeLayer(m));
+        markers = [];
+
+        const cardContainer = document.getElementById('poiCardContainer');
+        const searchVal = (document.getElementById('poiSearchInput')?.value || '').toLowerCase().trim();
+
+        // Filter places
+        const filtered = ALL_INDIA_FAMOUS_PLACES.filter(p => {
+          const layerMatch = activeLayers.has(p.category);
+          const stateMatch = (activeState === 'all') || (p.state === activeState);
+          
+          let regionMatch = true;
+          if (activeRegion !== 'all') {
+            if (activeRegion === 'Union Territories') {
+              regionMatch = p.region === 'Union Territories';
+            } else {
+              regionMatch = p.region === activeRegion;
+            }
+          }
+          
+          let themeMatch = true;
+          if (activeTheme === 'forts') themeMatch = (p.tags || []).includes('fort') || (p.tags || []).includes('palace');
+          else if (activeTheme === 'scenic') themeMatch = (p.tags || []).includes('scenic') || (p.tags || []).includes('waterfall') || (p.tags || []).includes('nature') || (p.tags || []).includes('canyon') || (p.tags || []).includes('lake');
+          else if (activeTheme === 'foodtrail') themeMatch = p.category === 'Food' || (p.tags || []).includes('foodtrail');
+          else if (activeTheme === 'jyotirlinga') themeMatch = (p.tags || []).includes('jyotirlinga');
+          else if (activeTheme === 'chardham') themeMatch = (p.tags || []).includes('chardham');
+          else if (activeTheme === 'shaktipeetha') themeMatch = (p.tags || []).includes('shaktipeetha');
+          else if (activeTheme === 'unesco') themeMatch = (p.tags || []).includes('unesco') || (p.tags || []).includes('unesco-tentative');
+
+          const searchMatch = !searchVal || 
+            p.name.toLowerCase().includes(searchVal) || 
+            p.city.toLowerCase().includes(searchVal) || 
+            p.state.toLowerCase().includes(searchVal) || 
+            p.category.toLowerCase().includes(searchVal) ||
+            p.desc.toLowerCase().includes(searchVal) ||
+            (p.tags || []).some(t => t.toLowerCase().includes(searchVal));
+
+          return layerMatch && stateMatch && regionMatch && themeMatch && searchMatch;
+        });
+
+        // Update counts
+        const countMap = { Temples: 0, Heritage: 0, Nature: 0, Food: 0 };
+        ALL_INDIA_FAMOUS_PLACES.forEach(p => { if (countMap[p.category] !== undefined) countMap[p.category]++; });
+        if (document.getElementById('countTemples')) document.getElementById('countTemples').textContent = countMap.Temples;
+        if (document.getElementById('countHeritage')) document.getElementById('countHeritage').textContent = countMap.Heritage;
+        if (document.getElementById('countNature')) document.getElementById('countNature').textContent = countMap.Nature;
+        if (document.getElementById('countFood')) document.getElementById('countFood').textContent = countMap.Food;
+        if (document.getElementById('visiblePlacesCount')) document.getElementById('visiblePlacesCount').textContent = filtered.length;
+
+        // Update State Banner
+        const stateBanner = document.getElementById('activeStateBanner');
+        if (activeState !== 'all' && stateBanner) {
+          stateBanner.classList.add('visible');
+          const stPlaces = ALL_INDIA_FAMOUS_PLACES.filter(p => p.state === activeState);
+          const tCount = stPlaces.filter(p => p.category === 'Temples').length;
+          const hCount = stPlaces.filter(p => p.category === 'Heritage').length;
+          const nCount = stPlaces.filter(p => p.category === 'Nature').length;
+          const fCount = stPlaces.filter(p => p.category === 'Food').length;
+          
+          document.getElementById('stateBannerTitle').textContent = `🚩 ${activeState}`;
+          document.getElementById('stateBannerRegion').textContent = stPlaces[0]?.region || 'India';
+          document.getElementById('stateBannerStats').innerHTML = `
+            <span>🛕 ${tCount} Temples</span> • 
+            <span>🏰 ${hCount} Forts/Palaces</span> • 
+            <span>🌿 ${nCount} Nature Wonders</span> • 
+            <span>🍛 ${fCount} Food Trails</span>
+          `;
+          const planLink = document.getElementById('stateBannerPlanLink');
+          if (planLink) {
+            planLink.href = `planner.html?destination=${encodeURIComponent(activeState)}`;
+          }
+        } else if (stateBanner) {
+          stateBanner.classList.remove('visible');
+        }
+
+        // Render Sidebar Cards
+        cardContainer.innerHTML = '';
+        if (filtered.length === 0) {
+          cardContainer.innerHTML = '<div style="padding: 2.5rem 1rem; text-align: center; color: var(--ug-text-muted); font-size: 0.85rem;">No famous places match your active filters. Try resetting the theme, state, or category layer.</div>';
+        }
+
+        const latLngBounds = [];
+
+        // Helper to build a place card element
+        function createPlaceCard(item) {
+          latLngBounds.push([item.lat, item.lng]);
+
+          // Marker icon selection
+          let iconEmoji = '📍';
+          let markerClass = 'ug-marker-heritage';
+          let cardClass = 'fort-card';
+
+          if (item.category === 'Temples') {
+            iconEmoji = '🛕';
+            markerClass = 'ug-marker-temple';
+            cardClass = 'temple-card';
+          } else if (item.category === 'Heritage') {
+            iconEmoji = '🏰';
+            markerClass = 'ug-marker-heritage';
+            cardClass = 'fort-card';
+          } else if (item.category === 'Nature') {
+            iconEmoji = '🌿';
+            markerClass = 'ug-marker-nature';
+            cardClass = 'nature-card';
+          } else if (item.category === 'Food') {
+            iconEmoji = '🍛';
+            markerClass = 'ug-marker-food';
+            cardClass = 'food-card';
+          }
+
+          const customIcon = L.divIcon({
+            html: `<div class="ug-marker-icon ${markerClass}">${iconEmoji}</div>`,
+            className: '',
+            iconSize: [32, 32],
+            iconAnchor: [16, 16]
+          });
+
+          const marker = L.marker([item.lat, item.lng], { icon: customIcon }).addTo(map);
+
+          // Popup content
+          const tagBadges = (item.tags || []).map(t => {
+            let color = 'rgba(255,255,255,0.15)';
+            if (t === 'jyotirlinga' || t === 'chardham') color = '#f59e0b';
+            else if (t === 'fort' || t === 'palace') color = '#fb923c';
+            else if (t === 'nature' || t === 'waterfall' || t === 'canyon') color = '#10b981';
+            else if (t === 'foodtrail') color = '#ef4444';
+            return `<span style="font-size:9px;background:rgba(255,255,255,0.08);color:${color};border:1px solid rgba(255,255,255,0.15);padding:1px 5px;border-radius:4px;margin-right:3px;">${t}</span>`;
+          }).join('');
+
+          const popupHtml = `
+            <div class="popup-card">
+              <img class="popup-img" src="${item.image}" alt="${item.name}" loading="lazy">
+              <div class="popup-body">
+                <div class="popup-header-row">
+                  <span class="popup-cat-badge">${item.category} · ${item.city}</span>
+                  <span class="popup-score-badge">✦ ${item.score}</span>
+                </div>
+                <h4 class="popup-title">${item.name}</h4>
+                <div class="popup-loc">📍 ${item.city}, ${item.state}</div>
+                ${tagBadges ? `<div style="margin-bottom:6px;">${tagBadges}</div>` : ''}
+                <p class="popup-desc">${item.desc}</p>
+                <div class="popup-actions">
+                  <a href="planner.html?place=${encodeURIComponent(item.name)}&city=${encodeURIComponent(item.city)}" class="popup-btn-primary">
+                    🤖 Plan AI Itinerary for this Place →
+                  </a>
+                  <div class="popup-btn-secondary">
+                    <a href="place.html?place=${encodeURIComponent(item.name)}&city=${encodeURIComponent(item.city)}" class="popup-sub-btn">
+                      📖 Details
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + item.city + ' ' + item.state)}" target="_blank" rel="noopener" class="popup-sub-btn">
+                      🧭 GPS Nav ↗
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          marker.bindPopup(popupHtml);
+          markers.push(marker);
+
+          // Card in Sidebar
+          const card = document.createElement('article');
+          card.className = `poi-card-item ${cardClass}`;
+          
+          let tagSnippet = '';
+          if ((item.tags || []).includes('fort')) tagSnippet += '<span class="poi-tag-badge orange">🏰 Fort</span>';
+          if ((item.tags || []).includes('palace')) tagSnippet += '<span class="poi-tag-badge orange">👑 Palace</span>';
+          if ((item.tags || []).includes('waterfall')) tagSnippet += '<span class="poi-tag-badge green">💦 Waterfall</span>';
+          if ((item.tags || []).includes('scenic') || (item.tags || []).includes('canyon')) tagSnippet += '<span class="poi-tag-badge green">⛰️ Scenic</span>';
+          if ((item.tags || []).includes('foodtrail')) tagSnippet += '<span class="poi-tag-badge red">🍛 Food Trail</span>';
+          if ((item.tags || []).includes('jyotirlinga')) tagSnippet += '<span class="poi-tag-badge gold">🔱 Jyotirlinga</span>';
+          if ((item.tags || []).includes('chardham')) tagSnippet += '<span class="poi-tag-badge gold">⛰️ Char Dham</span>';
+          if ((item.tags || []).includes('shaktipeetha')) tagSnippet += '<span class="poi-tag-badge gold">🌺 Shakti Peetha</span>';
+          if ((item.tags || []).includes('unesco')) tagSnippet += '<span class="poi-tag-badge gold">🏛️ UNESCO</span>';
+
+          card.innerHTML = `
+            <img class="poi-card-img" src="${item.image}" alt="${item.name}" loading="lazy">
+            <div class="poi-card-details">
+              <div>
+                <h4 class="poi-card-title">${item.name}</h4>
+                <div class="poi-card-meta">
+                  <span class="poi-state-badge">📍 ${item.city}, ${item.state}</span>
+                  <span>•</span>
+                  <span class="poi-score-pill">✦ ${item.score}</span>
+                  ${tagSnippet}
+                </div>
+              </div>
+              <div class="poi-action-row">
+                <a href="planner.html?place=${encodeURIComponent(item.name)}&city=${encodeURIComponent(item.city)}" class="card-mini-btn" style="color:var(--ug-lime); border-color:var(--ug-lime);" onclick="event.stopPropagation();">
+                  🤖 Plan
+                </a>
+                <a href="place.html?place=${encodeURIComponent(item.name)}&city=${encodeURIComponent(item.city)}" class="card-mini-btn" onclick="event.stopPropagation();">
+                  Guide
+                </a>
+                <button type="button" class="card-mini-btn" onclick="event.stopPropagation(); window.savePlace('${item.name}')">
+                  ❤️ Save
+                </button>
+              </div>
+            </div>
+          `;
+
+          card.addEventListener('click', () => {
+            document.querySelectorAll('.poi-card-item').forEach(c => c.classList.remove('active'));
+            card.classList.add('active');
+            map.flyTo([item.lat, item.lng], 13, { duration: 1.2 });
+            marker.openPopup();
+          });
+
+          return card;
+        }
+
+        // Render according to View Mode: State-Wise or Flat
+        if (viewMode === 'statewise' && activeState === 'all') {
+          // Group by State
+          const stateGroups = {};
+          filtered.forEach(item => {
+            if (!stateGroups[item.state]) stateGroups[item.state] = [];
+            stateGroups[item.state].push(item);
+          });
+
+          Object.keys(stateGroups).sort().forEach(stName => {
+            const stItems = stateGroups[stName];
+            const grpEl = document.createElement('div');
+            grpEl.className = 'state-group-section';
+
+            const grpHeader = document.createElement('div');
+            grpHeader.className = 'state-group-header';
+            grpHeader.innerHTML = `
+              <span class="state-group-name">🚩 ${stName}</span>
+              <span class="state-group-count">${stItems.length} destinations</span>
+            `;
+            
+            grpHeader.addEventListener('click', () => {
+              const stateSel = document.getElementById('stateFilterSelect');
+              if (stateSel) {
+                stateSel.value = stName;
+                activeState = stName;
+                const badge = document.getElementById('stateCountBadge');
+                if (badge) badge.textContent = stName;
+                renderMapPlaces();
+              }
+            });
+
+            const grpBody = document.createElement('div');
+            grpBody.className = 'state-group-items';
+
+            stItems.forEach(item => {
+              grpBody.appendChild(createPlaceCard(item));
+            });
+
+            grpEl.appendChild(grpHeader);
+            grpEl.appendChild(grpBody);
+            cardContainer.appendChild(grpEl);
+          });
+
+        } else {
+          // Flat list
+          filtered.forEach(item => {
+            cardContainer.appendChild(createPlaceCard(item));
+          });
+        }
+
+        // Fit map bounds if specific state or search
+        if (activeState !== 'all' && latLngBounds.length > 0) {
+          map.fitBounds(latLngBounds, { padding: [40, 40], maxZoom: 11 });
+        }
+      }
+
+      // 5. Setup Listeners for Filters
+      function setupFilters() {
+        const stateSel = document.getElementById('stateFilterSelect');
+        if (stateSel) {
+          stateSel.addEventListener('change', () => {
+            activeState = stateSel.value;
+            const badge = document.getElementById('stateCountBadge');
+            if (badge) badge.textContent = activeState === 'all' ? 'All India (250+ Places)' : activeState;
+            renderMapPlaces();
+          });
+        }
+
+        // View mode buttons
+        const btnGroup = document.getElementById('btnGroupState');
+        const btnFlat = document.getElementById('btnFlatList');
+        if (btnGroup && btnFlat) {
+          btnGroup.addEventListener('click', () => {
+            btnGroup.classList.add('active');
+            btnFlat.classList.remove('active');
+            viewMode = 'statewise';
+            renderMapPlaces();
+          });
+          btnFlat.addEventListener('click', () => {
+            btnFlat.classList.add('active');
+            btnGroup.classList.remove('active');
+            viewMode = 'flat';
+            renderMapPlaces();
+          });
+        }
+
+        // Themes buttons
+        document.querySelectorAll('.theme-pill-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.theme-pill-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeTheme = btn.dataset.theme;
+            renderMapPlaces();
+          });
+        });
+
+        // Region buttons
+        document.querySelectorAll('.region-tab-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.region-tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeRegion = btn.dataset.region;
+            
+            const regionCenters = {
+              all: [21.8, 79.2, 5],
+              South: [13.5, 78.0, 6],
+              North: [29.8, 77.2, 6],
+              West: [21.5, 73.0, 6],
+              East: [22.8, 86.2, 6],
+              Central: [23.5, 78.5, 6],
+              'North East': [26.0, 93.0, 6],
+              'Union Territories': [20.0, 78.0, 5]
+            };
+
+            if (regionCenters[activeRegion]) {
+              const [lat, lng, zoom] = regionCenters[activeRegion];
+              map.flyTo([lat, lng], zoom, { duration: 1 });
+            }
+
+            renderMapPlaces();
+          });
+        });
+
+        // Category layer toggles
+        document.querySelectorAll('.layer-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const layer = btn.dataset.layer;
+            if (activeLayers.has(layer)) {
+              if (activeLayers.size > 1) {
+                activeLayers.delete(layer);
+                btn.classList.remove('active');
+              }
+            } else {
+              activeLayers.add(layer);
+              btn.classList.add('active');
+            }
+            renderMapPlaces();
+          });
+        });
+
+        // Live search
+        document.getElementById('poiSearchInput')?.addEventListener('input', () => {
+          renderMapPlaces();
+        });
+      }
+
+      // 6. Global Save Place
+      window.savePlace = function(name) {
+        let list = [];
+        try {
+          list = JSON.parse(localStorage.getItem('unseengo_saved_places') || '[]');
+        } catch (_) {}
+        if (!list.includes(name)) {
+          list.push(name);
+          localStorage.setItem('unseengo_saved_places', JSON.stringify(list));
+          alert(`✓ Saved "${name}" to your My Travel vault! ❤️`);
+        } else {
+          alert(`"${name}" is already in your My Travel vault.`);
+        }
+      };
+
+      // 7. Initialize on load
+      window.addEventListener('DOMContentLoaded', () => {
+        initMap();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const pPlace = urlParams.get('place');
+        const pCity = urlParams.get('city');
+        const pState = urlParams.get('state');
+        const pTheme = urlParams.get('theme');
+
+        if (pTheme) {
+          const tBtn = document.querySelector(`[data-theme="${pTheme}"]`);
+          if (tBtn) {
+            document.querySelectorAll('.theme-pill-btn').forEach(b => b.classList.remove('active'));
+            tBtn.classList.add('active');
+            activeTheme = pTheme;
+          }
+        }
+
+        if (pState) {
+          const stateSel = document.getElementById('stateFilterSelect');
+          if (stateSel) {
+            stateSel.value = pState;
+            activeState = pState;
+            const badge = document.getElementById('stateCountBadge');
+            if (badge) badge.textContent = pState;
+            renderMapPlaces();
+          }
+        }
+
+        if (pPlace) {
+          const match = ALL_INDIA_FAMOUS_PLACES.find(p => p.name.toLowerCase().includes(pPlace.toLowerCase()) || pPlace.toLowerCase().includes(p.name.toLowerCase()));
+          if (match && map) {
+            setTimeout(() => {
+              map.flyTo([match.lat, match.lng], 13, { duration: 1.2 });
+              const m = markers.find(marker => {
+                const pos = marker.getLatLng();
+                return Math.abs(pos.lat - match.lat) < 0.001 && Math.abs(pos.lng - match.lng) < 0.001;
+              });
+              if (m) m.openPopup();
+            }, 500);
+          }
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>

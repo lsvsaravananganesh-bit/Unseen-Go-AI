@@ -1,1 +1,97 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Explore verified real photos, sourced history, narration and related places with UnseenGo AI."><title>Place Guide — UnseenGo AI</title><link rel="stylesheet" href="styles.css?v=20260826f"><link rel="stylesheet" href="responsive.css?v=20260826f"><link rel="stylesheet" href="bright-theme.css?v=20260826f"><link rel="stylesheet" href="place-details-page.css?v=20260826f"><link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head><body class="place-page"><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a href="discover.html">Discover</a><a href="india-cities.html">India</a><a href="transport.html">Transport</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='discover.html'">Back to places</button></header><main id="placeApp" class="place-shell"><div class="place-loading">Loading verified real place guide…</div></main><footer><b>✦ UnseenGo AI</b><span>Discover places. Build better journeys.</span><span>© 2026</span></footer><script src="app.js?v=20260826f"></script><script src="india-state-directory.js?v=20260826f"></script><script src="place-details-page.js?v=20260826f"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore verified real photos, sourced history, narration and related places with UnseenGo AI.">
+  <title>Place Guide — UnseenGo AI</title>
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="place-details-page.css">
+</head>
+<body class="place-page">
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link active" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link active" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+          <a class="ug-drawer-link" href="india-cities.html"><span class="icon">📍</span><span>Destinations Directory</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <main id="placeApp" class="place-shell">
+    <div class="place-loading">Loading verified real place guide…</div>
+  </main>
+
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Discover places. Build better journeys.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="india-state-directory.js"></script>
+  <script src="place-details-page.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

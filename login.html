@@ -1,1 +1,193 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Login to UnseenGo AI"><title>Login — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="auth.css"><link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head><body class="auth-page"><main class="auth-wrap"><a class="brand auth-brand" href="index.html">✦ UnseenGo <b>AI</b></a><section class="auth-card" aria-labelledby="loginTitle"><p class="eyebrow">WELCOME BACK, TRAVELLER</p><h1 id="loginTitle">Sign in.</h1><p class="sub">Continue discovering hidden places and planning your next journey.</p><form id="loginForm" novalidate><div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email" required placeholder="your@email.com"></div><div class="field"><label for="password">Password</label><div class="input-wrap"><input id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Enter your password"><button class="password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button></div></div><a class="forgot" href="#" id="forgotPassword">Forgot password?</a><button class="submit" id="loginButton" type="submit">LOGIN</button></form><div id="message" class="message" aria-live="polite"></div><p class="switch">Don't have an account? <a href="signup.html">Sign up</a></p><div class="back"><a href="index.html">← Back to UnseenGo AI</a></div></section></main><script src="supabase-config.js?v=20260826a"></script><script src="supabase-client.js?v=20260826a"></script><script src="auth.js?v=20260826a"></script><script>document.addEventListener('DOMContentLoaded',function(){const input=document.getElementById('password');const toggle=document.getElementById('togglePassword');toggle.addEventListener('click',function(){const visible=input.type==='text';input.type=visible?'password':'text';toggle.textContent=visible?'Show':'Hide';toggle.setAttribute('aria-label',visible?'Show password':'Hide password');});document.getElementById('forgotPassword').addEventListener('click',function(e){e.preventDefault();const email=document.getElementById('email').value.trim();const msg=document.getElementById('message');if(!email){msg.textContent='Enter your email first, then choose Forgot password.';msg.className='message error';return;}window.UnseenGoAuthForgotPassword?.(email);});});</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Login to UnseenGo AI — Experience hidden-gem Indian travel discovery">
+  <title>Login & Demo — UnseenGo AI</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="responsive.css">
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body class="auth-page">
+  <main class="auth-wrap">
+    <a class="brand auth-brand" href="index.html">✦ UnseenGo <b>AI</b></a>
+
+    <section class="auth-card" aria-labelledby="loginTitle">
+      <p class="eyebrow">✦ UNSEENGO AI · TRAVELLER ACCESS</p>
+      <h1 id="loginTitle">Welcome, traveller.</h1>
+      <p class="sub">Discover India's overlooked places, plan personalized journeys, and explore hidden gems.</p>
+
+      <!-- Interactive Mode Tabs -->
+      <nav class="auth-tabs" aria-label="Authentication modes">
+        <button type="button" class="auth-tab active" data-auth-tab="demoPane" aria-selected="true">
+          <span>⚡ 1-Click Demo</span>
+          <span class="auth-tab-badge">Instant</span>
+        </button>
+        <button type="button" class="auth-tab" data-auth-tab="credentialsPane" aria-selected="false">
+          <span>🔑 Email Login</span>
+        </button>
+      </nav>
+
+      <!-- Pane 1: 1-Click Demo Login (Active by Default) -->
+      <div id="demoPane" class="auth-tab-pane active" role="tabpanel">
+        <div class="demo-pane">
+          <!-- Master Instant Demo Button -->
+          <div class="demo-hero-cta" id="instantDemoButton" role="button" tabindex="0" title="Click to log in immediately with default demo traveller">
+            <div class="demo-hero-title">
+              <span>⚡ <b>Instant Demo Explorer</b></span>
+              <span class="demo-hero-badge">1-Click Launch →</span>
+            </div>
+            <p class="demo-hero-sub">Jump straight into the personalized dashboard with pre-configured preferences, saved gems, and live AI itineraries.</p>
+          </div>
+
+          <div class="demo-divider">OR CHOOSE A TRAVELLER PERSONA</div>
+
+          <!-- Persona 1: Arjun Sharma -->
+          <div class="persona-cards">
+            <article class="persona-card" data-demo-persona="arjun" role="button" tabindex="0" title="Login as Arjun Sharma">
+              <div class="persona-left">
+                <div class="persona-avatar">A</div>
+                <div class="persona-info">
+                  <span class="persona-name">Arjun Sharma</span>
+                  <span class="persona-meta">Heritage & Architecture Enthusiast</span>
+                  <div class="persona-tags">
+                    <span class="persona-tag">🏛 Heritage</span>
+                    <span class="persona-tag">📷 Photos</span>
+                    <span class="persona-tag">Ahmedabad · 3 Days</span>
+                  </div>
+                </div>
+              </div>
+              <span class="persona-action">Login →</span>
+            </article>
+
+            <!-- Persona 2: Ananya Roy -->
+            <article class="persona-card" data-demo-persona="ananya" role="button" tabindex="0" title="Login as Ananya Roy">
+              <div class="persona-left">
+                <div class="persona-avatar" style="color:#6affb8;background:linear-gradient(135deg,#12291c,#0a1710);border-color:#1c422c">A</div>
+                <div class="persona-info">
+                  <span class="persona-name">Ananya Roy</span>
+                  <span class="persona-meta">Rainforest & Nature Explorer</span>
+                  <div class="persona-tags">
+                    <span class="persona-tag">🌿 Nature</span>
+                    <span class="persona-tag">Quiet Trails</span>
+                    <span class="persona-tag">Bengaluru · 2 Days</span>
+                  </div>
+                </div>
+              </div>
+              <span class="persona-action">Login →</span>
+            </article>
+
+            <!-- Persona 3: Vikram Malhotra -->
+            <article class="persona-card" data-demo-persona="vikram" role="button" tabindex="0" title="Login as Vikram Malhotra">
+              <div class="persona-left">
+                <div class="persona-avatar" style="color:#ffb86a;background:linear-gradient(135deg,#2e1e12,#180f09);border-color:#48301c">V</div>
+                <div class="persona-info">
+                  <span class="persona-name">Vikram Malhotra</span>
+                  <span class="persona-meta">Food, Culture & Roadtripper</span>
+                  <div class="persona-tags">
+                    <span class="persona-tag">🍛 Food</span>
+                    <span class="persona-tag">⛰ Adventure</span>
+                    <span class="persona-tag">Hyderabad · 4 Days</span>
+                  </div>
+                </div>
+              </div>
+              <span class="persona-action">Login →</span>
+            </article>
+
+            <!-- Persona 4: Ganesh (Platform Administrator) -->
+            <article class="persona-card" data-demo-persona="ganesh" role="button" tabindex="0" title="Login as Platform Administrator (Ganesh)" style="border-color: rgba(245, 158, 11, 0.4); background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(0, 0, 0, 0.4));">
+              <div class="persona-left">
+                <div class="persona-avatar" style="color:#fbbf24;background:linear-gradient(135deg,#382205,#1c1002);border-color:#f59e0b">👑</div>
+                <div class="persona-info">
+                  <span class="persona-name" style="color: #fbbf24;">Ganesh <span style="font-size:0.65rem; background:rgba(245,158,11,0.25); padding:2px 8px; border-radius:999px; border:1px solid #f59e0b; font-weight:800;">👑 ADMIN</span></span>
+                  <span class="persona-meta">Platform Administrator & Operations</span>
+                  <div class="persona-tags">
+                    <span class="persona-tag" style="color:#fbbf24; border-color:rgba(245,158,11,0.4);">⚙️ Full Admin Access</span>
+                    <span class="persona-tag">🛡️ Governance</span>
+                  </div>
+                </div>
+              </div>
+              <span class="persona-action" style="color:#fbbf24; font-weight:800;">Admin Login →</span>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pane 2: Email & Password (Supabase / Standard Login) -->
+      <div id="credentialsPane" class="auth-tab-pane" role="tabpanel">
+        <div class="demo-chip-bar" style="flex-wrap: wrap; gap: 0.5rem;">
+          <div class="demo-chip-text" style="flex: 1 1 100%;">
+            <span>Enter any email (admin emails auto-grant full console access, others login as travellers)</span>
+          </div>
+          <button type="button" class="demo-chip-btn" id="fillDemoCreds">Fill User (Traveler)</button>
+          <button type="button" class="demo-chip-btn" id="fillAdminCreds" style="color:#fbbf24; border-color:rgba(245,158,11,0.4); background:rgba(245,158,11,0.1);">Fill Admin (Ganesh)</button>
+        </div>
+
+        <form id="loginForm" novalidate>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" type="email" autocomplete="email" required placeholder="your@email.com">
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <div class="input-wrap">
+              <input id="password" type="password" autocomplete="current-password" required minlength="6" placeholder="Enter your password">
+              <button class="password-toggle" id="togglePassword" type="button" aria-label="Show password">Show</button>
+            </div>
+          </div>
+
+          <a class="forgot" href="#" id="forgotPassword">Forgot password?</a>
+          <button class="submit" id="loginButton" type="submit">LOGIN</button>
+        </form>
+      </div>
+
+      <div id="message" class="message" aria-live="polite"></div>
+
+      <p class="switch">
+        Don't have an account? <a href="signup.html">Create account</a> or use <a href="#" onclick="document.querySelector('[data-auth-tab=\'demoPane\']').click();return false;">1-Click Demo</a>
+      </p>
+
+      <div class="back">
+        <a href="index.html">← Back to UnseenGo AI</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="supabase-config.js?v=20260826a"></script>
+  <script src="supabase-client.js?v=20260826a"></script>
+  <script src="auth.js?v=20260923"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      const input = document.getElementById('password');
+      const toggle = document.getElementById('togglePassword');
+      if (toggle && input) {
+        toggle.addEventListener('click', function(){
+          const visible = input.type === 'text';
+          input.type = visible ? 'password' : 'text';
+          toggle.textContent = visible ? 'Show' : 'Hide';
+          toggle.setAttribute('aria-label', visible ? 'Show password' : 'Hide password');
+        });
+      }
+
+      const forgot = document.getElementById('forgotPassword');
+      if (forgot) {
+        forgot.addEventListener('click', function(e){
+          e.preventDefault();
+          const email = document.getElementById('email')?.value.trim();
+          const msg = document.getElementById('message');
+          if (!email) {
+            if (msg) {
+              msg.textContent = 'Enter your email first, or use the 1-Click Demo tab.';
+              msg.className = 'message error';
+            }
+            return;
+          }
+          window.UnseenGoAuth?.forgotPassword(email);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

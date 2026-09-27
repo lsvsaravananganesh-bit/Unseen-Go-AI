@@ -1,0 +1,918 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Admin Center — Manage destinations, verification, community submissions, reviews, and users on UnseenGo AI.">
+  <title>Admin Operations — UnseenGo AI</title>
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+            <li><a class="ug-nav-link active" href="admin.html">⚙️ Admin</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+          <a class="ug-drawer-link active" href="admin.html"><span class="icon">⚙️</span><span>Admin</span></a>
+          <a class="ug-drawer-link" href="india-cities.html"><span class="icon">📍</span><span>Destinations Directory</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Page Body -->
+  <main class="ug-section" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+    <div class="ug-container">
+      
+      <!-- 🔒 LOCKED VIEW (Shown to normal/unauthenticated users) -->
+      <div id="adminLockedView" style="display: none; max-width: 580px; margin: 2rem auto; text-align: center;">
+        <div style="background: var(--ug-surface); border: 1px solid var(--ug-border); border-radius: 20px; padding: 2.5rem 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.35); position: relative; overflow: hidden;">
+          <div style="position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b);"></div>
+          
+          <div style="width: 72px; height: 72px; margin: 0 auto 1.25rem; border-radius: 50%; background: rgba(245, 158, 11, 0.12); border: 2px solid #f59e0b; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 0 30px rgba(245, 158, 11, 0.3);">
+            🔒
+          </div>
+
+          <div class="ug-kicker saffron" style="margin-bottom: 0.5rem;">RESTRICTED STAFF ACCESS</div>
+          <h2 style="font-size: 1.85rem; margin: 0 0 0.75rem; color: var(--ug-text-primary);">
+            Admin Portal <span class="ug-serif" style="color: var(--ug-terracotta);">Locked</span>
+          </h2>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; line-height: 1.6; margin: 0 auto 1.75rem; max-width: 480px;">
+            This operations dashboard is restricted to <strong>UnseenGo platform administrators</strong>. Public travellers and regular users cannot access governance controls.
+          </p>
+
+          <!-- Quick Unlock Form -->
+          <form id="adminUnlockForm" style="text-align: left; background: var(--ug-bg); border: 1px solid var(--ug-border); padding: 1.25rem; border-radius: 14px; margin-bottom: 1.25rem;">
+            <label for="adminUnlockInput" style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--ug-text-primary);">
+              Enter Admin Email or Passcode:
+            </label>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <input type="text" id="adminUnlockInput" placeholder="e.g. lsvsaravananganesh@gmail.com or passcode" required style="flex: 1; min-width: 220px; padding: 0.75rem 1rem; border: 1px solid var(--ug-border); border-radius: 10px; background: var(--ug-surface); color: var(--ug-text-primary); font-size: 0.9rem;">
+              <button type="submit" class="ug-btn-primary" style="padding: 0.75rem 1.25rem; font-weight: 800; background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; border: none; cursor: pointer;">
+                🔓 Unlock
+              </button>
+            </div>
+            <div id="adminUnlockMsg" style="font-size: 0.85rem; margin-top: 0.6rem; min-height: 1.2rem; font-weight: 600;"></div>
+          </form>
+
+          <!-- 1-Click Fast Unlock for Ganesh & Return Link -->
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <button type="button" id="fastAdminUnlockBtn" class="ug-btn-secondary" style="border-color: rgba(245, 158, 11, 0.4); color: #fbbf24; background: rgba(245, 158, 11, 0.08); font-weight: 700; padding: 0.7rem 1.2rem; cursor: pointer;">
+              👑 Instant Unlock as Ganesh (Admin)
+            </button>
+            <a href="index.html" class="ug-btn-secondary" style="text-decoration: none; font-size: 0.85rem; color: var(--ug-text-muted);">
+              ← Return to Traveler Home
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 👑 AUTHORIZED VIEW (Visible only to verified Admins) -->
+      <div id="adminAuthorizedView" style="display: none;">
+        
+        <!-- Admin Identity Pill Banner -->
+        <div id="adminIdentityBanner" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding: 0.75rem 1.25rem; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.35); border-radius: 12px; margin-bottom: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <span style="font-size: 1.2rem;">👑</span>
+            <span style="font-size: 0.88rem; color: #fbbf24; font-weight: 700;">
+              Authenticated as Platform Administrator: <strong id="adminUserDisplayName" style="color: var(--ug-text-primary);">Ganesh</strong> (<span id="adminUserDisplayEmail" style="opacity: 0.85;">lsvsaravananganesh@gmail.com</span>)
+            </span>
+          </div>
+          <button type="button" id="adminLockConsoleBtn" class="ug-btn-secondary" style="font-size: 0.78rem; padding: 0.35rem 0.75rem; border-color: rgba(245, 158, 11, 0.3); color: #fbbf24; cursor: pointer;">
+            🔒 Lock Console
+          </button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 2rem;">
+          <div>
+            <div class="ug-kicker saffron">⚙️ OPERATIONS & GOVERNANCE</div>
+            <h1 style="font-size: clamp(2.4rem, 5vw, 3.5rem); margin: 0.5rem 0 0.5rem; letter-spacing: -0.02em;">
+              Admin <span class="ug-serif" style="color: var(--ug-terracotta);">Console</span>
+            </h1>
+            <p style="color: var(--ug-text-secondary); max-width: 650px; margin: 0; line-height: 1.6;">
+              Manage destination registry, verify tourism data integrity, moderate community submissions and reviews, and govern user roles.
+            </p>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem;">
+            <button type="button" class="ug-btn-secondary" id="exportAuditBtn">
+              📊 Export Audit Log
+            </button>
+            <button type="button" class="ug-btn-primary" id="openAddDestBtn">
+              ➕ Add Destination
+            </button>
+          </div>
+        </div>
+
+      <!-- KPI Metrics Row -->
+      <div class="ug-admin-metrics">
+        <div class="ug-metric-box">
+          <div>
+            <div class="ug-metric-lbl">Total Destinations</div>
+            <div class="ug-metric-val" id="metricDestCount">142</div>
+          </div>
+          <span style="font-size: 2rem;">🏛️</span>
+        </div>
+        <div class="ug-metric-box">
+          <div>
+            <div class="ug-metric-lbl">Verified Data Rate</div>
+            <div class="ug-metric-val" id="metricVerifiedRate">98.4%</div>
+          </div>
+          <span style="font-size: 2rem;">🛡️</span>
+        </div>
+        <div class="ug-metric-box">
+          <div>
+            <div class="ug-metric-lbl">Community Submissions</div>
+            <div class="ug-metric-val" id="metricSubmissions">12</div>
+          </div>
+          <span style="font-size: 2rem;">🤝</span>
+        </div>
+        <div class="ug-metric-box">
+          <div>
+            <div class="ug-metric-lbl">Moderated Reviews</div>
+            <div class="ug-metric-val" id="metricReviews">348</div>
+          </div>
+          <span style="font-size: 2rem;">⭐</span>
+        </div>
+      </div>
+
+      <!-- 5 Core Admin Tabs -->
+      <div class="ug-tabs-bar">
+        <button type="button" class="ug-tab-btn active" data-tab="admin-destinations">
+          🏛️ Destinations (<span id="tabCountDest">142</span>)
+        </button>
+        <button type="button" class="ug-tab-btn" data-tab="admin-verification">
+          🛡️ Verification Audit (<span id="tabCountVerify">6</span>)
+        </button>
+        <button type="button" class="ug-tab-btn" data-tab="admin-submissions">
+          🤝 Community Submissions (<span id="tabCountSub">3</span>)
+        </button>
+        <button type="button" class="ug-tab-btn" data-tab="admin-reviews">
+          ⭐ Reviews (<span id="tabCountRev">4</span>)
+        </button>
+        <button type="button" class="ug-tab-btn" data-tab="admin-users">
+          👥 Users (<span id="tabCountUsers">5</span>)
+        </button>
+      </div>
+
+      <!-- TAB 1: DESTINATIONS -->
+      <div id="admin-destinations" class="ug-tab-pane active">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 0.75rem;">
+          <input type="text" id="destSearchInput" placeholder="Filter by destination, city or region..." style="padding: 0.55rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-surface); border-radius: 10px; color: var(--ug-text-primary); width: min(340px, 100%);">
+          <div style="display: flex; gap: 0.5rem;">
+            <select id="destCategoryFilter" style="padding: 0.55rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-surface); border-radius: 10px; color: var(--ug-text-primary);">
+              <option value="all">All Categories</option>
+              <option value="Heritage">Heritage & Ruins</option>
+              <option value="Nature">Sacred Nature</option>
+              <option value="Food">Food Trails</option>
+              <option value="Culture">Living Crafts</option>
+              <option value="Adventure">Offbeat Escapes</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="ug-admin-table-wrap">
+          <table class="ug-admin-table">
+            <thead>
+              <tr>
+                <th>Place Name</th>
+                <th>Hub / Region</th>
+                <th>Category</th>
+                <th>Unseen Score</th>
+                <th>Verification</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="destinationsTableBody">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 2: VERIFICATION -->
+      <div id="admin-verification" class="ug-tab-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.25rem;">Data Verification & Audit Queue</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--ug-text-secondary);">Validates Ministry of Tourism / NIDHI registries, coordinates, and photo integrity.</p>
+          </div>
+          <button type="button" class="ug-btn-primary" id="runAuditBtn">
+            ⚡ Run Full Integrity Scan
+          </button>
+        </div>
+
+        <div class="ug-admin-table-wrap">
+          <table class="ug-admin-table">
+            <thead>
+              <tr>
+                <th>Target Resource</th>
+                <th>Check Type</th>
+                <th>Status</th>
+                <th>Accuracy Signal</th>
+                <th>Last Scanned</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="verificationTableBody">
+              <tr>
+                <td><strong>Gandikota River Gorge</strong></td>
+                <td>Geolocation & GPS Boundary</td>
+                <td><span class="ug-badge ug-badge-verified">✓ Confirmed</span></td>
+                <td>±8m GPS precision</td>
+                <td>Today, 09:30 AM</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;">Re-verify</button></td>
+              </tr>
+              <tr>
+                <td><strong>Lepakshi Monoliths</strong></td>
+                <td>NIDHI National Registry</td>
+                <td><span class="ug-badge ug-badge-verified">✓ NIDHI-Listed</span></td>
+                <td>ASI Protected Site #AP-24</td>
+                <td>Yesterday</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;">Inspect</button></td>
+              </tr>
+              <tr>
+                <td><strong>Agumbe Rainforest Canopy</strong></td>
+                <td>Google Places Photo Attrib.</td>
+                <td><span class="ug-badge ug-badge-verified">✓ Real Photos Verified</span></td>
+                <td>No stock / AI image flags</td>
+                <td>2 days ago</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;">Inspect</button></td>
+              </tr>
+              <tr>
+                <td><strong>Belum Caves Subterranean</strong></td>
+                <td>Safety & Timings Audit</td>
+                <td><span class="ug-badge ug-badge-pending">⏳ Needs Seasonal Update</span></td>
+                <td>Monsoon water levels flag</td>
+                <td>3 days ago</td>
+                <td><button type="button" class="ug-btn-primary" style="font-size: 0.72rem;">Approve Update</button></td>
+              </tr>
+              <tr>
+                <td><strong>Paigah Tombs Courtyards</strong></td>
+                <td>Historical Source Attribution</td>
+                <td><span class="ug-badge ug-badge-verified">✓ Peer Reviewed</span></td>
+                <td>Telangana Heritage Archives</td>
+                <td>4 days ago</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;">View Source</button></td>
+              </tr>
+              <tr>
+                <td><strong>Kondapalli Fort Ruins</strong></td>
+                <td>Local Guide Registry</td>
+                <td><span class="ug-badge ug-badge-pending">⏳ New Guide Pending</span></td>
+                <td>2 local artisans registered</td>
+                <td>5 days ago</td>
+                <td><button type="button" class="ug-btn-primary" style="font-size: 0.72rem;">Verify Guide</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 3: COMMUNITY SUBMISSIONS -->
+      <div id="admin-submissions" class="ug-tab-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.25rem;">Traveler Hidden Gem Submissions</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--ug-text-secondary);">Crowdsourced discoveries awaiting editorial verification.</p>
+          </div>
+        </div>
+
+        <div class="ug-admin-table-wrap">
+          <table class="ug-admin-table">
+            <thead>
+              <tr>
+                <th>Proposed Gem</th>
+                <th>Location</th>
+                <th>Submitter</th>
+                <th>Highlights</th>
+                <th>Status</th>
+                <th>Moderation</th>
+              </tr>
+            </thead>
+            <tbody id="submissionsTableBody">
+              <tr id="sub-row-1">
+                <td><strong>Kuntala Waterfalls Secret Trail</strong></td>
+                <td>Adilabad, Telangana</td>
+                <td>raghav.k@gmail.com</td>
+                <td>Highest waterfall in Telangana, quiet monsoon trek without commercial shops.</td>
+                <td><span class="ug-badge ug-badge-pending">Under Review</span></td>
+                <td>
+                  <div style="display: flex; gap: 0.4rem;">
+                    <button type="button" class="ug-btn-primary" style="font-size: 0.72rem; padding: 0.35rem 0.65rem;" onclick="approveSubmission('sub-row-1', 'Kuntala Waterfalls')">Approve</button>
+                    <button type="button" class="ug-btn-secondary" style="font-size: 0.72rem; padding: 0.35rem 0.65rem; color: var(--ug-terracotta);" onclick="rejectSubmission('sub-row-1')">Decline</button>
+                  </div>
+                </td>
+              </tr>
+              <tr id="sub-row-2">
+                <td><strong>Panchalingala Shiva Shrines</strong></td>
+                <td>Tungabhadra Edge, Kurnool</td>
+                <td>swetha.travels@yahoo.com</td>
+                <td>Submerged river shrines visible only at low tide with ancient stone inscriptions.</td>
+                <td><span class="ug-badge ug-badge-pending">Under Review</span></td>
+                <td>
+                  <div style="display: flex; gap: 0.4rem;">
+                    <button type="button" class="ug-btn-primary" style="font-size: 0.72rem; padding: 0.35rem 0.65rem;" onclick="approveSubmission('sub-row-2', 'Panchalingala')">Approve</button>
+                    <button type="button" class="ug-btn-secondary" style="font-size: 0.72rem; padding: 0.35rem 0.65rem; color: var(--ug-terracotta);" onclick="rejectSubmission('sub-row-2')">Decline</button>
+                  </div>
+                </td>
+              </tr>
+              <tr id="sub-row-3">
+                <td><strong>Siddavatam Fort Riverside Bastion</strong></td>
+                <td>Kadapa District, AP</td>
+                <td>heritage.seeker@outlook.com</td>
+                <td>14th-century fort guarding the south gateway to Srisailam with intact moats.</td>
+                <td><span class="ug-badge ug-badge-pending">Under Review</span></td>
+                <td>
+                  <div style="display: flex; gap: 0.4rem;">
+                    <button type="button" class="ug-btn-primary" style="font-size: 0.72rem; padding: 0.35rem 0.65rem;" onclick="approveSubmission('sub-row-3', 'Siddavatam Fort')">Approve</button>
+                    <button type="button" class="ug-btn-secondary" style="font-size: 0.72rem; padding: 0.35rem 0.65rem; color: var(--ug-terracotta);" onclick="rejectSubmission('sub-row-3')">Decline</button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 4: REVIEWS -->
+      <div id="admin-reviews" class="ug-tab-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.25rem;">Traveler Reviews & Ratings Moderation</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--ug-text-secondary);">Ensure community authenticity and prevent tourist trap promotional spam.</p>
+          </div>
+        </div>
+
+        <div class="ug-admin-table-wrap">
+          <table class="ug-admin-table">
+            <thead>
+              <tr>
+                <th>Reviewer</th>
+                <th>Destination</th>
+                <th>Rating</th>
+                <th>Review Comment</th>
+                <th>Authenticity</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="reviewsTableBody">
+              <tr id="rev-row-1">
+                <td><strong>Vikramaditya R.</strong></td>
+                <td>Gandikota Canyon</td>
+                <td><span style="color: #f59e0b;">★★★★★</span> (5.0)</td>
+                <td>"Sunrise from the gorge rim is breathtaking. Carry water as the local shacks open only at 9am."</td>
+                <td><span class="ug-badge ug-badge-verified">Verified Visit</span></td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;" onclick="dismissReview('rev-row-1')">Keep</button></td>
+              </tr>
+              <tr id="rev-row-2">
+                <td><strong>Pooja Menon</strong></td>
+                <td>Lepakshi Temple</td>
+                <td><span style="color: #f59e0b;">★★★★★</span> (5.0)</td>
+                <td>"The hanging pillar truly passes a thin silk cloth underneath. Exceptional stone carvings."</td>
+                <td><span class="ug-badge ug-badge-verified">Verified Visit</span></td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;" onclick="dismissReview('rev-row-2')">Keep</button></td>
+              </tr>
+              <tr id="rev-row-3">
+                <td><strong>Anonymous User</strong></td>
+                <td>Belum Caves</td>
+                <td><span style="color: #f59e0b;">★☆☆☆☆</span> (1.0)</td>
+                <td>"Commercial tour operators selling unauthorized guide tickets outside main gate."</td>
+                <td><span class="ug-badge ug-badge-danger">⚠️ Flagged by AI</span></td>
+                <td>
+                  <div style="display: flex; gap: 0.4rem;">
+                    <button type="button" class="ug-btn-primary" style="font-size: 0.72rem;" onclick="dismissReview('rev-row-3')">Investigate</button>
+                    <button type="button" class="ug-btn-secondary" style="font-size: 0.72rem; color: var(--ug-terracotta);" onclick="deleteReview('rev-row-3')">Remove</button>
+                  </div>
+                </td>
+              </tr>
+              <tr id="rev-row-4">
+                <td><strong>Farhan Siddiqui</strong></td>
+                <td>Paigah Tombs</td>
+                <td><span style="color: #f59e0b;">★★★★☆</span> (4.0)</td>
+                <td>"Peaceful courtyards. Intricate jaali work is some of the best in the Deccan."</td>
+                <td><span class="ug-badge ug-badge-verified">Verified Visit</span></td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;" onclick="dismissReview('rev-row-4')">Keep</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TAB 5: USERS -->
+      <div id="admin-users" class="ug-tab-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+          <div>
+            <h3 style="margin: 0; font-size: 1.25rem;">User Accounts & Role Permissions</h3>
+            <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--ug-text-secondary);">Manage platform editors, contributors, and traveler accounts.</p>
+          </div>
+        </div>
+
+        <div class="ug-admin-table-wrap">
+          <table class="ug-admin-table">
+            <thead>
+              <tr>
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Saved Gems</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Ganesh Saravanan</strong></td>
+                <td>ganesh@unseengo.ai</td>
+                <td><span class="ug-badge ug-badge-verified">Super Admin</span></td>
+                <td>48</td>
+                <td>Active</td>
+                <td><span style="font-size: 0.8rem; color: var(--ug-text-muted);">Permanent</span></td>
+              </tr>
+              <tr>
+                <td><strong>Ananya Sharma</strong></td>
+                <td>ananya.sharma@unseengo.ai</td>
+                <td><span class="ug-badge ug-badge-verified">Heritage Editor</span></td>
+                <td>24</td>
+                <td>Active</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;">Manage</button></td>
+              </tr>
+              <tr>
+                <td><strong>Dr. K. Srinivas</strong></td>
+                <td>srinivas.archaeology@edu.in</td>
+                <td><span class="ug-badge ug-badge-verified">Verified Contributor</span></td>
+                <td>62</td>
+                <td>Active</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;">Manage</button></td>
+              </tr>
+              <tr>
+                <td><strong>Kavita Reddy</strong></td>
+                <td>kavita.reddy@travel.co</td>
+                <td><span class="ug-badge" style="background: rgba(0,0,0,0.06);">Traveler</span></td>
+                <td>12</td>
+                <td>Active</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem;">Manage</button></td>
+              </tr>
+              <tr>
+                <td><strong>Spam Account 409</strong></td>
+                <td>bot9823@tempmail.org</td>
+                <td><span class="ug-badge ug-badge-danger">Suspended</span></td>
+                <td>0</td>
+                <td>Blocked</td>
+                <td><button type="button" class="ug-btn-secondary" style="font-size: 0.72rem; color: var(--ug-terracotta);">Purge</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      </div> <!-- /adminAuthorizedView -->
+
+    </div>
+  </main>
+
+  <!-- Add New Destination Modal -->
+  <div class="ug-modal-overlay" id="addDestModal">
+    <div class="ug-modal-dialog">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+        <h3 style="margin: 0; font-size: 1.3rem;">Add New Destination to Registry</h3>
+        <button type="button" style="background: none; border: 0; font-size: 1.2rem; cursor: pointer;" onclick="document.getElementById('addDestModal').classList.remove('open')">✕</button>
+      </div>
+
+      <form id="addDestForm">
+        <div style="margin-bottom: 1rem;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Destination Name</label>
+          <input type="text" id="newDestName" placeholder="e.g. Yaganti Rock Temple" required style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">City / Hub</label>
+            <input type="text" id="newDestCity" placeholder="e.g. Kurnool" required style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">State</label>
+            <input type="text" id="newDestState" placeholder="e.g. Andhra Pradesh" required style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+          <div>
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Category</label>
+            <select id="newDestCategory" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+              <option value="Heritage">Heritage & Ruins</option>
+              <option value="Nature">Sacred Nature</option>
+              <option value="Food">Food Trail</option>
+              <option value="Culture">Living Crafts</option>
+              <option value="Adventure">Offbeat Escape</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">UnseenGo Score (1-100)</label>
+            <input type="number" id="newDestScore" value="94" min="50" max="100" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.25rem;">
+          <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Cultural Narrative & Description</label>
+          <textarea id="newDestDesc" rows="3" placeholder="Sourced cultural description and architectural context..." required style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);"></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="ug-btn-secondary" onclick="document.getElementById('addDestModal').classList.remove('open')">Cancel</button>
+          <button type="submit" class="ug-btn-primary">Add to Registry</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+            <li><a href="profile.html">Traveler Profile</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h5>Signature Gems</h5>
+          <ul class="ug-footer-links">
+            <li><a href="place.html?place=Gandikota">Gandikota Canyon</a></li>
+            <li><a href="place.html?place=Lepakshi">Lepakshi Monoliths</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      // 1. Role-Based Access Control Gatekeeper
+      function getAuthUser() {
+        try {
+          const raw = localStorage.getItem('unseengo_user') || 
+                      localStorage.getItem('supabase_user') || 
+                      localStorage.getItem('unseengo_auth_user') || 
+                      localStorage.getItem('unseengo_demo_user');
+          return raw ? JSON.parse(raw) : null;
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function isAdminUser(user) {
+        if (!user) return false;
+        const email = (user.email || '').toLowerCase().trim();
+        const adminDefaults = [
+          'ganesh@unseengo.ai',
+          'lsvsaravananganesh@gmail.com',
+          'saravananganesh@gmail.com',
+          'admin@unseengo.ai',
+          'admin@unseengo.demo'
+        ];
+        if (email && (adminDefaults.includes(email) || email.startsWith('admin@') || email.includes('admin') || email.includes('ganesh'))) return true;
+        if (user.role === 'admin' || user.user_metadata?.role === 'admin' || user.app_metadata?.role === 'admin') return true;
+        return false;
+      }
+
+      function checkAdminGate() {
+        const user = getAuthUser();
+        const lockedView = document.getElementById('adminLockedView');
+        const authView = document.getElementById('adminAuthorizedView');
+        const isAuthorized = isAdminUser(user);
+
+        if (isAuthorized) {
+          if (lockedView) lockedView.style.display = 'none';
+          if (authView) authView.style.display = 'block';
+
+          // Update Admin identity banner
+          const nameEl = document.getElementById('adminUserDisplayName');
+          const emailEl = document.getElementById('adminUserDisplayEmail');
+          const name = user.user_metadata?.full_name || user.name || (user.email?.includes('ganesh') ? 'Ganesh' : 'Admin');
+          if (nameEl) nameEl.textContent = name;
+          if (emailEl) emailEl.textContent = user.email || 'lsvsaravananganesh@gmail.com';
+
+          renderDestinations();
+        } else {
+          if (lockedView) lockedView.style.display = 'block';
+          if (authView) authView.style.display = 'none';
+        }
+      }
+
+      // Unlock form submission
+      const unlockForm = document.getElementById('adminUnlockForm');
+      if (unlockForm) {
+        unlockForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const input = document.getElementById('adminUnlockInput')?.value.trim();
+          const msg = document.getElementById('adminUnlockMsg');
+          if (!input) return;
+
+          const val = input.toLowerCase();
+          const isPasscode = val === 'admin2026' || val === 'unseengo2026';
+          const isEmailAdmin = val.includes('ganesh') || val.includes('admin') || val === 'lsvsaravananganesh@gmail.com' || val === 'ganesh@unseengo.ai';
+
+          if (isPasscode || isEmailAdmin) {
+            const adminUser = {
+              id: 'admin-' + Date.now(),
+              email: isEmailAdmin ? input : 'lsvsaravananganesh@gmail.com',
+              role: 'admin',
+              user_metadata: {
+                full_name: val.includes('ganesh') ? 'Ganesh' : 'Admin Administrator',
+                role: 'admin',
+                persona: 'Platform Administrator'
+              }
+            };
+            localStorage.setItem('unseengo_user', JSON.stringify(adminUser));
+            localStorage.setItem('unseengo_auth_user', JSON.stringify(adminUser));
+            localStorage.setItem('unseengo_demo_user', JSON.stringify(adminUser));
+
+            if (msg) {
+              msg.style.color = '#10b981';
+              msg.textContent = '✓ Admin access authorized! Opening console…';
+            }
+
+            if (window.UnseenGoNav?.refreshAuth) window.UnseenGoNav.refreshAuth();
+
+            setTimeout(() => {
+              checkAdminGate();
+              if (msg) msg.textContent = '';
+              unlockForm.reset();
+            }, 300);
+          } else {
+            if (msg) {
+              msg.style.color = '#ef4444';
+              msg.textContent = '❌ Access Denied. Email or passcode is not authorized for Admin Console.';
+            }
+          }
+        });
+      }
+
+      // Fast 1-click unlock button
+      const fastUnlockBtn = document.getElementById('fastAdminUnlockBtn');
+      if (fastUnlockBtn) {
+        fastUnlockBtn.addEventListener('click', () => {
+          const adminUser = {
+            id: 'admin-ganesh-00',
+            email: 'lsvsaravananganesh@gmail.com',
+            role: 'admin',
+            user_metadata: {
+              full_name: 'Ganesh',
+              role: 'admin',
+              persona: 'Platform Administrator & Lead Curator'
+            }
+          };
+          localStorage.setItem('unseengo_user', JSON.stringify(adminUser));
+          localStorage.setItem('unseengo_auth_user', JSON.stringify(adminUser));
+          localStorage.setItem('unseengo_demo_user', JSON.stringify(adminUser));
+          if (window.UnseenGoNav?.refreshAuth) window.UnseenGoNav.refreshAuth();
+          checkAdminGate();
+        });
+      }
+
+      // Lock console button
+      const lockConsoleBtn = document.getElementById('adminLockConsoleBtn');
+      if (lockConsoleBtn) {
+        lockConsoleBtn.addEventListener('click', () => {
+          ['unseengo_user', 'unseengo_auth_user', 'unseengo_demo_user'].forEach(k => localStorage.removeItem(k));
+          if (window.UnseenGoNav?.refreshAuth) window.UnseenGoNav.refreshAuth();
+          checkAdminGate();
+        });
+      }
+
+      // Sample Core Destinations Registry Data
+      let destinations = [
+        { id: 'dst-1', name: 'Gandikota Canyon & Fort', city: 'Kadapa', state: 'Andhra Pradesh', category: 'Heritage', score: 95, verified: true },
+        { id: 'dst-2', name: 'Lepakshi Hanging Pillar', city: 'Sri Sathya Sai', state: 'Andhra Pradesh', category: 'Heritage', score: 96, verified: true },
+        { id: 'dst-3', name: 'Belum Caves System', city: 'Kurnool', state: 'Andhra Pradesh', category: 'Nature', score: 94, verified: true },
+        { id: 'dst-4', name: 'Paigah Tombs', city: 'Hyderabad', state: 'Telangana', category: 'Heritage', score: 96, verified: true },
+        { id: 'dst-5', name: 'Agumbe Rainforest', city: 'Shivamogga', state: 'Karnataka', category: 'Nature', score: 93, verified: true },
+        { id: 'dst-6', name: 'Hampi Anegundi Trails', city: 'Vijayanagara', state: 'Karnataka', category: 'Heritage', score: 97, verified: true },
+        { id: 'dst-7', name: 'Undavalli Rock Caves', city: 'Vijayawada', state: 'Andhra Pradesh', category: 'Heritage', score: 97, verified: true },
+        { id: 'dst-8', name: 'Khajaguda Rock Formations', city: 'Hyderabad', state: 'Telangana', category: 'Nature', score: 94, verified: true },
+        { id: 'dst-9', name: 'Panna Meena ka Kund', city: 'Jaipur', state: 'Rajasthan', category: 'Heritage', score: 96, verified: true },
+        { id: 'dst-10', name: 'Sarnath Deer Park Stupa', city: 'Varanasi', state: 'Uttar Pradesh', category: 'Heritage', score: 98, verified: true },
+        { id: 'dst-11', name: 'Kumartuli Artisan Workshops', city: 'Kolkata', state: 'West Bengal', category: 'Culture', score: 97, verified: true }
+      ];
+
+      // Tab Switching
+      document.querySelectorAll('.ug-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.ug-tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.ug-tab-pane').forEach(p => p.classList.remove('active'));
+          btn.classList.add('active');
+          const target = document.getElementById(btn.dataset.tab);
+          if (target) target.classList.add('active');
+        });
+      });
+
+      // Render Destinations Table
+      function renderDestinations() {
+        const tbody = document.getElementById('destinationsTableBody');
+        if (!tbody) return;
+        const q = (document.getElementById('destSearchInput')?.value || '').toLowerCase().trim();
+        const cat = document.getElementById('destCategoryFilter')?.value || 'all';
+
+        const filtered = destinations.filter(d => {
+          const matchQ = !q || d.name.toLowerCase().includes(q) || d.city.toLowerCase().includes(q) || d.state.toLowerCase().includes(q);
+          const matchCat = cat === 'all' || d.category === cat;
+          return matchQ && matchCat;
+        });
+
+        const countEl = document.getElementById('metricDestCount');
+        const tabCountEl = document.getElementById('tabCountDest');
+        if (countEl) countEl.textContent = destinations.length;
+        if (tabCountEl) tabCountEl.textContent = destinations.length;
+
+        tbody.innerHTML = '';
+        filtered.forEach((d, idx) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${d.name}</strong></td>
+            <td>📍 ${d.city}, ${d.state}</td>
+            <td><span class="ug-score-pill" style="font-size: 0.72rem;">${d.category}</span></td>
+            <td><b style="color: var(--ug-primary);">✦ ${d.score}</b></td>
+            <td><span class="ug-badge ug-badge-verified">✓ Verified</span></td>
+            <td>
+              <div style="display: flex; gap: 0.4rem;">
+                <a href="place.html?place=${encodeURIComponent(d.name)}" class="ug-btn-secondary" style="font-size: 0.72rem; padding: 0.3rem 0.6rem; text-decoration: none;">View</a>
+                <button type="button" class="ug-btn-secondary delete-dest-btn" data-index="${idx}" style="font-size: 0.72rem; padding: 0.3rem 0.6rem; color: var(--ug-terracotta);">Delete</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        tbody.querySelectorAll('.delete-dest-btn').forEach(b => {
+          b.addEventListener('click', () => {
+            const index = Number(b.dataset.index);
+            if (confirm(`Remove "${destinations[index].name}" from destinations?`)) {
+              destinations.splice(index, 1);
+              renderDestinations();
+            }
+          });
+        });
+      }
+
+      document.getElementById('destSearchInput')?.addEventListener('input', renderDestinations);
+      document.getElementById('destCategoryFilter')?.addEventListener('change', renderDestinations);
+
+      // Add Destination Modal & Handler
+      document.getElementById('openAddDestBtn')?.addEventListener('click', () => {
+        document.getElementById('addDestModal')?.classList.add('open');
+      });
+
+      document.getElementById('addDestForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('newDestName').value.trim();
+        const city = document.getElementById('newDestCity').value.trim();
+        const state = document.getElementById('newDestState').value.trim();
+        const category = document.getElementById('newDestCategory').value;
+        const score = Number(document.getElementById('newDestScore').value) || 92;
+
+        destinations.unshift({
+          id: 'dst-' + Date.now(),
+          name, city, state, category, score, verified: true
+        });
+
+        document.getElementById('addDestModal')?.classList.remove('open');
+        document.getElementById('addDestForm')?.reset();
+        renderDestinations();
+        alert(`✨ Successfully added "${name}" to the UnseenGo Discovery Graph!`);
+      });
+
+      // Verification Scan Action
+      document.getElementById('runAuditBtn')?.addEventListener('click', () => {
+        alert('🛡️ Full automated verification scan complete!\n- 142 Destination GPS coordinates verified.\n- 0 Unverified stock images detected.\n- All historical narratives attributed.');
+      });
+
+      // Export Audit
+      document.getElementById('exportAuditBtn')?.addEventListener('click', () => {
+        alert('📊 Audit log report (CSV/JSON) generated and downloaded for Ministry of Tourism / NIDHI audit compliance.');
+      });
+
+      // Submissions actions
+      window.approveSubmission = function(rowId, name) {
+        const row = document.getElementById(rowId);
+        if (row) {
+          row.style.background = 'rgba(16, 185, 129, 0.1)';
+          row.cells[4].innerHTML = '<span class="ug-badge ug-badge-verified">✓ Approved & Published</span>';
+          row.cells[5].innerHTML = '<span style="font-size: 0.8rem; color: #10b981;">Published</span>';
+          alert(`🎉 "${name}" approved and published to the live UnseenGo Discovery Graph!`);
+        }
+      };
+
+      window.rejectSubmission = function(rowId) {
+        const row = document.getElementById(rowId);
+        if (row) {
+          row.style.opacity = '0.5';
+          row.cells[4].innerHTML = '<span class="ug-badge ug-badge-danger">Declined</span>';
+          row.cells[5].innerHTML = '<span style="font-size: 0.8rem; color: var(--ug-text-muted);">Archived</span>';
+        }
+      };
+
+      // Review actions
+      window.dismissReview = function(rowId) {
+        const row = document.getElementById(rowId);
+        if (row) {
+          row.cells[4].innerHTML = '<span class="ug-badge ug-badge-verified">✓ Cleared</span>';
+          row.cells[5].innerHTML = '<span style="font-size: 0.8rem; color: #10b981;">Active</span>';
+        }
+      };
+
+      window.deleteReview = function(rowId) {
+        const row = document.getElementById(rowId);
+        if (row && confirm('Remove this review from destination guide?')) {
+          row.remove();
+        }
+      };
+
+      window.addEventListener('DOMContentLoaded', () => {
+        checkAdminGate();
+      });
+    })();
+  </script>
+</body>
+</html>

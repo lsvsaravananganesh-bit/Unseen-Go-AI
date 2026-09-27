@@ -1,1 +1,548 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>My Profile — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="auth.css"><link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a href="discover.html">Discover</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><div id="authNav"></div></header><main class="profile-wrap"><section class="profile-card"><div class="profile-avatar" id="avatar">?</div><p class="eyebrow">TRAVELLER PROFILE</p><h1 id="profileName">Loading…</h1><p class="muted" id="profileEmail"></p><div class="profile-actions"><a class="primary" href="discover.html">Explore India</a><button id="logoutButton" type="button">Log out</button></div><p class="muted" id="profileStatus" style="margin-top:24px"></p></section></main><script src="supabase-config.js"></script><script src="supabase-client.js"></script><script src="auth-guard.js"></script><script src="nav-auth.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Traveler Profile — Manage personal details, travel rhythm, interests, saved destinations, and settings on UnseenGo AI.">
+  <title>Traveler Profile — UnseenGo AI</title>
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <style>
+    .ug-avatar-grid {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .ug-avatar-option {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid var(--ug-border);
+      background: var(--ug-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--ug-transition);
+    }
+    .ug-avatar-option:hover, .ug-avatar-option.selected {
+      border-color: var(--ug-primary);
+      box-shadow: 0 4px 14px var(--ug-primary-glow);
+      transform: scale(1.1);
+    }
+    .ug-interest-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 9999px;
+      border: 1px solid var(--ug-border);
+      background: var(--ug-surface);
+      color: var(--ug-text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--ug-transition);
+    }
+    .ug-interest-chip:hover {
+      border-color: var(--ug-primary);
+      color: var(--ug-primary);
+    }
+    .ug-interest-chip.selected {
+      background: var(--ug-primary);
+      color: #080d09;
+      border-color: var(--ug-primary);
+      box-shadow: 0 4px 10px var(--ug-primary-glow);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link active" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Explore Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Travel</span></a>
+          <a class="ug-drawer-link active" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+          <a class="ug-drawer-link" href="india-cities.html"><span class="icon">📍</span><span>Destinations Directory</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+        </nav>
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Profile Page Container -->
+  <main class="ug-section" style="padding-top: 3.5rem; padding-bottom: 5rem;">
+    <div class="ug-container">
+      
+      <!-- Profile Header Summary Banner -->
+      <div class="ug-how-card" style="padding: 2rem; margin-bottom: 2.5rem; background: linear-gradient(135deg, var(--ug-surface), var(--ug-bg));">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
+          <div style="display: flex; align-items: center; gap: 1.25rem;">
+            <div id="profileAvatarDisplay" style="width: 76px; height: 76px; border-radius: 50%; background: var(--ug-primary-gradient); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; box-shadow: 0 4px 16px var(--ug-primary-glow);">
+              🧳
+            </div>
+            <div>
+              <div class="ug-score-pill" style="margin-bottom: 0.35rem;">VERIFIED TRAVELER</div>
+              <h2 id="profileDisplayName" style="margin: 0 0 0.2rem; font-size: 1.7rem;">Ananya Sharma</h2>
+              <span id="profileDisplayCity" style="color: var(--ug-text-secondary); font-size: 0.88rem;">📍 Base: Hyderabad, India · Explorer of Unseen Heritage</span>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem;">
+            <a href="my-travel.html" class="ug-btn-secondary" style="font-size: 0.85rem; text-decoration: none;">
+              ❤️ My Travel Vault
+            </a>
+            <button type="button" class="ug-btn-primary" id="saveProfileBtn">
+              💾 Save Profile Changes
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Core Profile Sections Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+
+        <!-- 1. PERSONAL INFORMATION -->
+        <section class="ug-how-card" style="padding: 1.75rem;">
+          <div class="ug-how-step">
+            <span class="ug-how-num">01</span>
+            <span class="ug-how-icon">👤</span>
+          </div>
+          <h3>Personal Information</h3>
+          <p style="margin-bottom: 1.25rem;">Your identity and departure hub for personalized travel routes.</p>
+
+          <form id="personalInfoForm">
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Full Name</label>
+              <input type="text" id="inputName" value="Ananya Sharma" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Email Address</label>
+              <input type="email" id="inputEmail" value="ananya.sharma@unseengo.ai" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Home Departure City</label>
+              <input type="text" id="inputHomeCity" value="Hyderabad" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+            </div>
+
+            <div style="margin-bottom: 1rem;">
+              <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Traveler Avatar</label>
+              <div class="ug-avatar-grid">
+                <button type="button" class="ug-avatar-option selected" data-avatar="🧳" title="Solo Wanderer">🧳</button>
+                <button type="button" class="ug-avatar-option" data-avatar="🏛️" title="Heritage Scholar">🏛️</button>
+                <button type="button" class="ug-avatar-option" data-avatar="📸" title="Photographer">📸</button>
+                <button type="button" class="ug-avatar-option" data-avatar="🌿" title="Eco Nomad">🌿</button>
+                <button type="button" class="ug-avatar-option" data-avatar="🍛" title="Culinary Explorer">🍛</button>
+                <button type="button" class="ug-avatar-option" data-avatar="⛰️" title="Canyon Explorer">⛰️</button>
+              </div>
+            </div>
+
+            <div>
+              <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Bio & Travel Philosophy</label>
+              <textarea id="inputBio" rows="2" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">Passionate about silent rock-cut caves, regional handloom craft, and forgotten Vijayanagara ruins.</textarea>
+            </div>
+          </form>
+        </section>
+
+        <!-- 2. TRAVEL PREFERENCES -->
+        <section class="ug-how-card" style="padding: 1.75rem;">
+          <div class="ug-how-step">
+            <span class="ug-how-num">02</span>
+            <span class="ug-how-icon">⚙️</span>
+          </div>
+          <h3>Travel Preferences</h3>
+          <p style="margin-bottom: 1.25rem;">Fine-tune how the AI algorithm structures your pace, budget, and stays.</p>
+
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Travel Style & Companion</label>
+            <select id="prefCompanion" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+              <option value="solo" selected>Solo Cultural Explorer</option>
+              <option value="couple">Couple / Quiet Getaway</option>
+              <option value="family">Family with Children</option>
+              <option value="friends">Friends Adventure Group</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Preferred Travel Rhythm / Pace</label>
+            <select id="prefPace" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+              <option value="slow">Slow Travel (1–2 deep stops/day)</option>
+              <option value="balanced" selected>Balanced Discovery (3–4 stops/day)</option>
+              <option value="active">High-Energy Trail (5+ stops/day)</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Budget Tier</label>
+            <select id="prefBudget" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+              <option value="budget">₹ Backpacker / Homestay (₹1,500/day)</option>
+              <option value="comfort" selected>₹₹ Value Comfort (₹4,500/day)</option>
+              <option value="luxury">₹₹₹ Heritage Luxury & Retreats (₹10,000+/day)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.35rem;">Preferred Accommodation</label>
+            <select id="prefStay" style="width: 100%; padding: 0.65rem 0.85rem; border: 1px solid var(--ug-border); background: var(--ug-bg); border-radius: 10px; color: var(--ug-text-primary);">
+              <option value="homestay" selected>Authentic Village Homestays</option>
+              <option value="eco">Eco-Friendly Treehouses & Lodges</option>
+              <option value="heritage">Restored Palaces & Havelis</option>
+              <option value="boutique">Boutique City Suites</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- 3. INTERESTS & NICHE PASSIONS -->
+        <section class="ug-how-card" style="padding: 1.75rem;">
+          <div class="ug-how-step">
+            <span class="ug-how-num">03</span>
+            <span class="ug-how-icon">🎨</span>
+          </div>
+          <h3>Interests & Travel Themes</h3>
+          <p style="margin-bottom: 1.25rem;">Select themes that ignite your curiosity. The AI boosts matching gems.</p>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 0.6rem;" id="interestPillsContainer">
+            <button type="button" class="ug-interest-chip selected" data-interest="temples">🛕 Rock-Cut Temples</button>
+            <button type="button" class="ug-interest-chip selected" data-interest="forts">🏰 Forgotten Forts</button>
+            <button type="button" class="ug-interest-chip selected" data-interest="caves">⛰️ Subterranean Caves</button>
+            <button type="button" class="ug-interest-chip" data-interest="waterfalls">🌿 Secret Waterfalls</button>
+            <button type="button" class="ug-interest-chip selected" data-interest="food">🍛 Regional Food Trails</button>
+            <button type="button" class="ug-interest-chip" data-interest="crafts">🎭 Handloom & Artisan Crafts</button>
+            <button type="button" class="ug-interest-chip selected" data-interest="canyons">🏞️ River Gorges & Canyons</button>
+            <button type="button" class="ug-interest-chip" data-interest="photo">📸 Astrophotography</button>
+            <button type="button" class="ug-interest-chip" data-interest="monoliths">🧗 Monolith Hikes</button>
+            <button type="button" class="ug-interest-chip" data-interest="wildlife">🐅 Buffer Zone Wildlife</button>
+          </div>
+        </section>
+
+        <!-- 4. SAVED PLACES QUICK ACCESS -->
+        <section class="ug-how-card" style="padding: 1.75rem;">
+          <div class="ug-how-step">
+            <span class="ug-how-num">04</span>
+            <span class="ug-how-icon">❤️</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <h3 style="margin: 0;">Saved Places Vault</h3>
+            <span id="savedCountBadge" class="ug-score-pill">3 Saved</span>
+          </div>
+          <p style="margin: 0.25rem 0 1.25rem;">Quick view of your favorited destinations. Synced with My Travel.</p>
+
+          <div id="profileSavedList" style="display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.25rem;">
+            <!-- Rendered dynamically -->
+          </div>
+
+          <a href="my-travel.html" class="ug-btn-secondary" style="width: 100%; justify-content: center; text-decoration: none; font-size: 0.85rem;">
+            Open Complete Travel Vault (Saved, Trips & Itineraries) →
+          </a>
+        </section>
+
+        <!-- 5. ACCOUNT SETTINGS -->
+        <section class="ug-how-card" style="grid-column: 1 / -1; padding: 1.75rem;">
+          <div class="ug-how-step">
+            <span class="ug-how-num">05</span>
+            <span class="ug-how-icon">🔒</span>
+          </div>
+          <h3>Account Settings & Data Privacy</h3>
+          <p style="margin-bottom: 1.5rem;">Manage theme settings, notifications, privacy, and account sessions.</p>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+            <!-- Theme Setting -->
+            <div style="background: var(--ug-bg); border: 1px solid var(--ug-border); padding: 1.25rem; border-radius: 14px;">
+              <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem;">Interface Theme</h4>
+              <p style="font-size: 0.8rem; color: var(--ug-text-secondary); margin-bottom: 0.85rem;">Choose between Daylight Glow and Midnight Heritage theme.</p>
+              <button type="button" class="ug-btn-secondary" data-ug-theme-toggle style="font-size: 0.8rem; width: 100%; justify-content: center;">
+                Toggle Theme 🌙/☀️
+              </button>
+            </div>
+
+            <!-- Notifications Setting -->
+            <div style="background: var(--ug-bg); border: 1px solid var(--ug-border); padding: 1.25rem; border-radius: 14px;">
+              <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem;">Travel Alerts</h4>
+              <p style="font-size: 0.8rem; color: var(--ug-text-secondary); margin-bottom: 0.85rem;">Monsoon road advisories & newly discovered heritage gems.</p>
+              <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; cursor: pointer;">
+                <input type="checkbox" id="alertAdvisories" checked>
+                <span>Enable Weather Advisories</span>
+              </label>
+            </div>
+
+            <!-- Data & Session -->
+            <div style="background: var(--ug-bg); border: 1px solid var(--ug-border); padding: 1.25rem; border-radius: 14px;">
+              <h4 style="margin: 0 0 0.5rem; font-size: 0.95rem;">Session & Data</h4>
+              <p style="font-size: 0.8rem; color: var(--ug-text-secondary); margin-bottom: 0.85rem;">Export your travel logs or clear your local cache.</p>
+              <div style="display: flex; gap: 0.5rem;">
+                <button type="button" class="ug-btn-secondary" id="exportDataBtn" style="font-size: 0.75rem; flex: 1; justify-content: center;">
+                  Export JSON
+                </button>
+                <button type="button" class="ug-btn-secondary" id="logoutBtn" style="font-size: 0.75rem; color: var(--ug-terracotta); flex: 1; justify-content: center;">
+                  Sign Out
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h5>Signature Gems</h5>
+          <ul class="ug-footer-links">
+            <li><a href="place.html?place=Gandikota">Gandikota Canyon</a></li>
+            <li><a href="place.html?place=Lepakshi">Lepakshi Monoliths</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function() {
+      'use strict';
+
+      let currentAvatar = '🧳';
+
+      // 1. Avatar Selection
+      document.querySelectorAll('.ug-avatar-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.ug-avatar-option').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          currentAvatar = btn.dataset.avatar;
+          document.getElementById('profileAvatarDisplay').textContent = currentAvatar;
+        });
+      });
+
+      // 2. Interest Chips Multi-Select
+      document.querySelectorAll('.ug-interest-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          chip.classList.toggle('selected');
+        });
+      });
+
+      // 3. Render Saved Places Summary
+      function renderProfileSaved() {
+        let saved = [];
+        try {
+          saved = JSON.parse(localStorage.getItem('unseengo_saved_places') || localStorage.getItem('unseengo-saved-places') || '[]');
+        } catch (_) {}
+
+        if (!saved.length) {
+          saved = ['Gandikota Canyon & Fort', 'Lepakshi Hanging Pillar', 'Paigah Tombs'];
+        }
+
+        document.getElementById('savedCountBadge').textContent = `${saved.length} Saved`;
+        const list = document.getElementById('profileSavedList');
+        list.innerHTML = '';
+
+        saved.slice(0, 3).forEach(item => {
+          const name = typeof item === 'string' ? (item.includes('|') ? item.split('|')[1] : item) : item.name;
+          const row = document.createElement('div');
+          row.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 0.65rem 0.85rem; background: var(--ug-bg); border: 1px solid var(--ug-border); border-radius: 10px; font-size: 0.85rem;';
+          row.innerHTML = `
+            <span>📍 <strong>${name}</strong></span>
+            <a href="place.html?place=${encodeURIComponent(name)}" style="color: var(--ug-primary); text-decoration: none; font-weight: 700; font-size: 0.78rem;">Guide ↗</a>
+          `;
+          list.appendChild(row);
+        });
+      }
+
+      // 4. Save Profile Action
+      document.getElementById('saveProfileBtn')?.addEventListener('click', () => {
+        const name = document.getElementById('inputName').value.trim() || 'Traveler';
+        const city = document.getElementById('inputHomeCity').value.trim() || 'Hyderabad';
+        const email = document.getElementById('inputEmail').value.trim();
+        const bio = document.getElementById('inputBio').value.trim();
+
+        document.getElementById('profileDisplayName').textContent = name;
+        document.getElementById('profileDisplayCity').textContent = `📍 Base: ${city}, India · Explorer of Unseen Heritage`;
+
+        const profileData = {
+          name, city, email, bio, avatar: currentAvatar,
+          companion: document.getElementById('prefCompanion').value,
+          pace: document.getElementById('prefPace').value,
+          budget: document.getElementById('prefBudget').value,
+          stay: document.getElementById('prefStay').value,
+          updated: Date.now()
+        };
+
+        localStorage.setItem('unseengo_user_profile', JSON.stringify(profileData));
+        try {
+          const rawU = localStorage.getItem('unseengo_user');
+          if (rawU) {
+            const u = JSON.parse(rawU);
+            if (!u.user_metadata) u.user_metadata = {};
+            u.user_metadata.full_name = name;
+            localStorage.setItem('unseengo_user', JSON.stringify(u));
+          }
+          window.UnseenGoNav?.refreshAuth?.();
+        } catch (_) {}
+        alert('✨ Profile and travel preferences saved successfully!');
+      });
+
+      // 5. Load Saved Profile on Load
+      function loadProfile() {
+        try {
+          let saved = JSON.parse(localStorage.getItem('unseengo_user_profile') || '{}');
+          if (!saved.name) {
+            const rawUser = localStorage.getItem('unseengo_user') || localStorage.getItem('unseengo_demo_user') || localStorage.getItem('supabase_user');
+            if (rawUser) {
+              const u = JSON.parse(rawUser);
+              saved.name = u.user_metadata?.full_name || u.name || u.email?.split('@')[0] || 'Traveler';
+              saved.email = u.email || '';
+              saved.bio = u.user_metadata?.persona || 'Passionate explorer of India’s forgotten heritage and quiet landscapes.';
+            }
+          }
+          if (saved.name) {
+            document.getElementById('inputName').value = saved.name;
+            document.getElementById('profileDisplayName').textContent = saved.name;
+          }
+          if (saved.city) {
+            document.getElementById('inputHomeCity').value = saved.city;
+            document.getElementById('profileDisplayCity').textContent = `📍 Base: ${saved.city}, India · Explorer of Unseen Heritage`;
+          }
+          if (saved.email) document.getElementById('inputEmail').value = saved.email;
+          if (saved.bio) document.getElementById('inputBio').value = saved.bio;
+          if (saved.avatar) {
+            currentAvatar = saved.avatar;
+            document.getElementById('profileAvatarDisplay').textContent = saved.avatar;
+            document.querySelectorAll('.ug-avatar-option').forEach(b => {
+              b.classList.toggle('selected', b.dataset.avatar === saved.avatar);
+            });
+          }
+          if (saved.companion) document.getElementById('prefCompanion').value = saved.companion;
+          if (saved.pace) document.getElementById('prefPace').value = saved.pace;
+          if (saved.budget) document.getElementById('prefBudget').value = saved.budget;
+          if (saved.stay) document.getElementById('prefStay').value = saved.stay;
+        } catch (_) {}
+      }
+
+      // Export JSON
+      document.getElementById('exportDataBtn')?.addEventListener('click', () => {
+        const data = {
+          profile: JSON.parse(localStorage.getItem('unseengo_user_profile') || '{}'),
+          savedPlaces: JSON.parse(localStorage.getItem('unseengo_saved_places') || '[]'),
+          trips: JSON.parse(localStorage.getItem('unseengo_custom_trips') || '[]'),
+          itineraries: JSON.parse(localStorage.getItem('unseengo_saved_itineraries') || '[]')
+        };
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'unseengo-travel-vault.json';
+        a.click();
+      });
+
+      // Sign out
+      document.getElementById('logoutBtn')?.addEventListener('click', () => {
+        if (confirm('Sign out of your traveler profile session?')) {
+          [
+            'unseengo_user', 'supabase_user', 'unseengo_auth_user', 
+            'unseengo_demo_user', 'unseengo_demo_preferences', 
+            'unseengo_demo_saved', 'unseengo_demo_trips', 'unseengo_user_profile'
+          ].forEach(k => localStorage.removeItem(k));
+          try {
+            if (window.unseenGoSupabase?.auth?.signOut) window.unseenGoSupabase.auth.signOut();
+          } catch (_) {}
+          window.location.href = 'index.html';
+        }
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        loadProfile();
+        renderProfileSaved();
+      });
+    })();
+  </script>
+</body>
+</html>

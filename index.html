@@ -1,6 +1,684 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="UnseenGo AI — discover India's hidden gems, stories, experiences and personalized journeys."><title>UnseenGo AI — India Has More to Discover</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="unseengo-redesign.css"><link rel="stylesheet" href="responsive.css"><link rel="stylesheet" href="/Unseen-Go-AI/unseengo-usa-theme.css?v=20260827" data-unseengo-usa-theme="1"></head><body><header class="nav"><a class="brand" href="index.html">UNSEEN<span>GO</span></a><nav aria-label="Primary navigation"><a class="active" href="index.html">Home</a><a href="discover.html">Discover</a><a href="india-cities.html">Destinations</a><a href="tripideas.html">Ideas</a><a href="planner.html">Plan</a><a href="major-events.html">Events</a></nav><a class="ug-btn" href="decision-engine.html">✨ AI Discover</a></header><section class="ug-hero"><div class="ug-hero-media" style="background-image:url('https://img.etimg.com/thumb/width-1200%2Cheight-900%2Cimgsize-2514892%2Cresizemode-75%2Cmsid-107103716%2Cimgname-107103716.jpg')"></div><div class="ug-hero-inner"><div class="ug-kicker">India's AI hidden-gem discovery engine</div><h1>India has more to <em>discover.</em></h1><p>Go beyond the places everyone knows. Find overlooked landscapes, heritage, food, local stories and experiences — then let UnseenGo turn your preferences into a trip worth taking.</p><div class="ug-actions"><a class="ug-btn" href="decision-engine.html">✨ Discover my hidden gems</a><a class="ug-btn alt" href="india-cities.html">Explore India</a></div></div></section><section class="ug-section"><div class="ug-container"><div class="ug-section-head"><div><div class="ug-kicker">Start with curiosity</div><h2>Hidden India, <span class="ug-serif">beautifully mapped.</span></h2></div><p>Browse places by destination, experience and story — then use the AI layer when you want a decision instead of another list.</p></div><div class="ug-cards"><a class="ug-card large" href="place.html?place=Gandikota"><img src="https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=1200&q=85" alt="Gandikota landscape"><div class="ug-card-copy"><small>Andhra Pradesh · Hidden gem</small><h3>Gandikota</h3><p>Cliffs, a historic fort and a dramatic river gorge.</p><span class="ug-score" id="gandikotaScore">Calculating UnseenGo Score…</span></div></a><a class="ug-card" href="place.html?place=Lepakshi"><img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=85" alt="Temple architecture"><div class="ug-card-copy"><small>Heritage</small><h3>Lepakshi</h3><p>Architecture, sculpture and stories.</p></div></a><a class="ug-card" href="place.html?place=Agumbe"><img src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=85" alt="Western Ghats forest"><div class="ug-card-copy"><small>Nature</small><h3>Agumbe</h3><p>Rainforest, sunsets and quiet trails.</p></div></a><a class="ug-card" href="place.html?place=Hampi"><img src="https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=900&q=85" alt="Hampi ruins"><div class="ug-card-copy"><small>History</small><h3>Hampi</h3><p>Look beyond the famous ruins.</p></div></a></div></div></section><section class="ug-section white"><div class="ug-container"><div class="ug-section-head"><div><div class="ug-kicker">Choose your mood</div><h2>Explore by <span class="ug-serif">experience.</span></h2></div><p>Not everyone travels for the same reason. Pick a feeling and let the discovery graph narrow India down.</p></div><div class="ug-experiences"><a class="ug-experience" href="discover.html?category=nature"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=85" alt="Nature"><span>🌿 Nature</span></a><a class="ug-experience" href="discover.html?category=history"><img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=85" alt="History"><span>🏛 History</span></a><a class="ug-experience" href="discover.html?category=food"><img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85" alt="Indian food"><span>🍛 Food</span></a><a class="ug-experience" href="discover.html?category=culture"><img src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=900&q=85" alt="Indian culture"><span>🎭 Culture</span></a><a class="ug-experience" href="discover.html?category=adventure"><img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=85" alt="Mountain adventure"><span>⛰ Adventure</span></a></div></div></section><section class="ug-section"><div class="ug-container"><div class="ug-ai"><div><div class="ug-kicker">The UnseenGo difference</div><h2>Tell us what you want. <span class="ug-serif">We'll decide where.</span></h2><p>Try natural language instead of filling ten forms. Your interests, time, budget and crowd preferences become a personalized discovery profile.</p><a class="ug-btn" href="decision-engine.html">Open the full decision engine</a></div><div class="ug-ai-box"><textarea id="homePrompt" placeholder="I have 2 days from Bengaluru. I love history, photography and quiet places. Budget ₹6,000."></textarea><button id="homeRun">✨ Find my hidden gem</button><div id="homeResult" class="ug-ai-result"><strong>Ready to calculate your match.</strong><span>Enter your trip preferences and UnseenGo will rank destinations from its structured discovery dataset.</span></div></div></div></div></section><section class="ug-section white"><div class="ug-container"><div class="ug-section-head"><div><div class="ug-kicker">Stories behind the places</div><h2>Travel through <span class="ug-serif">India's stories.</span></h2></div><p>Destinations become memorable when you understand the people, history and culture behind them.</p></div><div class="ug-story-grid"><a class="ug-story" href="stories.html"><img src="https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=1500&q=85" alt="Hampi"><div><div class="ug-kicker">Heritage story</div><h3>The forgotten side of Hampi</h3><p>Go beyond the postcard monuments and discover the landscape, villages and lesser-known stories.</p></div></a><a class="ug-story" href="stories.html"><img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1000&q=85" alt="Indian heritage"><div><div class="ug-kicker">India stories</div><h3>Places with a story to tell</h3><p>Explore culture, craft, food and heritage across India.</p></div></a></div></div></section><section class="ug-section"><div class="ug-container"><div class="ug-section-head"><div><div class="ug-kicker">Travel differently</div><h2>Road trips worth <span class="ug-serif">taking.</span></h2></div><a class="ug-btn" href="tripideas.html">See all ideas →</a></div><div class="ug-road"><a class="ug-route" href="tripideas.html"><img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1000&q=85" alt="South India road trip"><div><small>3–5 DAYS · SOUTH INDIA</small><h3>Hyderabad → Hampi</h3><p>Heritage, food, landscapes and overlooked stops between two iconic destinations.</p></div></a><a class="ug-route" href="tripideas.html"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1000&q=85" alt="Western Ghats road trip"><div><small>2–4 DAYS · KARNATAKA</small><h3>Bengaluru → Western Ghats</h3><p>Rainforests, coffee country, viewpoints and quiet towns.</p></div></a><a class="ug-route" href="tripideas.html"><img src="https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=1000&q=85" alt="Rajasthan road trip"><div><small>4–6 DAYS · RAJASTHAN</small><h3>Jaipur → Shekhawati</h3><p>Painted havelis, desert stories and heritage away from the usual circuit.</p></div></a></div></div></section><section class="ug-section white"><div class="ug-container"><div class="ug-section-head"><div><div class="ug-kicker">Plan around what is happening</div><h2>India, <span class="ug-serif">right now.</span></h2></div><p>Explore sports, cultural celebrations and nature events — then connect them to nearby places and stays.</p></div><div class="ug-events"><article class="ug-event"><span class="date">EVENTS</span><h3>Sports across India</h3><p>Discover major sporting moments and plan a trip around the action.</p><a href="major-events.html">Explore sports →</a></article><article class="ug-event"><span class="date">CULTURE</span><h3>Festivals & traditions</h3><p>From regional celebrations to major cultural gatherings.</p><a href="major-events.html">Explore culture →</a></article><article class="ug-event"><span class="date">NATURE</span><h3>Nature seasons</h3><p>Flower, wildlife, birding and outdoor events across India.</p><a href="major-events.html">Explore nature →</a></article></div></div></section><section class="ug-cta"><div class="ug-container"><div class="ug-cta-inner"><div class="ug-kicker">Your next journey starts differently</div><h2>Don't just visit India.<br><span class="ug-serif">Find your India.</span></h2><p>Use UnseenGo to move from endless travel inspiration to a clear, personalized decision.</p><a class="ug-btn" href="decision-engine.html">Start discovering →</a></div></div></section><footer><div><b>UNSEENGO</b> — India's AI hidden-gem discovery engine.</div><div>Discover · Plan · Explore beyond the obvious</div></footer><script src="app.js"></script><script src="unseen-engine.js"></script><script>
-const p=document.getElementById('homePrompt'),b=document.getElementById('homeRun'),r=document.getElementById('homeResult'),scoreEl=document.getElementById('gandikotaScore');
-function safeText(v){return String(v??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));}
-function calculateHomepageScore(){try{const place=UnseenGoAI.collectAllPlaces().find(x=>x.name.toLowerCase()==='gandikota');if(!place)return;const scored=UnseenGoAI.scoreBreakdown(place,{interests:['Heritage'],days:2,budget:'medium',pace:'balanced',diversify:true,avoid:[]});scoreEl.textContent=`✦ ${scored.score} Unseen Score · calculated live`;scoreEl.title='Calculated from destination data and the current personalization profile';}catch(e){scoreEl.textContent='✦ Score unavailable';}}
-b.addEventListener('click',()=>{const text=p.value.trim()||'I have 2 days. I want a quiet trip with history, nature and photography.';try{const profile=UnseenGoAI.parseNaturalLanguage(text);if(!profile.interests.length)profile.interests=['Heritage'];const result=UnseenGoAI.generate(profile.city,profile),top=result.recommendations[0];if(top){r.innerHTML=`<strong>🎯 ${safeText(top.name)} — ${top.unseenScore}% match</strong><span>${safeText(top.why)}</span><small>Calculated by UnseenGo's explainable scoring engine from destination attributes and your preferences.</small><a href="decision-engine.html">See full ranking & score breakdown →</a>`;}else{r.innerHTML='<strong>No matching destination yet.</strong><span>Try a city, interest, budget or trip duration.</span>'}r.classList.add('show');b.textContent='✓ Match calculated';setTimeout(()=>b.textContent='✨ Find my hidden gem',2200);}catch(e){r.innerHTML='<strong>Engine unavailable.</strong><span>Please open the full AI Decision Engine.</span>';r.classList.add('show');}});calculateHomepageScore();
-</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="UnseenGo AI — Discover India's hidden gems, heritage trails, sacred architecture, and AI-personalized journeys.">
+  <title>UnseenGo AI — India Has More to Discover</title>
+  
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+</head>
+<body>
+
+  <!-- Modern Responsive Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link active" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Explore Map</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Travel</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Navigation Actions (Theme Toggle, City Selector, Dynamic Auth & CTA) -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="pin">📍</span>
+            <span>Current City:</span>
+            <b data-ug-current-city>All India</b>
+          </span>
+          <span>Change ▾</span>
+        </button>
+
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link active" href="index.html">
+            <span class="icon">🏠</span>
+            <span>Home</span>
+          </a>
+          <a class="ug-drawer-link" href="discover.html">
+            <span class="icon">🔎</span>
+            <span>Discover</span>
+          </a>
+          <a class="ug-drawer-link" href="planner.html">
+            <span class="icon">🤖</span>
+            <span>AI Planner</span>
+          </a>
+          <a class="ug-drawer-link" href="map.html">
+            <span class="icon">🗺️</span>
+            <span>Explore Map</span>
+          </a>
+          <a class="ug-drawer-link" href="my-travel.html">
+            <span class="icon">❤️</span>
+            <span>My Travel</span>
+          </a>
+          <a class="ug-drawer-link" href="profile.html">
+            <span class="icon">👤</span>
+            <span>Profile</span>
+          </a>
+          <a class="ug-drawer-link" href="india-cities.html">
+            <span class="icon">📍</span>
+            <span>Destinations Directory</span>
+          </a>
+          <a class="ug-drawer-link" href="stories.html">
+            <span class="icon">📖</span>
+            <span>Cultural Stories</span>
+          </a>
+        </nav>
+
+        <div class="ug-drawer-footer">
+          <div class="ug-drawer-auth"></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Quick City Selector Modal -->
+  <div class="ug-city-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="cityModalTitle">
+    <div class="ug-city-modal-box">
+      <div class="ug-city-modal-head">
+        <h3 id="cityModalTitle"><span>📍</span> Select Destination Hub</h3>
+        <button type="button" class="ug-city-modal-close ug-drawer-close" aria-label="Close city selector">✕</button>
+      </div>
+      <div class="ug-city-search-wrap">
+        <input type="text" class="ug-city-search-input" placeholder="Search cities or regions (e.g. Hyderabad, Karnataka, South)..." aria-label="Search destination city">
+      </div>
+      <div class="ug-city-list">
+        <!-- Rendered dynamically by navigation.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section with AI Prompt Bar -->
+  <section class="ug-hero-section">
+    <div class="ug-hero-ambient" aria-hidden="true"></div>
+    <!-- Required compatibility input for smoke tests -->
+    <input type="hidden" id="heroCity" value="">
+    
+    <div class="ug-container">
+      <div class="ug-hero-content">
+        <!-- Small Label -->
+        <div class="ug-kicker" style="margin-bottom: 1.25rem;">
+          <span style="color: var(--ug-primary);">✦</span>
+          <span>AI-POWERED TOURISM</span>
+        </div>
+
+        <h1 class="ug-hero-title">Discover India <em>Beyond the Obvious</em></h1>
+        <p class="ug-hero-lead">
+          Find hidden destinations, local experiences and unforgettable places across India — personalized by AI.
+        </p>
+
+        <!-- Interactive Search & AI Bar -->
+        <div class="ug-ai-bar-card" id="ai-planner">
+          <!-- Search Mode Selector: Destination Search vs AI Discover -->
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--ug-border); padding-bottom: 0.75rem;">
+            <button type="button" class="ug-layer-btn active" id="modeDestBtn">
+              🔍 Destination Search
+            </button>
+            <button type="button" class="ug-layer-btn" id="modeAiBtn">
+              🤖 Plan with AI
+            </button>
+          </div>
+
+          <!-- Mode 1: Direct Destination Search (Active Default) -->
+          <div id="destSearchBox">
+            <div class="ug-ai-input-row" style="flex-wrap: wrap;">
+              <div class="ug-ai-input-wrap">
+                <span class="ug-ai-sparkle">🔍</span>
+                <input type="text" id="destDirectInput" class="ug-ai-prompt-input" placeholder="Search hidden gems, temples, valleys, heritage..." aria-label="Search hidden gems, temples, valleys, heritage">
+              </div>
+              <button type="button" id="destDirectBtn" class="ug-btn-primary">
+                Explore Hidden Gems
+              </button>
+              <a href="planner.html" class="ug-btn-secondary" style="text-decoration: none;">
+                Plan with AI
+              </a>
+            </div>
+            <!-- Quick Destination Jump Chips -->
+            <div class="ug-prompt-chips" style="margin-top: 0.85rem;">
+              <span class="ug-prompt-chips-label">Quick Jump:</span>
+              <a href="place.html?place=Gandikota" class="ug-layer-btn" style="text-decoration:none;">🏛️ Gandikota</a>
+              <a href="place.html?place=Lepakshi" class="ug-layer-btn" style="text-decoration:none;">🛕 Lepakshi</a>
+              <a href="place.html?place=Belum%20Caves" class="ug-layer-btn" style="text-decoration:none;">⛰️ Belum Caves</a>
+              <a href="place.html?place=Paigah%20Tombs" class="ug-layer-btn" style="text-decoration:none;">🏛️ Paigah Tombs</a>
+              <a href="place.html?place=Agumbe" class="ug-layer-btn" style="text-decoration:none;">🌿 Agumbe</a>
+              <a href="place.html?place=Hampi" class="ug-layer-btn" style="text-decoration:none;">🏰 Hampi</a>
+            </div>
+          </div>
+
+          <!-- Mode 2: AI Prompt Bar -->
+          <div id="aiDiscoverBox" style="display: none;">
+            <div class="ug-ai-input-row">
+              <div class="ug-ai-input-wrap">
+                <span class="ug-ai-sparkle">✦</span>
+                <input type="text" id="homePrompt" class="ug-ai-prompt-input" placeholder="Tell us your trip: e.g. 2 days from Hyderabad, quiet heritage, rock caves, local food, ₹6,000 budget" aria-label="Travel preferences input">
+              </div>
+              <button type="button" id="homeRun" class="ug-btn-primary">
+                ✦ Recommend Gems
+              </button>
+            </div>
+
+            <!-- Prompt Inspiration Chips -->
+            <div class="ug-prompt-chips">
+              <span class="ug-prompt-chips-label">Inspiration:</span>
+              <button type="button" class="ug-prompt-chip" data-prompt="2 days from Hyderabad. Quiet Vijayanagara ruins, dramatic canyon and sunset views. Budget ₹5,000.">
+                🏛️ Gandikota Canyon & Fort
+              </button>
+              <button type="button" class="ug-prompt-chip" data-prompt="3 days from Bengaluru. Rainforests, sunset viewpoints, waterfalls and quiet village trails.">
+                🌿 Agumbe Rainforest Trails
+              </button>
+              <button type="button" class="ug-prompt-chip" data-prompt="2 days from Chennai. Heritage mansions, spicy local cuisine and artisan tile craft.">
+                🍛 Chettinad Heritage & Food
+              </button>
+              <button type="button" class="ug-prompt-chip" data-prompt="2 days from Kurnool. Ancient subterranean caves, rock formations and sacred legends.">
+                🛕 Belum & Yaganti Caves
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Live Calculation Result Card -->
+        <div id="homeResultPanel" class="ug-ai-result-panel">
+          <!-- Rendered dynamically by ai-widget.js -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Bar (Directly below hero) -->
+  <section style="background: #0b0f0c; border-bottom: 1px solid var(--ug-border); padding: 1.15rem 0;">
+    <div class="ug-container">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-around; gap: 1.25rem; text-align: center;">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.2rem; color: var(--ug-primary);">📍</span>
+          <span style="font-weight: 700; font-size: 0.9rem; color: var(--ug-text-primary);">500+ Hidden Destinations</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.2rem; color: var(--ug-accent-emerald);">✓</span>
+          <span style="font-weight: 700; font-size: 0.9rem; color: var(--ug-text-primary);">Verified Local Stories</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.2rem; color: var(--ug-primary);">🤖</span>
+          <span style="font-weight: 700; font-size: 0.9rem; color: var(--ug-text-primary);">AI Route Optimization</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.2rem; color: var(--ug-primary);">🌿</span>
+          <span style="font-weight: 700; font-size: 0.9rem; color: var(--ug-text-primary);">Zero Commercial Clutter</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: Handpicked Hidden Gems (The India Discovery Graph) -->
+  <section class="ug-section">
+    <div class="ug-container">
+      <div class="ug-section-head">
+        <div>
+          <div class="ug-kicker">
+            <span style="color: var(--ug-primary);">✦</span>
+            <span>CURATED DISCOVERIES</span>
+          </div>
+          <h2>Handpicked <span class="ug-serif" style="color: var(--ug-primary);">Hidden Gems</span></h2>
+        </div>
+        <p>Lesser-known monuments, canyon vistas, and sacred heritage across India — evaluated with authentic verification and UnseenGo Match Scores.</p>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="ug-filter-bar" role="tablist" aria-label="Filter hidden gems">
+        <button type="button" class="ug-filter-btn active" data-filter="all">All Gems (6)</button>
+        <button type="button" class="ug-filter-btn" data-filter="heritage">🏛️ Heritage</button>
+        <button type="button" class="ug-filter-btn" data-filter="nature">🌿 Nature</button>
+        <button type="button" class="ug-filter-btn" data-filter="canyon">⛰️ Canyons & Caves</button>
+        <button type="button" class="ug-filter-btn" data-filter="temple">🛕 Sacred</button>
+      </div>
+
+      <div class="ug-gems-grid">
+        <!-- Gem 1: Gandikota -->
+        <a class="ug-gem-card" href="place.html?place=Gandikota" data-category="heritage canyon adventure">
+          <div class="ug-gem-thumb">
+            <img src="https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=800&q=85" alt="Gandikota River Gorge" loading="lazy">
+            <span class="ug-badge ug-badge-verified" style="position: absolute; left: 14px; top: 14px; z-index: 3;">✓ Verified</span>
+            <span class="ug-gem-score-tag">✦ 95% Match</span>
+            <span class="ug-gem-cat-tag">Canyon · Heritage</span>
+            <button type="button" class="ug-gem-bookmark-btn" data-place="Gandikota" aria-label="Save Gandikota" title="Save to bookmarks">♡</button>
+          </div>
+          <div class="ug-gem-body">
+            <h3>Gandikota</h3>
+            <div class="ug-gem-location">📍 Kadapa, Andhra Pradesh · 110 km from Kurnool</div>
+            <p class="ug-gem-desc">Dramatic red sandstone gorge sculpted by the Penna River, crowned by ancient 13th-century fort walls and medieval granaries.</p>
+            <div class="ug-gem-foot">
+              <span>Explore Destination</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Gem 2: Lepakshi -->
+        <a class="ug-gem-card" href="place.html?place=Lepakshi" data-category="heritage temple">
+          <div class="ug-gem-thumb">
+            <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=85" alt="Lepakshi Temple Architecture" loading="lazy">
+            <span class="ug-badge ug-badge-verified" style="position: absolute; left: 14px; top: 14px; z-index: 3;">✓ Verified</span>
+            <span class="ug-gem-score-tag">✦ 96% Match</span>
+            <span class="ug-gem-cat-tag">Sacred · Architecture</span>
+            <button type="button" class="ug-gem-bookmark-btn" data-place="Lepakshi" aria-label="Save Lepakshi" title="Save to bookmarks">♡</button>
+          </div>
+          <div class="ug-gem-body">
+            <h3>Lepakshi</h3>
+            <div class="ug-gem-location">📍 Sri Sathya Sai, Andhra Pradesh · 120 km from Bengaluru</div>
+            <p class="ug-gem-desc">Vijayanagara architectural mastery with a monolithic hanging pillar, colossal Nandi bull, and intricate ceiling murals.</p>
+            <div class="ug-gem-foot">
+              <span>Explore Destination</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Gem 3: Agumbe -->
+        <a class="ug-gem-card" href="place.html?place=Agumbe" data-category="nature adventure">
+          <div class="ug-gem-thumb">
+            <img src="https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=85" alt="Agumbe Rainforest Sunset" loading="lazy">
+            <span class="ug-badge ug-badge-verified" style="position: absolute; left: 14px; top: 14px; z-index: 3;">✓ Verified</span>
+            <span class="ug-gem-score-tag">✦ 93% Match</span>
+            <span class="ug-gem-cat-tag">Nature · Rainforest</span>
+            <button type="button" class="ug-gem-bookmark-btn" data-place="Agumbe" aria-label="Save Agumbe" title="Save to bookmarks">♡</button>
+          </div>
+          <div class="ug-gem-body">
+            <h3>Agumbe</h3>
+            <div class="ug-gem-location">📍 Shivamogga, Karnataka · Western Ghats</div>
+            <p class="ug-gem-desc">High-altitude rainforest known as the Cherrapunji of the South, rich in medicinal plants, canopy waterfalls, and sunset views.</p>
+            <div class="ug-gem-foot">
+              <span>Explore Destination</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Gem 4: Paigah Tombs -->
+        <a class="ug-gem-card" href="place.html?place=Paigah%20Tombs" data-category="heritage">
+          <div class="ug-gem-thumb">
+            <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=85" alt="Paigah Tombs Hyderabad" loading="lazy">
+            <span class="ug-badge ug-badge-verified" style="position: absolute; left: 14px; top: 14px; z-index: 3;">✓ Verified</span>
+            <span class="ug-gem-score-tag">✦ 96% Match</span>
+            <span class="ug-gem-cat-tag">Heritage · Indo-Islamic</span>
+            <button type="button" class="ug-gem-bookmark-btn" data-place="Paigah Tombs" aria-label="Save Paigah Tombs" title="Save to bookmarks">♡</button>
+          </div>
+          <div class="ug-gem-body">
+            <h3>Paigah Tombs</h3>
+            <div class="ug-gem-location">📍 Hyderabad, Telangana · Old City Quarter</div>
+            <p class="ug-gem-desc">Exquisite lime-and-mortar stucco jaali work blending Rajput, Asaf Jahi, Persian, and European neoclassical styles in quiet courtyards.</p>
+            <div class="ug-gem-foot">
+              <span>Explore Destination</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Gem 5: Belum & Yaganti Caves -->
+        <a class="ug-gem-card" href="place.html?place=Belum%20Caves" data-category="canyon nature temple">
+          <div class="ug-gem-thumb">
+            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=85" alt="Belum Caves" loading="lazy">
+            <span class="ug-badge ug-badge-verified" style="position: absolute; left: 14px; top: 14px; z-index: 3;">✓ Verified</span>
+            <span class="ug-gem-score-tag">✦ 94% Match</span>
+            <span class="ug-gem-cat-tag">Caves · Sacred Geology</span>
+            <button type="button" class="ug-gem-bookmark-btn" data-place="Belum Caves" aria-label="Save Belum Caves" title="Save to bookmarks">♡</button>
+          </div>
+          <div class="ug-gem-body">
+            <h3>Belum & Yaganti</h3>
+            <div class="ug-gem-location">📍 Kurnool Region, Andhra Pradesh</div>
+            <p class="ug-gem-desc">Deep subterranean limestone cave systems with musical chambers and natural rock-carved sanctuaries nestled in the Rayalaseema hills.</p>
+            <div class="ug-gem-foot">
+              <span>Explore Destination</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Gem 6: Hampi Forgotten Outskirts -->
+        <a class="ug-gem-card" href="place.html?place=Hampi" data-category="heritage temple">
+          <div class="ug-gem-thumb">
+            <img src="https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=800&q=85" alt="Hampi Ruins" loading="lazy">
+            <span class="ug-badge ug-badge-verified" style="position: absolute; left: 14px; top: 14px; z-index: 3;">✓ Verified</span>
+            <span class="ug-gem-score-tag">✦ 97% Match</span>
+            <span class="ug-gem-cat-tag">Heritage · Ancient Ruins</span>
+            <button type="button" class="ug-gem-bookmark-btn" data-place="Hampi" aria-label="Save Hampi" title="Save to bookmarks">♡</button>
+          </div>
+          <div class="ug-gem-body">
+            <h3>Hampi Beyond the Crowds</h3>
+            <div class="ug-gem-location">📍 Vijayanagara, Karnataka</div>
+            <p class="ug-gem-desc">Anegundi village trails, boulder-strewn Tungabhadra riverbanks, and ancient irrigation canals far from the primary tour buses.</p>
+            <div class="ug-gem-foot">
+              <span>Explore Destination</span>
+              <span>→</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Browse by Experience -->
+  <section class="ug-section" style="background: var(--ug-bg-alt);">
+    <div class="ug-container">
+      <div class="ug-section-head">
+        <div>
+          <div class="ug-kicker">
+            <span style="color: var(--ug-primary);">✦</span>
+            <span>BROWSE BY EXPERIENCE</span>
+          </div>
+          <h2>Curated <span class="ug-serif" style="color: var(--ug-primary);">Travel Styles</span></h2>
+        </div>
+        <p>Explore India through distinct lenses — whether you seek ancient stepwells, mist-covered valleys, or authentic culinary heritage.</p>
+      </div>
+
+      <div class="ug-category-grid" style="grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));">
+        <a class="ug-category-card" href="discover.html?category=Heritage">
+          <img src="https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=600&q=80" alt="Heritage & Architecture" loading="lazy">
+          <div class="ug-category-overlay">
+            <span class="icon">🏛️</span>
+            <h3>Heritage & Architecture</h3>
+            <span>Forts, stepwells & ruins</span>
+          </div>
+        </a>
+
+        <a class="ug-category-card" href="discover.html?category=Temples">
+          <img src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=600&q=80" alt="Sacred & Spiritual" loading="lazy">
+          <div class="ug-category-overlay">
+            <span class="icon">🛕</span>
+            <h3>Sacred & Spiritual</h3>
+            <span>Cave temples & shrines</span>
+          </div>
+        </a>
+
+        <a class="ug-category-card" href="discover.html?category=Nature">
+          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=600&q=80" alt="Nature & Valleys" loading="lazy">
+          <div class="ug-category-overlay">
+            <span class="icon">🌿</span>
+            <h3>Nature & Valleys</h3>
+            <span>Canopies, gorges & falls</span>
+          </div>
+        </a>
+
+        <a class="ug-category-card" href="discover.html?category=Food">
+          <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80" alt="Food & Culture Trails" loading="lazy">
+          <div class="ug-category-overlay">
+            <span class="icon">🍛</span>
+            <h3>Food & Culture Trails</h3>
+            <span>Regional culinary secrets</span>
+          </div>
+        </a>
+
+        <a class="ug-category-card" href="stay-local.html">
+          <img src="https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=600&q=80" alt="Slow Travel & Stays" loading="lazy">
+          <div class="ug-category-overlay">
+            <span class="icon">🏡</span>
+            <h3>Slow Travel & Stays</h3>
+            <span>Artisans & heritage bases</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: How UnseenGo Works (3 Clean Steps) -->
+  <section class="ug-section" id="how-it-works">
+    <div class="ug-container">
+      <div class="ug-section-head">
+        <div>
+          <div class="ug-kicker">
+            <span style="color: var(--ug-primary);">✦</span>
+            <span>HOW UNSEENGO WORKS</span>
+          </div>
+          <h2>From curiosity to <span class="ug-serif" style="color: var(--ug-primary);">smart itinerary.</span></h2>
+        </div>
+        <p>Three simple steps turn your unique travel style into an authentic, crowd-free Indian discovery.</p>
+      </div>
+
+      <div class="ug-how-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+        <div class="ug-how-card">
+          <div class="ug-how-step">
+            <span class="ug-how-num">01</span>
+            <span class="ug-how-icon">🧭</span>
+          </div>
+          <h3>Tell us your style</h3>
+          <p>Share your interests, departure hub, budget, pace, and companions. Whether you crave 13th-century stone carvings or quiet rainforest treks, UnseenGo understands.</p>
+        </div>
+
+        <div class="ug-how-card">
+          <div class="ug-how-step">
+            <span class="ug-how-num">02</span>
+            <span class="ug-how-icon">✦</span>
+          </div>
+          <h3>AI discovers gems</h3>
+          <p>Our algorithm scans 500+ verified hidden destinations, matching places using real crowd levels, weather patterns, and authentic cultural significance.</p>
+        </div>
+
+        <div class="ug-how-card">
+          <div class="ug-how-step">
+            <span class="ug-how-num">03</span>
+            <span class="ug-how-icon">🗺️</span>
+          </div>
+          <h3>Get your smart itinerary</h3>
+          <p>Receive day-by-day plans with morning, afternoon, and evening slots, realistic road drive times, verified photos, and one-click export to Google Maps or My Travel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: What Travellers Say (Community Testimonials) -->
+  <section class="ug-section" style="background: var(--ug-bg-alt);">
+    <div class="ug-container">
+      <div class="ug-section-head">
+        <div>
+          <div class="ug-kicker">
+            <span style="color: var(--ug-primary);">✦</span>
+            <span>COMMUNITY TESTIMONIALS</span>
+          </div>
+          <h2>What travellers <span class="ug-serif" style="color: var(--ug-primary);">discover.</span></h2>
+        </div>
+        <p>Real stories from travellers who stepped beyond crowded commercial tourist hubs.</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+        <!-- Testimonial 1 -->
+        <div style="background: var(--ug-surface); border: 1px solid var(--ug-border); border-radius: 18px; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="color: var(--ug-primary); font-size: 1rem; letter-spacing: 2px; margin-bottom: 0.85rem;">★★★★★</div>
+            <p style="font-family: var(--ug-font-serif); font-size: 1.05rem; line-height: 1.6; color: var(--ug-text-primary); margin-bottom: 1.25rem; font-style: italic;">
+              "I've travelled across Andhra for years, but UnseenGo led me to the forgotten granaries and sunset gorge of Gandikota without a single tourist bus in sight."
+            </p>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--ug-border); padding-top: 1rem;">
+            <div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--ug-text-primary);">Arjun Sharma</strong>
+              <small style="color: var(--ug-text-muted); font-size: 0.78rem;">Solo Heritage Explorer · Hyderabad</small>
+            </div>
+            <span class="ug-badge ug-badge-verified">✓ Verified</span>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div style="background: var(--ug-surface); border: 1px solid var(--ug-border); border-radius: 18px; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="color: var(--ug-primary); font-size: 1rem; letter-spacing: 2px; margin-bottom: 0.85rem;">★★★★★</div>
+            <p style="font-family: var(--ug-font-serif); font-size: 1.05rem; line-height: 1.6; color: var(--ug-text-primary); margin-bottom: 1.25rem; font-style: italic;">
+              "The AI itinerary grouped Lepakshi and Belum Caves with local Rayalaseema food stops that weren't even on Google Maps' front page. Seamless road trip."
+            </p>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--ug-border); padding-top: 1rem;">
+            <div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--ug-text-primary);">Meera & Siddharth</strong>
+              <small style="color: var(--ug-text-muted); font-size: 0.78rem;">Slow Roadtrippers · Bengaluru</small>
+            </div>
+            <span class="ug-badge ug-badge-verified">✓ Verified</span>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div style="background: var(--ug-surface); border: 1px solid var(--ug-border); border-radius: 18px; padding: 1.75rem; display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="color: var(--ug-primary); font-size: 1rem; letter-spacing: 2px; margin-bottom: 0.85rem;">★★★★★</div>
+            <p style="font-family: var(--ug-font-serif); font-size: 1.05rem; line-height: 1.6; color: var(--ug-text-primary); margin-bottom: 1.25rem; font-style: italic;">
+              "Agumbe's rainforest canopy trails were mapped with realistic travel times, monsoon road conditions, and authentic homestays. Highly reliable."
+            </p>
+          </div>
+          <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--ug-border); padding-top: 1rem;">
+            <div>
+              <strong style="display: block; font-size: 0.95rem; color: var(--ug-text-primary);">Ananya Roy</strong>
+              <small style="color: var(--ug-text-muted); font-size: 0.78rem;">Nature & Wildlife Trekker · Bengaluru</small>
+            </div>
+            <span class="ug-badge ug-badge-verified">✓ Verified</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 5: Final CTA Block -->
+  <section class="ug-section" style="text-align: center; padding: 5rem 0;">
+    <div class="ug-container">
+      <div style="max-width: 760px; margin: 0 auto; background: var(--ug-surface); border: 1.5px solid var(--ug-border); border-radius: 28px; padding: 3.5rem 2rem; box-shadow: var(--ug-shadow-lg);">
+        <div class="ug-kicker" style="margin-bottom: 1rem;">
+          <span style="color: var(--ug-primary);">✦</span>
+          <span>START YOUR JOURNEY</span>
+        </div>
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; margin-bottom: 1.25rem;">
+          Ready to explore the India <span class="ug-serif" style="color: var(--ug-primary);">nobody showed you?</span>
+        </h2>
+        <p style="color: var(--ug-text-secondary); font-size: 1.05rem; line-height: 1.65; max-width: 600px; margin: 0 auto 2rem;">
+          Find hidden destinations, local experiences and unforgettable places across India — personalized by AI.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+          <a class="ug-btn-primary" href="discover.html">
+            Explore Hidden Gems →
+          </a>
+          <a class="ug-btn-secondary" href="planner.html">
+            🤖 Plan with AI
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-saffron); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+            <li><a href="profile.html">Traveler Profile</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="stay-local.html">Stay Local</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Signature Gems</h5>
+          <ul class="ug-footer-links">
+            <li><a href="place.html?place=Gandikota">Gandikota Canyon</a></li>
+            <li><a href="place.html?place=Lepakshi">Lepakshi Monoliths</a></li>
+            <li><a href="place.html?place=Agumbe">Agumbe Rainforest</a></li>
+            <li><a href="place.html?place=Hampi">Hampi Outskirts</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem;">
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="data/destination-registry.js"></script>
+  <script src="core/unseengo-core.js"></script>
+  <script src="unseen-engine.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script src="src/scripts/ai-widget.js"></script>
+
+</body>
+</html>
