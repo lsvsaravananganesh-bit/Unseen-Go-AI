@@ -1,11 +1,42 @@
 {
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "functions": {
-    "api/*.js": { "runtime": "nodejs22.x" }
+    "api/*.js": {
+      "runtime": "nodejs22.x"
+    }
   },
+  "routes": [
+    {
+      "src": "/api/auth/login",
+      "dest": "/api/auth-login.js"
+    },
+    {
+      "src": "/api/auth/signup",
+      "dest": "/api/auth-signup.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1.js"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "s-maxage=300, stale-while-revalidate=600" }]
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Access-Control-Allow-Methods", "value": "GET, POST, PUT, DELETE, OPTIONS" },
+        { "key": "Access-Control-Allow-Headers", "value": "Content-Type, Authorization, X-Requested-With, apikey" },
+        { "key": "Cache-Control", "value": "no-store, max-age=0" }
+      ]
     }
   ]
 }

@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Global search — find destinations, cities, experiences, and food trails across India on UnseenGo AI.">
+  <title>Search — UnseenGo AI</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+  <style>
+    /* ── Search Page Specific Styles ── */
+    .search-hero {
+      background: var(--ug-bg);
+      border-bottom: 1px solid var(--ug-border);
+      padding: 3rem 0 2.5rem;
+    }
+
+    .search-hero-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .search-hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ug-text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .search-hero-title {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.15;
+      color: var(--ug-text-primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .search-hero-title em {
+      color: var(--ug-primary);
+      font-style: normal;
+    }
+
+    /* Search Bar */
+    .sg-search-bar {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .sg-search-bar:focus-within {
+      border-color: var(--ug-primary);
+      box-shadow: 0 0 0 3px rgba(216, 255, 77, 0.15);
+    }
+
+    .sg-search-icon {
+      padding: 0 1rem 0 1.25rem;
+      font-size: 1.15rem;
+      color: var(--ug-text-muted);
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+
+    .sg-search-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--ug-text-primary);
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 1rem 0;
+      caret-color: var(--ug-primary);
+    }
+
+    .sg-search-input::placeholder {
+      color: var(--ug-text-muted);
+    }
+
+    .sg-clear-btn {
+      background: none;
+      border: none;
+      color: var(--ug-text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0 1.25rem;
+      transition: color 0.2s;
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .sg-clear-btn:hover { color: var(--ug-text-primary); }
+    .sg-clear-btn.visible { display: block; }
+
+    .sg-search-count {
+      font-size: 0.8rem;
+      color: var(--ug-text-muted);
+      margin-top: 0.65rem;
+      text-align: center;
+      min-height: 1.2rem;
+    }
+
+    /* Filter Pills */
+    .sg-filter-strip {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 1.25rem;
+    }
+
+    .sg-filter-pill {
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+    }
+
+    .sg-filter-pill:hover,
+    .sg-filter-pill.active {
+      background: var(--ug-primary);
+      border-color: var(--ug-primary);
+      color: #080d09;
+    }
+
+    /* Results Area */
+    .sg-results-area {
+      padding: 2.5rem 0 4rem;
+    }
+
+    .sg-results-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Category Group */
+    .sg-category-group {
+      margin-bottom: 2.5rem;
+    }
+
+    .sg-category-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ug-text-muted);
+      border-bottom: 1px solid var(--ug-border);
+      padding-bottom: 0.65rem;
+      margin-bottom: 1rem;
+    }
+
+    .sg-category-label span.icon {
+      font-size: 1rem;
+    }
+
+    .sg-results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    /* Result Card */
+    .sg-result-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--ug-text-primary);
+      transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+      cursor: pointer;
+    }
+
+    .sg-result-card:hover {
+      border-color: var(--ug-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    .sg-result-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(216, 255, 77, 0.08);
+      border: 1px solid rgba(216, 255, 77, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .sg-result-body { flex: 1; min-width: 0; }
+
+    .sg-result-name {
+      font-weight: 800;
+      font-size: 0.97rem;
+      color: var(--ug-text-primary);
+      line-height: 1.3;
+      margin-bottom: 0.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sg-result-name mark {
+      background: rgba(216, 255, 77, 0.25);
+      color: var(--ug-primary);
+      border-radius: 3px;
+      padding: 0 2px;
+    }
+
+    .sg-result-meta {
+      font-size: 0.78rem;
+      color: var(--ug-text-muted);
+      line-height: 1.4;
+    }
+
+    .sg-result-arrow {
+      font-size: 1rem;
+      color: var(--ug-text-muted);
+      flex-shrink: 0;
+      align-self: center;
+      transition: color 0.18s, transform 0.18s;
+    }
+
+    .sg-result-card:hover .sg-result-arrow {
+      color: var(--ug-primary);
+      transform: translateX(3px);
+    }
+
+    .sg-result-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 999px;
+      margin-top: 0.3rem;
+    }
+
+    .sg-badge-destination {
+      background: rgba(216,255,77,0.12);
+      color: var(--ug-primary);
+      border: 1px solid rgba(216,255,77,0.2);
+    }
+    .sg-badge-city {
+      background: rgba(99,202,183,0.12);
+      color: #63cab7;
+      border: 1px solid rgba(99,202,183,0.2);
+    }
+    .sg-badge-experience {
+      background: rgba(245,158,11,0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(245,158,11,0.2);
+    }
+    .sg-badge-food {
+      background: rgba(251,113,133,0.12);
+      color: #fb7185;
+      border: 1px solid rgba(251,113,133,0.2);
+    }
+
+    /* Empty State */
+    .sg-empty-state {
+      text-align: center;
+      padding: 4rem 1rem;
+      display: none;
+    }
+
+    .sg-empty-state.visible { display: block; }
+
+    .sg-empty-icon {
+      font-size: 3.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .sg-empty-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--ug-text-primary);
+      margin-bottom: 0.6rem;
+    }
+
+    .sg-empty-body {
+      color: var(--ug-text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .sg-suggestion-chips {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .sg-chip {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.18s;
+      text-decoration: none;
+    }
+    .sg-chip:hover {
+      background: var(--ug-primary);
+      border-color: var(--ug-primary);
+      color: #080d09;
+    }
+
+    /* Default / Welcome state (no query) */
+    .sg-welcome-state {
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .sg-welcome-state .sg-recent-title {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ug-text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Skeleton loading cards */
+    .sg-skeleton-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .sg-skeleton-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: var(--ug-border);
+      animation: sg-pulse 1.4s ease infinite;
+      flex-shrink: 0;
+    }
+    .sg-skeleton-lines { flex: 1; }
+    .sg-skeleton-line {
+      height: 12px;
+      border-radius: 6px;
+      background: var(--ug-border);
+      animation: sg-pulse 1.4s ease infinite;
+      margin-bottom: 6px;
+    }
+    .sg-skeleton-line.short { width: 60%; }
+    @keyframes sg-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+
+    @media (max-width: 600px) {
+      .sg-results-grid { grid-template-columns: 1fr; }
+      .search-hero { padding: 2rem 0 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">🌙</button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display:flex;align-items:center;gap:0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Experiences</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link active" href="search.html"><span class="icon">🔍</span><span>Search</span></a>
+        </nav>
+        <div class="ug-drawer-footer"><div class="ug-drawer-auth"></div></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Search Hero -->
+  <section class="search-hero">
+    <div class="search-hero-inner">
+      <div class="search-hero-kicker">
+        <span style="color:var(--ug-primary)">✦</span>
+        <span>Global Search</span>
+      </div>
+      <h1 class="search-hero-title">
+        Find <em>anything</em> in India
+      </h1>
+
+      <!-- Main Search Bar -->
+      <div class="sg-search-bar" role="search">
+        <span class="sg-search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="search"
+          id="sgInput"
+          class="sg-search-input"
+          placeholder="Search Gandikota, caves, heritage, Irani Chai…"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          aria-label="Search destinations, cities, experiences, food"
+        >
+        <button type="button" id="sgClearBtn" class="sg-clear-btn" aria-label="Clear search">✕</button>
+      </div>
+
+      <p class="sg-search-count" id="sgCount" aria-live="polite" aria-atomic="true"></p>
+
+      <!-- Category Filter Pills -->
+      <div class="sg-filter-strip" role="group" aria-label="Filter by category">
+        <button class="sg-filter-pill active" data-filter="all">All</button>
+        <button class="sg-filter-pill" data-filter="destination">📍 Destinations</button>
+        <button class="sg-filter-pill" data-filter="city">🏙️ Cities</button>
+        <button class="sg-filter-pill" data-filter="experience">🧭 Experiences</button>
+        <button class="sg-filter-pill" data-filter="food">🍛 Food</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Area -->
+  <main class="sg-results-area" id="sgResultsArea">
+    <div class="sg-results-inner">
+
+      <!-- Empty State (no results) -->
+      <div class="sg-empty-state" id="sgEmptyState" role="status">
+        <div class="sg-empty-icon">🔍</div>
+        <h2 class="sg-empty-title" id="sgEmptyTitle">No results found</h2>
+        <p class="sg-empty-body" id="sgEmptyBody">
+          Try searching for 'Gandikota', 'heritage', 'caves', or 'chai'
+        </p>
+        <div class="sg-suggestion-chips">
+          <button class="sg-chip" data-suggest="Gandikota">Gandikota</button>
+          <button class="sg-chip" data-suggest="heritage">heritage</button>
+          <button class="sg-chip" data-suggest="caves">caves</button>
+          <button class="sg-chip" data-suggest="rainforest">rainforest</button>
+          <button class="sg-chip" data-suggest="spiritual">spiritual</button>
+          <button class="sg-chip" data-suggest="Hyderabad">Hyderabad</button>
+        </div>
+      </div>
+
+      <!-- Welcome / Default State -->
+      <div class="sg-welcome-state" id="sgWelcomeState">
+        <div class="sg-recent-title">✦ Popular Searches</div>
+        <div class="sg-suggestion-chips" style="margin-bottom:2.5rem">
+          <button class="sg-chip" data-suggest="Gandikota">🏔️ Gandikota</button>
+          <button class="sg-chip" data-suggest="Hampi">🏛️ Hampi</button>
+          <button class="sg-chip" data-suggest="caves">🦇 Caves</button>
+          <button class="sg-chip" data-suggest="Agumbe">🌧️ Agumbe</button>
+          <button class="sg-chip" data-suggest="heritage">🏯 Heritage</button>
+          <button class="sg-chip" data-suggest="Irani Chai">☕ Irani Chai</button>
+          <button class="sg-chip" data-suggest="spiritual">🛕 Spiritual</button>
+          <button class="sg-chip" data-suggest="Araku">🍃 Araku Valley</button>
+        </div>
+      </div>
+
+      <!-- Actual Results Container (grouped by category) -->
+      <div id="sgResultsContainer"></div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Search Data & Engine -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Search Data ── */
+    var SEARCH_DATA = [
+      // Destinations
+      {type:'destination', name:'Gandikota', tags:['canyon','fort','heritage','history','gorge'], city:'Kurnool', state:'Andhra Pradesh'},
+      {type:'destination', name:'Lepakshi', tags:['temple','nandi','heritage','sculpture','history'], city:'Anantapur', state:'Andhra Pradesh'},
+      {type:'destination', name:'Belum Caves', tags:['caves','underground','adventure','nature'], city:'Kurnool', state:'Andhra Pradesh'},
+      {type:'destination', name:'Yaganti', tags:['temple','spiritual','caves','sacred'], city:'Kurnool', state:'Andhra Pradesh'},
+      {type:'destination', name:'Agumbe', tags:['rainforest','nature','sunset','wildlife','western ghats'], city:'Shimoga', state:'Karnataka'},
+      {type:'destination', name:'Hampi', tags:['ruins','vijayanagara','heritage','history','boulders'], city:'Bellary', state:'Karnataka'},
+      {type:'destination', name:'Paigah Tombs', tags:['tombs','heritage','hyderabad','history','hidden'], city:'Hyderabad', state:'Telangana'},
+      {type:'destination', name:'Srisailam', tags:['temple','spiritual','forest','dam','nature'], city:'Nandyal', state:'Andhra Pradesh'},
+      {type:'destination', name:'Araku Valley', tags:['valley','nature','tribal','coffee','scenic'], city:'Visakhapatnam', state:'Andhra Pradesh'},
+      {type:'destination', name:'Orvakal Rock Garden', tags:['rocks','nature','adventure','boulders'], city:'Kurnool', state:'Andhra Pradesh'},
+      {type:'destination', name:'Ahobilam', tags:['temple','spiritual','forest','narasimha','sacred'], city:'Kurnool', state:'Andhra Pradesh'},
+      {type:'destination', name:'Anegundi', tags:['heritage','hampi','history','village','ruins'], city:'Koppal', state:'Karnataka'},
+      {type:'destination', name:'Panna Meena ka Kund', tags:['stepwell','jaipur','heritage','hidden','photography'], city:'Jaipur', state:'Rajasthan'},
+      {type:'destination', name:'Chunar Fort', tags:['fort','varanasi','history','river','ganga'], city:'Mirzapur', state:'Uttar Pradesh'},
+      {type:'destination', name:'Talakona', tags:['waterfall','nature','wildlife','temple','forest'], city:'Tirupati', state:'Andhra Pradesh'},
+      // Cities
+      {type:'city', name:'Kurnool', tags:['rayalaseema','andhra','heritage','caves','canyon']},
+      {type:'city', name:'Hyderabad', tags:['telangana','biryani','charminar','nizam','city']},
+      {type:'city', name:'Bengaluru', tags:['karnataka','tech','city','western ghats']},
+      {type:'city', name:'Varanasi', tags:['ganga','ghats','spiritual','oldest','city']},
+      {type:'city', name:'Jaipur', tags:['pink city','rajasthan','forts','heritage']},
+      {type:'city', name:'Hampi', tags:['ruins','karnataka','vijayanagara','boulders']},
+      // Experiences
+      {type:'experience', name:'Heritage Trail', tags:['history','forts','temples','ruins'], link:'discover.html'},
+      {type:'experience', name:'Cave Adventure', tags:['caves','underground','belum','adventure'], link:'discover.html'},
+      {type:'experience', name:'Rainforest Trek', tags:['forest','nature','trekking','wildlife'], link:'discover.html'},
+      {type:'experience', name:'Sunset Photography', tags:['photography','sunset','scenic','views'], link:'discover.html'},
+      {type:'experience', name:'Spiritual Journey', tags:['temples','sacred','spiritual','pilgrimage'], link:'discover.html'},
+      {type:'experience', name:'Weekend Getaway', tags:['quick','short','2-days','nearby'], link:'planner.html'},
+      // Food
+      {type:'food', name:'Irani Chai Trail', tags:['chai','tea','hyderabad','food','cafe'], link:'place.html?place=Irani+Chai+Trail'},
+      {type:'food', name:'Kachori Gali', tags:['kachori','varanasi','street food','food'], link:'place.html?place=Kachori+Gali'},
+      {type:'food', name:'Chettinad Cuisine', tags:['spicy','tamil','authentic','food','non-veg'], link:'discover.html'}
+    ];
+
+    /* ── Icon & Badge Config ── */
+    var TYPE_CONFIG = {
+      destination: { icon: '📍', label: 'Destinations', badgeClass: 'sg-badge-destination', badgeText: '📍 Destination' },
+      city:        { icon: '🏙️', label: 'Cities',       badgeClass: 'sg-badge-city',        badgeText: '🏙️ City' },
+      experience:  { icon: '🧭', label: 'Experiences',  badgeClass: 'sg-badge-experience',  badgeText: '🧭 Experience' },
+      food:        { icon: '🍛', label: 'Food & Culture', badgeClass: 'sg-badge-food',      badgeText: '🍛 Food' }
+    };
+
+    /* ── Build destination link ── */
+    function buildLink(item) {
+      if (item.link) return item.link;
+      if (item.type === 'destination') return 'place.html?place=' + encodeURIComponent(item.name);
+      if (item.type === 'city') return 'india-cities.html?city=' + encodeURIComponent(item.name);
+      return 'discover.html';
+    }
+
+    /* ── Highlight matched text ── */
+    function highlight(text, query) {
+      if (!query) return escapeHtml(text);
+      var escaped = escapeHtml(text);
+      var escapedQuery = escapeHtml(query).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return escaped.replace(new RegExp('(' + escapedQuery + ')', 'gi'), '<mark>$1</mark>');
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    /* ── Score a result for relevance (higher = better) ── */
+    function scoreItem(item, query) {
+      var q = query.toLowerCase();
+      var name = item.name.toLowerCase();
+      var tags = item.tags || [];
+      var score = 0;
+
+      if (name === q) score += 100;
+      else if (name.startsWith(q)) score += 60;
+      else if (name.includes(q)) score += 40;
+
+      tags.forEach(function(tag) {
+        if (tag === q) score += 30;
+        else if (tag.startsWith(q)) score += 20;
+        else if (tag.includes(q)) score += 10;
+      });
+
+      if (item.city && item.city.toLowerCase().includes(q)) score += 15;
+      if (item.state && item.state.toLowerCase().includes(q)) score += 10;
+
+      return score;
+    }
+
+    /* ── Filter & score search results ── */
+    function runSearch(query, typeFilter) {
+      var q = query.trim().toLowerCase();
+      if (!q) return [];
+
+      return SEARCH_DATA
+        .filter(function(item) {
+          if (typeFilter !== 'all' && item.type !== typeFilter) return false;
+          var score = scoreItem(item, q);
+          item._score = score;
+          return score > 0;
+        })
+        .sort(function(a, b) { return b._score - a._score; });
+    }
+
+    /* ── Render result card ── */
+    function renderCard(item, query) {
+      var cfg = TYPE_CONFIG[item.type] || TYPE_CONFIG.destination;
+      var link = buildLink(item);
+      var meta = [];
+      if (item.city) meta.push(item.city);
+      if (item.state) meta.push(item.state);
+
+      return '<a class="sg-result-card" href="' + escapeHtml(link) + '" aria-label="' + escapeHtml(item.name) + '">' +
+        '<div class="sg-result-icon" aria-hidden="true">' + cfg.icon + '</div>' +
+        '<div class="sg-result-body">' +
+          '<div class="sg-result-name">' + highlight(item.name, query) + '</div>' +
+          (meta.length ? '<div class="sg-result-meta">' + escapeHtml(meta.join(' · ')) + '</div>' : '') +
+          '<span class="sg-result-badge ' + cfg.badgeClass + '">' + cfg.badgeText + '</span>' +
+        '</div>' +
+        '<span class="sg-result-arrow" aria-hidden="true">→</span>' +
+      '</a>';
+    }
+
+    /* ── Render grouped results ── */
+    function renderResults(results, query) {
+      if (!results.length) return '';
+
+      // Group by type
+      var groups = {};
+      results.forEach(function(item) {
+        if (!groups[item.type]) groups[item.type] = [];
+        groups[item.type].push(item);
+      });
+
+      var typeOrder = ['destination', 'city', 'experience', 'food'];
+      var html = '';
+
+      typeOrder.forEach(function(type) {
+        if (!groups[type] || !groups[type].length) return;
+        var cfg = TYPE_CONFIG[type];
+        html += '<div class="sg-category-group">';
+        html += '<div class="sg-category-label"><span class="icon">' + cfg.icon + '</span>' + escapeHtml(cfg.label) + '</div>';
+        html += '<div class="sg-results-grid">';
+        groups[type].forEach(function(item) {
+          html += renderCard(item, query);
+        });
+        html += '</div></div>';
+      });
+
+      return html;
+    }
+
+    /* ── DOM refs ── */
+    var input      = document.getElementById('sgInput');
+    var clearBtn   = document.getElementById('sgClearBtn');
+    var count      = document.getElementById('sgCount');
+    var container  = document.getElementById('sgResultsContainer');
+    var emptyState = document.getElementById('sgEmptyState');
+    var emptyTitle = document.getElementById('sgEmptyTitle');
+    var emptyBody  = document.getElementById('sgEmptyBody');
+    var welcome    = document.getElementById('sgWelcomeState');
+    var filterPills = document.querySelectorAll('.sg-filter-pill');
+
+    var activeFilter = 'all';
+    var debounceTimer = null;
+
+    /* ── Update results UI ── */
+    function updateUI(query) {
+      var q = query.trim();
+
+      // Toggle clear button
+      if (q) {
+        clearBtn.classList.add('visible');
+      } else {
+        clearBtn.classList.remove('visible');
+      }
+
+      if (!q) {
+        // Welcome state
+        welcome.style.display = 'block';
+        emptyState.classList.remove('visible');
+        container.innerHTML = '';
+        count.textContent = '';
+        return;
+      }
+
+      welcome.style.display = 'none';
+      var results = runSearch(q, activeFilter);
+
+      if (results.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.add('visible');
+        emptyTitle.textContent = 'No results for \u201c' + q + '\u201d';
+        emptyBody.textContent = 'Try \u2018Gandikota\u2019, \u2018heritage\u2019, or \u2018caves\u2019';
+        count.textContent = '';
+      } else {
+        emptyState.classList.remove('visible');
+        container.innerHTML = renderResults(results, q);
+        count.textContent = results.length + ' result' + (results.length !== 1 ? 's' : '') + ' for \u201c' + q + '\u201d';
+      }
+    }
+
+    /* ── Input events ── */
+    input.addEventListener('input', function () {
+      clearTimeout(debounceTimer);
+      var val = input.value;
+      debounceTimer = setTimeout(function () {
+        updateUI(val);
+        // Keep URL in sync
+        try {
+          var url = new URL(window.location.href);
+          if (val.trim()) {
+            url.searchParams.set('q', val.trim());
+          } else {
+            url.searchParams.delete('q');
+          }
+          history.replaceState(null, '', url.toString());
+        } catch(e) {}
+      }, 140);
+    });
+
+    clearBtn.addEventListener('click', function () {
+      input.value = '';
+      input.focus();
+      updateUI('');
+      try {
+        var url = new URL(window.location.href);
+        url.searchParams.delete('q');
+        history.replaceState(null, '', url.toString());
+      } catch(e) {}
+    });
+
+    /* ── Filter pills ── */
+    filterPills.forEach(function (pill) {
+      pill.addEventListener('click', function () {
+        filterPills.forEach(function(p) { p.classList.remove('active'); });
+        pill.classList.add('active');
+        activeFilter = pill.dataset.filter || 'all';
+        updateUI(input.value);
+      });
+    });
+
+    /* ── Suggestion chips ── */
+    function initChips() {
+      document.querySelectorAll('[data-suggest]').forEach(function(chip) {
+        chip.addEventListener('click', function () {
+          var term = chip.dataset.suggest;
+          input.value = term;
+          welcome.style.display = 'none';
+          updateUI(term);
+          input.focus();
+        });
+      });
+    }
+
+    /* ── Read URL param on load ── */
+    function initFromURL() {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var q = params.get('q') || '';
+        if (q) {
+          input.value = q;
+          welcome.style.display = 'none';
+          updateUI(q);
+        }
+      } catch(e) {}
+    }
+
+    /* ── Keyboard shortcut: focus input on '/' ── */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === '/' && !['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) {
+        e.preventDefault();
+        input.focus();
+        input.select();
+      }
+    });
+
+    /* ── Boot ── */
+    document.addEventListener('DOMContentLoaded', function () {
+      initChips();
+      initFromURL();
+      input.focus();
+    });
+
+  })();
+  </script>
+
+  <script src="app.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

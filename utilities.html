@@ -1,0 +1,1023 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Travel Utilities Suite — Smart climate-aware packing checklist, multi-currency budget calculator, and emergency safety hub on UnseenGo AI.">
+  <title>Travel Utilities Suite — UnseenGo AI</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="UnseenGo Tools">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .utility-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-glass);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 1.15rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ug-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Tab Switcher */
+    .utility-nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 1.5rem auto 3rem;
+      flex-wrap: wrap;
+    }
+
+    .utility-tab-btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 9999px;
+      border: 1.5px solid var(--ug-border);
+      background: var(--ug-surface);
+      color: var(--ug-text-secondary);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--ug-transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .utility-tab-btn:hover, .utility-tab-btn.active {
+      border-color: var(--ug-primary);
+      background: var(--ug-primary-soft);
+      color: var(--ug-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px var(--ug-primary-glow);
+    }
+
+    /* Panel Content Containers */
+    .utility-panel {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .utility-panel.active {
+      display: block;
+    }
+
+    /* Packing Tool Styles */
+    .tool-card {
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 28px;
+      padding: 2.25rem;
+      box-shadow: var(--ug-shadow-lg);
+      max-width: 900px;
+      margin: 0 auto 3rem;
+    }
+
+    .config-selectors-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.75rem;
+      border-bottom: 1px solid var(--ug-border);
+    }
+
+    .config-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      color: var(--ug-text-muted);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .config-select {
+      width: 100%;
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      padding: 0.8rem 1rem;
+      color: var(--ug-text-primary);
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+    }
+
+    .packing-progress-bar-wrap {
+      background: var(--ug-surface-elevated);
+      border-radius: 9999px;
+      height: 10px;
+      overflow: hidden;
+      margin: 1rem 0 2rem;
+    }
+
+    .packing-progress-fill {
+      height: 100%;
+      background: var(--ug-primary-gradient);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .checklist-category-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--ug-primary);
+      margin: 1.5rem 0 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checklist-items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .check-item-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      color: var(--ug-text-secondary);
+      cursor: pointer;
+      transition: var(--ug-transition);
+      user-select: none;
+    }
+
+    .check-item-label:hover {
+      border-color: var(--ug-primary);
+      color: var(--ug-text-primary);
+    }
+
+    .check-item-label.checked {
+      background: var(--ug-primary-soft);
+      border-color: var(--ug-primary);
+      color: var(--ug-primary);
+      text-decoration: line-through;
+    }
+
+    .check-custom-input-row {
+      display: flex;
+      gap: 0.6rem;
+      margin-top: 2rem;
+    }
+
+    /* Budget Tool Styles */
+    .budget-breakdown-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2rem;
+    }
+
+    .budget-slider-group {
+      margin-bottom: 1.35rem;
+    }
+
+    .budget-slider-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .budget-slider {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--ug-surface-elevated);
+      outline: none;
+      -webkit-appearance: none;
+      accent-color: var(--ug-primary);
+    }
+
+    .budget-summary-card {
+      background: var(--ug-surface-elevated);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .budget-currency-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.25rem;
+    }
+
+    .total-cost-display {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--ug-primary);
+      line-height: 1;
+      margin: 0.5rem 0 1rem;
+    }
+
+    /* Safety & Emergency Styles */
+    .emergency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .emergency-card {
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 22px;
+      padding: 1.75rem;
+      transition: var(--ug-transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .emergency-card:hover {
+      border-color: #ef4444;
+      box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15);
+      transform: translateY(-4px);
+    }
+
+    .emergency-dial-btn {
+      margin-top: auto;
+      background: #ef4444;
+      color: #fff;
+      font-weight: 800;
+      border-radius: 9999px;
+      padding: 0.65rem 1.25rem;
+      text-align: center;
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .budget-breakdown-grid {
+        grid-template-columns: 1fr;
+      }
+      .tool-card {
+        padding: 1.5rem;
+      }
+    }
+
+    @media print {
+      .ug-header, .ug-footer, .utility-nav-tabs, .btn-no-print {
+        display: none !important;
+      }
+      body {
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .tool-card {
+        border: 1px solid #ccc !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">🌙</button>
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="pin">📍</span>
+            <span>Current City:</span>
+            <b data-ug-current-city>All India</b>
+          </span>
+          <span>Change ▾</span>
+        </button>
+
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="stay.html"><span class="icon">🏡</span><span>Stay & Lodges</span></a>
+          <a class="ug-drawer-link" href="transport.html"><span class="icon">🚗</span><span>Transport</span></a>
+          <a class="ug-drawer-link" href="flights.html"><span class="icon">✈️</span><span>Flights & Gateways</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+          <a class="ug-drawer-link" href="tripideas.html"><span class="icon">💡</span><span>Thematic Expeditions</span></a>
+          <a class="ug-drawer-link active" href="utilities.html"><span class="icon">🧰</span><span>Travel Utilities & Tools</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Content -->
+  <main class="ug-main">
+    <!-- Hero Section -->
+    <section class="ug-hero-section" style="padding: 4.5rem 0 3rem;">
+      <div class="ug-container">
+        <div class="ug-hero-content" style="max-width: 860px;">
+          <div class="utility-kicker">✦ Practical Travel Utilities Suite</div>
+          <h1 class="ug-hero-title">Prepare With Precision.<br><em>Travel With Confidence.</em></h1>
+          <p class="ug-hero-lead">
+            Everything you need before setting foot in remote heritage landscapes — climate-aware packing checklists, multi-currency budget calculators, and 24x7 emergency helplines.
+          </p>
+
+          <!-- Tab Navigation -->
+          <div class="utility-nav-tabs">
+            <button type="button" class="utility-tab-btn active" data-tab="packing">🎒 Smart Packing Checklist</button>
+            <button type="button" class="utility-tab-btn" data-tab="budget">💰 Budget & Multi-Currency Tool</button>
+            <button type="button" class="utility-tab-btn" data-tab="safety">🛡️ Safety & Temple Etiquette</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 1: Smart Packing Checklist -->
+    <section class="ug-section utility-panel active" id="packingPanel" style="padding: 1.5rem 0 5rem;">
+      <div class="ug-container">
+        <div class="tool-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Climate-Aware Packing Checklist</h2>
+              <p style="color: var(--ug-text-muted); font-size: 0.88rem;">Items update dynamically based on terrain and travel duration. Saved automatically to your browser.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem;" class="btn-no-print">
+              <button type="button" id="printChecklistBtn" class="ug-btn ug-btn-sm ug-btn-outline" style="border-radius: 9999px;">🖨️ Print Checklist</button>
+              <button type="button" id="resetChecklistBtn" class="ug-btn ug-btn-sm ug-btn-outline" style="border-radius: 9999px;">🔄 Reset</button>
+            </div>
+          </div>
+
+          <!-- Configuration Selectors -->
+          <div class="config-selectors-row">
+            <div>
+              <label class="config-label">🏔️ Destination Terrain & Climate</label>
+              <select id="packingTerrainSelect" class="config-select">
+                <option value="heritage">Sacred Temples & Heritage (Kurnool, Hampi, Varanasi)</option>
+                <option value="altitude">High-Altitude Cold (Leh, Spiti, Sikkim, Kinnaur)</option>
+                <option value="monsoon">Rainforest & Monsoon (Meghalaya, Western Ghats)</option>
+                <option value="desert">Arid & Desert (Rajasthan, Kutch, Deccan plateaus)</option>
+                <option value="coastal">Coastal & Tropical (Goa, Malabar, Konkan)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="config-label">⏱️ Trip Duration</label>
+              <select id="packingDurationSelect" class="config-select">
+                <option value="weekend">Weekend Escape (2–3 Days)</option>
+                <option value="week" selected>Week Expedition (4–7 Days)</option>
+                <option value="extended">Extended Odyssey (8+ Days)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Progress -->
+          <div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
+              <span style="color: var(--ug-text-secondary);" id="packingStatusCount">0 of 0 packed</span>
+              <span style="color: var(--ug-primary);" id="packingStatusPercent">0%</span>
+            </div>
+            <div class="packing-progress-bar-wrap">
+              <div class="packing-progress-fill" id="packingProgressFill"></div>
+            </div>
+          </div>
+
+          <!-- Checklist Categories Container -->
+          <div id="checklistCategoriesContainer">
+            <!-- Dynamically populated via JS -->
+          </div>
+
+          <!-- Custom Item Addition -->
+          <div class="check-custom-input-row btn-no-print">
+            <input type="text" id="customItemInput" class="config-select" placeholder="Add custom personal item (e.g., Drone battery, Journal, Kindle)..." style="flex: 1;">
+            <button type="button" id="addCustomItemBtn" class="ug-btn ug-btn-primary" style="border-radius: 14px; font-weight: 700;">+ Add Item</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Budget & Multi-Currency Tool -->
+    <section class="ug-section utility-panel" id="budgetPanel" style="padding: 1.5rem 0 5rem;">
+      <div class="ug-container">
+        <div class="tool-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Trip Expense & Multi-Currency Estimator</h2>
+              <p style="color: var(--ug-text-muted); font-size: 0.88rem;">Estimate costs for stays, transport, food, and entry fees with live conversion.</p>
+            </div>
+            <div class="btn-no-print">
+              <button type="button" id="printBudgetBtn" class="ug-btn ug-btn-sm ug-btn-outline" style="border-radius: 9999px;">🖨️ Export Summary</button>
+            </div>
+          </div>
+
+          <div class="budget-breakdown-grid">
+            <!-- Left: Controls & Sliders -->
+            <div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.75rem;">
+                <div>
+                  <label class="config-label">🗓️ Trip Duration</label>
+                  <select id="budgetDaysSelect" class="config-select">
+                    <option value="2">2 Days (Weekend)</option>
+                    <option value="3" selected>3 Days (Long Weekend)</option>
+                    <option value="5">5 Days (Expedition)</option>
+                    <option value="7">7 Days (Full Week)</option>
+                    <option value="10">10 Days (Comprehensive)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="config-label">👥 Number of Travellers</label>
+                  <select id="budgetPeopleSelect" class="config-select">
+                    <option value="1">Solo Traveller (1)</option>
+                    <option value="2" selected>Couple / Pair (2)</option>
+                    <option value="3">Small Group (3)</option>
+                    <option value="4">Family / Friends (4)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Sliders -->
+              <div class="budget-slider-group">
+                <div class="budget-slider-header">
+                  <span style="color: var(--ug-text-primary);">🏡 Accommodation (Per Night)</span>
+                  <span style="color: var(--ug-primary);" id="valStay">₹2,500</span>
+                </div>
+                <input type="range" class="budget-slider" id="sliderStay" min="800" max="15000" step="200" value="2500">
+                <small style="color: var(--ug-text-muted); font-size: 0.75rem;">Homestay ₹1,000 · Boutique ₹3,500 · Palace ₹8,000+</small>
+              </div>
+
+              <div class="budget-slider-group">
+                <div class="budget-slider-header">
+                  <span style="color: var(--ug-text-primary);">🚗 Local Transport / Cab (Per Day)</span>
+                  <span style="color: var(--ug-primary);" id="valTransport">₹1,800</span>
+                </div>
+                <input type="range" class="budget-slider" id="sliderTransport" min="300" max="6000" step="100" value="1800">
+                <small style="color: var(--ug-text-muted); font-size: 0.75rem;">Public transit ₹400 · Auto ₹800 · Dedicated Sedan Cab ₹2,500</small>
+              </div>
+
+              <div class="budget-slider-group">
+                <div class="budget-slider-header">
+                  <span style="color: var(--ug-text-primary);">🍲 Food & Regional Dining (Per Person/Day)</span>
+                  <span style="color: var(--ug-primary);" id="valFood">₹900</span>
+                </div>
+                <input type="range" class="budget-slider" id="sliderFood" min="300" max="3500" step="100" value="900">
+                <small style="color: var(--ug-text-muted); font-size: 0.75rem;">Local tiffin/dhabas ₹400 · Fine dining/Speciality ₹1,500</small>
+              </div>
+
+              <div class="budget-slider-group">
+                <div class="budget-slider-header">
+                  <span style="color: var(--ug-text-primary);">🎟️ Entry Fees, Guides & Activities (Total)</span>
+                  <span style="color: var(--ug-primary);" id="valActivities">₹1,500</span>
+                </div>
+                <input type="range" class="budget-slider" id="sliderActivities" min="200" max="10000" step="200" value="1500">
+                <small style="color: var(--ug-text-muted); font-size: 0.75rem;">ASI monuments ₹25–₹50 · Cave permits · Local licensed guides</small>
+              </div>
+            </div>
+
+            <!-- Right: Summary Card & Currency Converter -->
+            <div>
+              <div class="budget-summary-card">
+                <div>
+                  <div class="budget-currency-row">
+                    <span style="font-size: 0.8rem; font-weight: 800; text-transform: uppercase; color: var(--ug-text-muted);">Currency</span>
+                    <select id="currencySelect" class="config-select" style="width: auto; padding: 0.4rem 0.85rem; font-size: 0.85rem;">
+                      <option value="INR" selected>INR (₹) · Indian Rupee</option>
+                      <option value="USD">USD ($) · US Dollar</option>
+                      <option value="EUR">EUR (€) · Euro</option>
+                      <option value="GBP">GBP (£) · British Pound</option>
+                      <option value="AUD">AUD ($) · Australian Dollar</option>
+                      <option value="AED">AED (د.إ) · UAE Dirham</option>
+                      <option value="SGD">SGD ($) · Singapore Dollar</option>
+                    </select>
+                  </div>
+
+                  <small style="color: var(--ug-text-muted); font-size: 0.78rem; font-weight: 700; text-transform: uppercase;">Estimated Total Trip Cost</small>
+                  <div class="total-cost-display" id="totalCostDisplay">₹18,800</div>
+                  <div style="font-size: 0.85rem; color: var(--ug-text-secondary); margin-bottom: 1.5rem;" id="perPersonDisplay">
+                    Approx. ₹9,400 per traveller
+                  </div>
+
+                  <div style="border-top: 1px solid var(--ug-border); padding-top: 1rem; font-size: 0.85rem; color: var(--ug-text-secondary); line-height: 1.8;">
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>Stays Total:</span>
+                      <strong id="sumStays" style="color: var(--ug-text-primary);">₹7,500</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>Local Transport:</span>
+                      <strong id="sumTransport" style="color: var(--ug-text-primary);">₹5,400</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>Food & Refreshments:</span>
+                      <strong id="sumFood" style="color: var(--ug-text-primary);">₹5,400</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <span>Monuments & Guides:</span>
+                      <strong id="sumActivities" style="color: var(--ug-text-primary);">₹1,500</strong>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; color: var(--ug-primary); font-weight: 700; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--ug-border);">
+                      <span>Contingency Buffer (10%):</span>
+                      <span id="sumBuffer">₹1,980</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                  <a href="planner.html" class="ug-btn ug-btn-primary" style="width: 100%; text-align: center; border-radius: 9999px; text-decoration: none; font-size: 0.9rem;">
+                    🤖 Generate Itinerary within Budget →
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Safety & Cultural Etiquette -->
+    <section class="ug-section utility-panel" id="safetyPanel" style="padding: 1.5rem 0 5rem;">
+      <div class="ug-container">
+        <!-- Emergency Helplines -->
+        <div style="margin-bottom: 2rem;">
+          <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">24x7 Verified Indian Emergency Helplines</h2>
+          <p style="color: var(--ug-text-muted); font-size: 0.9rem;">Tap any card to dial directly from your smartphone.</p>
+        </div>
+
+        <div class="emergency-grid">
+          <div class="emergency-card">
+            <span style="font-size: 2rem; margin-bottom: 0.5rem;">🚨</span>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">National Emergency</h3>
+            <p style="color: var(--ug-text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.25rem;">All-in-one emergency response for Police, Fire, and Medical assistance pan-India.</p>
+            <a href="tel:112" class="emergency-dial-btn">📞 Dial 112</a>
+          </div>
+
+          <div class="emergency-card">
+            <span style="font-size: 2rem; margin-bottom: 0.5rem;">👮</span>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Inbound Tourist Helpline</h3>
+            <p style="color: var(--ug-text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.25rem;">Ministry of Tourism 24x7 multi-lingual guidance toll-free in 12 languages.</p>
+            <a href="tel:1363" class="emergency-dial-btn" style="background: #2563eb;">📞 Dial 1363</a>
+          </div>
+
+          <div class="emergency-card">
+            <span style="font-size: 2rem; margin-bottom: 0.5rem;">👩</span>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Women Safety Helpline</h3>
+            <p style="color: var(--ug-text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.25rem;">Dedicated nationwide emergency support and legal counseling for female travellers.</p>
+            <a href="tel:1091" class="emergency-dial-btn" style="background: #7c3aed;">📞 Dial 1091</a>
+          </div>
+
+          <div class="emergency-card">
+            <span style="font-size: 2rem; margin-bottom: 0.5rem;">🚑</span>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Ambulance & Medical</h3>
+            <p style="color: var(--ug-text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.25rem;">Emergency medical technician response and government hospital dispatch.</p>
+            <a href="tel:108" class="emergency-dial-btn" style="background: #059669;">📞 Dial 108</a>
+          </div>
+        </div>
+
+        <!-- Cultural Etiquette & Health Advisories -->
+        <div class="tool-card">
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 1.25rem;">✦ Cultural Protocols & Remote Terrain Protocols</h3>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+            <div style="background: var(--ug-surface-elevated); padding: 1.35rem; border-radius: 18px; border: 1px solid var(--ug-border);">
+              <h4 style="color: var(--ug-primary); font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem;">🛕 Temple Dress & Footwear Etiquette</h4>
+              <p style="color: var(--ug-text-secondary); font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                Always remove footwear before entering sanctums. Wear modest clothing covering shoulders and knees. In traditional shrines of South India (like Tirupati or Guruvayur), male devotees may be required to wear dhotis without shirts. Circumambulate the sanctum clockwise (Pradakshina).
+              </p>
+            </div>
+
+            <div style="background: var(--ug-surface-elevated); padding: 1.35rem; border-radius: 18px; border: 1px solid var(--ug-border);">
+              <h4 style="color: var(--ug-primary); font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem;">🏔️ Altitude Sickness (AMS) Protocol</h4>
+              <p style="color: var(--ug-text-secondary); font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                For destinations above 8,000 ft (Leh, Spiti, Kedarnath), spend your first 24–36 hours completely resting without heavy physical exertion. Drink at least 3–4 litres of warm water/fluids daily. Avoid alcohol. Carry Diamox if prescribed by a physician.
+              </p>
+            </div>
+
+            <div style="background: var(--ug-surface-elevated); padding: 1.35rem; border-radius: 18px; border: 1px solid var(--ug-border);">
+              <h4 style="color: var(--ug-primary); font-size: 0.95rem; font-weight: 800; margin-bottom: 0.5rem;">📜 Inner Line Permits (ILP)</h4>
+              <p style="color: var(--ug-text-secondary); font-size: 0.85rem; line-height: 1.6; margin: 0;">
+                Certain sensitive border areas require prior online permit clearances: Ladakh (Nubra, Pangong, Tso Moriri), Arunachal Pradesh, Nagaland, Mizoram, and parts of Sikkim. Keep at least 4 physical passport-size photos and ID photocopies handy.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand-col">
+          <a class="ug-brand" href="index.html">
+            <span class="ug-sparkle">✦</span>
+            <span>UnseenGo</span>
+            <span class="ug-brand-badge">AI</span>
+          </a>
+          <p class="ug-footer-tagline">
+            Empowering mindful travellers with vetted logistics, climate intelligence, and cultural respect across India.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="discover.html">Discover Places</a></li>
+            <li><a href="planner.html">AI Trip Planner</a></li>
+            <li><a href="map.html">India Explorer Map</a></li>
+            <li><a href="stories.html">Cultural Stories</a></li>
+            <li><a href="tripideas.html">Thematic Expeditions</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Travel Services</h4>
+          <ul>
+            <li><a href="stay.html">Local Stays</a></li>
+            <li><a href="transport.html">Transport & Routes</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Budget Tools</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Travel Utilities & Logistics. Currency conversions indicative.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function(){
+      'use strict';
+
+      /* --- TAB SWITCHER --- */
+      const tabs = document.querySelectorAll('.utility-tab-btn');
+      const panels = {
+        packing: document.getElementById('packingPanel'),
+        budget: document.getElementById('budgetPanel'),
+        safety: document.getElementById('safetyPanel')
+      };
+
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const target = tab.dataset.tab;
+          Object.keys(panels).forEach(k => {
+            panels[k].classList.toggle('active', k === target);
+          });
+        });
+      });
+
+      /* --- PACKING CHECKLIST ENGINE --- */
+      const CHECKLIST_DATABASE = {
+        heritage: {
+          title: 'Sacred Temples & Heritage',
+          items: {
+            'Documents & Currency': ['Government Photo ID (Aadhaar / Passport)', 'Hotel & Train Bookings', 'Cash (small denominations for temple offerings & dhabas)', 'Debit/Credit Cards'],
+            'Clothing & Footwear': ['Easy Slip-on Shoes (frequent removal at temples)', 'Modest Cotton Attire (covers shoulders & knees)', 'Dupatta / Scarf (for head covering if required)', 'Socks (marble courtyards get blistering hot at noon)', 'Sunglasses & Sun Hat'],
+            'Health & Wellbeing': ['Reusable Steel Water Bottle with Purifier', 'ORS Hydration Salts', 'Mosquito Repellent Cream', 'Sunscreen SPF 50+', 'Wet Wipes & Hand Sanitizer'],
+            'Electronics & Gear': ['Power Bank (10,000+ mAh)', 'Camera & Extra Memory Card', 'Compact Backpack / Crossbody Bag', 'Offline Maps downloaded']
+          }
+        },
+        altitude: {
+          title: 'High-Altitude Cold (Leh / Spiti / Himalayas)',
+          items: {
+            'Documents & Permits': ['Inner Line Permit (ILP) Photocopies (x5)', 'Government Photo ID', 'Emergency Contact Sheet', 'Offline Medical Insurance Card'],
+            'Thermal Clothing & Gear': ['Merino Wool Thermal Inners', 'Windproof & Waterproof Heavy Down Jacket', 'Trekking Shoes with Ankle Support', 'Woolen Beanie & Polarized Sunglasses (UV protection)', 'Fleece Gloves & Neck Gaiter'],
+            'High-Altitude Medical': ['Diamox (AMS preventive, physician approved)', 'Camphor tablet pouch (eases breathing in thin air)', 'Lip Balm & Heavy Cold Cream', 'Pain Relievers (Paracetamol / Ibuprofen)', 'Pulse Oximeter'],
+            'Electronics': ['Cold-Resistant Power Bank (keep in inside jacket pocket)', 'Spare Camera Batteries (drain faster in sub-zero)', 'Headlamp with extra cells', 'Universal Multi-Plug Extension']
+          }
+        },
+        monsoon: {
+          title: 'Rainforest & Monsoon (Meghalaya / Western Ghats)',
+          items: {
+            'Weatherproof Protection': ['Waterproof Rain Poncho / Sturdy Umbrella', 'Dry-Bags for Phone & Electronics', 'Waterproof Trekking Shoes with Grip', 'Silica Gel Pouches for Camera Bag', 'Leech Socks (essential for rainforest trails)'],
+            'Clothing': ['Quick-Dry Moisture-Wicking T-Shirts', 'Synthetic Cargo Pants (dry rapidly)', 'Extra Pairs of Quick-Dry Socks', 'Lightweight Windbreaker'],
+            'First Aid & Skin': ['Antifungal Skin Powder', 'Antiseptic Ointment & Band-Aids', 'Salt pouch / Tobacco oil (for leech deterrent)', 'Water Purification Tablets'],
+            'Gear': ['Waterproof Phone Pouch with Lanyard', 'High-Lumen Torch / Flashlight', 'Trekking Pole']
+          }
+        },
+        desert: {
+          title: 'Arid & Desert Plains (Rajasthan / Kutch)',
+          items: {
+            'Sun & Dust Protection': ['Breathable Pure Cotton Clothing', 'Large Cotton Shemagh / Gamcha for Dust Storms', 'UV400 Polarized Sunglasses', 'Broad-Brimmed Sun Hat', 'High SPF Sunblock'],
+            'Hydration & Skin': ['Electrolyte Hydration Salts (x10)', 'Hydration Bladder or Insulated Flask', 'Deep Moisturizing Cream', 'Saline Nasal Drops for dry desert air'],
+            'Footwear': ['Breathable Walking Shoes (sand resistant)', 'Cotton Socks'],
+            'Night Gear': ['Warm Fleece Jacket (deserts drop drastically in night temp)', 'Headlamp']
+          }
+        },
+        coastal: {
+          title: 'Coastal & Tropical (Goa / Konkan / Malabar)',
+          items: {
+            'Beach & Sea Wear': ['Breathable Linen Shirts & Shorts', 'UV-Protective Swimwear / Rashguard', 'Waterproof Sandals / Flip-Flops', 'Microfiber Quick-Dry Towel'],
+            'Sun & Skin': ['Reef-Safe High Sunscreen', 'Aloe Vera After-Sun Gel', 'Anti-Mosquito Roll-On', 'Polarized Sunglasses'],
+            'Tech & Leisure': ['Waterproof Floating Phone Pouch', 'Waterproof Bluetooth Speaker', 'Lightweight Daypack']
+          }
+        }
+      };
+
+      const terrainSelect = document.getElementById('packingTerrainSelect');
+      const container = document.getElementById('checklistCategoriesContainer');
+      const statusCount = document.getElementById('packingStatusCount');
+      const statusPercent = document.getElementById('packingStatusPercent');
+      const progressFill = document.getElementById('packingProgressFill');
+      const customItemInput = document.getElementById('customItemInput');
+      const addCustomItemBtn = document.getElementById('addCustomItemBtn');
+      const resetBtn = document.getElementById('resetChecklistBtn');
+      const printChecklistBtn = document.getElementById('printChecklistBtn');
+
+      const STORAGE_KEY = 'unseengo_packed_items';
+
+      function getSavedChecked() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        } catch (_) {
+          return [];
+        }
+      }
+
+      function saveChecked(list) {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+        } catch (_) {}
+      }
+
+      function renderChecklist() {
+        const terrain = terrainSelect.value;
+        const config = CHECKLIST_DATABASE[terrain] || CHECKLIST_DATABASE.heritage;
+        const saved = getSavedChecked();
+
+        let total = 0;
+        let checkedCount = 0;
+        let html = '';
+
+        Object.keys(config.items).forEach(cat => {
+          const items = config.items[cat];
+          total += items.length;
+          html += `
+            <div class="checklist-category-title">
+              <span>✦</span>
+              <span>${cat}</span>
+            </div>
+            <div class="checklist-items-grid">
+              ${items.map(item => {
+                const isChecked = saved.includes(item);
+                if (isChecked) checkedCount++;
+                return `
+                  <label class="check-item-label ${isChecked ? 'checked' : ''}" data-item="${encodeURIComponent(item)}">
+                    <input type="checkbox" style="display:none;" ${isChecked ? 'checked' : ''}>
+                    <span>${isChecked ? '☑' : '☐'}</span>
+                    <span>${item}</span>
+                  </label>
+                `;
+              }).join('')}
+            </div>
+          `;
+        });
+
+        container.innerHTML = html;
+
+        // Update progress
+        const pct = total ? Math.round((checkedCount / total) * 100) : 0;
+        statusCount.textContent = `${checkedCount} of ${total} packed`;
+        statusPercent.textContent = `${pct}%`;
+        progressFill.style.width = `${pct}%`;
+
+        // Bind clicks
+        document.querySelectorAll('.check-item-label').forEach(lbl => {
+          lbl.addEventListener('click', (e) => {
+            e.preventDefault();
+            const item = decodeURIComponent(lbl.dataset.item);
+            let current = getSavedChecked();
+            if (current.includes(item)) {
+              current = current.filter(x => x !== item);
+            } else {
+              current.push(item);
+            }
+            saveChecked(current);
+            renderChecklist();
+          });
+        });
+      }
+
+      terrainSelect.addEventListener('change', renderChecklist);
+
+      addCustomItemBtn.addEventListener('click', () => {
+        const val = customItemInput.value.trim();
+        if (!val) return;
+        const terrain = terrainSelect.value;
+        if (!CHECKLIST_DATABASE[terrain].items['Custom Items']) {
+          CHECKLIST_DATABASE[terrain].items['Custom Items'] = [];
+        }
+        CHECKLIST_DATABASE[terrain].items['Custom Items'].push(val);
+        customItemInput.value = '';
+        renderChecklist();
+      });
+
+      customItemInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          addCustomItemBtn.click();
+        }
+      });
+
+      resetBtn.addEventListener('click', () => {
+        if (confirm('Reset your packing progress for all items?')) {
+          saveChecked([]);
+          renderChecklist();
+        }
+      });
+
+      printChecklistBtn.addEventListener('click', () => window.print());
+
+      renderChecklist();
+
+
+      /* --- MULTI-CURRENCY BUDGET ESTIMATOR --- */
+      const RATES = {
+        INR: 1,
+        USD: 0.0118,
+        EUR: 0.0108,
+        GBP: 0.0092,
+        AUD: 0.0178,
+        AED: 0.0433,
+        SGD: 0.0157
+      };
+
+      const SYMBOLS = {
+        INR: '₹',
+        USD: '$',
+        EUR: '€',
+        GBP: '£',
+        AUD: 'A$',
+        AED: 'AED ',
+        SGD: 'S$'
+      };
+
+      const sliderStay = document.getElementById('sliderStay');
+      const sliderTransport = document.getElementById('sliderTransport');
+      const sliderFood = document.getElementById('sliderFood');
+      const sliderActivities = document.getElementById('sliderActivities');
+
+      const valStay = document.getElementById('valStay');
+      const valTransport = document.getElementById('valTransport');
+      const valFood = document.getElementById('valFood');
+      const valActivities = document.getElementById('valActivities');
+
+      const daysSelect = document.getElementById('budgetDaysSelect');
+      const peopleSelect = document.getElementById('budgetPeopleSelect');
+      const currencySelect = document.getElementById('currencySelect');
+
+      const totalCostDisplay = document.getElementById('totalCostDisplay');
+      const perPersonDisplay = document.getElementById('perPersonDisplay');
+      const sumStays = document.getElementById('sumStays');
+      const sumTransport = document.getElementById('sumTransport');
+      const sumFood = document.getElementById('sumFood');
+      const sumActivities = document.getElementById('sumActivities');
+      const sumBuffer = document.getElementById('sumBuffer');
+      const printBudgetBtn = document.getElementById('printBudgetBtn');
+
+      function formatMoney(amountINR, currency) {
+        const rate = RATES[currency] || 1;
+        const sym = SYMBOLS[currency] || '₹';
+        const converted = Math.round(amountINR * rate);
+        return `${sym}${converted.toLocaleString()}`;
+      }
+
+      function updateBudget() {
+        const days = Number(daysSelect.value);
+        const people = Number(peopleSelect.value);
+        const curr = currencySelect.value;
+
+        const stayPerNight = Number(sliderStay.value);
+        const transportPerDay = Number(sliderTransport.value);
+        const foodPerPersonDay = Number(sliderFood.value);
+        const activitiesTotal = Number(sliderActivities.value);
+
+        // Update slider value indicators
+        valStay.textContent = `₹${stayPerNight.toLocaleString()}`;
+        valTransport.textContent = `₹${transportPerDay.toLocaleString()}`;
+        valFood.textContent = `₹${foodPerPersonDay.toLocaleString()}`;
+        valActivities.textContent = `₹${activitiesTotal.toLocaleString()}`;
+
+        // Calculations (assuming 1 room per 2 travellers)
+        const rooms = Math.ceil(people / 2);
+        const nights = Math.max(1, days - 1);
+
+        const totalStays = rooms * nights * stayPerNight;
+        const totalTransport = days * transportPerDay;
+        const totalFood = days * people * foodPerPersonDay;
+        const totalAct = activitiesTotal * people;
+
+        const subtotal = totalStays + totalTransport + totalFood + totalAct;
+        const buffer = Math.round(subtotal * 0.10); // 10% contingency
+        const grandTotal = subtotal + buffer;
+        const perPerson = Math.round(grandTotal / people);
+
+        // Render in selected currency
+        totalCostDisplay.textContent = formatMoney(grandTotal, curr);
+        perPersonDisplay.textContent = `Approx. ${formatMoney(perPerson, curr)} per traveller`;
+
+        sumStays.textContent = formatMoney(totalStays, curr);
+        sumTransport.textContent = formatMoney(totalTransport, curr);
+        sumFood.textContent = formatMoney(totalFood, curr);
+        sumActivities.textContent = formatMoney(totalAct, curr);
+        sumBuffer.textContent = formatMoney(buffer, curr);
+      }
+
+      [sliderStay, sliderTransport, sliderFood, sliderActivities, daysSelect, peopleSelect, currencySelect].forEach(el => {
+        el.addEventListener('input', updateBudget);
+        el.addEventListener('change', updateBudget);
+      });
+
+      printBudgetBtn.addEventListener('click', () => window.print());
+
+      updateBudget();
+    })();
+  </script>
+</body>
+</html>

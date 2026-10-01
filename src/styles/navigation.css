@@ -201,6 +201,54 @@
   color: #080d09 !important;
 }
 
+.ug-btn-signin-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: transparent;
+  color: var(--ug-text-primary) !important;
+  border: 1px solid var(--ug-border);
+  font-family: var(--ug-font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.46rem 0.95rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: var(--ug-transition);
+  white-space: nowrap;
+}
+
+.ug-btn-signin-ghost:hover {
+  background: var(--ug-surface-hover);
+  border-color: var(--ug-primary);
+  color: var(--ug-primary) !important;
+  transform: translateY(-1px);
+}
+
+.ug-btn-signup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--ug-primary);
+  color: #080d09 !important;
+  font-family: var(--ug-font-display);
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 0.48rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 2px 10px var(--ug-primary-glow);
+  transition: var(--ug-transition);
+  white-space: nowrap;
+}
+
+.ug-btn-signup:hover {
+  background: var(--ug-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--ug-primary-glow);
+  color: #080d09 !important;
+}
+
 /* Theme Switcher Toggle */
 .ug-theme-toggle {
   background: var(--ug-surface);
@@ -625,4 +673,260 @@
   .ug-auth-name {
     display: none;
   }
+  .ug-btn-signin-ghost {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   NAVIGATION LIGHT MODE STYLING
+   ========================================================================== */
+[data-theme="light"] .ug-header,
+html.ug-light .ug-header {
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid var(--ug-border);
+}
+
+[data-theme="light"] .ug-header.scrolled,
+html.ug-light .ug-header.scrolled {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  border-bottom-color: var(--ug-border);
+}
+
+[data-theme="light"] .ug-nav-links,
+html.ug-light .ug-nav-links {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--ug-border);
+}
+
+[data-theme="light"] .ug-nav-link,
+html.ug-light .ug-nav-link {
+  color: var(--ug-text-secondary);
+}
+
+[data-theme="light"] .ug-nav-link:hover,
+html.ug-light .ug-nav-link:hover {
+  color: var(--ug-primary);
+  background: rgba(77, 124, 15, 0.09);
+}
+
+[data-theme="light"] .ug-nav-link.active,
+html.ug-light .ug-nav-link.active {
+  color: #ffffff !important;
+  background: var(--ug-primary);
+  box-shadow: 0 2px 10px var(--ug-primary-glow);
+}
+
+[data-theme="light"] .ug-brand-badge,
+html.ug-light .ug-brand-badge {
+  background: var(--ug-primary);
+  color: #ffffff;
+}
+
+[data-theme="light"] .ug-btn-signin,
+html.ug-light .ug-btn-signin,
+[data-theme="light"] .ug-btn-signup,
+html.ug-light .ug-btn-signup {
+  background: var(--ug-primary);
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .ug-btn-signin:hover,
+html.ug-light .ug-btn-signin:hover,
+[data-theme="light"] .ug-btn-signup:hover,
+html.ug-light .ug-btn-signup:hover {
+  background: var(--ug-primary-hover);
+  color: #ffffff !important;
+}
+
+[data-theme="light"] .ug-btn-signin-ghost,
+html.ug-light .ug-btn-signin-ghost {
+  border-color: var(--ug-border);
+  color: var(--ug-text-primary) !important;
+}
+
+[data-theme="light"] .ug-btn-signin-ghost:hover,
+html.ug-light .ug-btn-signin-ghost:hover {
+  border-color: var(--ug-primary);
+  color: var(--ug-primary) !important;
+  background: rgba(77, 124, 15, 0.08);
+}
+
+[data-theme="light"] .ug-auth-avatar,
+html.ug-light .ug-auth-avatar {
+  background: #f0fdf4;
+  border-color: var(--ug-primary);
+  color: var(--ug-primary);
+}
+
+[data-theme="light"] .ug-btn-logout,
+html.ug-light .ug-btn-logout {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: var(--ug-border);
+  color: var(--ug-text-secondary);
+}
+
+[data-theme="light"] .ug-theme-toggle,
+html.ug-light .ug-theme-toggle {
+  background: var(--ug-surface);
+  border-color: var(--ug-border);
+  color: var(--ug-text-primary);
+}
+
+[data-theme="light"] .ug-theme-toggle:hover,
+html.ug-light .ug-theme-toggle:hover {
+  border-color: var(--ug-primary);
+  color: var(--ug-primary);
+  background: rgba(77, 124, 15, 0.08);
+}
+
+[data-theme="light"] .ug-city-selector-btn,
+html.ug-light .ug-city-selector-btn {
+  background: var(--ug-surface);
+  border-color: var(--ug-border);
+  color: var(--ug-text-primary);
+}
+
+[data-theme="light"] .ug-city-selector-btn .ug-kbd-shortcut,
+[data-theme="light"] .ug-city-selector-btn .kbd,
+html.ug-light .ug-city-selector-btn .ug-kbd-shortcut,
+html.ug-light .ug-city-selector-btn .kbd {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: var(--ug-border);
+  color: var(--ug-text-muted);
+}
+
+[data-theme="light"] .ug-mobile-toggle,
+html.ug-light .ug-mobile-toggle {
+  background: var(--ug-surface);
+  border-color: var(--ug-border);
+}
+
+[data-theme="light"] .ug-mobile-toggle span,
+html.ug-light .ug-mobile-toggle span {
+  background-color: var(--ug-text-primary);
+}
+
+[data-theme="light"] .ug-drawer-backdrop,
+html.ug-light .ug-drawer-backdrop {
+  background: rgba(15, 22, 16, 0.45);
+}
+
+[data-theme="light"] .ug-mobile-drawer,
+html.ug-light .ug-mobile-drawer {
+  background: var(--ug-surface);
+  border-left-color: var(--ug-border);
+  box-shadow: -15px 0 45px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .ug-drawer-header,
+html.ug-light .ug-drawer-header {
+  background: var(--ug-surface);
+  border-bottom-color: var(--ug-border);
+}
+
+[data-theme="light"] .ug-drawer-close,
+html.ug-light .ug-drawer-close {
+  border-color: var(--ug-border);
+  color: var(--ug-text-primary);
+}
+
+[data-theme="light"] .ug-drawer-link,
+html.ug-light .ug-drawer-link {
+  background: var(--ug-bg);
+  border-color: var(--ug-border);
+  color: var(--ug-text-primary);
+}
+
+[data-theme="light"] .ug-drawer-link:hover,
+[data-theme="light"] .ug-drawer-link.active,
+html.ug-light .ug-drawer-link:hover,
+html.ug-light .ug-drawer-link.active {
+  background: rgba(77, 124, 15, 0.1);
+  border-color: var(--ug-primary);
+  color: var(--ug-primary);
+}
+
+[data-theme="light"] .ug-city-modal,
+html.ug-light .ug-city-modal {
+  background: rgba(15, 22, 16, 0.45);
+}
+
+[data-theme="light"] .ug-city-modal-box,
+html.ug-light .ug-city-modal-box {
+  background: var(--ug-surface);
+  border-color: var(--ug-border);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .ug-city-modal-head,
+html.ug-light .ug-city-modal-head {
+  background: var(--ug-bg-alt);
+  border-bottom-color: var(--ug-border);
+}
+
+[data-theme="light"] .ug-city-search-wrap,
+html.ug-light .ug-city-search-wrap {
+  background: var(--ug-surface);
+  border-bottom-color: var(--ug-border);
+}
+
+[data-theme="light"] .ug-city-search-input,
+html.ug-light .ug-city-search-input {
+  background: var(--ug-bg);
+  border-color: var(--ug-border);
+  color: var(--ug-text-primary);
+}
+
+[data-theme="light"] .ug-city-chip,
+html.ug-light .ug-city-chip {
+  background: var(--ug-bg);
+  border-color: var(--ug-border);
+  color: var(--ug-text-primary);
+}
+
+[data-theme="light"] .ug-city-chip:hover,
+html.ug-light .ug-city-chip:hover {
+  background: var(--ug-surface);
+  border-color: var(--ug-primary);
+  color: var(--ug-primary);
+}
+
+[data-theme="light"] .ug-city-chip.active,
+html.ug-light .ug-city-chip.active {
+  background: var(--ug-primary);
+  color: #ffffff;
+  border-color: var(--ug-primary);
+}
+
+[data-theme="light"] .ug-mobile-bottom-nav,
+html.ug-light .ug-mobile-bottom-nav {
+  background: rgba(255, 255, 255, 0.96);
+  border-top-color: var(--ug-border);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .ug-bottom-nav-item,
+html.ug-light .ug-bottom-nav-item {
+  color: var(--ug-text-secondary);
+}
+
+[data-theme="light"] .ug-bottom-nav-item:hover,
+[data-theme="light"] .ug-bottom-nav-item.active,
+html.ug-light .ug-bottom-nav-item:hover,
+html.ug-light .ug-bottom-nav-item.active {
+  color: var(--ug-primary);
+}
+
+[data-theme="light"] .ug-global-search-btn,
+html.ug-light .ug-global-search-btn {
+  border-color: var(--ug-border) !important;
+  color: var(--ug-text-secondary) !important;
+}
+
+[data-theme="light"] .ug-global-search-btn:hover,
+html.ug-light .ug-global-search-btn:hover {
+  border-color: var(--ug-primary) !important;
+  color: var(--ug-primary) !important;
+  background: rgba(77, 124, 15, 0.08) !important;
 }

@@ -1,1 +1,544 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transport — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="unseengo-background.css?v=20260824"><link rel="stylesheet" href="unseengo-suite.css?v=20260826"><style>.transport-hero{max-width:1200px;margin:auto;padding:72px 6% 35px}.transport-hero h1{font-size:clamp(45px,7vw,76px);line-height:.95;margin:15px 0 22px;letter-spacing:-3px}.transport-hero h1 em{color:var(--accent);font-style:italic}.transport-hero p{max-width:760px;color:var(--muted);line-height:1.7}.transport-search{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;margin-top:30px}.transport-search input{background:#101610;border:1px solid #3b463b;border-radius:13px;padding:16px;color:#fff;outline:none}.transport-search input:focus{border-color:var(--accent)}.transport-search button,.loc-btn{border:0;border-radius:13px;padding:0 20px;background:linear-gradient(135deg,#d8ff4d,#61e7cb);color:#07100b;font-weight:800;cursor:pointer}.transport-modes{max-width:1200px;margin:20px auto;padding:25px 6%;display:grid;grid-template-columns:repeat(7,1fr);gap:12px}.mode{padding:20px 10px;border:1px solid #303b31;border-radius:17px;background:#101510;color:#dfe6dd;text-align:center;cursor:pointer;transition:.25s}.mode:hover,.mode.active{transform:translateY(-4px);border-color:#d8ff4d;background:#182119;box-shadow:0 12px 30px #0005}.mode b{display:block;font-size:27px;margin-bottom:8px}.mode span{font-size:11px;color:#9aa39a}.transport-results{max-width:1200px;margin:20px auto 70px;padding:0 6%}.result-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:18px}.result-head h2{margin:0;font-size:30px}.route-card{display:grid;grid-template-columns:1fr auto;gap:20px;padding:22px;margin-bottom:12px;border:1px solid #303b31;border-radius:18px;background:linear-gradient(145deg,#111711,#0d110e)}.route-card h3{margin:0 0 7px}.route-card p{margin:4px 0;color:#8f988f;font-size:13px}.route-actions{display:flex;align-items:center;gap:8px}.route-actions a{padding:10px 13px;border:1px solid #394439;border-radius:10px;color:#d8ff4d;text-decoration:none;font-size:12px}.route-actions a:hover{border-color:#d8ff4d;background:#192218}.nearby-title{margin:45px 0 15px}.nearby-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.nearby{padding:18px;border:1px solid #303b31;border-radius:15px;background:#101510}.nearby b{color:#d8ff4d}.nearby p{color:#8f988f;font-size:12px;line-height:1.5}.empty{padding:35px;border:1px dashed #3b463b;border-radius:16px;color:#8f988f;text-align:center}.city-chip{display:inline-block;margin-top:8px;padding:7px 10px;border-radius:999px;border:1px solid #3b463b;color:#d8ff4d;font-size:11px}.live-note{margin-top:12px;padding:12px;border-radius:12px;background:#111811;border:1px solid #303b31;color:#9da69d;font-size:11px}.live-note b{color:#d8ff4d}@media(max-width:1000px){.transport-modes{grid-template-columns:repeat(4,1fr)}}@media(max-width:800px){.transport-search{grid-template-columns:1fr}.transport-search button{height:50px}.transport-modes{grid-template-columns:repeat(2,1fr)}.nearby-grid{grid-template-columns:1fr}.route-card{grid-template-columns:1fr}.route-actions{justify-content:flex-start}}@media(max-width:500px){.transport-modes{grid-template-columns:1fr 1fr}}</style></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a href="discover.html">Discover</a><a class="active" href="transport.html">Transport</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='discover.html'">Explore India</button></header><main><section class="transport-hero"><p class="eyebrow">✦ SMART TRANSPORT EXPLORER</p><h1>Get there.<br><em>your way.</em></h1><p>Choose any Indian city or nearby destination, enter your starting point, and compare practical transport modes. UnseenGo finds useful nearby hubs and sends you to Google Maps for live directions.</p><div class="transport-search"><input id="from" placeholder="From: city, station, airport or pickup point"><input id="to" placeholder="To: city or nearby destination"><button id="routeBtn">Find transport →</button></div><div id="cityChip"></div></section><section class="transport-modes"><button class="mode active" data-mode="driving"><b>🚗</b>Car / Taxi<br><span>Road route</span></button><button class="mode" data-mode="bus"><b>🚌</b>Bus<br><span>Bus connectivity</span></button><button class="mode" data-mode="train"><b>🚆</b>Train<br><span>Rail routes</span></button><button class="mode" data-mode="walking"><b>🚶</b>Walking<br><span>Short routes</span></button><button class="mode" data-mode="bicycling"><b>🚲</b>Bike<br><span>Cycle route</span></button><button class="mode" data-mode="flight"><b>✈️</b>Flight<br><span>Air connectivity</span></button><button class="mode" data-mode="metro"><b>🚇</b>Metro<br><span>Metro availability</span></button></section><section class="transport-results"><div class="result-head"><div><p class="eyebrow">ROUTE OPTIONS</p><h2 id="routeTitle">Choose a destination</h2></div><button class="loc-btn" id="locationBtn">⌖ Use my location</button></div><div id="routeResults" class="empty">Enter a starting point and destination to generate transport options.</div><h2 class="nearby-title">Nearby transport hubs</h2><div id="nearbyGrid" class="nearby-grid"></div></section></main><footer><b>✦ UnseenGo AI</b><span>Discover heritage. Empower communities. Grow local economies.</span><span>© 2026</span></footer><script>let mode='driving';const $=id=>document.getElementById(id);const params=new URLSearchParams(location.search);const city=params.get('city');if(city){$('to').value=city;$('cityChip').innerHTML='<span class="city-chip">Destination selected: '+city+'</span>';setTimeout(()=>build(),100)}const labels={driving:['🚗 Road route','Google Maps driving directions'],bus:['🚌 Bus connectivity','Nearby bus stands and public-transit search'],train:['🚆 Train routes','Nearest railway stations and rail search'],walking:['🚶 Walking route','Walking directions where practical'],bicycling:['🚲 Cycling route','Cycling directions where practical'],flight:['✈️ Air connectivity','Nearest airports and destination-airport search'],metro:['🚇 Metro connectivity','Nearest metro stations where available']};const hubs=[['🚆','Railway stations','railway station'],['🚌','Bus stands','bus station'],['✈️','Airports','airport'],['🚕','Taxi / cab pickup','taxi stand'],['🚇','Metro stations','metro station'],['🅿️','Parking','parking']];document.querySelectorAll('.mode').forEach(b=>b.onclick=()=>{document.querySelectorAll('.mode').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;if($('from').value&&$('to').value)build()});function mapMode(){return ['bus','metro','train'].includes(mode)?'transit':mode==='flight'?'driving':mode}function build(){const from=$('from').value.trim(),to=$('to').value.trim();if(!to){$('routeResults').className='empty';$('routeResults').textContent='Please enter a destination city or place.';return}const origin=from||'Current location',m=mapMode(),dir='https://www.google.com/maps/dir/?api=1&origin='+encodeURIComponent(origin)+'&destination='+encodeURIComponent(to)+'&travelmode='+encodeURIComponent(m);const title=labels[mode][0],desc=labels[mode][1];$('routeTitle').textContent=origin+' → '+to;$('routeResults').className='';$('routeResults').innerHTML='<article class="route-card"><div><h3>'+title+'</h3><p>'+desc+'</p><p><b>From:</b> '+origin+' &nbsp; <b>To:</b> '+to+'</p><div class="live-note"><b>Live information:</b> UnseenGo does not invent schedules or travel times. Open the relevant Maps/search link to see current routes, availability and navigation.</div></div><div class="route-actions"><a target="_blank" rel="noopener" href="'+dir+'">Open route ↗</a></div></article>';renderHubs(to)}function renderHubs(to){$('nearbyGrid').innerHTML=hubs.map(h=>{const q=h[2]+' near '+to;return '<div class="nearby"><b>'+h[0]+' '+h[1]+'</b><p>Find '+h[1].toLowerCase()+' around '+to+'.</p><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)+'" style="color:#d8ff4d;font-size:12px">Find nearby ↗</a></div>'}).join('')}$('routeBtn').onclick=build;$('locationBtn').onclick=()=>{if(!navigator.geolocation){alert('Location is not available in this browser.');return}navigator.geolocation.getCurrentPosition(p=>{$('from').value=p.coords.latitude+','+p.coords.longitude;$('from').focus();if($('to').value)build()},()=>alert('Please allow location access.'))};$('to').addEventListener('keydown',e=>{if(e.key==='Enter')build()});</script><script src="cultural-economy.js?v=20260821"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Smart Transport Explorer — Connect your journey across Indian cities, compare transit modes, and explore iconic scenic rail routes on UnseenGo AI.">
+  <title>Smart Transport Explorer — UnseenGo AI</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="UnseenGo Transport">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .trans-hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-glass);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 1.15rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ug-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .transport-search-card {
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 24px;
+      padding: 1.75rem;
+      box-shadow: var(--ug-shadow-lg);
+      max-width: 900px;
+      margin: 1.5rem auto 2.5rem;
+    }
+
+    .transport-search-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 1rem;
+    }
+
+    .trans-input {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      padding: 0.85rem 1.15rem;
+      color: var(--ug-text-primary);
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      transition: var(--ug-transition);
+      width: 100%;
+    }
+
+    .trans-input:focus {
+      border-color: var(--ug-primary);
+      box-shadow: 0 0 0 3px rgba(216, 255, 77, 0.15);
+    }
+
+    .trans-modes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--ug-border);
+    }
+
+    .trans-mode-btn {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 16px;
+      padding: 0.85rem 0.5rem;
+      color: var(--ug-text-secondary);
+      text-align: center;
+      cursor: pointer;
+      transition: var(--ug-transition);
+    }
+
+    .trans-mode-btn:hover, .trans-mode-btn.active {
+      border-color: var(--ug-primary);
+      background: var(--ug-primary-soft);
+      color: var(--ug-primary);
+      transform: translateY(-3px);
+    }
+
+    .trans-mode-icon {
+      font-size: 1.5rem;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .trans-mode-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      display: block;
+    }
+
+    .trans-mode-sub {
+      font-size: 0.72rem;
+      color: var(--ug-text-muted);
+      display: block;
+    }
+
+    .route-result-box {
+      background: var(--ug-surface-elevated);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 1.75rem;
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    /* Scenic Rail Catalog */
+    .scenic-rail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.75rem;
+      margin: 2rem 0 4rem;
+    }
+
+    .scenic-rail-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: var(--ug-transition);
+    }
+
+    .scenic-rail-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--ug-primary);
+      box-shadow: 0 15px 35px -10px var(--ug-primary-glow);
+    }
+
+    .scenic-rail-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .scenic-rail-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .hubs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .hub-card {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 16px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media (max-width: 768px) {
+      .transport-search-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link active" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">🌙</button>
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="pin">📍</span>
+            <span>Current City:</span>
+            <b data-ug-current-city>All India</b>
+          </span>
+          <span>Change ▾</span>
+        </button>
+
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="stay.html"><span class="icon">🏡</span><span>Stay & Lodges</span></a>
+          <a class="ug-drawer-link active" href="transport.html"><span class="icon">🚗</span><span>Transport</span></a>
+          <a class="ug-drawer-link" href="flights.html"><span class="icon">✈️</span><span>Flights & Gateways</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+          <a class="ug-drawer-link" href="tripideas.html"><span class="icon">💡</span><span>Thematic Expeditions</span></a>
+          <a class="ug-drawer-link" href="utilities.html"><span class="icon">🧰</span><span>Travel Utilities & Tools</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Content -->
+  <main class="ug-main">
+    <!-- Hero Section -->
+    <section class="ug-hero-section" style="padding: 4.5rem 0 3.5rem;">
+      <div class="ug-container">
+        <div class="ug-hero-content" style="max-width: 860px;">
+          <div class="trans-hero-kicker">✦ Smart Transit & Scenic Route Logistics</div>
+          <h1 class="ug-hero-title">Get There.<br><em>Your Way.</em></h1>
+          <p class="ug-hero-lead">
+            Select any destination across India, configure your starting location, and compare road, rail, and public transit connectivity with direct Google Maps route handoff.
+          </p>
+
+          <!-- Transport Search Card -->
+          <div class="transport-search-card">
+            <div class="transport-search-row">
+              <input type="text" id="transFrom" class="trans-input" placeholder="From: Origin city, station, or airport (e.g. Hyderabad / Bengaluru)">
+              <input type="text" id="transTo" class="trans-input" placeholder="To: Destination city or monument (e.g. Kurnool / Gandikota / Hampi)">
+              <button type="button" id="transRouteBtn" class="ug-btn ug-btn-primary" style="border-radius: 14px; font-weight: 800; white-space: nowrap;">
+                Find Route →
+              </button>
+            </div>
+
+            <!-- Transport Mode Buttons -->
+            <div class="trans-modes-grid">
+              <button type="button" class="trans-mode-btn active" data-mode="driving">
+                <span class="trans-mode-icon">🚗</span>
+                <span class="trans-mode-name">Car / Cab</span>
+                <span class="trans-mode-sub">Road Route</span>
+              </button>
+              <button type="button" class="trans-mode-btn" data-mode="train">
+                <span class="trans-mode-icon">🚆</span>
+                <span class="trans-mode-name">Indian Railways</span>
+                <span class="trans-mode-sub">Rail Tracks</span>
+              </button>
+              <button type="button" class="trans-mode-btn" data-mode="bus">
+                <span class="trans-mode-icon">🚌</span>
+                <span class="trans-mode-name">Bus Network</span>
+                <span class="trans-mode-sub">State Transit</span>
+              </button>
+              <button type="button" class="trans-mode-btn" data-mode="bicycling">
+                <span class="trans-mode-icon">🚲</span>
+                <span class="trans-mode-name">Cycling / Bike</span>
+                <span class="trans-mode-sub">Trail Ride</span>
+              </button>
+              <button type="button" class="trans-mode-btn" data-mode="walking">
+                <span class="trans-mode-icon">🚶</span>
+                <span class="trans-mode-name">Walking</span>
+                <span class="trans-mode-sub">Heritage Walk</span>
+              </button>
+            </div>
+
+            <!-- Generated Route Box -->
+            <div class="route-result-box" id="routeResultBox">
+              <div>
+                <span style="font-size: 0.78rem; text-transform: uppercase; font-weight: 800; color: var(--ug-primary); letter-spacing: 0.06em;">Selected Route</span>
+                <h3 id="resRouteTitle" style="font-size: 1.35rem; font-weight: 800; color: var(--ug-text-primary); margin: 0.25rem 0 0.4rem;">Bengaluru → Kurnool</h3>
+                <p id="resRouteDesc" style="color: var(--ug-text-secondary); font-size: 0.88rem; margin: 0;">
+                  Fastest route via NH44. Smooth 4-lane highway passing through Anantapur and Gooty.
+                </p>
+              </div>
+              <div>
+                <a id="resGoogleMapsLink" href="https://www.google.com/maps/dir/?api=1&origin=Bengaluru&destination=Kurnool&travelmode=driving" target="_blank" rel="noopener" class="ug-btn ug-btn-primary" style="border-radius: 9999px; text-decoration: none;">
+                  Open Live Route on Google Maps ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scenic Rail Journeys of India -->
+    <section class="ug-section" style="padding: 1.5rem 0 5rem;">
+      <div class="ug-container">
+        <div style="margin-bottom: 2rem;">
+          <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Iconic Scenic Rail Journeys Across India</h2>
+          <p style="color: var(--ug-text-muted); font-size: 0.9rem;">Sometimes the journey itself is the hidden gem. Historic mountain railways and coastal train tracks.</p>
+        </div>
+
+        <div class="scenic-rail-grid">
+          <div class="scenic-rail-card">
+            <img class="scenic-rail-img" src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80" alt="Nilgiri Mountain Railway">
+            <div class="scenic-rail-body">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--ug-primary); font-weight: 800; margin-bottom: 0.35rem;">UNESCO World Heritage Track</span>
+              <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Nilgiri Mountain Railway (Mettupalayam – Ooty)</h3>
+              <p style="color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem; flex: 1;">
+                Asia\'s steepest rack-and-pinion steam railway, climbing through 16 tunnels, 250 bridges, and emerald eucalyptus tea estates into the Blue Mountains.
+              </p>
+              <a href="https://www.google.com/maps/search/Nilgiri+Mountain+Railway" target="_blank" rel="noopener" class="ug-btn ug-btn-outline ug-btn-sm" style="border-radius: 9999px; text-align: center; text-decoration: none;">Explore Rail Route ↗</a>
+            </div>
+          </div>
+
+          <div class="scenic-rail-card">
+            <img class="scenic-rail-img" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Kalka Shimla Railway">
+            <div class="scenic-rail-body">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--ug-primary); font-weight: 800; margin-bottom: 0.35rem;">Colonial Toy Train Marvel</span>
+              <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Kalka to Shimla Himalayan Toy Train</h3>
+              <p style="color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem; flex: 1;">
+                Built in 1898, this narrow-gauge wonder winds through 102 tunnels and 864 bridges with breathtaking views of pine forests and Himalayan foothills.
+              </p>
+              <a href="https://www.google.com/maps/search/Kalka+Shimla+Toy+Train" target="_blank" rel="noopener" class="ug-btn ug-btn-outline ug-btn-sm" style="border-radius: 9999px; text-align: center; text-decoration: none;">Explore Rail Route ↗</a>
+            </div>
+          </div>
+
+          <div class="scenic-rail-card">
+            <img class="scenic-rail-img" src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=800&q=80" alt="Konkan Railway">
+            <div class="scenic-rail-body">
+              <span style="font-size: 0.75rem; text-transform: uppercase; color: var(--ug-primary); font-weight: 800; margin-bottom: 0.35rem;">Coastal Engineering Feat</span>
+              <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Konkan Railway (Mumbai – Goa – Mangaluru)</h3>
+              <p style="color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem; flex: 1;">
+                Traversing 2,000 bridges and 91 tunnels across Arabian sea inlets, lush Western Ghats waterfalls (including the majestic Dudhsagar Falls), and paddy fields.
+              </p>
+              <a href="https://www.google.com/maps/search/Konkan+Railway+Route" target="_blank" rel="noopener" class="ug-btn ug-btn-outline ug-btn-sm" style="border-radius: 9999px; text-align: center; text-decoration: none;">Explore Rail Route ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nearby Hubs Directory -->
+        <div>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Transit Hubs & Stations Around Destination</h3>
+          <p style="color: var(--ug-text-muted); font-size: 0.88rem;">Find official railway stations, interstate bus terminals, and taxi stands.</p>
+          <div class="hubs-grid" id="hubsGrid">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand-col">
+          <a class="ug-brand" href="index.html">
+            <span class="ug-sparkle">✦</span>
+            <span>UnseenGo</span>
+            <span class="ug-brand-badge">AI</span>
+          </a>
+          <p class="ug-footer-tagline">
+            Intelligent intercity route handoff, verified transit connections, and scenic train guidance across India.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="discover.html">Discover Places</a></li>
+            <li><a href="planner.html">AI Trip Planner</a></li>
+            <li><a href="map.html">India Explorer Map</a></li>
+            <li><a href="stories.html">Cultural Stories</a></li>
+            <li><a href="tripideas.html">Thematic Expeditions</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Travel Services</h4>
+          <ul>
+            <li><a href="stay.html">Local Stays</a></li>
+            <li><a href="transport.html">Transport & Routes</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Budget Tools</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Transit & Navigation Explorer. Live schedules via Google Maps.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function(){
+      'use strict';
+
+      let currentMode = 'driving';
+      const fromInput = document.getElementById('transFrom');
+      const toInput = document.getElementById('transTo');
+      const routeBtn = document.getElementById('transRouteBtn');
+      const routeTitle = document.getElementById('resRouteTitle');
+      const routeDesc = document.getElementById('resRouteDesc');
+      const mapsLink = document.getElementById('resGoogleMapsLink');
+      const modeBtns = document.querySelectorAll('.trans-mode-btn');
+      const hubsGrid = document.getElementById('hubsGrid');
+
+      // Check URL query params ?city=...
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCity = urlParams.get('city');
+      if (urlCity) {
+        toInput.value = urlCity;
+        fromInput.value = 'Current Location';
+      } else {
+        fromInput.value = 'Bengaluru';
+        toInput.value = 'Kurnool';
+      }
+
+      const HUBS = [
+        { icon: '🚆', title: 'Railway Junctions', query: 'railway station' },
+        { icon: '🚌', title: 'Interstate Bus Stands (ISBT)', query: 'bus station' },
+        { icon: '✈️', title: 'Airports & Airstrips', query: 'airport' },
+        { icon: '🚕', title: 'Official Taxi Stands', query: 'taxi stand' }
+      ];
+
+      function renderHubs(dest) {
+        hubsGrid.innerHTML = HUBS.map(h => `
+          <div class="hub-card">
+            <div>
+              <span style="font-size: 1.5rem; display: block; margin-bottom: 0.35rem;">${h.icon}</span>
+              <strong style="color: var(--ug-text-primary); font-size: 0.95rem;">${h.title}</strong>
+              <p style="color: var(--ug-text-muted); font-size: 0.8rem; margin: 0.3rem 0 1rem;">Find verified ${h.query}s around ${dest}.</p>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(h.query + ' near ' + dest)}" target="_blank" rel="noopener" class="ug-btn ug-btn-sm ug-btn-outline" style="border-radius: 9999px; text-align: center; text-decoration: none;">
+              Search Nearby ↗
+            </a>
+          </div>
+        `).join('');
+      }
+
+      function updateRoute() {
+        const from = fromInput.value.trim() || 'Current Location';
+        const to = toInput.value.trim() || 'Destination';
+
+        routeTitle.textContent = `${from} → ${to}`;
+
+        const travelMode = ['bus', 'train'].includes(currentMode) ? 'transit' : currentMode;
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(from)}&destination=${encodeURIComponent(to)}&travelmode=${encodeURIComponent(travelMode)}`;
+
+        mapsLink.href = mapsUrl;
+
+        const modeDescriptions = {
+          driving: `Showing driving directions via national highways and state expressways.`,
+          train: `Showing railway and express train connections between nearest junctions.`,
+          bus: `Showing state road transport (KSRTC, APSRTC, MSRTC) and private bus connections.`,
+          bicycling: `Showing cycling trails and country roads where accessible.`,
+          walking: `Showing local walking and pilgrimage trails.`
+        };
+
+        routeDesc.textContent = modeDescriptions[currentMode] || `Showing verified route handoff.`;
+        renderHubs(to);
+      }
+
+      modeBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          modeBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentMode = btn.dataset.mode;
+          updateRoute();
+        });
+      });
+
+      routeBtn.addEventListener('click', updateRoute);
+      fromInput.addEventListener('keydown', e => { if (e.key === 'Enter') updateRoute(); });
+      toInput.addEventListener('keydown', e => { if (e.key === 'Enter') updateRoute(); });
+
+      updateRoute();
+    })();
+  </script>
+</body>
+</html>

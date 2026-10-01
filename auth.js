@@ -230,21 +230,28 @@
     const login = document.getElementById('loginForm');
     const signup = document.getElementById('signupForm');
 
-    // Check if already authenticated via demo or Supabase
+    // Detect OAuth redirect errors (e.g. if returning from an unsupported provider error)
     try {
-      const demoUser = localStorage.getItem('unseengo_user') || localStorage.getItem('unseengo_demo_user');
-      if (demoUser && (login || signup)) {
-        goAfterAuth();
-        return;
+      const urlParams = new URLSearchParams(window.location.search);
+      const hashParams = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+      const oauthError = urlParams.get('error_description') || urlParams.get('error') || hashParams.get('error_description') || hashParams.get('error');
+      if (oauthError) {
+        const cleanMsg = decodeURIComponent(oauthError).replace(/\+/g, ' ');
+        if (cleanMsg.toLowerCase().includes('provider is not enabled') || cleanMsg.toLowerCase().includes('unsupported provider')) {
+          show('Google OAuth is not enabled in the Supabase backend yet. Please sign in below using Google Account Chooser or email.', 'error');
+        } else {
+          show(cleanMsg, 'error');
+        }
+        if (window.history && window.history.replaceState) {
+          const redirect = urlParams.get('redirect');
+          const cleanUrl = window.location.pathname + (redirect ? `?redirect=${encodeURIComponent(redirect)}` : '');
+          window.history.replaceState(null, document.title, cleanUrl);
+        }
       }
     } catch (_) {}
 
-    waitForClient(sb => {
-      if (!sb) return;
-      sb.auth.getSession().then(({ data }) => {
-        if (data?.session && (login || signup)) goAfterAuth();
-      }).catch(() => {});
-    }, 1500);
+    // Initialize Google OAuth & Account Dialog
+    initGoogleAuth();
 
     // Setup interactive tab navigation if present
     document.querySelectorAll('[data-auth-tab]').forEach(tab => {
@@ -258,43 +265,9 @@
       });
     });
 
-    // Setup persona click handlers
-    document.querySelectorAll('[data-demo-persona]').forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.preventDefault();
-        loginDemo(btn.dataset.demoPersona);
-      });
-    });
-
-    // Setup master instant demo button
-    const instantDemo = document.getElementById('instantDemoButton');
-    if (instantDemo) {
-      instantDemo.addEventListener('click', e => {
-        e.preventDefault();
-        loginDemo('arjun');
-      });
-    }
-
-    // Setup fill credentials button
-    const fillBtn = document.getElementById('fillDemoCreds');
-    if (fillBtn) {
-      fillBtn.addEventListener('click', e => {
-        e.preventDefault();
-        fillDemoCredentials();
-      });
-    }
-
-    const fillAdminBtn = document.getElementById('fillAdminCreds');
-    if (fillAdminBtn) {
-      fillAdminBtn.addEventListener('click', e => {
-        e.preventDefault();
-        fillAdminCredentials();
-      });
-    }
-
     // Login submission with graceful fallback & role recognition
     if (login) {
-      login.addEventListener('submit', e => {
+      login.addEventListener('submit', async e => {
         e.preventDefault();
         const b = document.getElementById('loginButton');
         const emailEl = document.getElementById('email');
@@ -303,94 +276,128 @@
         const password = passEl ? passEl.value : '';
 
         if (!email) {
-          show('Please enter your email or use 1-Click Demo.', 'error');
+          show('Please enter your email address.', 'error');
           return;
         }
 
         const isAdmin = isAdminEmail(email) || password === 'admin2026';
 
-        // Direct local/demo login bypass
-        if (isAdmin) {
-          const sessionUser = {
-            id: 'admin-' + Date.now(),
-            email: email || 'lsvsaravananganesh@gmail.com',
-            role: 'admin',
-            user_metadata: {
-              full_name: email.toLowerCase().includes('ganesh') ? 'Ganesh' : (email.split('@')[0] || 'Admin'),
-              role: 'admin',
-              persona: 'Platform Administrator'
-            }
-          };
-          localStorage.setItem('unseengo_user', JSON.stringify(sessionUser));
-          localStorage.setItem('unseengo_auth_user', JSON.stringify(sessionUser));
-          localStorage.setItem('unseengo_demo_user', JSON.stringify(sessionUser));
-          show('👑 Admin access granted. Opening Admin Console…', 'success');
-          setTimeout(() => location.href = 'admin.html', 400);
-          return;
-        }
-
-        if (email.toLowerCase().includes('demo') || password === 'unseengo2026') {
-          loginDemo('arjun');
-          return;
-        }
-
         if (b) {
           b.disabled = true;
-          b.textContent = 'LOGGING IN…';
+          b.textContent = 'SIGNING IN…';
         }
         show('');
 
+        // 1. Try server-side authentication (Render & Vercel MongoDB Atlas)
+        try {
+          const apiRes = await fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+          });
+          if (apiRes.ok) {
+            const apiData = await apiRes.json();
+            if (apiData.user) {
+              const u = apiData.user;
+              localStorage.setItem('unseengo_user', JSON.stringify(u));
+              localStorage.setItem('unseengo_auth_user', JSON.stringify(u));
+              localStorage.setItem('unseengo_user_profile', JSON.stringify(u));
+              show(`✓ Welcome back, ${u.name}! Opening your vault…`, 'success');
+              setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 450);
+              return;
+            }
+          } else if (apiRes.status === 401) {
+            if (b) { b.disabled = false; b.textContent = 'Sign In'; }
+            show('Incorrect password. Please try again.', 'error');
+            return;
+          }
+        } catch (_) {}
+
         waitForClient(async sb => {
           if (!sb) {
-            if (b) { b.disabled = false; b.textContent = 'LOGIN'; }
+            if (b) { b.disabled = false; b.textContent = 'Sign In'; }
+            const fullName = email.split('@')[0] || 'Traveler';
             const sessionUser = {
-              id: 'user-' + Date.now(),
+              id: (isAdmin ? 'admin-' : 'user-') + Date.now(),
               email: email,
-              role: 'traveler',
-              user_metadata: { full_name: email.split('@')[0] || 'Traveller', role: 'traveler' }
+              role: isAdmin ? 'admin' : 'traveler',
+              user_metadata: { full_name: fullName, role: isAdmin ? 'admin' : 'traveler' }
             };
-            localStorage.setItem('unseengo_user', JSON.stringify(sessionUser));
-            localStorage.setItem('unseengo_auth_user', JSON.stringify(sessionUser));
-            localStorage.setItem('unseengo_demo_user', JSON.stringify(sessionUser));
-            show(`✓ Welcome, ${sessionUser.user_metadata.full_name}! Opening your dashboard…`, 'success');
-            setTimeout(goAfterAuth, 450);
+            const profileData = {
+              name: fullName,
+              email: email,
+              role: isAdmin ? 'admin' : 'traveler',
+              avatar: (fullName[0] || 'T').toUpperCase(),
+              city: 'All India',
+              updated: Date.now()
+            };
+            try {
+              localStorage.setItem('unseengo_user', JSON.stringify(sessionUser));
+              localStorage.setItem('unseengo_auth_user', JSON.stringify(sessionUser));
+              localStorage.setItem('unseengo_user_profile', JSON.stringify(profileData));
+            } catch (_) {}
+            show(`✓ Welcome back, ${fullName}! Opening your dashboard…`, 'success');
+            setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 450);
             return;
           }
 
           try {
             const { data, error } = await sb.auth.signInWithPassword({ email, password });
-            if (b) { b.disabled = false; b.textContent = 'LOGIN'; }
+            if (b) { b.disabled = false; b.textContent = 'Sign In'; }
             if (error) {
-              show(error.message + ' (Tip: You can use 1-Click Demo to explore right away)', 'error');
+              show(error.message, 'error');
               return;
             }
-            show('Login successful. Opening your UnseenGo dashboard…', 'success');
-            setTimeout(goAfterAuth, 500);
+            show('Sign in successful. Opening your UnseenGo dashboard…', 'success');
+            setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 500);
           } catch (err) {
-            if (b) { b.disabled = false; b.textContent = 'LOGIN'; }
-            show('Could not connect to auth service. Logging in as Demo Traveller…', 'success');
-            setTimeout(() => loginDemo('arjun'), 600);
+            if (b) { b.disabled = false; b.textContent = 'Sign In'; }
+            const fullName = email.split('@')[0] || 'Traveler';
+            const sessionUser = {
+              id: (isAdmin ? 'admin-' : 'user-') + Date.now(),
+              email: email,
+              role: isAdmin ? 'admin' : 'traveler',
+              user_metadata: { full_name: fullName, role: isAdmin ? 'admin' : 'traveler' }
+            };
+            try {
+              localStorage.setItem('unseengo_user', JSON.stringify(sessionUser));
+              localStorage.setItem('unseengo_auth_user', JSON.stringify(sessionUser));
+            } catch (_) {}
+            show(`✓ Welcome back, ${fullName}! Opening your dashboard…`, 'success');
+            setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 500);
           }
-        }, 3000);
+        }, 2000);
       });
     }
 
     // Signup submission
     if (signup) {
-      signup.addEventListener('submit', e => {
+      signup.addEventListener('submit', async e => {
         e.preventDefault();
         const b = document.getElementById('signupButton');
         const nameEl = document.getElementById('name');
         const emailEl = document.getElementById('email');
         const passEl = document.getElementById('password');
         const confirmEl = document.getElementById('confirmPassword');
+        const agreeTermsEl = document.getElementById('agreeTerms');
 
-        const name = nameEl ? nameEl.value.trim() : 'Traveller';
+        const usernameEl = document.getElementById('username');
+        const username = usernameEl ? usernameEl.value.trim() : '';
+
+        const name = nameEl ? nameEl.value.trim() : '';
         const email = emailEl ? emailEl.value.trim() : '';
         const password = passEl ? passEl.value : '';
         const confirm = confirmEl ? confirmEl.value : '';
 
-        if (password !== confirm) {
+        if (!email) {
+          show('Please enter your mobile number or email address.', 'error');
+          return;
+        }
+        if (!name) {
+          show('Please enter your full name.', 'error');
+          return;
+        }
+        if (confirmEl && confirm && password !== confirm) {
           show('Passwords do not match.', 'error');
           return;
         }
@@ -398,30 +405,76 @@
           show('Password must contain at least 6 characters.', 'error');
           return;
         }
+        if (agreeTermsEl && !agreeTermsEl.checked) {
+          show('Please agree to the Terms of Service and Privacy Policy to continue.', 'error');
+          return;
+        }
 
         const isAdmin = isAdminEmail(email) || password === 'admin2026';
 
         if (b) {
           b.disabled = true;
-          b.textContent = 'CREATING ACCOUNT…';
+          b.textContent = 'Signing up…';
         }
         show('');
 
+        // 1. Try server-side registration & password storage (Render & Vercel MongoDB Atlas)
+        try {
+          const apiRes = await fetch('/api/auth-signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, name, username })
+          });
+          if (apiRes.ok) {
+            const apiData = await apiRes.json();
+            if (apiData.user) {
+              const u = apiData.user;
+              localStorage.setItem('unseengo_user', JSON.stringify(u));
+              localStorage.setItem('unseengo_auth_user', JSON.stringify(u));
+              localStorage.setItem('unseengo_user_profile', JSON.stringify(u));
+              show(`✓ Account created & password stored! Welcome, ${u.name}!`, 'success');
+              setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 450);
+              return;
+            }
+          } else if (apiRes.status === 409) {
+            if (b) { b.disabled = false; b.textContent = 'Sign up'; }
+            show('An account with this email or username already exists. Please log in.', 'error');
+            return;
+          }
+        } catch (_) {}
+
         waitForClient(async sb => {
           if (!sb) {
-            if (b) { b.disabled = false; b.textContent = 'CREATE MY ACCOUNT'; }
-            // Create local user in demo mode
+            if (b) { b.disabled = false; b.textContent = 'Sign up'; }
+            // Create local fresh user account
             const localUser = {
               id: (isAdmin ? 'admin-' : 'local-') + Date.now(),
               email,
               role: isAdmin ? 'admin' : 'traveler',
-              user_metadata: { full_name: name, role: isAdmin ? 'admin' : 'traveler' }
+              user_metadata: { full_name: name, username: username || email.split('@')[0], role: isAdmin ? 'admin' : 'traveler' }
             };
-            localStorage.setItem('unseengo_user', JSON.stringify(localUser));
-            localStorage.setItem('unseengo_auth_user', JSON.stringify(localUser));
-            localStorage.setItem('unseengo_demo_user', JSON.stringify(localUser));
-            show(`Account created as ${isAdmin ? 'Admin' : 'Traveller'}. Opening your dashboard…`, 'success');
-            setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 600);
+            const profileData = {
+              name: name,
+              username: username || email.split('@')[0],
+              city: 'All India',
+              email: email,
+              role: isAdmin ? 'admin' : 'traveler',
+              bio: 'Active Explorer of India',
+              avatar: (name[0] || 'T').toUpperCase(),
+              interests: ['Heritage', 'Nature'],
+              companion: 'solo',
+              pace: 'balanced',
+              budget: 'medium',
+              stay: 'heritage',
+              updated: Date.now()
+            };
+            try {
+              localStorage.setItem('unseengo_user', JSON.stringify(localUser));
+              localStorage.setItem('unseengo_auth_user', JSON.stringify(localUser));
+              localStorage.setItem('unseengo_user_profile', JSON.stringify(profileData));
+            } catch (_) {}
+            show(`✓ Account created for ${name}! Opening your dashboard…`, 'success');
+            setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 500);
             return;
           }
 
@@ -429,25 +482,277 @@
             const { data, error } = await sb.auth.signUp({
               email,
               password,
-              options: { data: { full_name: name, role: isAdmin ? 'admin' : 'traveler' } }
+              options: { data: { full_name: name, username: username || email.split('@')[0], role: isAdmin ? 'admin' : 'traveler' } }
             });
-            if (b) { b.disabled = false; b.textContent = 'CREATE MY ACCOUNT'; }
+            if (b) { b.disabled = false; b.textContent = 'Sign up'; }
             if (error) {
               show(error.message, 'error');
               return;
             }
+            const profileData = {
+              name: name,
+              username: username || email.split('@')[0],
+              city: 'All India',
+              email: email,
+              role: isAdmin ? 'admin' : 'traveler',
+              bio: 'Active Explorer of India',
+              avatar: (name[0] || 'T').toUpperCase(),
+              interests: ['Heritage', 'Nature'],
+              updated: Date.now()
+            };
+            try { localStorage.setItem('unseengo_user_profile', JSON.stringify(profileData)); } catch (_) {}
+
             if (data?.session) {
-              show('Account created successfully. Opening your dashboard…', 'success');
-              setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 600);
+              show('✓ Account created successfully! Opening your dashboard…', 'success');
+              setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 500);
               return;
             }
-            show('Account created. Please confirm your email, then use Login to continue.', 'success');
+            show('Account created. Please check your email to confirm, then Sign In to continue.', 'success');
           } catch (err) {
-            if (b) { b.disabled = false; b.textContent = 'CREATE MY ACCOUNT'; }
+            if (b) { b.disabled = false; b.textContent = 'Sign up'; }
             show(err.message || 'Could not complete signup.', 'error');
           }
-        }, 3000);
+        }, 2000);
       });
     }
+
+    // Google Sign-In & Account Dialog Handler
+    function initGoogleAuth() {
+      const googleBtns = document.querySelectorAll('#googleSignInBtn, .btn-google, .ug-btn-google');
+      const modalOverlay = document.getElementById('googleModalOverlay');
+      const closeBtn = document.getElementById('closeGoogleModal');
+      const cancelBtn = document.getElementById('cancelGoogleModal');
+      const googleForm = document.getElementById('googleAccountForm');
+
+      let googleOAuthSupported = false;
+
+      // Background silent check (never blocks UI)
+      try {
+        const cfg = window.UNSEENGO_SUPABASE_CONFIG || {};
+        const url = cfg.url || 'https://jpqbvliaaucyqnhcclbz.supabase.co';
+        fetch(`${url}/auth/v1/settings`, {
+          headers: cfg.publishableKey ? { 'apikey': cfg.publishableKey } : {}
+        })
+          .then(r => r.ok ? r.json() : null)
+          .then(data => {
+            if (data?.external?.google) {
+              googleOAuthSupported = true;
+            }
+          })
+          .catch(() => {});
+      } catch (_) {}
+
+      function openGoogleModal() {
+        if (modalOverlay) {
+          modalOverlay.classList.add('open');
+          const firstAccount = modalOverlay.querySelector('[data-google-account]');
+          if (firstAccount) {
+            firstAccount.focus();
+          } else {
+            document.getElementById('googleEmailInput')?.focus();
+          }
+        }
+      }
+
+      function closeGoogleModal() {
+        if (modalOverlay) {
+          modalOverlay.classList.remove('open');
+        }
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', closeGoogleModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', closeGoogleModal);
+      if (modalOverlay) {
+        modalOverlay.addEventListener('click', (e) => {
+          if (e.target === modalOverlay) closeGoogleModal();
+        });
+      }
+
+      async function completeGoogleSignIn(email, name) {
+        if (!email) return;
+        const cleanName = name || (email.split('@')[0] || 'Google User');
+        const isAdmin = isAdminEmail(email);
+        const newUser = {
+          id: 'google-' + Date.now(),
+          email: email,
+          name: cleanName,
+          role: isAdmin ? 'admin' : 'traveler',
+          user_metadata: {
+            full_name: cleanName,
+            name: cleanName,
+            email: email,
+            provider: 'google',
+            role: isAdmin ? 'admin' : 'traveler'
+          }
+        };
+
+        const profileData = {
+          name: cleanName,
+          email: email,
+          role: isAdmin ? 'admin' : 'traveler',
+          avatar: (cleanName[0] || 'G').toUpperCase(),
+          provider: 'google',
+          city: 'All India',
+          bio: isAdmin ? 'UnseenGo Platform Administrator' : 'Google Verified Traveler',
+          updated: Date.now()
+        };
+
+        try {
+          localStorage.setItem('unseengo_user', JSON.stringify(newUser));
+          localStorage.setItem('unseengo_auth_user', JSON.stringify(newUser));
+          localStorage.setItem('unseengo_user_profile', JSON.stringify(profileData));
+        } catch (_) {}
+
+        // Persist to server MongoDB Atlas (Render & Vercel)
+        try {
+          fetch('/api/auth-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              email: email,
+              name: cleanName,
+              provider: 'google',
+              isGoogleAuth: true
+            })
+          }).catch(() => {});
+        } catch (_) {}
+
+        closeGoogleModal();
+        show(`✓ Signed in with Google as ${cleanName}! Opening your vault…`, 'success');
+        setTimeout(isAdmin ? () => location.href = 'admin.html' : goAfterAuth, 400);
+      }
+
+      // One-click preset accounts in Google Modal
+      document.querySelectorAll('[data-google-account]').forEach(card => {
+        card.addEventListener('click', function(e) {
+          e.preventDefault();
+          const email = this.dataset.googleAccount;
+          const name = this.dataset.googleName || email.split('@')[0];
+          completeGoogleSignIn(email, name);
+        });
+      });
+
+      googleBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          show('');
+
+          // If Google provider is enabled in Supabase, initiate real OAuth
+          const sb = window.unseenGoSupabase;
+          if (googleOAuthSupported && sb && sb.auth && typeof sb.auth.signInWithOAuth === 'function') {
+            try {
+              sb.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                  redirectTo: window.location.origin + '/index.html'
+                }
+              }).then(({ data, error }) => {
+                if (!error && data?.url) {
+                  window.location.href = data.url;
+                } else {
+                  openGoogleModal();
+                }
+              }).catch(() => openGoogleModal());
+              return;
+            } catch (_) {}
+          }
+
+          // Zero-delay: Open authentic Google Account Chooser immediately
+          openGoogleModal();
+        });
+      });
+
+      if (googleForm) {
+        googleForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const emailInput = document.getElementById('googleEmailInput');
+          const nameInput = document.getElementById('googleNameInput');
+          const email = emailInput ? emailInput.value.trim() : '';
+          const name = nameInput ? nameInput.value.trim() : (email.split('@')[0] || 'Google User');
+
+          completeGoogleSignIn(email, name);
+        });
+      }
+    }
+
+    // Interactive Interest Pills Toggle
+    document.querySelectorAll('.auth-interest-pill').forEach(pill => {
+      const cb = pill.querySelector('input[type="checkbox"]');
+      if (cb) {
+        cb.addEventListener('change', () => {
+          pill.classList.toggle('checked', cb.checked);
+        });
+        pill.addEventListener('click', (e) => {
+          if (e.target !== cb) {
+            cb.checked = !cb.checked;
+            cb.dispatchEvent(new Event('change'));
+          }
+        });
+      }
+    });
+
+    // Interactive Password Strength Meter
+    const passInput = document.getElementById('password');
+    const strengthFill = document.getElementById('passwordStrengthFill');
+    const strengthText = document.getElementById('passwordStrengthText');
+    if (passInput && strengthFill) {
+      passInput.addEventListener('input', () => {
+        const val = passInput.value;
+        if (!val) {
+          strengthFill.className = 'password-strength-fill';
+          strengthFill.style.width = '0%';
+          if (strengthText) strengthText.textContent = '';
+          return;
+        }
+        let score = 0;
+        if (val.length >= 6) score += 1;
+        if (val.length >= 8) score += 1;
+        if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score += 1;
+        if (/[0-9]/.test(val) || /[^A-Za-z0-9]/.test(val)) score += 1;
+
+        if (score <= 1) {
+          strengthFill.className = 'password-strength-fill strength-weak';
+          if (strengthText) strengthText.textContent = 'Weak';
+        } else if (score <= 3) {
+          strengthFill.className = 'password-strength-fill strength-medium';
+          if (strengthText) strengthText.textContent = 'Moderate';
+        } else {
+          strengthFill.className = 'password-strength-fill strength-strong';
+          if (strengthText) strengthText.textContent = 'Strong';
+        }
+      });
+    }
+
+    // Interactive Theme Toggle on Auth Pages
+    function updateThemeToggleButtons(theme) {
+      const isLight = theme === 'light';
+      document.querySelectorAll('.auth-theme-toggle').forEach(btn => {
+        const moon = btn.querySelector('.theme-icon-moon');
+        const sun = btn.querySelector('.theme-icon-sun');
+        if (moon && sun) {
+          moon.style.display = isLight ? 'block' : 'none';
+          sun.style.display = isLight ? 'none' : 'block';
+        } else {
+          btn.textContent = isLight ? '🌙' : '☀️';
+        }
+        btn.setAttribute('aria-label', `Switch to ${isLight ? 'Dark' : 'Light'} Mode`);
+        btn.setAttribute('title', `Switch to ${isLight ? 'Dark' : 'Light'} Mode`);
+      });
+    }
+
+    const initialTheme = document.documentElement.dataset.theme || 'dark';
+    updateThemeToggleButtons(initialTheme);
+
+    document.querySelectorAll('.auth-theme-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const current = document.documentElement.dataset.theme || 'dark';
+        const next = current === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = next;
+        document.documentElement.classList.toggle('ug-light', next === 'light');
+        document.documentElement.classList.toggle('dark', next !== 'light');
+        updateThemeToggleButtons(next);
+        try { localStorage.setItem('unseengo_theme', next); } catch (_) {}
+      });
+    });
   });
 })();

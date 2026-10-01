@@ -37,31 +37,85 @@
   ];
 
   /* 1. Dark / Light Theme Controller */
-  function initTheme() {
-    const savedTheme = localStorage.getItem('unseengo_theme');
-    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+  const THEME_STORAGE_KEY = 'unseengo_theme';
 
-    document.documentElement.dataset.theme = initialTheme;
-    updateThemeToggleIcons(initialTheme);
+  function getSavedTheme() {
+    try {
+      const saved = localStorage.getItem(THEME_STORAGE_KEY);
+      if (saved === 'light' || saved === 'dark') return saved;
+      return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    } catch (_) {
+      return 'dark';
+    }
+  }
 
-    const toggleBtns = document.querySelectorAll('[data-ug-theme-toggle]');
+  function applyTheme(theme) {
+    const isLight = theme === 'light';
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.classList.toggle('ug-light', isLight);
+    document.documentElement.classList.toggle('dark', !isLight);
+    document.documentElement.style.colorScheme = theme;
+
+    let metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (!metaTheme) {
+      metaTheme = document.createElement('meta');
+      metaTheme.name = 'theme-color';
+      document.head.appendChild(metaTheme);
+    }
+    metaTheme.content = isLight ? '#f5f7f2' : '#080d09';
+
+    updateThemeToggleIcons(theme);
+  }
+
+  // Apply immediately upon script evaluation to prevent any flash
+  applyTheme(getSavedTheme());
+
+  function updateThemeToggleIcons(theme) {
+    const isLight = theme === 'light';
+    const toggleBtns = document.querySelectorAll('[data-ug-theme-toggle], .ug-theme-toggle');
     toggleBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
+      const icon = btn.querySelector('.ug-theme-icon');
+      const label = btn.querySelector('.ug-theme-label');
+      if (icon) {
+        icon.textContent = isLight ? '🌙' : '☀️';
+      }
+      if (label) {
+        label.textContent = isLight ? 'Dark' : 'Light';
+      }
+      if (!icon && !label) {
+        btn.textContent = isLight ? '🌙' : '☀️';
+      }
+      btn.setAttribute('aria-label', `Switch to ${isLight ? 'Dark' : 'Light'} Mode`);
+      btn.setAttribute('title', `Switch to ${isLight ? 'Dark' : 'Light'} Mode`);
+      btn.setAttribute('aria-pressed', String(isLight));
+    });
+  }
+
+  function initTheme() {
+    applyTheme(getSavedTheme());
+
+    const toggleBtns = document.querySelectorAll('[data-ug-theme-toggle], .ug-theme-toggle');
+    toggleBtns.forEach(btn => {
+      // Prevent multiple listeners if already bound
+      if (btn.dataset.themeBound) return;
+      btn.dataset.themeBound = 'true';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         const current = document.documentElement.dataset.theme;
-        const nextTheme = current === 'dark' ? 'light' : 'dark';
-        document.documentElement.dataset.theme = nextTheme;
-        localStorage.setItem('unseengo_theme', nextTheme);
-        updateThemeToggleIcons(nextTheme);
+        const nextTheme = current === 'light' ? 'dark' : 'light';
+        try {
+          localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+        } catch (_) {}
+        applyTheme(nextTheme);
       });
     });
 
-    function updateThemeToggleIcons(theme) {
-      toggleBtns.forEach(btn => {
-        btn.textContent = theme === 'dark' ? '☀️' : '🌙';
-        btn.title = `Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`;
-      });
-    }
+    // Cross-tab synchronization
+    window.addEventListener('storage', (e) => {
+      if (e.key === THEME_STORAGE_KEY && (e.newValue === 'light' || e.newValue === 'dark')) {
+        applyTheme(e.newValue);
+      }
+    });
   }
 
   /* 2. Header Scroll Effect */
@@ -438,8 +492,11 @@
         }
       } else {
         authContainer.innerHTML = `
-          <a href="login.html" class="ug-btn-signin">
+          <a href="signin.html" class="ug-btn-signin-ghost" title="Sign In to your account">
             <span>Sign In</span>
+          </a>
+          <a href="signup.html" class="ug-btn-signup" title="Create a free traveller account">
+            <span>Sign Up</span>
           </a>
         `;
       }
@@ -486,9 +543,14 @@
         }
       } else {
         drawerAuth.innerHTML = `
-          <a href="login.html" class="ug-btn-signin" style="display:block;text-align:center;margin-bottom:0.75rem;padding:0.75rem;">
-            🔑 Sign In / Demo Login
-          </a>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.6rem;margin-bottom:0.75rem;">
+            <a href="signin.html" class="ug-btn-signin-ghost" style="text-align:center;padding:0.7rem 0.5rem;justify-content:center;display:flex;">
+              🔑 Sign In
+            </a>
+            <a href="signup.html" class="ug-btn-signup" style="text-align:center;padding:0.7rem 0.5rem;justify-content:center;display:flex;">
+              ✨ Sign Up
+            </a>
+          </div>
         `;
       }
     }
@@ -512,9 +574,9 @@
     const isDiscover = filename.includes('discover');
     const isPlanner = filename.includes('planner');
     const isTrips = filename.includes('my-travel') || filename.includes('dashboard');
-    const isProfile = filename.includes('profile') || filename.includes('login') || filename.includes('signup');
+    const isProfile = filename.includes('profile') || filename.includes('login') || filename.includes('signin') || filename.includes('signup');
 
-    const profileHref = user ? 'profile.html' : 'login.html';
+    const profileHref = user ? 'profile.html' : 'signin.html';
 
     bottomNav.innerHTML = `
       <a href="index.html" class="ug-bottom-nav-item ${isHome ? 'active' : ''}">
@@ -568,6 +630,82 @@
     getAdminEmails: getAdminEmails
   };
 
+  /* 11. Global Search Quick-Access Button */
+  function initGlobalSearch() {
+    // Inject search button into all .ug-nav-actions areas (desktop header)
+    document.querySelectorAll('.ug-nav-actions').forEach(function(navActions) {
+      if (navActions.querySelector('.ug-global-search-btn')) return; // already added
+
+      var searchBtn = document.createElement('button');
+      searchBtn.type = 'button';
+      searchBtn.className = 'ug-global-search-btn';
+      searchBtn.setAttribute('aria-label', 'Global search — press / or Ctrl+/');
+      searchBtn.setAttribute('title', 'Search destinations (/)');
+      searchBtn.innerHTML = '🔍';
+      searchBtn.style.cssText = [
+        'background:transparent',
+        'border:1.5px solid var(--ug-border)',
+        'border-radius:10px',
+        'color:var(--ug-text-secondary)',
+        'cursor:pointer',
+        'font-size:1rem',
+        'padding:0.35rem 0.65rem',
+        'transition:all 0.18s',
+        'display:flex',
+        'align-items:center',
+        'gap:0.35rem',
+        'white-space:nowrap'
+      ].join(';');
+
+      searchBtn.addEventListener('mouseenter', function() {
+        searchBtn.style.borderColor = 'var(--ug-primary)';
+        searchBtn.style.color = 'var(--ug-primary)';
+        searchBtn.style.background = 'rgba(216,255,77,0.08)';
+      });
+      searchBtn.addEventListener('mouseleave', function() {
+        searchBtn.style.borderColor = 'var(--ug-border)';
+        searchBtn.style.color = 'var(--ug-text-secondary)';
+        searchBtn.style.background = 'transparent';
+      });
+
+      searchBtn.addEventListener('click', function() {
+        window.location.href = 'search.html';
+      });
+
+      // Insert before the auth container (or before mobile toggle)
+      var themeToggle = navActions.querySelector('[data-ug-theme-toggle]');
+      if (themeToggle) {
+        navActions.insertBefore(searchBtn, themeToggle.nextSibling);
+      } else {
+        navActions.prepend(searchBtn);
+      }
+    });
+
+    // Add search link in mobile drawer nav too
+    document.querySelectorAll('.ug-drawer-nav').forEach(function(drawerNav) {
+      if (drawerNav.querySelector('a[href*="search.html"]')) return;
+      var a = document.createElement('a');
+      a.className = 'ug-drawer-link';
+      a.href = 'search.html';
+      a.innerHTML = '<span class="icon">🔍</span><span>Search Everything</span>';
+      // Insert after the first link (Home)
+      var firstLink = drawerNav.querySelector('.ug-drawer-link');
+      if (firstLink && firstLink.nextSibling) {
+        drawerNav.insertBefore(a, firstLink.nextSibling);
+      } else {
+        drawerNav.appendChild(a);
+      }
+    });
+
+    // Keyboard shortcut: Ctrl+/ → navigate to search page
+    document.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === '/') {
+        e.preventDefault();
+        window.location.href = 'search.html';
+      }
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initHeader();
@@ -579,5 +717,6 @@
     initNavLinks();
     initNavAuth();
     initMobileBottomNav();
+    initGlobalSearch();
   });
 })();

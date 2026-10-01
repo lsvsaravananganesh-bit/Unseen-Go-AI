@@ -11,6 +11,14 @@
   <link rel="stylesheet" href="src/styles/heritage-theme.css">
   <link rel="stylesheet" href="src/styles/navigation.css">
   <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
   <style>
     .ug-avatar-grid {
       display: flex;
@@ -60,6 +68,96 @@
       border-color: var(--ug-primary);
       box-shadow: 0 4px 10px var(--ug-primary-glow);
       font-weight: 700;
+    }
+
+    /* ── Feature #38 Travel Pref Chips ── */
+    .ug-pref-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 1.05rem;
+      border-radius: 9999px;
+      border: 1.5px solid var(--ug-border);
+      background: var(--ug-bg);
+      color: var(--ug-text-secondary);
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s;
+      user-select: none;
+    }
+    .ug-pref-chip:hover {
+      border-color: var(--ug-primary);
+      color: var(--ug-primary);
+      transform: translateY(-1px);
+    }
+    .ug-pref-chip.active {
+      border-color: var(--ug-primary);
+      background: rgba(216, 255, 77, 0.12);
+      color: var(--ug-primary);
+      box-shadow: 0 0 0 2px rgba(216, 255, 77, 0.25), 0 4px 12px rgba(216, 255, 77, 0.2);
+      font-weight: 700;
+    }
+    .ug-pref-chip.active::before {
+      content: '✓ ';
+      font-size: 0.75rem;
+    }
+
+    /* ── Feature #39 Travel Style Card ── */
+    .ug-style-card {
+      background: linear-gradient(135deg, var(--ug-surface) 0%, rgba(216,255,77,0.05) 100%);
+      border: 1.5px solid rgba(216,255,77,0.3);
+      border-radius: 20px;
+      padding: 2rem;
+      grid-column: 1 / -1;
+      position: relative;
+      overflow: hidden;
+    }
+    .ug-style-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(216,255,77,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .ug-style-name {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      color: var(--ug-primary);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin: 0.5rem 0 0.75rem;
+    }
+    .ug-style-tagline {
+      color: var(--ug-text-secondary);
+      font-size: 0.93rem;
+      line-height: 1.6;
+      max-width: 680px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ── Toast notification ── */
+    #ugToast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-primary);
+      color: var(--ug-primary);
+      padding: 0.75rem 1.5rem;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      box-shadow: 0 8px 24px rgba(216,255,77,0.25);
+      z-index: 9999;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+      white-space: nowrap;
+    }
+    #ugToast.show {
+      transform: translateX(-50%) translateY(0);
     }
   </style>
 </head>
@@ -341,9 +439,72 @@
           </div>
         </section>
 
+        <!-- 6. TRAVEL INTERESTS & PREFERENCES — Feature #38 -->
+        <section class="ug-how-card" style="grid-column: 1 / -1; padding: 1.75rem;" id="travelPrefsSection">
+          <div class="ug-how-step">
+            <span class="ug-how-num">06</span>
+            <span class="ug-how-icon">🧭</span>
+          </div>
+          <div style="display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <h3 style="margin: 0 0 0.35rem;">Travel Interests &amp; Preferences</h3>
+              <p style="margin: 0; font-size: 0.88rem; color: var(--ug-text-secondary);">Select every theme that excites you. UnseenGo AI uses these to detect your travel style and surface hidden gems that match your soul.</p>
+            </div>
+            <button type="button" id="savePrefsBtn" class="ug-btn-primary" style="font-size: 0.85rem; white-space: nowrap; flex-shrink: 0;">
+              💾 Save Preferences
+            </button>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.25rem;" id="travelPrefChips" role="group" aria-label="Travel interests">
+            <button type="button" class="ug-pref-chip" data-pref="Nature" aria-pressed="false">🌿 Nature</button>
+            <button type="button" class="ug-pref-chip" data-pref="History" aria-pressed="false">🏛️ History</button>
+            <button type="button" class="ug-pref-chip" data-pref="Adventure" aria-pressed="false">⛰️ Adventure</button>
+            <button type="button" class="ug-pref-chip" data-pref="Culture" aria-pressed="false">🎨 Culture</button>
+            <button type="button" class="ug-pref-chip" data-pref="Food" aria-pressed="false">🍛 Food</button>
+            <button type="button" class="ug-pref-chip" data-pref="Spiritual" aria-pressed="false">🛕 Spiritual</button>
+            <button type="button" class="ug-pref-chip" data-pref="Photography" aria-pressed="false">📸 Photography</button>
+            <button type="button" class="ug-pref-chip" data-pref="Wildlife" aria-pressed="false">🐅 Wildlife</button>
+            <button type="button" class="ug-pref-chip" data-pref="Beaches" aria-pressed="false">🏖️ Beaches</button>
+            <button type="button" class="ug-pref-chip" data-pref="Mountains" aria-pressed="false">⛰️ Mountains</button>
+            <button type="button" class="ug-pref-chip" data-pref="Budget travel" aria-pressed="false">💰 Budget Travel</button>
+            <button type="button" class="ug-pref-chip" data-pref="Luxury" aria-pressed="false">✨ Luxury</button>
+            <button type="button" class="ug-pref-chip" data-pref="Family travel" aria-pressed="false">👨‍👩‍👧 Family Travel</button>
+            <button type="button" class="ug-pref-chip" data-pref="Solo travel" aria-pressed="false">🎒 Solo Travel</button>
+          </div>
+
+          <p style="font-size: 0.78rem; color: var(--ug-text-muted); margin-top: 1rem;">✦ AI GENERATED · Style detection updates automatically when you save your preferences.</p>
+        </section>
+
+        <!-- 7. AI TRAVEL STYLE CARD — Feature #39 -->
+        <div class="ug-style-card" id="travelStyleCard">
+          <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.35rem;">
+            <span style="color: var(--ug-primary); font-size: 1.1rem;">✦</span>
+            <span style="font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; color: var(--ug-text-muted); text-transform: uppercase;">Your UnseenGo Travel Style</span>
+          </div>
+          <div class="ug-style-name" id="styleNameDisplay">Explorer</div>
+          <p class="ug-style-tagline" id="styleTaglineDisplay">
+            Select your travel interests above and save to reveal your personalized travel style — UnseenGo will then surface hidden destinations that resonate with how you explore.
+          </p>
+          <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
+            <a href="discover.html" class="ug-btn-primary" style="text-decoration: none; font-size: 0.88rem;">
+              🔍 View Recommendations →
+            </a>
+            <a href="profile.html#travelPrefsSection" class="ug-btn-secondary" style="text-decoration: none; font-size: 0.88rem;">
+              ✏️ Update Interests
+            </a>
+          </div>
+          <div style="margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--ug-border);">
+            <span style="font-size: 0.78rem; color: var(--ug-text-muted);">✦ AI GENERATED · Based on your selected travel preferences · Updates on save</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </main>
+
+  <!-- Toast Notification -->
+  <div id="ugToast" role="status" aria-live="polite"></div>
+
 
   <!-- Modern Heritage Footer -->
   <footer class="ug-footer">
@@ -368,6 +529,8 @@
           <ul class="ug-footer-links">
             <li><a href="planner.html">AI Itinerary Planner</a></li>
             <li><a href="my-travel.html">My Travel Vault</a></li>
+            <li><a href="signin.html">Sign In & Demo</a></li>
+            <li><a href="signup.html">Create Account (Sign Up)</a></li>
             <li><a href="india-cities.html">Destinations Directory</a></li>
           </ul>
         </div>
@@ -381,6 +544,12 @@
       </div>
       <div class="ug-footer-bottom">
         <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -541,8 +710,93 @@
       window.addEventListener('DOMContentLoaded', () => {
         loadProfile();
         renderProfileSaved();
+        initTravelPrefs();   // Feature #38
+        renderTravelStyle(); // Feature #39
       });
+
+      // ── Feature #38: Travel Preferences ─────────────────────────────────────
+      const PREFS_KEY = 'unseengo_travel_prefs';
+
+      function showToast(msg) {
+        const t = document.getElementById('ugToast');
+        if (!t) return;
+        t.textContent = msg;
+        t.classList.add('show');
+        setTimeout(() => t.classList.remove('show'), 3000);
+      }
+
+      function getSelectedPrefs() {
+        return Array.from(document.querySelectorAll('.ug-pref-chip.active'))
+          .map(c => c.dataset.pref);
+      }
+
+      function detectTravelStyle(prefs) {
+        const has = (...items) => items.every(i => prefs.includes(i));
+        const hasAny = (...items) => items.some(i => prefs.includes(i));
+
+        if (prefs.includes('Luxury'))                                      return 'Luxury Traveller';
+        if (prefs.includes('Budget travel'))                               return 'Budget Traveller';
+        if (prefs.includes('Family travel'))                               return 'Family Traveller';
+        if (prefs.includes('Solo travel'))                                 return 'Solo Explorer';
+        if (has('Nature', 'Wildlife', 'Mountains'))                        return 'Nature Seeker';
+        if (has('Adventure', 'Mountains', 'Nature'))                       return 'Adventure Traveller';
+        if (has('History', 'Spiritual') || has('History', 'Culture'))      return 'History Lover';
+        if (has('Culture', 'Food', 'Photography'))                         return 'Culture Explorer';
+        if (hasAny('History', 'Spiritual'))                                return 'History Lover';
+        if (hasAny('Nature', 'Wildlife', 'Mountains'))                     return 'Nature Seeker';
+        if (hasAny('Adventure'))                                           return 'Adventure Traveller';
+        if (hasAny('Culture', 'Food'))                                     return 'Culture Explorer';
+        return 'Explorer';
+      }
+
+      function renderTravelStyle(prefs) {
+        const stored = prefs || (() => {
+          try { return JSON.parse(localStorage.getItem(PREFS_KEY) || '[]'); } catch(_) { return []; }
+        })();
+
+        const styleName = stored.length ? detectTravelStyle(stored) : 'Explorer';
+        const nameEl   = document.getElementById('styleNameDisplay');
+        const tagEl    = document.getElementById('styleTaglineDisplay');
+        if (!nameEl || !tagEl) return;
+
+        nameEl.textContent = styleName;
+
+        if (stored.length) {
+          const previewPrefs = stored.slice(0, 4).join(', ');
+          const extra = stored.length > 4 ? ` and ${stored.length - 4} more interests` : '';
+          tagEl.innerHTML = `Because you enjoy <strong style="color:var(--ug-text-primary)">${previewPrefs}${extra}</strong>, UnseenGo recommends these hidden destinations tailored to your spirit of travel.`;
+        } else {
+          tagEl.textContent = 'Select your travel interests above and save to reveal your personalized travel style — UnseenGo will then surface hidden destinations that resonate with how you explore.';
+        }
+      }
+
+      function initTravelPrefs() {
+        // Load persisted prefs and activate chips
+        let saved = [];
+        try { saved = JSON.parse(localStorage.getItem(PREFS_KEY) || '[]'); } catch(_) {}
+
+        document.querySelectorAll('.ug-pref-chip').forEach(chip => {
+          const pref = chip.dataset.pref;
+          const isActive = saved.includes(pref);
+          chip.classList.toggle('active', isActive);
+          chip.setAttribute('aria-pressed', String(isActive));
+
+          chip.addEventListener('click', () => {
+            const active = chip.classList.toggle('active');
+            chip.setAttribute('aria-pressed', String(active));
+          });
+        });
+
+        // Save button handler
+        document.getElementById('savePrefsBtn')?.addEventListener('click', () => {
+          const selected = getSelectedPrefs();
+          localStorage.setItem(PREFS_KEY, JSON.stringify(selected));
+          renderTravelStyle(selected);
+          showToast('✓ Travel preferences saved');
+        });
+      }
     })();
   </script>
+
 </body>
 </html>

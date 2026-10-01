@@ -12,6 +12,15 @@
   <link rel="stylesheet" href="src/styles/navigation.css">
   <link rel="stylesheet" href="src/styles/components.css">
 
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
   <style>
     :root {
       --ug-lime: #d8ff4d;
@@ -27,6 +36,38 @@
       --ug-text-primary: #f5f8f5;
       --ug-text-secondary: #9cb0a2;
       --ug-text-muted: #6f8275;
+    }
+
+    [data-theme="light"], html.ug-light {
+      --ug-lime: #4d7c0f;
+      --ug-lime-soft: rgba(77, 124, 15, 0.12);
+      --ug-gold: #b45309;
+      --ug-emerald: #15803d;
+      --ug-orange: #c2410c;
+      --ug-bg: #f5f7f2;
+      --ug-surface: #ffffff;
+      --ug-surface-elevated: #f0f3ec;
+      --ug-border: #d4ded4;
+      --ug-border-glow: #84cc16;
+      --ug-text-primary: #0f1710;
+      --ug-text-secondary: #3e4d41;
+      --ug-text-muted: #647567;
+    }
+
+    [data-theme="light"] .ic-hero,
+    html.ug-light .ic-hero {
+      background: radial-gradient(circle at 85% 15%, rgba(77, 124, 15, 0.08) 0%, transparent 55%),
+                  linear-gradient(180deg, #e9ece4 0%, #f5f7f2 100%);
+    }
+
+    [data-theme="light"] .ic-hero-title,
+    html.ug-light .ic-hero-title {
+      color: var(--ug-text-primary);
+    }
+
+    [data-theme="light"] .ic-search-card,
+    html.ug-light .ic-search-card {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
     }
 
     body {

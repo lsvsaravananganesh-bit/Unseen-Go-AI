@@ -6,13 +6,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start": "vite",
+    "start": "node server.js",
+    "serve": "node server.js",
     "build": "vite build",
     "preview": "vite preview",
-    "check": "vite build"
+    "check": "vite build",
+    "seed:mongo": "node scripts/seed-mongodb.mjs",
+    "test:mongo": "node scripts/test-mongo.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
+    "mongodb": "^7.7.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {

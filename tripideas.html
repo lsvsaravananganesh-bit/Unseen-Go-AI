@@ -1,1 +1,714 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Trip Ideas | UnseenGo AI</title><link rel="stylesheet" href="unseengo-suite.css?v=20260826"><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:#fff;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1100px;margin:auto;padding:55px 22px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{padding:25px;background:#101713;border:1px solid #2a342d;border-radius:16px}.box a{display:inline-block;margin-top:12px;text-decoration:none}h1{font-size:48px}@media(max-width:700px){.grid{grid-template-columns:1fr}h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>TRIP IDEAS</p><h1>Choose a mood. Find a journey.</h1><p>Curated starting points for travelers who want more than the standard tourist checklist.</p><div class="grid"><div class="box"><h2>Weekend escapes</h2><p>Short journeys packed with hidden places and local experiences.</p><a href="planner.html">Plan a weekend →</a></div><div class="box"><h2>Heritage trails</h2><p>Fort towns, old markets, temples, monuments and stories.</p><a href="discover.html?style=Heritage">Explore heritage →</a></div><div class="box"><h2>Nature & adventure</h2><p>Waterfalls, viewpoints, forests and quiet landscapes.</p><a href="discover.html?style=Nature">Explore nature →</a></div><div class="box"><h2>Food & culture</h2><p>Local cuisine, traditions and community experiences.</p><a href="discover.html?style=Food">Explore culture →</a></div><div class="box"><h2>Family journeys</h2><p>Comfortable experiences for families and mixed-age groups.</p><a href="planner.html">Build family trip →</a></div><div class="box"><h2>Undiscovered India</h2><p>Let AI choose a destination based on your interests.</p><a href="planner.html">Ask UnseenGo AI →</a></div></div></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Curated Thematic Expeditions — Signature multi-day itineraries, weekend escapes, sacred corridors, and canyon circuits across India with 1-click AI Planner import on UnseenGo AI.">
+  <title>Thematic Expeditions & Signature Circuits — UnseenGo AI</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="UnseenGo Expeditions">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .trip-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-glass);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 1.15rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ug-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .trip-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1.5rem 0 3rem;
+      justify-content: center;
+    }
+
+    .trip-filter-btn {
+      padding: 0.55rem 1.2rem;
+      border-radius: 9999px;
+      border: 1px solid var(--ug-border);
+      background: var(--ug-surface);
+      color: var(--ug-text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--ug-transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .trip-filter-btn:hover, .trip-filter-btn.active {
+      border-color: var(--ug-primary);
+      background: var(--ug-primary-soft);
+      color: var(--ug-primary);
+      transform: translateY(-2px);
+    }
+
+    /* Expedition Cards Layout */
+    .expeditions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .expedition-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+      position: relative;
+    }
+
+    .expedition-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--ug-primary);
+      box-shadow: 0 20px 45px -15px var(--ug-primary-glow);
+    }
+
+    .expedition-media {
+      height: 230px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background: var(--ug-surface-elevated);
+    }
+
+    .expedition-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .expedition-card:hover .expedition-img {
+      transform: scale(1.05);
+    }
+
+    .expedition-meta-badge {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(8, 13, 9, 0.88);
+      border: 1px solid var(--ug-border);
+      backdrop-filter: blur(8px);
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--ug-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .expedition-duration-badge {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(8, 13, 9, 0.88);
+      border: 1px solid rgba(216, 255, 77, 0.4);
+      backdrop-filter: blur(8px);
+      padding: 0.3rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .expedition-body {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .expedition-region {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--ug-text-muted);
+      margin-bottom: 0.35rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .expedition-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--ug-text-primary);
+      line-height: 1.25;
+      margin-bottom: 0.75rem;
+    }
+
+    .expedition-desc {
+      font-size: 0.92rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .expedition-chips-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .expedition-info-chip {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--ug-text-secondary);
+    }
+
+    /* Itinerary Route Stepper */
+    .expedition-waypoints-box {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 16px;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .expedition-waypoints-title {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ug-primary);
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .expedition-waypoint-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--ug-text-secondary);
+    }
+
+    .expedition-waypoint-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    .expedition-waypoint-list li:last-child {
+      margin-bottom: 0;
+    }
+
+    .expedition-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ug-primary);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .expedition-card-footer {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--ug-border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">🌙</button>
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="pin">📍</span>
+            <span>Current City:</span>
+            <b data-ug-current-city>All India</b>
+          </span>
+          <span>Change ▾</span>
+        </button>
+
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="stay.html"><span class="icon">🏡</span><span>Stay & Lodges</span></a>
+          <a class="ug-drawer-link" href="transport.html"><span class="icon">🚗</span><span>Transport</span></a>
+          <a class="ug-drawer-link" href="flights.html"><span class="icon">✈️</span><span>Flights & Gateways</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+          <a class="ug-drawer-link active" href="tripideas.html"><span class="icon">💡</span><span>Thematic Expeditions</span></a>
+          <a class="ug-drawer-link" href="utilities.html"><span class="icon">🧰</span><span>Travel Utilities & Tools</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Content -->
+  <main class="ug-main">
+    <!-- Hero Section -->
+    <section class="ug-hero-section" style="padding: 4.5rem 0 3.5rem;">
+      <div class="ug-container">
+        <div class="ug-hero-content" style="max-width: 860px;">
+          <div class="trip-kicker">✦ Signature Circuits & Curated Trails</div>
+          <h1 class="ug-hero-title">Choose A Mood.<br><em>Find A Journey.</em></h1>
+          <p class="ug-hero-lead">
+            Carefully engineered multi-day routes across India's hidden landscapes. Vetted waypoints, realistic travel rhythms, budget benchmarks, and instant 1-click import into the UnseenGo AI Planner.
+          </p>
+
+          <!-- Category Filter Tabs -->
+          <div class="trip-filters">
+            <button class="trip-filter-btn active" data-filter="all">✨ All Circuits</button>
+            <button class="trip-filter-btn" data-filter="weekend">⚡ Weekend Getaways (2–3 Days)</button>
+            <button class="trip-filter-btn" data-filter="temples">🛕 Sacred Corridors</button>
+            <button class="trip-filter-btn" data-filter="nature">⛰️ Canyons & Waterfalls</button>
+            <button class="trip-filter-btn" data-filter="forts">🏰 Fortresses & Palaces</button>
+            <button class="trip-filter-btn" data-filter="food">🍲 Culinary & Crafts</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Expeditions Grid Section -->
+    <section class="ug-section" style="padding: 2.5rem 0 5rem;">
+      <div class="ug-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Signature Expedition Circuits</h2>
+            <p style="color: var(--ug-text-muted); font-size: 0.9rem;">Each circuit can be customized in the AI Planner with your preferred travel dates and pace.</p>
+          </div>
+          <span style="font-size: 0.85rem; color: var(--ug-text-muted); font-weight: 600;" id="circuitCountBadge">Showing 8 Circuits</span>
+        </div>
+
+        <div class="expeditions-grid" id="expeditionsGrid">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+        <!-- Custom Prompt CTA Card -->
+        <div style="background: var(--ug-surface-elevated); border: 1.5px solid var(--ug-border); border-radius: 24px; padding: 2.75rem; text-align: center; max-width: 840px; margin: 3rem auto 0; position: relative; overflow: hidden;">
+          <div style="position: absolute; top: -50px; right: -50px; width: 180px; height: 180px; background: radial-gradient(circle, var(--ug-primary-glow) 0%, transparent 70%); filter: blur(30px); pointer-events: none;"></div>
+          <span style="font-size: 2.4rem; display: block; margin-bottom: 0.75rem;">🤖</span>
+          <h3 style="font-size: 1.5rem; font-weight: 900; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Have a unique timeframe or specific budget?</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.6;">
+            Tell our explainable AI engine where you are starting, what you love (history, food, photography, silence), and your trip duration. We’ll build a custom day-by-day itinerary in seconds.
+          </p>
+          <a href="planner.html" class="ug-btn ug-btn-primary" style="border-radius: 9999px; padding: 0.85rem 2rem; font-size: 0.95rem;">
+            Launch Custom AI Planner →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand-col">
+          <a class="ug-brand" href="index.html">
+            <span class="ug-sparkle">✦</span>
+            <span>UnseenGo</span>
+            <span class="ug-brand-badge">AI</span>
+          </a>
+          <p class="ug-footer-tagline">
+            Curated thematic journeys connecting ancient wisdom, living architecture, and lesser-travelled landscapes across India.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="discover.html">Discover Places</a></li>
+            <li><a href="planner.html">AI Trip Planner</a></li>
+            <li><a href="map.html">India Explorer Map</a></li>
+            <li><a href="stories.html">Cultural Stories</a></li>
+            <li><a href="tripideas.html">Thematic Expeditions</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Travel Services</h4>
+          <ul>
+            <li><a href="stay.html">Local Stays</a></li>
+            <li><a href="transport.html">Transport & Routes</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Budget Tools</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Curated Thematic Circuits. Transparent AI recommendations.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function(){
+      'use strict';
+
+      /* Curated Thematic Expeditions Dataset */
+      const EXPEDITIONS = [
+        {
+          id: 'rayalaseema-canyon',
+          title: 'The Grand Canyon & Subterranean Karst Trail',
+          category: 'nature',
+          tag: 'Canyons & Caves',
+          duration: '2 Days / 1 Night',
+          pace: 'Balanced',
+          budget: '₹4,500 – ₹7,000 / person',
+          season: 'Oct – Mar',
+          region: 'Andhra Pradesh (Rayalaseema)',
+          city: 'Kurnool',
+          plannerInterests: 'Nature,Heritage,Photography',
+          plannerDays: 2,
+          plannerPace: 'balanced',
+          image: 'https://images.unsplash.com/photo-1609137144822-47c34d3b4d58?auto=format&fit=crop&w=800&q=80',
+          desc: 'Witness the breathtaking 300-ft red gorge carved by the Pennar river at Gandikota, explore medieval ramparts, and delve 150 ft underground into Belum Caves.',
+          waypoints: [
+            'Day 1: Gandikota Gorge sunset, Pemmasani citadel & Madhavaraya temple',
+            'Day 2: Belum subterranean caves chasm & Yaganti growing Nandi shrine',
+            'Bonus: Oravakallu natural rock gardens picnic on route to Kurnool'
+          ]
+        },
+        {
+          id: 'vijayanagara-golden-arc',
+          title: 'The Vijayanagara Stone Empire: Hampi to Badami',
+          category: 'temples',
+          tag: 'UNESCO Heritage',
+          duration: '4 Days / 3 Nights',
+          pace: 'Immersive',
+          budget: '₹8,500 – ₹14,000 / person',
+          season: 'Nov – Feb',
+          region: 'Karnataka',
+          city: 'Hampi',
+          plannerInterests: 'Heritage,Temples,Photography',
+          plannerDays: 4,
+          plannerPace: 'slow',
+          image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
+          desc: 'Travel through the boulder-strewn capital of the Vijayanagara Empire to the rock-cut Chalukyan cliff sanctuaries of Badami, Aihole, and Pattadakal.',
+          waypoints: [
+            'Day 1: Vittala musical pillars, stone chariot & Hemakuta hill sunset',
+            'Day 2: Coracle boat ride across Tungabhadra to Anegundi Kishkindha',
+            'Day 3: Rock-cut cave temples of Badami overlooking Agastya lake',
+            'Day 4: Aihole cradle of temple architecture & Pattadakal UNESCO complex'
+          ]
+        },
+        {
+          id: 'monsoon-meghalaya',
+          title: 'Cloud Canyons & Living Root Bridges of Sohra',
+          category: 'nature',
+          tag: 'Bio-Architecture',
+          duration: '4 Days / 3 Nights',
+          pace: 'Adventure',
+          budget: '₹12,000 – ₹18,000 / person',
+          season: 'May – Sep (Lush) / Oct – Mar (Clear)',
+          region: 'Meghalaya',
+          city: 'Guwahati',
+          plannerInterests: 'Nature,Adventure,Photography',
+          plannerDays: 4,
+          plannerPace: 'fast',
+          image: 'https://images.unsplash.com/photo-1626014303757-64670081c784?auto=format&fit=crop&w=800&q=80',
+          desc: 'Trek into sacred Khasi rainforests where indigenous clans have woven living suspension bridges across torrential waterfalls for generations.',
+          waypoints: [
+            'Day 1: Guwahati to Shillong, Umiam Lake & evening café trail',
+            'Day 2: Sohra (Cherrapunji) Nohkalikai Falls, Mawsmai cave system',
+            'Day 3: 3,500-step trek to the Umshiang Double Decker Living Root Bridge',
+            'Day 4: Crystal clear boating at Dawki Umngot river & Mawlynnong village'
+          ]
+        },
+        {
+          id: 'spiti-cold-desert',
+          title: 'Spiti Valley: The 1,000-Year Monastic Circuit',
+          category: 'weekend',
+          tag: 'High Altitude Trek',
+          duration: '6 Days / 5 Nights',
+          pace: 'Slow / Acclimatized',
+          budget: '₹18,000 – ₹28,000 / person',
+          season: 'Jun – Oct',
+          region: 'Himachal Pradesh',
+          city: 'Leh',
+          plannerInterests: 'Nature,Adventure,Photography',
+          plannerDays: 6,
+          plannerPace: 'slow',
+          image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+          desc: 'Cross towering Himalayan mountain passes to ancient Tibetan Buddhist monasteries perched on barren moonscapes overlooking the turquoise Spiti river.',
+          waypoints: [
+            'Day 1-2: Manali through Atal Tunnel to Kaza (acclimatization)',
+            'Day 3: Key Monastery blessing & Kibber high-altitude wildlife haven',
+            'Day 4: Tabo Monastery (Ajanta of the Himalayas, founded 996 CE)',
+            'Day 5-6: Chandratal (Moon Lake) wild camping & Kunzum Pass return'
+          ]
+        },
+        {
+          id: 'chola-temple-trail',
+          title: 'The Great Living Chola Temples & Chettinad Mansions',
+          category: 'temples',
+          tag: 'Granite Architecture',
+          duration: '3 Days / 2 Nights',
+          pace: 'Balanced',
+          budget: '₹6,500 – ₹10,000 / person',
+          season: 'Oct – Mar',
+          region: 'Tamil Nadu',
+          city: 'Chennai',
+          plannerInterests: 'Temples,Heritage,Food',
+          plannerDays: 3,
+          plannerPace: 'balanced',
+          image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80',
+          desc: 'Behold the towering 216-ft monolithic vimana of Thanjavur, the sculptural finesse of Gangaikonda Cholapuram, and palatial 1,000-window Chettinad heritage.',
+          waypoints: [
+            'Day 1: Brihadisvara Temple (Big Temple) shadowless gopuram at sunset',
+            'Day 2: Gangaikonda Cholapuram & Darasuram Airavatesvara chariot temple',
+            'Day 3: Chettinad palatial mansions, handmade Athangudi tiles & banana-leaf feast'
+          ]
+        },
+        {
+          id: 'deccan-hill-forts',
+          title: 'Maratha Hill Fortresses & Sacred Ghat Escapes',
+          category: 'forts',
+          tag: 'Mountain Citadels',
+          duration: '3 Days / 2 Nights',
+          pace: 'Adventure',
+          budget: '₹5,000 – ₹8,500 / person',
+          season: 'Jul – Feb',
+          region: 'Maharashtra',
+          city: 'Pune',
+          plannerInterests: 'Forts,Heritage,Adventure',
+          plannerDays: 3,
+          plannerPace: 'fast',
+          image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+          desc: 'Scale the impregnable mountain citadels of Chhatrapati Shivaji Maharaj perched atop mist-covered Western Ghat cliffs overlooking deep valleys.',
+          waypoints: [
+            'Day 1: Sinhagad Fort battle ramparts, Kanda Bhaji & Tanaji Malusare memorial',
+            'Day 2: Rajgad Fort Sanjeevani Machi spine ridge trek with panoramic views',
+            'Day 3: Torna Fort cliff ascent & Pataleshwar monolithic rock-cut cave temple'
+          ]
+        },
+        {
+          id: 'shekhawati-open-air-gallery',
+          title: 'Shekhawati & Abhaneri: Painted Havelis & Stepwells',
+          category: 'weekend',
+          tag: 'Fresco Murals',
+          duration: '3 Days / 2 Nights',
+          pace: 'Balanced',
+          budget: '₹6,000 – ₹11,000 / person',
+          season: 'Oct – Mar',
+          region: 'Rajasthan',
+          city: 'Jaipur',
+          plannerInterests: 'Heritage,Culture,Photography',
+          plannerDays: 3,
+          plannerPace: 'balanced',
+          image: 'https://images.unsplash.com/photo-1599818818826-64c8d5a163a8?auto=format&fit=crop&w=800&q=80',
+          desc: 'Explore the world\'s largest open-air art gallery in Mandawa and Nawalgarh, followed by the geometric optical illusion of Chand Baori stepwell.',
+          waypoints: [
+            'Day 1: Jaipur to Mandawa fresco-painted merchant mansions (havelis)',
+            'Day 2: Nawalgarh Poddar Haveli museum & local brass craft workshops',
+            'Day 3: Chand Baori at Abhaneri (3,500 symmetrical steps) & Harshat Mata'
+          ]
+        },
+        {
+          id: 'awadhi-dastarkhwan',
+          title: 'The Awadhi Culinary Dastarkhwan & Tehzeeb Trail',
+          category: 'food',
+          tag: 'Culinary Heritage',
+          duration: '2 Days / 1 Night',
+          pace: 'Relaxed & Food-Focused',
+          budget: '₹3,500 – ₹6,000 / person',
+          season: 'Oct – Mar',
+          region: 'Uttar Pradesh',
+          city: 'Lucknow',
+          plannerInterests: 'Food,Culture,Heritage',
+          plannerDays: 2,
+          plannerPace: 'slow',
+          image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+          desc: 'An authentic gastronomic journey through the royal kitchens of Nawabs, fragrant Dum Biryanis, melt-in-mouth Galouti kebabs, and historic Chikan embroidery lanes.',
+          waypoints: [
+            'Day 1: Bara Imambara acoustic maze (Bhool Bhulaiya), Tunday Kababi Chowk feast',
+            'Day 2: Chota Imambara chandeliers, Hazratganj evening promenade & Makhan Malai'
+          ]
+        }
+      ];
+
+      const grid = document.getElementById('expeditionsGrid');
+      const countBadge = document.getElementById('circuitCountBadge');
+      const filterBtns = document.querySelectorAll('.trip-filter-btn');
+
+      function renderExpeditions(category = 'all') {
+        const filtered = category === 'all'
+          ? EXPEDITIONS
+          : EXPEDITIONS.filter(e => e.category === category);
+
+        countBadge.textContent = `Showing ${filtered.length} Circuit${filtered.length === 1 ? '' : 's'}`;
+
+        grid.innerHTML = filtered.map(item => `
+          <article class="expedition-card">
+            <div class="expedition-media">
+              <img class="expedition-img" src="${item.image}" alt="${item.title}" loading="lazy">
+              <span class="expedition-meta-badge">${item.tag}</span>
+              <span class="expedition-duration-badge">⏱ ${item.duration}</span>
+            </div>
+            <div class="expedition-body">
+              <div class="expedition-region">
+                <span>📍</span>
+                <span>${item.region}</span>
+              </div>
+              <h3 class="expedition-title">${item.title}</h3>
+              <p class="expedition-desc">${item.desc}</p>
+
+              <div class="expedition-chips-row">
+                <span class="expedition-info-chip">🗓 Best: ${item.season}</span>
+                <span class="expedition-info-chip">🚶 Pace: ${item.pace}</span>
+                <span class="expedition-info-chip">💰 ${item.budget}</span>
+              </div>
+
+              <div class="expedition-waypoints-box">
+                <div class="expedition-waypoints-title">✦ Verified Route Waypoints</div>
+                <ul class="expedition-waypoint-list">
+                  ${item.waypoints.map(w => `
+                    <li>
+                      <span class="expedition-dot"></span>
+                      <span>${w}</span>
+                    </li>
+                  `).join('')}
+                </ul>
+              </div>
+
+              <div class="expedition-card-footer">
+                <button type="button" class="ug-btn ug-btn-primary import-planner-btn" style="flex: 1; border-radius: 9999px; font-size: 0.82rem;" data-id="${item.id}">
+                  🤖 Import to AI Planner
+                </button>
+                <a href="map.html" class="ug-btn ug-btn-outline" style="border-radius: 9999px; font-size: 0.82rem; padding: 0.5rem 0.85rem;" title="View on map">
+                  🗺️
+                </a>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        // Bind Planner Import buttons
+        document.querySelectorAll('.import-planner-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const exp = EXPEDITIONS.find(e => e.id === btn.dataset.id);
+            if (!exp) return;
+            const params = new URLSearchParams({
+              city: exp.city,
+              days: exp.plannerDays,
+              pace: exp.plannerPace,
+              interests: exp.plannerInterests
+            });
+            window.location.href = `planner.html?${params.toString()}`;
+          });
+        });
+      }
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderExpeditions(btn.dataset.filter);
+        });
+      });
+
+      renderExpeditions('all');
+    })();
+  </script>
+</body>
+</html>

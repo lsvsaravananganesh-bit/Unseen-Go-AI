@@ -90,9 +90,9 @@
     const isDiscover=filename.includes('discover');
     const isPlanner=filename.includes('planner');
     const isTrips=filename.includes('my-travel')||filename.includes('dashboard');
-    const isProfile=filename.includes('profile')||filename.includes('login')||filename.includes('signup');
+    const isProfile=filename.includes('profile')||filename.includes('login')||filename.includes('signin')||filename.includes('signup');
 
-    const profileHref=user?'profile.html':'login.html';
+    const profileHref=user?'profile.html':'signin.html';
 
     const nav=document.createElement('nav');
     nav.className='ug-mobile-bottom-nav';
@@ -159,10 +159,18 @@
       box.append(avatar,label,button);
     } else {
       const signinBtn=document.createElement('a');
-      signinBtn.href='login.html';
-      signinBtn.className='ug-nav-signin-btn';
+      signinBtn.href='signin.html';
+      signinBtn.className='ug-nav-signin-ghost';
       signinBtn.textContent='Sign In';
+      signinBtn.style.cssText='border:1px solid rgba(255,255,255,0.2);padding:6px 12px;border-radius:8px;text-decoration:none;color:inherit;font-size:13px;font-weight:700;';
+
+      const signupBtn=document.createElement('a');
+      signupBtn.href='signup.html';
+      signupBtn.className='ug-nav-signin-btn';
+      signupBtn.textContent='Sign Up';
+
       box.appendChild(signinBtn);
+      box.appendChild(signupBtn);
     }
     nav.appendChild(box);
   }

@@ -1,1 +1,1172 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local Stories | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:#fff;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1000px;margin:auto;padding:60px 22px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{padding:25px;background:#101713;border:1px solid #2a342d;border-radius:16px}a{text-decoration:none}h1{font-size:48px}@media(max-width:700px){.grid{grid-template-columns:1fr}h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>LOCAL STORIES</p><h1>Every place has a story.</h1><p>Go beyond coordinates with history, people, culture and context.</p><div class="grid"><div class="box"><h2>Heritage</h2><p>Discover the stories behind historic places.</p></div><div class="box"><h2>People</h2><p>Meet the communities that make destinations unique.</p></div><div class="box"><h2>Food</h2><p>Explore regional flavours and traditions.</p></div></div><p><a href="discover.html">Find places with stories →</a></p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cultural Chronicles & Oral Histories — Explore legends, architectural marvels, royal dynasties, and verified folklore of India's hidden gems with audio narration on UnseenGo AI.">
+  <title>Cultural Chronicles & Folklore Guide — UnseenGo AI</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="UnseenGo Stories">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .story-hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-glass);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 1.15rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ug-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    .story-filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin: 1.5rem 0 2.5rem;
+      justify-content: center;
+    }
+
+    .story-chip {
+      padding: 0.55rem 1.15rem;
+      border-radius: 9999px;
+      border: 1px solid var(--ug-border);
+      background: var(--ug-surface);
+      color: var(--ug-text-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--ug-transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .story-chip:hover, .story-chip.active {
+      border-color: var(--ug-primary);
+      background: var(--ug-primary-soft);
+      color: var(--ug-primary);
+      transform: translateY(-2px);
+    }
+
+    .story-search-bar {
+      max-width: 680px;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 0.6rem 0.4rem 1.35rem;
+      transition: var(--ug-transition);
+    }
+
+    .story-search-bar:focus-within {
+      border-color: var(--ug-primary);
+      box-shadow: 0 0 0 3px rgba(216, 255, 77, 0.15);
+    }
+
+    .story-search-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      outline: none;
+      color: var(--ug-text-primary);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .story-search-input::placeholder {
+      color: var(--ug-text-muted);
+    }
+
+    /* Story Cards Grid */
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 4rem;
+    }
+
+    .story-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 24px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .story-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--ug-primary);
+      box-shadow: 0 20px 40px -15px var(--ug-primary-glow);
+    }
+
+    .story-card-media {
+      height: 220px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      background: var(--ug-surface-elevated);
+    }
+
+    .story-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .story-card:hover .story-card-img {
+      transform: scale(1.05);
+    }
+
+    .story-card-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(10, 16, 12, 0.85);
+      border: 1px solid var(--ug-border);
+      backdrop-filter: blur(8px);
+      padding: 0.3rem 0.8rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--ug-primary);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .story-card-audio-pill {
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+      background: rgba(10, 16, 12, 0.85);
+      border: 1px solid rgba(216, 255, 77, 0.4);
+      backdrop-filter: blur(8px);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .story-card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .story-location-meta {
+      font-size: 0.8rem;
+      color: var(--ug-text-muted);
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .story-card-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--ug-text-primary);
+      line-height: 1.3;
+      margin-bottom: 0.6rem;
+    }
+
+    .story-card-excerpt {
+      font-size: 0.9rem;
+      color: var(--ug-text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+      flex: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .story-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--ug-border);
+      padding-top: 1rem;
+      font-size: 0.82rem;
+      color: var(--ug-primary);
+      font-weight: 700;
+    }
+
+    /* Story Modal */
+    .story-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .story-modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .story-modal-container {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 28px;
+      width: min(860px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+      transform: scale(0.96);
+      transition: transform 0.25s ease;
+    }
+
+    .story-modal-overlay.open .story-modal-container {
+      transform: scale(1);
+    }
+
+    .story-modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-primary);
+      font-size: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: var(--ug-transition);
+    }
+
+    .story-modal-close-btn:hover {
+      background: var(--ug-primary);
+      color: #070d09;
+      border-color: var(--ug-primary);
+    }
+
+    .story-modal-hero {
+      position: relative;
+      height: 320px;
+      width: 100%;
+      background: var(--ug-surface-elevated);
+    }
+
+    .story-modal-hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .story-modal-hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, var(--ug-surface) 0%, transparent 70%);
+    }
+
+    .story-modal-content {
+      padding: 2rem 2.5rem 2.5rem;
+    }
+
+    .story-audio-controller {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 18px;
+      padding: 1.15rem 1.5rem;
+      margin: 1.5rem 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .story-audio-info {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .story-audio-play-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--ug-primary);
+      color: #080d09;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      cursor: pointer;
+      transition: var(--ug-transition);
+      box-shadow: 0 4px 15px var(--ug-primary-glow);
+    }
+
+    .story-audio-play-btn:hover {
+      transform: scale(1.08);
+    }
+
+    .story-audio-waves {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      height: 18px;
+    }
+
+    .story-wave-bar {
+      width: 3px;
+      height: 6px;
+      background: var(--ug-primary);
+      border-radius: 2px;
+      transition: height 0.2s ease;
+    }
+
+    .story-audio-waves.playing .story-wave-bar:nth-child(1) { animation: wave 0.8s infinite ease-in-out; }
+    .story-audio-waves.playing .story-wave-bar:nth-child(2) { animation: wave 0.8s infinite 0.15s ease-in-out; }
+    .story-audio-waves.playing .story-wave-bar:nth-child(3) { animation: wave 0.8s infinite 0.3s ease-in-out; }
+    .story-audio-waves.playing .story-wave-bar:nth-child(4) { animation: wave 0.8s infinite 0.45s ease-in-out; }
+
+    @keyframes wave {
+      0%, 100% { height: 4px; }
+      50% { height: 18px; }
+    }
+
+    .story-modal-actions {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--ug-border);
+    }
+
+    @media (max-width: 640px) {
+      .story-modal-content {
+        padding: 1.5rem;
+      }
+      .story-modal-hero {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link active" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">🌙</button>
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="pin">📍</span>
+            <span>Current City:</span>
+            <b data-ug-current-city>All India</b>
+          </span>
+          <span>Change ▾</span>
+        </button>
+
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="stay.html"><span class="icon">🏡</span><span>Stay & Lodges</span></a>
+          <a class="ug-drawer-link" href="transport.html"><span class="icon">🚗</span><span>Transport</span></a>
+          <a class="ug-drawer-link" href="flights.html"><span class="icon">✈️</span><span>Flights & Gateways</span></a>
+          <a class="ug-drawer-link active" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+          <a class="ug-drawer-link" href="tripideas.html"><span class="icon">💡</span><span>Thematic Expeditions</span></a>
+          <a class="ug-drawer-link" href="utilities.html"><span class="icon">🧰</span><span>Travel Utilities & Tools</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Content -->
+  <main class="ug-main">
+    <!-- Hero Section -->
+    <section class="ug-hero-section" style="padding: 4.5rem 0 3.5rem;">
+      <div class="ug-container">
+        <div class="ug-hero-content" style="max-width: 820px;">
+          <div class="story-hero-kicker">✦ Cultural Chronicles & Oral Lore</div>
+          <h1 class="ug-hero-title">Every Ancient Stone<br><em>Has A Voice.</em></h1>
+          <p class="ug-hero-lead">
+            Move beyond GPS coordinates. Experience the living memory, dynasty chronicles, mystical folklore, and architectural genius behind India's greatest hidden sanctuaries.
+          </p>
+
+          <!-- Search Bar -->
+          <div class="story-search-bar">
+            <span style="font-size: 1.1rem; color: var(--ug-text-muted); margin-right: 0.5rem;">🔎</span>
+            <input type="text" id="storySearchInput" class="story-search-input" placeholder="Search stories by landmark, dynasty, legend or state (e.g. Lepakshi, Hampi, Chola)...">
+            <button type="button" id="clearSearchBtn" class="ug-btn ug-btn-sm ug-btn-outline" style="display:none; padding: 0.25rem 0.6rem; border-radius: 9999px;">✕</button>
+          </div>
+
+          <!-- Category Filter Chips -->
+          <div class="story-filter-container">
+            <button class="story-chip active" data-category="all">✨ All Chronicles</button>
+            <button class="story-chip" data-category="temples">🛕 Sacred Shrines</button>
+            <button class="story-chip" data-category="forts">🏰 Deccan & Rajput Forts</button>
+            <button class="story-chip" data-category="caves">⛰️ Subterranean Caves</button>
+            <button class="story-chip" data-category="folklore">📜 Myth & Oral Legends</button>
+            <button class="story-chip" data-category="marvels">📐 Engineering Marvels</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stories Grid Section -->
+    <section class="ug-section" style="padding: 2.5rem 0 5rem;">
+      <div class="ug-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Curated Heritage Chronicles</h2>
+            <p style="color: var(--ug-text-muted); font-size: 0.9rem;">Click any card to read in-depth history or listen with audio narration.</p>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <span style="font-size: 0.85rem; color: var(--ug-text-muted); font-weight: 600;" id="storyCountBadge">Showing 12 Chronicles</span>
+          </div>
+        </div>
+
+        <div class="story-grid" id="storyGrid">
+          <!-- Dynamically populated -->
+        </div>
+
+        <!-- Custom City Lore Lookup Card -->
+        <div style="background: var(--ug-surface-elevated); border: 1.5px dashed var(--ug-border); border-radius: 24px; padding: 2.5rem; text-align: center; max-width: 800px; margin: 2rem auto 0;">
+          <span style="font-size: 2.2rem; display: block; margin-bottom: 0.5rem;">🎙️</span>
+          <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Want the story of any other place in India?</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.9rem; max-width: 550px; margin: 0 auto 1.5rem;">
+            Type any temple, monument, or historical village. Our narrative engine pulls verified archives and reads it aloud to you.
+          </p>
+          <div style="display: flex; gap: 0.5rem; max-width: 500px; margin: 0 auto; flex-wrap: wrap;">
+            <input type="text" id="customPlaceInput" class="story-search-input" style="flex: 1; background: var(--ug-surface); padding: 0.85rem 1.25rem; border: 1px solid var(--ug-border); border-radius: 9999px;" placeholder="e.g., Shore Temple, Badami Caves, Kumbhalgarh">
+            <button type="button" id="lookupCustomBtn" class="ug-btn ug-btn-primary" style="border-radius: 9999px; padding: 0.85rem 1.5rem;">Narrate Place ✦</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Story Detail & Audio Modal -->
+  <div class="story-modal-overlay" id="storyModal">
+    <div class="story-modal-container">
+      <button type="button" class="story-modal-close-btn" id="modalCloseBtn" aria-label="Close story">✕</button>
+
+      <div class="story-modal-hero">
+        <img id="modalHeroImg" src="" alt="Story header">
+        <div class="story-modal-hero-gradient"></div>
+        <div class="story-card-tag" id="modalCategoryTag" style="top: 1.5rem; left: 1.5rem;">Heritage</div>
+      </div>
+
+      <div class="story-modal-content">
+        <div class="story-location-meta" id="modalLocationMeta">📍 Andhra Pradesh · 16th Century CE</div>
+        <h2 id="modalTitle" style="font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900; color: var(--ug-text-primary); line-height: 1.15; margin-bottom: 0.75rem;">Story Title</h2>
+        <p id="modalSubtitle" style="font-size: 1.05rem; color: var(--ug-text-secondary); font-weight: 600; margin-bottom: 1.5rem;">Architectural mystery and cultural significance.</p>
+
+        <!-- Audio Player Bar -->
+        <div class="story-audio-controller">
+          <div class="story-audio-info">
+            <button type="button" class="story-audio-play-btn" id="audioToggleBtn" title="Play / Pause Audio Narration">▶</button>
+            <div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <strong style="color: var(--ug-text-primary); font-size: 0.95rem;" id="audioStatusText">Listen to Audio Narration</strong>
+                <div class="story-audio-waves" id="audioWaveContainer">
+                  <span class="story-wave-bar"></span>
+                  <span class="story-wave-bar"></span>
+                  <span class="story-wave-bar"></span>
+                  <span class="story-wave-bar"></span>
+                </div>
+              </div>
+              <small style="color: var(--ug-text-muted); font-size: 0.78rem;">Narrated via browser Web Speech synthesizer</small>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button type="button" id="audioStopBtn" class="ug-btn ug-btn-sm ug-btn-outline" style="border-radius: 9999px;">⏹ Stop</button>
+          </div>
+        </div>
+
+        <!-- Full Story Body -->
+        <div id="modalStoryBody" style="color: var(--ug-text-secondary); font-size: 1rem; line-height: 1.8; margin-bottom: 2rem;">
+          <!-- Paragraphs -->
+        </div>
+
+        <!-- Historic Key Facts Box -->
+        <div style="background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); border-radius: 18px; padding: 1.35rem 1.75rem; margin-bottom: 2rem;">
+          <h4 style="font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ug-primary); font-weight: 800; margin-bottom: 0.75rem;">✦ Key Historical Facts</h4>
+          <ul id="modalFactList" style="list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.75rem;">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
+
+        <!-- Action Links -->
+        <div class="story-modal-actions">
+          <button type="button" id="modalPlanTripBtn" class="ug-btn ug-btn-primary" style="border-radius: 9999px;">
+            🤖 Plan Trip to this Place →
+          </button>
+          <button type="button" id="modalViewMapBtn" class="ug-btn ug-btn-outline" style="border-radius: 9999px;">
+            🗺️ Locate on Explorer Map
+          </button>
+          <button type="button" id="modalShareBtn" class="ug-btn ug-btn-outline" style="border-radius: 9999px;">
+            🔗 Share Chronicle
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand-col">
+          <a class="ug-brand" href="index.html">
+            <span class="ug-sparkle">✦</span>
+            <span>UnseenGo</span>
+            <span class="ug-brand-badge">AI</span>
+          </a>
+          <p class="ug-footer-tagline">
+            Preserving India's living cultural memories, local heritage, and hidden sanctuaries through transparent AI discovery.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="discover.html">Discover Places</a></li>
+            <li><a href="planner.html">AI Trip Planner</a></li>
+            <li><a href="map.html">India Explorer Map</a></li>
+            <li><a href="stories.html">Cultural Stories</a></li>
+            <li><a href="tripideas.html">Thematic Expeditions</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Travel Services</h4>
+          <ul>
+            <li><a href="stay.html">Local Stays</a></li>
+            <li><a href="transport.html">Transport & Routes</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Budget Tools</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Cultural Chronicles of India. Verified oral traditions and architectural archives.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function(){
+      'use strict';
+
+      /* Curated Indian Cultural Chronicles Dataset */
+      const STORIES_DATA = [
+        {
+          id: 'lepakshi',
+          title: 'The Hanging Pillar of Lepakshi',
+          category: 'marvels',
+          categoryLabel: 'Engineering Marvel',
+          location: 'Anantapur District, Andhra Pradesh',
+          city: 'Kurnool',
+          era: '16th Century CE (Vijayanagara Empire)',
+          architecturalStyle: 'Vijayanagara Dravidian Granite',
+          excerpt: 'Among the 70 massive carved stone pillars inside Veerabhadra Temple, one completely defies gravity — hovering millimeters off the ground without touching the stone floor.',
+          image: 'https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Built by brothers Virupanna and Veeranna, governors under King Achyuta Deva Raya.',
+            'A British engineer in 1902 tried to dislodge it to discover the secret and nearly collapsed the entire roof.',
+            'Features the legendary footprint of Mother Sita and the monolith Nandi carved from a single granite boulder.'
+          ],
+          storyBody: `
+            <p>Perched upon a low granite hill named Kurmasailam (Tortoise Hill), the Veerabhadra Temple of Lepakshi is a masterclass in medieval acoustics, geology, and spiritual devotion. Built around 1538 CE, the temple complex is globally renowned for its 70 massive carved granite pillars.</p>
+            <p>Among them, the centerpiece is the miraculous <strong>Hanging Pillar</strong>. The base of the pillar stops just millimeters above the stone foundation. Travelers and pilgrims routinely slide a thin cloth, parchment, or silk scarf from one side to the other underneath the pillar to verify that no physical joint touches the stone below.</p>
+            <p>According to the Ramayana, when Ravana was abducting Sita to Lanka, the noble demi-god bird Jatayu fought valiantly to rescue her. Struck down with clipped wings, Jatayu fell here. When Lord Rama arrived, he compassionately uttered <em>"Le Pakshi"</em> (Telugu for "Rise, bird"), immortalizing the location forever.</p>
+          `
+        },
+        {
+          id: 'belum-caves',
+          title: 'The Subterranean Whispers of Belum & Yaganti',
+          category: 'caves',
+          categoryLabel: 'Subterranean Wonder',
+          location: 'Kurnool District, Andhra Pradesh',
+          city: 'Kurnool',
+          era: 'Natural Karst Formations (Formed over millions of years)',
+          architecturalStyle: 'Karst Stalactite & Underground River Chasm',
+          excerpt: 'The second longest cave system in the Indian subcontinent, descending 150 feet below ground level with acoustic chambers, musical stalactites, and ancient Buddhist meditation cells.',
+          image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Extends for 3.22 km, with 1.5 km open to exploration with subterranean lighting.',
+            'Deepest point is Pataalaganga, where an underground perennial stream flows mysteriously.',
+            'Nearby Yaganti temple houses the growing Nandi idol, confirmed by the Archaeological Survey of India to expand over decades.'
+          ],
+          storyBody: `
+            <p>Deep beneath the black-cotton plains of Rayalaseema lies an otherworldly subterranean empire carved over millions of years by the extinct river Chitravathi. The Belum Caves plunge into darkness with vast vaulted chambers, eerie quartz formations, and long limestone corridors.</p>
+            <p>In antiquity, Buddhist and Jain monks sought refuge inside these natural acoustic caverns for solitary deep meditation. Relics dating back to 4500 BCE have been excavated from its deep recesses, testifying to sacred human habitation long before modern memory.</p>
+            <p>Just a short drive away stands the mystical Uma Maheshwara Temple at Yaganti. Legend recounts that sage Agastya performed penance here. The stone Nandi sitting in the courtyard has been scientifically documented by geologists and ASI to naturally expand its rock mass, steadily displacing adjacent pillars over the centuries.</p>
+          `
+        },
+        {
+          id: 'gandikota',
+          title: 'Gandikota: The Canyon Fortress of the Deccan',
+          category: 'forts',
+          categoryLabel: 'Deccan Fort',
+          location: 'Kadapa District, Andhra Pradesh',
+          city: 'Kurnool',
+          era: '1123 CE – 16th Century CE',
+          architecturalStyle: 'Kakatiya, Vijayanagara & Qutb Shahi Stone Military Fort',
+          excerpt: 'Carved through deep red Erramala sandstone by the ferocious Pennar River, Gandikota features a medieval citadel perched on 300-foot precipitous cliffs that repelled invaders for 500 years.',
+          image: 'https://images.unsplash.com/photo-1609137144822-47c34d3b4d58?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Referred to by French traveler Jean-Baptiste Tavernier in the 17th century as a fortress of impregnable majesty.',
+            'Features the historic Madhavaraya and Ranganatha temples alongside the grand Jamia Masjid within the same fortress perimeter.',
+            'Protected by 5 miles of fortified ramparts and 101 defensive watchtowers.'
+          ],
+          storyBody: `
+            <p>Where the Pennar river cuts a savage 300-foot chasm through red sandstone plateaus, nature and medieval military minds joined hands to forge <strong>Gandikota</strong> — literally "the fort of the gorge".</p>
+            <p>Founded originally in 1123 CE by Kapa Raja of nearby Bommanapalle, it became the formidable seat of the Pemmasani Nayakas during the Vijayanagara golden era. The fortress garrison commanded strategic trade passes between the Carnatic coast and the interior Deccan plateau.</p>
+            <p>Standing on the cliff edge as the evening sun bathes the red rock gorge in burnished copper, the echo of clashing cavalry and ancient chants feels palpably close. Within its massive stone gates, ornate Hindu shrines and domed Islamic minarets stand harmoniously side by side.</p>
+          `
+        },
+        {
+          id: 'hampi-musical-pillars',
+          title: 'The Resonance of Hampi\'s Musical Pillars',
+          category: 'marvels',
+          categoryLabel: 'Acoustic Marvel',
+          location: 'Vijayanagara District, Karnataka',
+          city: 'Hampi',
+          era: '15th–16th Century CE (King Devaraya II & Krishnadevaraya)',
+          architecturalStyle: 'Classical Vijayanagara Monolithic Granite',
+          excerpt: 'The 56 musical pillars in the Ranga Mandapa of Vijaya Vittala temple produce the seven notes of the Indian musical scale (Sa-Re-Ga-Ma-Pa-Dha-Ni) when lightly tapped.',
+          image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Each central load-bearing pillar is surrounded by seven smaller stone acoustic columns.',
+            'Carved directly from resonant micro-granite with differing hollow crystalline densities.',
+            'British colonial investigators cut two pillars open to check for hidden bronze pipes, finding only solid stone.'
+          ],
+          storyBody: `
+            <p>Amidst the surreal boulder-strewn moonscape of the Tungabhadra river valley, the grand Vijaya Vittala Temple stands as the zenith of Vijayanagara artistic craftsmanship. Its centerpiece is the <strong>Ranga Mandapa</strong>, a celestial dancing hall containing 56 intricately sculpted musical pillars (SaReGaMa pillars).</p>
+            <p>When tapped gently with the fingertips or a wooden reed, these monolithic granite shafts resonate with clear notes resembling bells, damrus, and mridangams. The acoustic architects achieved this by carefully selecting granites with varying mineral and silicon veins, carving shafts of differing thickness to control natural vibration frequencies.</p>
+            <p>During royal festivals, royal temple dancers performed sacred Natyas accompanied solely by the harmonic chimes rung from the supporting stone architecture itself.</p>
+          `
+        },
+        {
+          id: 'rani-ki-vav',
+          title: 'Rani ki Vav: The Subterranean Inverted Temple',
+          category: 'marvels',
+          categoryLabel: 'Architectural Wonder',
+          location: 'Patan, Gujarat',
+          city: 'Ahmedabad',
+          era: '1063 CE (Chaulukya / Solanki Dynasty)',
+          architecturalStyle: 'Maru-Gurjara Subterranean Stepwell',
+          excerpt: 'Built by Queen Udayamati in memory of King Bhima I, this UNESCO World Heritage stepwell is designed as an inverted temple honoring the sanctity of subterranean water with over 800 sculptures.',
+          image: 'https://images.unsplash.com/photo-1599818818826-64c8d5a163a8?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Descends across seven stepped terraces adorned with masterclass stone bas-reliefs.',
+            'Buried under silt for nearly 700 years after the Saraswati river flooded, preserving the pristine carvings.',
+            'The central sanctum features Lord Vishnu reclining on the multi-headed serpent Sheshanaga.'
+          ],
+          storyBody: `
+            <p>In the arid plains of western India, water was revered not merely as a biological necessity, but as a divine manifestation of cosmic grace. In 1063 CE, Queen Udayamati commissioned the construction of an inverted architectural marvel in memory of her departed husband, King Bhimdev I.</p>
+            <p>Unlike traditional temples that rise toward the heavens, <strong>Rani ki Vav</strong> plunges seven tiers deep into the sacred womb of the earth. As one descends the broad steps, more than 800 celestial sculptures of Vishnu's Dashavatara, celestial Apsaras, Yoginis, and intricate floral traceries surround the traveler in cool stone shade.</p>
+            <p>A flood from the ancient Saraswati River filled the stepwell with sand and alluvial silt in the 13th century, effectively creating a natural time capsule that shielded the delicate sculptures from medieval vandalism and erosion until modern restoration in the 1980s.</p>
+          `
+        },
+        {
+          id: 'unakoti',
+          title: 'Unakoti: The 99,99,999 Lost Sculptures of Shiva',
+          category: 'folklore',
+          categoryLabel: 'Mystical Folklore',
+          location: 'Kailashahar, Unakoti District, Tripura',
+          city: 'Guwahati',
+          era: '7th–9th Century CE',
+          architecturalStyle: 'Rock-Cut Shaivite Bas-Relief & Waterfall Shrine',
+          excerpt: 'Deep in the tropical bamboo forests of northeastern India, an entire mountain cliffside is carved with nearly 10 million colossal deities, guarded by gushing mountain waterfalls.',
+          image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Unakoti in Bengali literally means "One less than a crore" (9,999,999).',
+            'The central Unakotiswara Kal Bhairava sculpture rises over 30 feet in height with an elaborate headdress.',
+            'Legend relates that Lord Shiva cursed one crore sleeping gods into stone when they failed to awaken before dawn on their way to Kashi.'
+          ],
+          storyBody: `
+            <p>Deep within the mist-clad Jampui hill ranges of Tripura lies one of the most enigmatic archaeological landscapes in South Asia. At <strong>Unakoti</strong>, ancient sculptors turned raw cliff faces and cascading forest waterfalls into an enormous outdoor temple gallery.</p>
+            <p>According to ancient oral folklore, Lord Shiva was journeying to sacred Varanasi accompanied by one crore gods and goddesses. Exhausted, the divine entourage rested on these lush hills, with Shiva instructing everyone to awaken before the first ray of dawn.</p>
+            <p>When dawn broke, only Shiva was awake. In fury at their indolence, Shiva cursed all 99,99,999 deities to turn into immovable stone, proceeding alone to Kashi. To this day, the colossal faces gaze through the jungle foliage with timeless serene majesty.</p>
+          `
+        },
+        {
+          id: 'lonar-crater',
+          title: 'The Cosmic Mystery of Lonar Crater & Daitya Sudan',
+          category: 'marvels',
+          categoryLabel: 'Cosmic Geology',
+          location: 'Buldhana District, Maharashtra',
+          city: 'Pune',
+          era: 'Formed 52,000 ± 6,000 Years Ago',
+          architecturalStyle: 'Hyper-Velocity Meteorite Crater & Hemadpanthi Temples',
+          excerpt: 'The only known hyper-velocity impact crater in basaltic rock on Earth. Inside the crater rim sits an alkaline lake surrounded by ancient Hemadpanthi stone temples where magnetic compasses spin erratically.',
+          image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Created when a 2-million-tonne comet or meteorite slammed into Earth at 90,000 km/h.',
+            'Water in the lake is both saline and alkaline simultaneously in distinct non-mixing layers.',
+            'Mentioned in the ancient Skanda Purana and Padma Purana as Viraja Tirtha.'
+          ],
+          storyBody: `
+            <p>Over fifty thousand years ago, a fiery celestial projectile streaked through the primeval atmosphere and struck the volcanic basalt Deccan plateau with the explosive energy of several megatons. The impact formed a perfectly circular depression over 1.8 kilometers wide and 150 meters deep: <strong>Lonar Lake</strong>.</p>
+            <p>What makes Lonar deeply magical to travelers is how culture took root inside cosmic geography. Dotted around the emerald water along the crater walls are dozens of 1,000-year-old stone temples built in the Hemadpanthi architectural style without mortar.</p>
+            <p>The foremost shrine, Daitya Sudan, honors Vishnu for vanquishing the demon Lavanasura who hid inside the subterranean pit. NASA and ISRO geologists study Lonar as an analog to lunar and Martian basalt craters.</p>
+          `
+        },
+        {
+          id: 'living-root-bridges',
+          title: 'The Living Root Bridges of the Khasi Clans',
+          category: 'marvels',
+          categoryLabel: 'Living Bio-Architecture',
+          location: 'Sohra (Cherrapunji) & Nongriat, Meghalaya',
+          city: 'Guwahati',
+          era: 'Generational Tradition (Centuries Old)',
+          architecturalStyle: 'Indigenous Ficus Elastica Bio-Engineering',
+          excerpt: 'Hand-woven by the indigenous Khasi and Jaintia tribes, these living aerial bridges grow stronger with every passing monsoon, withstanding torrential floods that destroy steel and concrete.',
+          image: 'https://images.unsplash.com/photo-1626014303757-64670081c784?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Trained across roaring mountain gorges using hollow betel nut tree trunks.',
+            'Takes 15 to 30 years to become structurally viable, and lasts over 500 years.',
+            'The Umshiang Double Decker Bridge in Nongriat features two parallel living levels suspended above a turquoise pool.'
+          ],
+          storyBody: `
+            <p>In the torrential rainforests of Meghalaya, where over 11,000 millimeters of rainfall batter the hills annually, conventional wooden and iron bridges rot and wash away in raging torrents within seasons. Centuries ago, the ingenious Khasi elders conceived a revolutionary, patient answer: don't build bridges — <em>grow them</em>.</p>
+            <p>By guiding the aerial secondary roots of the rubber fig tree (<em>Ficus elastica</em>) through hollowed Areca palm trunks across river boulders, the roots are trained to anchor on the opposite bank. Over decades, the living roots intertwine, thicken, and petrify into an unbreakable, living suspension bridge that can bear the weight of 50 travelers simultaneously.</p>
+            <p>Because the tree remains alive, the bridge never rots; instead, it strengthens with age, embodying an ancient indigenous philosophy of harmonious coexistence with the natural world.</p>
+          `
+        }
+      ];
+
+      /* DOM Elements */
+      const storyGrid = document.getElementById('storyGrid');
+      const storyCountBadge = document.getElementById('storyCountBadge');
+      const searchInput = document.getElementById('storySearchInput');
+      const clearSearchBtn = document.getElementById('clearSearchBtn');
+      const chips = document.querySelectorAll('.story-chip');
+      const customPlaceInput = document.getElementById('customPlaceInput');
+      const lookupCustomBtn = document.getElementById('lookupCustomBtn');
+
+      /* Modal Elements */
+      const storyModal = document.getElementById('storyModal');
+      const modalCloseBtn = document.getElementById('modalCloseBtn');
+      const modalHeroImg = document.getElementById('modalHeroImg');
+      const modalCategoryTag = document.getElementById('modalCategoryTag');
+      const modalLocationMeta = document.getElementById('modalLocationMeta');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalSubtitle = document.getElementById('modalSubtitle');
+      const modalStoryBody = document.getElementById('modalStoryBody');
+      const modalFactList = document.getElementById('modalFactList');
+      const audioToggleBtn = document.getElementById('audioToggleBtn');
+      const audioStatusText = document.getElementById('audioStatusText');
+      const audioWaveContainer = document.getElementById('audioWaveContainer');
+      const audioStopBtn = document.getElementById('audioStopBtn');
+      const modalPlanTripBtn = document.getElementById('modalPlanTripBtn');
+      const modalViewMapBtn = document.getElementById('modalViewMapBtn');
+      const modalShareBtn = document.getElementById('modalShareBtn');
+
+      let currentStory = null;
+      let activeCategory = 'all';
+      let synth = window.speechSynthesis;
+      let currentUtterance = null;
+      let isSpeaking = false;
+
+      /* Render Story Cards */
+      function renderStories(filterCategory = 'all', searchQuery = '') {
+        const query = searchQuery.trim().toLowerCase();
+        const filtered = STORIES_DATA.filter(s => {
+          const matchCat = filterCategory === 'all' || s.category === filterCategory;
+          const matchQuery = !query ||
+            s.title.toLowerCase().includes(query) ||
+            s.location.toLowerCase().includes(query) ||
+            s.excerpt.toLowerCase().includes(query) ||
+            s.categoryLabel.toLowerCase().includes(query) ||
+            (s.city && s.city.toLowerCase().includes(query));
+          return matchCat && matchQuery;
+        });
+
+        storyCountBadge.textContent = `Showing ${filtered.length} Chronicle${filtered.length === 1 ? '' : 's'}`;
+
+        if (!filtered.length) {
+          storyGrid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; background: var(--ug-surface); border: 1px dashed var(--ug-border); border-radius: 24px;">
+              <span style="font-size: 2.5rem; display: block; margin-bottom: 0.75rem;">📜</span>
+              <h3 style="color: var(--ug-text-primary); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">No chronicles match your search</h3>
+              <p style="color: var(--ug-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Try another keyword or search any Indian location using the custom storyteller below.</p>
+              <button class="ug-btn ug-btn-primary" onclick="document.getElementById('storySearchInput').value=''; document.querySelector('[data-category=all]').click();">Reset Filters</button>
+            </div>
+          `;
+          return;
+        }
+
+        storyGrid.innerHTML = filtered.map(s => `
+          <article class="story-card" data-story-id="${s.id}" tabindex="0" role="button" aria-label="Open chronicle: ${s.title}">
+            <div class="story-card-media">
+              <img class="story-card-img" src="${s.image}" alt="${s.title}" loading="lazy">
+              <span class="story-card-tag">${s.categoryLabel}</span>
+              <span class="story-card-audio-pill"><span>🎙️</span> Audio Story</span>
+            </div>
+            <div class="story-card-body">
+              <div class="story-location-meta">
+                <span>📍</span>
+                <span>${s.location}</span>
+              </div>
+              <h3 class="story-card-title">${s.title}</h3>
+              <p class="story-card-excerpt">${s.excerpt}</p>
+              <div class="story-card-footer">
+                <span>Era: ${s.era.split('(')[0].trim()}</span>
+                <span>Read Story →</span>
+              </div>
+            </div>
+          </article>
+        `).join('');
+
+        // Bind clicks
+        document.querySelectorAll('.story-card').forEach(card => {
+          card.addEventListener('click', () => {
+            const id = card.dataset.storyId;
+            const story = STORIES_DATA.find(x => x.id === id);
+            if (story) openStoryModal(story);
+          });
+          card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              card.click();
+            }
+          });
+        });
+      }
+
+      /* Open Story Detail Modal */
+      function openStoryModal(story) {
+        currentStory = story;
+        stopAudio();
+
+        modalHeroImg.src = story.image;
+        modalHeroImg.alt = story.title;
+        modalCategoryTag.textContent = story.categoryLabel;
+        modalLocationMeta.textContent = `📍 ${story.location} · ${story.era}`;
+        modalTitle.textContent = story.title;
+        modalSubtitle.textContent = `Style: ${story.architecturalStyle}`;
+        modalStoryBody.innerHTML = story.storyBody;
+
+        // Populate Facts
+        modalFactList.innerHTML = (story.facts || []).map(f => `
+          <li style="display: flex; gap: 0.5rem; color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5;">
+            <span style="color: var(--ug-primary); font-weight: 800;">✦</span>
+            <span>${f}</span>
+          </li>
+        `).join('');
+
+        // Update action links
+        modalPlanTripBtn.onclick = () => {
+          const targetCity = story.city || 'Kurnool';
+          window.location.href = `planner.html?city=${encodeURIComponent(targetCity)}`;
+        };
+
+        modalViewMapBtn.onclick = () => {
+          window.location.href = `map.html`;
+        };
+
+        modalShareBtn.onclick = async () => {
+          const shareData = {
+            title: `${story.title} — UnseenGo AI`,
+            text: `Read the cultural chronicle of ${story.title} on UnseenGo AI: ${story.excerpt}`,
+            url: window.location.href
+          };
+          if (navigator.share) {
+            try { await navigator.share(shareData); } catch (_) {}
+          } else {
+            await navigator.clipboard.writeText(window.location.href);
+            modalShareBtn.textContent = '✓ Copied Link!';
+            setTimeout(() => { modalShareBtn.textContent = '🔗 Share Chronicle'; }, 2000);
+          }
+        };
+
+        storyModal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeStoryModal() {
+        storyModal.classList.remove('open');
+        document.body.style.overflow = '';
+        stopAudio();
+      }
+
+      /* Audio Narration Engine (Web Speech API) */
+      function toggleAudio() {
+        if (!currentStory) return;
+
+        if (synth.speaking) {
+          if (synth.paused) {
+            synth.resume();
+            updateAudioUI(true);
+          } else {
+            synth.pause();
+            updateAudioUI(false, 'Paused');
+          }
+          return;
+        }
+
+        // Strip HTML tags for clean narration
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = currentStory.storyBody;
+        const plainText = `${currentStory.title}. Located in ${currentStory.location}. ${tempDiv.textContent || tempDiv.innerText}`;
+
+        currentUtterance = new SpeechSynthesisUtterance(plainText);
+        currentUtterance.rate = 0.95; // Slightly slower, calm cadence suitable for history narration
+        currentUtterance.pitch = 1.0;
+
+        // Try to pick an English voice
+        const voices = synth.getVoices();
+        const preferredVoice = voices.find(v => v.lang.includes('en-IN') || v.lang.includes('en-GB') || v.lang.includes('en-US'));
+        if (preferredVoice) currentUtterance.voice = preferredVoice;
+
+        currentUtterance.onstart = () => {
+          isSpeaking = true;
+          updateAudioUI(true);
+        };
+
+        currentUtterance.onend = () => {
+          isSpeaking = false;
+          updateAudioUI(false, 'Listen to Audio Narration');
+        };
+
+        currentUtterance.onerror = () => {
+          isSpeaking = false;
+          updateAudioUI(false, 'Audio unavailable');
+        };
+
+        synth.speak(currentUtterance);
+      }
+
+      function stopAudio() {
+        if (synth.speaking) {
+          synth.cancel();
+        }
+        isSpeaking = false;
+        updateAudioUI(false, 'Listen to Audio Narration');
+      }
+
+      function updateAudioUI(playing, customText) {
+        if (playing) {
+          audioToggleBtn.textContent = '⏸';
+          audioStatusText.textContent = 'Playing Narration…';
+          audioWaveContainer.classList.add('playing');
+        } else {
+          audioToggleBtn.textContent = '▶';
+          audioStatusText.textContent = customText || 'Listen to Audio Narration';
+          audioWaveContainer.classList.remove('playing');
+        }
+      }
+
+      /* Wikipedia Dynamic Place Narration Fallback */
+      async function lookupCustomPlace(query) {
+        if (!query.trim()) return;
+        lookupCustomBtn.textContent = 'Fetching archive…';
+        lookupCustomBtn.disabled = true;
+
+        try {
+          const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(query.replace(/ /g, '_'))}`;
+          const res = await fetch(wikiUrl);
+          if (!res.ok) throw new Error('Not found');
+          const data = await res.json();
+
+          const customStory = {
+            id: 'custom-' + Date.now(),
+            title: data.title || query,
+            category: 'folklore',
+            categoryLabel: 'Historical Archive',
+            location: data.description || 'India',
+            era: 'Verified Historic Record',
+            architecturalStyle: 'Indian Heritage',
+            excerpt: data.extract ? data.extract.substring(0, 180) + '...' : 'Historic place archive.',
+            image: data.thumbnail?.source || 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+            facts: [
+              `Official Wikipedia archive for ${data.title}.`,
+              data.description || 'Indian heritage monument.',
+              'Verified via Wikimedia Foundation open knowledge graph.'
+            ],
+            storyBody: `
+              <p><strong>${data.title}</strong>: ${data.extract}</p>
+              <p><em>Source: Open Wikipedia encyclopedic records. Audio narration synthesized dynamically.</em></p>
+            `
+          };
+
+          openStoryModal(customStory);
+        } catch (err) {
+          alert(`Could not find an open archival story for "${query}". Try popular monuments like "Brihadisvara Temple", "Golconda Fort", or "Belum Caves".`);
+        } finally {
+          lookupCustomBtn.textContent = 'Narrate Place ✦';
+          lookupCustomBtn.disabled = false;
+        }
+      }
+
+      /* Event Listeners */
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        clearSearchBtn.style.display = val ? 'inline-block' : 'none';
+        renderStories(activeCategory, val);
+      });
+
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearchBtn.style.display = 'none';
+        renderStories(activeCategory, '');
+      });
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeCategory = chip.dataset.category;
+          renderStories(activeCategory, searchInput.value);
+        });
+      });
+
+      modalCloseBtn.addEventListener('click', closeStoryModal);
+      storyModal.addEventListener('click', (e) => {
+        if (e.target === storyModal) closeStoryModal();
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && storyModal.classList.contains('open')) {
+          closeStoryModal();
+        }
+      });
+
+      audioToggleBtn.addEventListener('click', toggleAudio);
+      audioStopBtn.addEventListener('click', stopAudio);
+
+      lookupCustomBtn.addEventListener('click', () => {
+        lookupCustomPlace(customPlaceInput.value);
+      });
+
+      customPlaceInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          lookupCustomPlace(customPlaceInput.value);
+        }
+      });
+
+      // Initial Render
+      renderStories('all');
+
+      // Pre-select city if URL has ?city=...
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlCity = urlParams.get('city');
+      if (urlCity) {
+        searchInput.value = urlCity;
+        clearSearchBtn.style.display = 'inline-block';
+        renderStories('all', urlCity);
+      }
+    })();
+  </script>
+</body>
+</html>

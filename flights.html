@@ -1,1 +1,625 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Flights | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:#fff;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1050px;margin:auto;padding:60px 22px}.box{padding:30px;background:#101713;border:1px solid #2a342d;border-radius:16px}.search{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px}input,select{padding:14px;background:#151d18;border:1px solid #303a33;border-radius:8px;color:white}button{background:#d8f36a;border:0;border-radius:8px;font-weight:900;padding:14px 20px}h1{font-size:48px}@media(max-width:700px){.search{grid-template-columns:1fr}h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>TRAVEL · FLIGHTS</p><h1>Start your journey.</h1><div class="box"><p>Use UnseenGo to discover what to do when you arrive, then connect your journey to practical travel planning.</p><div class="search"><input placeholder="From"><input placeholder="To"><input type="date"><button onclick="alert('Flight search demo — connect your preferred flight API to enable live fares.')">Search flights</button></div></div><h2>Make the arrival part count</h2><p>After choosing a route, explore hidden gems, stays and an AI itinerary for your destination.</p><p><a href="discover.html">Discover destinations →</a></p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Air Gateways & Flight Connectivity — Find the nearest airports, transfer drives, and live flight search for India's hidden gems on UnseenGo AI.">
+  <title>Air Gateways & Flights Explorer — UnseenGo AI</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="UnseenGo Flights">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .flight-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-glass);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 1.15rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ug-primary);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Interactive Flight Finder Card */
+    .flight-finder-card {
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 24px;
+      padding: 2rem;
+      box-shadow: var(--ug-shadow-lg);
+      max-width: 900px;
+      margin: 1.5rem auto 3rem;
+      text-align: left;
+    }
+
+    .flight-inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr auto;
+      gap: 1rem;
+      align-items: end;
+    }
+
+    .flight-field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .flight-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 800;
+      color: var(--ug-text-muted);
+    }
+
+    .flight-select, .flight-input {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 14px;
+      padding: 0.85rem 1.15rem;
+      color: var(--ug-text-primary);
+      font-size: 0.95rem;
+      font-weight: 600;
+      outline: none;
+      transition: var(--ug-transition);
+      width: 100%;
+    }
+
+    .flight-select:focus, .flight-input:focus {
+      border-color: var(--ug-primary);
+      box-shadow: 0 0 0 3px rgba(216, 255, 77, 0.15);
+    }
+
+    /* Resolved Gateway Display */
+    .gateway-resolution-panel {
+      margin-top: 1.75rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--ug-border);
+      display: none;
+    }
+
+    .gateway-resolution-panel.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .gateway-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      background: var(--ug-primary-soft);
+      color: var(--ug-primary);
+      border: 1px solid rgba(216, 255, 77, 0.3);
+      margin-bottom: 0.75rem;
+    }
+
+    .gateway-details-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    .gateway-stat-box {
+      background: var(--ug-surface-elevated);
+      border: 1px solid var(--ug-border);
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+
+    .gateway-stat-box small {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--ug-text-muted);
+      margin-bottom: 0.3rem;
+    }
+
+    .gateway-stat-box strong {
+      display: block;
+      font-size: 1.15rem;
+      color: var(--ug-text-primary);
+      font-weight: 800;
+    }
+
+    .gateway-stat-box p {
+      font-size: 0.82rem;
+      color: var(--ug-text-secondary);
+      margin: 0.35rem 0 0;
+      line-height: 1.4;
+    }
+
+    .gateway-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+
+    /* Gateways Catalog */
+    .gateways-catalog {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.75rem;
+      margin-bottom: 4rem;
+    }
+
+    .gateway-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 24px;
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.28s ease, border-color 0.28s ease;
+    }
+
+    .gateway-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--ug-primary);
+      box-shadow: 0 15px 35px -10px var(--ug-primary-glow);
+    }
+
+    .gateway-card-iata {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: var(--ug-surface-elevated);
+      border: 1.5px solid var(--ug-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--ug-primary);
+      margin-bottom: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .flight-inputs-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">🌙</button>
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="pin">📍</span>
+            <span>Current City:</span>
+            <b data-ug-current-city>All India</b>
+          </span>
+          <span>Change ▾</span>
+        </button>
+
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="stay.html"><span class="icon">🏡</span><span>Stay & Lodges</span></a>
+          <a class="ug-drawer-link" href="transport.html"><span class="icon">🚗</span><span>Transport</span></a>
+          <a class="ug-drawer-link active" href="flights.html"><span class="icon">✈️</span><span>Flights & Gateways</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Cultural Stories</span></a>
+          <a class="ug-drawer-link" href="tripideas.html"><span class="icon">💡</span><span>Thematic Expeditions</span></a>
+          <a class="ug-drawer-link" href="utilities.html"><span class="icon">🧰</span><span>Travel Utilities & Tools</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Profile</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Content -->
+  <main class="ug-main">
+    <!-- Hero Section -->
+    <section class="ug-hero-section" style="padding: 4.5rem 0 3.5rem;">
+      <div class="ug-container">
+        <div class="ug-hero-content" style="max-width: 860px;">
+          <div class="flight-kicker">✦ Air Gateways & Connectivity Advisory</div>
+          <h1 class="ug-hero-title">Connecting Air Travel<br><em>To Hidden India.</em></h1>
+          <p class="ug-hero-lead">
+            Most secret canyons, ancient stepwells, and sacred cave temples do not have a commercial runway next door. UnseenGo matches your desired destination with the optimal gateway airport, transfer drives, and live fare search.
+          </p>
+
+          <!-- Interactive Flight Route Finder -->
+          <div class="flight-finder-card">
+            <div class="flight-inputs-grid">
+              <div class="flight-field-group">
+                <label class="flight-label">🛫 Origin Metro / Airport</label>
+                <select id="originAirportSelect" class="flight-select">
+                  <option value="DEL">New Delhi (DEL · Indira Gandhi Intl)</option>
+                  <option value="BOM">Mumbai (BOM · Chhatrapati Shivaji Intl)</option>
+                  <option value="BLR" selected>Bengaluru (BLR · Kempegowda Intl)</option>
+                  <option value="HYD">Hyderabad (HYD · Rajiv Gandhi Intl)</option>
+                  <option value="MAA">Chennai (MAA · Chennai Intl)</option>
+                  <option value="CCU">Kolkata (CCU · Netaji Subhash Chandra Bose)</option>
+                  <option value="COK">Kochi (COK · Cochin Intl)</option>
+                </select>
+              </div>
+
+              <div class="flight-field-group">
+                <label class="flight-label">🎯 Destination Hidden Sanctuary</label>
+                <select id="destGemSelect" class="flight-select">
+                  <option value="kurnool" selected>Gandikota Canyon & Belum Caves (Kurnool)</option>
+                  <option value="hampi">Hampi & Vijayanagara Boulder Ruins</option>
+                  <option value="lepakshi">Lepakshi Hanging Pillar & Veerabhadra</option>
+                  <option value="spiti">Spiti Valley High-Altitude Monasteries</option>
+                  <option value="meghalaya">Cherrapunji & Living Root Bridges (Sohra)</option>
+                  <option value="shekhawati">Shekhawati Painted Havelis & Mandawa</option>
+                  <option value="lonar">Lonar Meteorite Impact Crater & Temples</option>
+                  <option value="dholavira">Dholavira Harappan Metropolis (Kutch)</option>
+                </select>
+              </div>
+
+              <div>
+                <button type="button" id="resolveGatewayBtn" class="ug-btn ug-btn-primary" style="border-radius: 14px; height: 50px; padding: 0 1.75rem; font-weight: 800;">
+                  Resolve Gateway →
+                </button>
+              </div>
+            </div>
+
+            <!-- Resolution Panel -->
+            <div class="gateway-resolution-panel" id="gatewayResolutionPanel">
+              <span class="gateway-badge" id="resGatewayBadge">✦ Recommended Gateway Airport</span>
+              <h3 id="resGatewayName" style="font-size: 1.45rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Hyderabad Intl (HYD) / Kurnool (KJB)</h3>
+              <p id="resGatewayRouteDesc" style="color: var(--ug-text-secondary); font-size: 0.92rem; line-height: 1.6;">
+                Fly into Hyderabad (HYD), then take a scenic 3.5-hour highway drive along NH44 to Kurnool. Regional turboprop flights also operate into Uyyalawada Narasimha Reddy Airport (KJB).
+              </p>
+
+              <div class="gateway-details-grid">
+                <div class="gateway-stat-box">
+                  <small>Primary Airport Code</small>
+                  <strong id="resIata">HYD / KJB</strong>
+                  <p id="resDistance">215 km (3.5 hr drive via NH44)</p>
+                </div>
+                <div class="gateway-stat-box">
+                  <small>Flight Duration from Origin</small>
+                  <strong id="resFlightTime">~1 hr 15 mins non-stop</strong>
+                  <p id="resFlightFrequency">Daily flights from major metros</p>
+                </div>
+                <div class="gateway-stat-box">
+                  <small>Onward Transport Recommendation</small>
+                  <strong>Self-Drive / Pre-booked Cab</strong>
+                  <p id="resCabAdvice">Pre-book intercity taxi at airport arrivals</p>
+                </div>
+              </div>
+
+              <div class="gateway-actions-row">
+                <a id="resGoogleFlightsLink" href="#" target="_blank" rel="noopener" class="ug-btn ug-btn-primary" style="border-radius: 9999px; text-decoration: none;">
+                  ✈️ Search Fares on Google Flights ↗
+                </a>
+                <a id="resSkyscannerLink" href="#" target="_blank" rel="noopener" class="ug-btn ug-btn-outline" style="border-radius: 9999px; text-decoration: none;">
+                  🔎 Search on Skyscanner ↗
+                </a>
+                <a id="resPlannerLink" href="planner.html" class="ug-btn ug-btn-outline" style="border-radius: 9999px; text-decoration: none;">
+                  🤖 Build Day-by-Day Itinerary
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Key Regional Air Gateways Directory -->
+    <section class="ug-section" style="padding: 2rem 0 5rem;">
+      <div class="ug-container">
+        <div style="margin-bottom: 2rem;">
+          <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Gateway Airports Directory for Off-Grid India</h2>
+          <p style="color: var(--ug-text-muted); font-size: 0.9rem;">Quick reference for which flight hubs unlock specific cultural belts.</p>
+        </div>
+
+        <div class="gateways-catalog">
+          <div class="gateway-card">
+            <div class="gateway-card-iata">VDY / HBX</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.4rem;">Jindal Vidyanagar & Hubli</h3>
+            <p style="color: var(--ug-text-muted); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem;">Gateways to: Hampi, Anegundi, Badami</p>
+            <p style="color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem; flex: 1;">
+              Vidyanagar Airport (VDY) is located just 35 km from Hampi with direct daily flights from Bengaluru and Hyderabad. Hubli (HBX) offers broader pan-India connections.
+            </p>
+            <a href="https://www.google.com/travel/flights?q=flights+to+VDY" target="_blank" rel="noopener" class="ug-btn ug-btn-outline ug-btn-sm" style="border-radius: 9999px; text-align: center; text-decoration: none;">
+              Search Flights to VDY ↗
+            </a>
+          </div>
+
+          <div class="gateway-card">
+            <div class="gateway-card-iata">GAU / SHL</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.4rem;">Guwahati & Shillong (Umroi)</h3>
+            <p style="color: var(--ug-text-muted); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem;">Gateways to: Cherrapunji, Living Root Bridges, Kaziranga</p>
+            <p style="color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem; flex: 1;">
+              Guwahati (GAU) has extensive high-frequency flights from across India. From Guwahati, smooth four-lane highways connect to Shillong in 3 hours, opening the doorway to Meghalaya's deep canyons.
+            </p>
+            <a href="https://www.google.com/travel/flights?q=flights+to+GAU" target="_blank" rel="noopener" class="ug-btn ug-btn-outline ug-btn-sm" style="border-radius: 9999px; text-align: center; text-decoration: none;">
+              Search Flights to GAU ↗
+            </a>
+          </div>
+
+          <div class="gateway-card">
+            <div class="gateway-card-iata">KUU / IXC</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.4rem;">Bhuntar (Kullu) & Chandigarh</h3>
+            <p style="color: var(--ug-text-muted); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem;">Gateways to: Spiti Valley, Lahaul & Tirthan</p>
+            <p style="color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem; flex: 1;">
+              Kullu–Manali Airport at Bhuntar (KUU) handles regional Himalayan flights, while Chandigarh (IXC) is the primary base for travellers starting the high-altitude Shimla-Kinnaur-Kaza circuit.
+            </p>
+            <a href="https://www.google.com/travel/flights?q=flights+to+IXC" target="_blank" rel="noopener" class="ug-btn ug-btn-outline ug-btn-sm" style="border-radius: 9999px; text-align: center; text-decoration: none;">
+              Search Flights to IXC ↗
+            </a>
+          </div>
+
+          <div class="gateway-card">
+            <div class="gateway-card-iata">TIR / BLR</div>
+            <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.4rem;">Tirupati & Bengaluru Intl</h3>
+            <p style="color: var(--ug-text-muted); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem;">Gateways to: Lepakshi, Chandragiri, Talakona</p>
+            <p style="color: var(--ug-text-secondary); font-size: 0.88rem; line-height: 1.5; margin-bottom: 1.25rem; flex: 1;">
+              Kempegowda Intl (BLR) is located right on the northern edge of Bengaluru, making the drive to Lepakshi just 100 km (2 hours via NH44). Tirupati Airport (TIR) unlocks the sacred hill shrines.
+            </p>
+            <a href="https://www.google.com/travel/flights?q=flights+to+BLR" target="_blank" rel="noopener" class="ug-btn ug-btn-outline ug-btn-sm" style="border-radius: 9999px; text-align: center; text-decoration: none;">
+              Search Flights to BLR ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand-col">
+          <a class="ug-brand" href="index.html">
+            <span class="ug-sparkle">✦</span>
+            <span>UnseenGo</span>
+            <span class="ug-brand-badge">AI</span>
+          </a>
+          <p class="ug-footer-tagline">
+            Intelligent flight gateway coordination and onward connectivity for remote cultural sanctuaries.
+          </p>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="discover.html">Discover Places</a></li>
+            <li><a href="planner.html">AI Trip Planner</a></li>
+            <li><a href="map.html">India Explorer Map</a></li>
+            <li><a href="stories.html">Cultural Stories</a></li>
+            <li><a href="tripideas.html">Thematic Expeditions</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Travel Services</h4>
+          <ul>
+            <li><a href="stay.html">Local Stays</a></li>
+            <li><a href="transport.html">Transport & Routes</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Budget Tools</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Gateway Flight Intelligence. Direct provider handoff.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    (function(){
+      'use strict';
+
+      /* Gateways Mapping Database */
+      const GATEWAY_DATA = {
+        kurnool: {
+          name: 'Hyderabad (HYD) or Kurnool (KJB)',
+          primaryIata: 'HYD',
+          secondaryIata: 'KJB',
+          desc: 'Rajiv Gandhi Intl Airport in Hyderabad (HYD) is the most reliable major hub with frequent domestic flights. From HYD, Kurnool is an easy 3.5-hour expressway drive along NH44. Regional turboprop flights also fly into Kurnool Airport (KJB) from Bengaluru and Chennai.',
+          distance: '215 km from HYD (3.5 hr drive) / 25 km from KJB',
+          flightTime: '~1 hr 15 mins non-stop from BLR/MAA',
+          cityParam: 'Kurnool'
+        },
+        hampi: {
+          name: 'Jindal Vidyanagar (VDY) or Hubli (HBX)',
+          primaryIata: 'VDY',
+          secondaryIata: 'HBX',
+          desc: 'Vidyanagar Airport in Toranagallu (VDY) sits just 35 km from Hampi with scheduled flights from Bengaluru and Hyderabad. Alternatively, Hubballi Airport (HBX) is 145 km (3 hours) away with flights from Mumbai, Delhi and Kochi.',
+          distance: '35 km from VDY (45 min drive) / 145 km from HBX',
+          flightTime: '~1 hr from BLR to VDY',
+          cityParam: 'Hampi'
+        },
+        lepakshi: {
+          name: 'Bengaluru Kempegowda Intl (BLR)',
+          primaryIata: 'BLR',
+          secondaryIata: 'BLR',
+          desc: 'Because BLR Airport is strategically situated north of Bengaluru on NH44, you do not have to cross city traffic. The smooth drive from BLR airport directly to Lepakshi is approximately 100 km (2 hours).',
+          distance: '100 km (2 hr drive via NH44)',
+          flightTime: 'Direct non-stop from all Indian metros',
+          cityParam: 'Kurnool'
+        },
+        spiti: {
+          name: 'Bhuntar / Kullu (KUU) or Chandigarh (IXC)',
+          primaryIata: 'IXC',
+          secondaryIata: 'KUU',
+          desc: 'Chandigarh International Airport (IXC) is the most reliable hub. From Chandigarh, embark on the legendary Hindustan-Tibet road via Shimla and Kinnaur into Spiti Valley. In summer months, Kullu Bhuntar connects via Atal Tunnel.',
+          distance: '480 km from IXC via Kinnaur / 240 km from KUU via Kaza pass',
+          flightTime: '~1 hr 15 mins to IXC from Delhi/Mumbai',
+          cityParam: 'Leh'
+        },
+        meghalaya: {
+          name: 'Guwahati (GAU) or Shillong Umroi (SHL)',
+          primaryIata: 'GAU',
+          secondaryIata: 'SHL',
+          desc: 'Lokpriya Gopinath Bordoloi Intl Airport in Guwahati (GAU) offers dozens of daily flights from Delhi, Kolkata, Mumbai and Bengaluru. From Guwahati, private cabs reach Shillong in 3 hours and Sohra in 4.5 hours.',
+          distance: '120 km to Shillong (3 hr) / 165 km to Sohra',
+          flightTime: '~2 hr 15 mins from Kolkata/Delhi to GAU',
+          cityParam: 'Guwahati'
+        },
+        shekhawati: {
+          name: 'Jaipur Intl (JAI) or New Delhi (DEL)',
+          primaryIata: 'JAI',
+          secondaryIata: 'DEL',
+          desc: 'Jaipur Airport (JAI) is 150 km from Nawalgarh and Mandawa (2.5 hr drive). Travelers from northern India can also drive directly from Delhi Airport (DEL) in about 4.5 hours.',
+          distance: '150 km from JAI / 240 km from DEL',
+          flightTime: '~50 mins from DEL to JAI',
+          cityParam: 'Jaipur'
+        },
+        lonar: {
+          name: 'Aurangabad Chhatrapati Sambhajinagar (IXU)',
+          primaryIata: 'IXU',
+          secondaryIata: 'NAG',
+          desc: 'Aurangabad Airport (IXU) is the closest aviation gateway to the Lonar meteorite crater, located 140 km away (approx 3 hours by cab through Jalna).',
+          distance: '140 km from IXU (3 hr drive)',
+          flightTime: '~1 hr 20 mins from Mumbai/Delhi to IXU',
+          cityParam: 'Pune'
+        },
+        dholavira: {
+          name: 'Bhuj (BHJ) or Kandla (IXY)',
+          primaryIata: 'BHJ',
+          secondaryIata: 'AMD',
+          desc: 'Bhuj Airport (BHJ) connects with Mumbai and Ahmedabad. From Bhuj, the new scenic "Road to Heaven" crosses the Great Rann of Kutch directly into Dholavira in about 3 hours.',
+          distance: '180 km from BHJ via Road to Heaven',
+          flightTime: '~1 hr 15 mins from Mumbai to BHJ',
+          cityParam: 'Ahmedabad'
+        }
+      };
+
+      const originSelect = document.getElementById('originAirportSelect');
+      const destSelect = document.getElementById('destGemSelect');
+      const resolveBtn = document.getElementById('resolveGatewayBtn');
+
+      const panel = document.getElementById('gatewayResolutionPanel');
+      const resName = document.getElementById('resGatewayName');
+      const resDesc = document.getElementById('resGatewayRouteDesc');
+      const resIata = document.getElementById('resIata');
+      const resDistance = document.getElementById('resDistance');
+      const resFlightTime = document.getElementById('resFlightTime');
+      const googleFlightsLink = document.getElementById('resGoogleFlightsLink');
+      const skyscannerLink = document.getElementById('resSkyscannerLink');
+      const plannerLink = document.getElementById('resPlannerLink');
+
+      function resolveGateway() {
+        const gemKey = destSelect.value;
+        const originIata = originSelect.value;
+        const info = GATEWAY_DATA[gemKey];
+
+        if (!info) return;
+
+        resName.textContent = info.name;
+        resDesc.textContent = info.desc;
+        resIata.textContent = `${info.primaryIata} / ${info.secondaryIata}`;
+        resDistance.textContent = info.distance;
+        resFlightTime.textContent = info.flightTime;
+
+        // Build Google Flights Deep Link
+        const gfUrl = `https://www.google.com/travel/flights?q=flights+from+${originIata}+to+${info.primaryIata}`;
+        googleFlightsLink.href = gfUrl;
+
+        // Build Skyscanner Deep Link
+        const skyUrl = `https://www.skyscanner.com/transport/flights/${originIata.toLowerCase()}/${info.primaryIata.toLowerCase()}/`;
+        skyscannerLink.href = skyUrl;
+
+        plannerLink.href = `planner.html?city=${encodeURIComponent(info.cityParam)}`;
+
+        panel.classList.add('active');
+      }
+
+      resolveBtn.addEventListener('click', resolveGateway);
+      destSelect.addEventListener('change', resolveGateway);
+      originSelect.addEventListener('change', resolveGateway);
+
+      // Initial execution
+      resolveGateway();
+    })();
+  </script>
+</body>
+</html>

@@ -12,6 +12,15 @@
   <link rel="stylesheet" href="src/styles/navigation.css">
   <link rel="stylesheet" href="src/styles/components.css">
 
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
   <style>
     :root {
       --ug-lime: #d8ff4d;
@@ -34,6 +43,227 @@
       --radius-lg: 20px;
       --radius-xl: 28px;
       --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    [data-theme="light"], html.ug-light {
+      --ug-lime: #4d7c0f;
+      --ug-lime-hover: #3f6609;
+      --ug-lime-soft: rgba(77, 124, 15, 0.12);
+      --ug-lime-glow: rgba(77, 124, 15, 0.25);
+      --ug-bg: #f5f7f2;
+      --ug-bg-alt: #e9ece4;
+      --ug-panel: #ffffff;
+      --ug-panel-elevated: #f0f3ec;
+      --ug-panel-border: #d4ded4;
+      --ug-panel-border-hover: #84cc16;
+      --ug-text-primary: #0f1710;
+      --ug-text-secondary: #3e4d41;
+      --ug-text-muted: #647567;
+      --ug-emerald: #15803d;
+      --ug-amber: #b45309;
+    }
+
+    [data-theme="light"] .planner-hero h1,
+    html.ug-light .planner-hero h1 {
+      color: var(--ug-text-primary);
+    }
+
+    [data-theme="light"] .journey-stepper,
+    html.ug-light .journey-stepper {
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .stepper-step:hover,
+    html.ug-light .stepper-step:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="light"] .planner-card,
+    html.ug-light .planner-card {
+      background: #ffffff;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="light"] .section-header,
+    html.ug-light .section-header {
+      border-bottom-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .counter-badge,
+    html.ug-light .counter-badge {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .focus-item input:checked + .focus-card,
+    html.ug-light .focus-item input:checked + .focus-card {
+      background: var(--ug-lime);
+      border-color: var(--ug-lime);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .focus-item input:checked + .focus-card .focus-icon-title,
+    [data-theme="light"] .focus-item input:checked + .focus-card small,
+    html.ug-light .focus-item input:checked + .focus-card .focus-icon-title,
+    html.ug-light .focus-item input:checked + .focus-card small {
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .config-field,
+    html.ug-light .config-field {
+      background: #f8faf7;
+    }
+
+    [data-theme="light"] .styled-select,
+    html.ug-light .styled-select {
+      background: #ffffff;
+    }
+
+    [data-theme="light"] .city-chip-btn,
+    html.ug-light .city-chip-btn {
+      background: #ffffff;
+    }
+
+    [data-theme="light"] .city-chip-btn.active,
+    html.ug-light .city-chip-btn.active {
+      background: var(--ug-lime);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .duration-pill,
+    html.ug-light .duration-pill {
+      background: #ffffff;
+    }
+
+    [data-theme="light"] .duration-pill:hover,
+    html.ug-light .duration-pill:hover {
+      color: var(--ug-text-primary);
+    }
+
+    [data-theme="light"] .duration-pill.active,
+    html.ug-light .duration-pill.active {
+      background: var(--ug-lime);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .pace-card-choice,
+    [data-theme="light"] .budget-card-choice,
+    html.ug-light .pace-card-choice,
+    html.ug-light .budget-card-choice {
+      background: #ffffff;
+    }
+
+    [data-theme="light"] .pace-card-choice:hover,
+    [data-theme="light"] .budget-card-choice:hover,
+    html.ug-light .pace-card-choice:hover,
+    html.ug-light .budget-card-choice:hover {
+      background: #f0f4ee;
+    }
+
+    [data-theme="light"] .intent-textarea,
+    html.ug-light .intent-textarea {
+      background: #ffffff;
+      color: var(--ug-text-primary);
+      border-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .generate-btn,
+    html.ug-light .generate-btn {
+      background: var(--ug-lime);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .generate-btn:hover:not(:disabled),
+    html.ug-light .generate-btn:hover:not(:disabled) {
+      background: var(--ug-lime-hover);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .result-banner-card,
+    html.ug-light .result-banner-card {
+      background: #ffffff;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="light"] .result-banner-top h2,
+    html.ug-light .result-banner-top h2 {
+      color: var(--ug-text-primary);
+    }
+
+    [data-theme="light"] .result-action-bar,
+    html.ug-light .result-action-bar {
+      border-top-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .action-btn.primary,
+    html.ug-light .action-btn.primary {
+      background: var(--ug-lime);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .action-btn.secondary,
+    html.ug-light .action-btn.secondary {
+      background: #f0f4ee;
+      color: var(--ug-lime);
+      border-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .ai-explanation-card,
+    html.ug-light .ai-explanation-card {
+      background: #f8faf7;
+      border-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .route-engine-banner,
+    html.ug-light .route-engine-banner {
+      background: #ffffff;
+      border-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .timeline-day-block,
+    html.ug-light .timeline-day-block {
+      background: var(--ug-panel);
+      border-color: var(--ug-panel-border);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    }
+
+    [data-theme="light"] .day-header,
+    html.ug-light .day-header {
+      border-bottom-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .day-num-badge,
+    html.ug-light .day-num-badge {
+      background: var(--ug-lime);
+      color: #ffffff;
+    }
+
+    [data-theme="light"] .day-header h4,
+    html.ug-light .day-header h4 {
+      color: var(--ug-text-primary);
+    }
+
+    [data-theme="light"] .stop-time-pill,
+    html.ug-light .stop-time-pill {
+      background: #f0f4ee;
+      border-color: rgba(77, 124, 15, 0.25);
+      color: var(--ug-lime);
+    }
+
+    [data-theme="light"] .stop-title-row h5,
+    html.ug-light .stop-title-row h5 {
+      color: var(--ug-text-primary);
+    }
+
+    [data-theme="light"] .transit-chip,
+    html.ug-light .transit-chip {
+      background: #f8faf7;
+      border-color: var(--ug-panel-border);
+    }
+
+    [data-theme="light"] .timeline-stop-item,
+    html.ug-light .timeline-stop-item {
+      border-bottom-color: var(--ug-panel-border);
     }
 
     * {
@@ -1819,6 +2049,12 @@
         <button type="button" class="results-tab-btn" data-tab="places">
           <span>💎</span> Curated Hidden Gems & Scores
         </button>
+        <button type="button" class="results-tab-btn" data-tab="budget">
+          <span>💰</span> Trip Budget Calculator
+        </button>
+        <button type="button" class="results-tab-btn" data-tab="route">
+          <span>⚡</span> Smart Route Optimizer
+        </button>
       </div>
 
       <!-- Tab 1: Itinerary Timeline -->
@@ -1829,6 +2065,16 @@
       <!-- Tab 2: Curated Places Cards -->
       <div id="tabPane-places" class="tab-content-pane">
         <div class="cards-grid" id="recommendations"></div>
+      </div>
+
+      <!-- Tab 3: Trip Budget Calculator -->
+      <div id="tabPane-budget" class="tab-content-pane">
+        <div id="budgetCalculatorWrapper" class="budget-calculator-pane"></div>
+      </div>
+
+      <!-- Tab 4: Smart Route Optimizer -->
+      <div id="tabPane-route" class="tab-content-pane">
+        <div id="routeOptimizerWrapper" class="route-optimizer-pane"></div>
       </div>
 
     </section>

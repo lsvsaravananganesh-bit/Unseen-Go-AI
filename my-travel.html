@@ -11,8 +11,22 @@
   <link rel="stylesheet" href="src/styles/heritage-theme.css">
   <link rel="stylesheet" href="src/styles/navigation.css">
   <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
 
   <style>
+    [data-theme="light"] .ug-guest-banner,
+    html.ug-light .ug-guest-banner {
+      background: linear-gradient(135deg, rgba(77, 124, 15, 0.08) 0%, rgba(255, 255, 255, 0.95) 100%);
+      border-color: rgba(77, 124, 15, 0.3);
+    }
+
     /* Scoped Luxury Styles for My Travel Vault */
     .ug-vault-hero {
       margin-bottom: 2.25rem;

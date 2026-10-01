@@ -1,0 +1,1149 @@
+/* ==========================================================================
+   UnseenGo AI — Luxury Auth & Discovery Experience
+   Split-Screen Showcase & Web Authentication Interface
+   ========================================================================== */
+
+:root {
+  --auth-bg: #070a08;
+  --auth-surface: #0e1410;
+  --auth-surface-elevated: #141c16;
+  --auth-surface-glass: rgba(14, 20, 16, 0.82);
+  --auth-border: #1f2a21;
+  --auth-border-glow: rgba(216, 255, 77, 0.35);
+  --auth-text-main: #f5f8f4;
+  --auth-text-sub: #a4b3a6;
+  --auth-text-muted: #6f8072;
+  --auth-accent: #d8ff4d;
+  --auth-accent-hover: #c4ec3e;
+  --auth-accent-glow: rgba(216, 255, 77, 0.22);
+  --auth-accent-soft: rgba(216, 255, 77, 0.12);
+  --auth-danger: #f87171;
+  --auth-danger-bg: rgba(239, 68, 68, 0.12);
+  --auth-success: #4ade80;
+  --auth-success-bg: rgba(74, 222, 128, 0.12);
+  --auth-radius-lg: 24px;
+  --auth-radius-md: 14px;
+  --auth-radius-sm: 10px;
+}
+
+[data-theme="light"], html.ug-light {
+  --auth-bg: #f4f6f1;
+  --auth-surface: #ffffff;
+  --auth-surface-elevated: #f0f4ed;
+  --auth-surface-glass: rgba(255, 255, 255, 0.92);
+  --auth-border: #d7e0d5;
+  --auth-border-glow: rgba(77, 124, 15, 0.35);
+  --auth-text-main: #0d150e;
+  --auth-text-sub: #3d4d40;
+  --auth-text-muted: #637566;
+  --auth-accent: #3d7115;
+  --auth-accent-hover: #325e10;
+  --auth-accent-glow: rgba(61, 113, 21, 0.25);
+  --auth-accent-soft: rgba(61, 113, 21, 0.1);
+  --auth-danger: #dc2626;
+  --auth-danger-bg: rgba(220, 38, 38, 0.08);
+  --auth-success: #16a34a;
+  --auth-success-bg: rgba(22, 163, 74, 0.1);
+}
+
+/* Page Base */
+body.ug-auth-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--auth-bg);
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(216, 255, 77, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 90% 85%, rgba(34, 197, 94, 0.035) 0%, transparent 40%);
+  color: var(--auth-text-main);
+  font-family: var(--ug-font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+
+[data-theme="light"] body.ug-auth-body,
+html.ug-light body.ug-auth-body {
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(61, 113, 21, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 90% 85%, rgba(34, 197, 94, 0.03) 0%, transparent 40%);
+}
+
+/* Minimal Top Navigation */
+.ug-auth-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  padding: 0 clamp(20px, 4vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 50;
+  pointer-events: none;
+}
+.ug-auth-nav > * {
+  pointer-events: auto;
+}
+
+.ug-auth-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+  color: var(--auth-text-main);
+  font-size: 19px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  transition: opacity 0.2s ease;
+}
+.ug-auth-logo:hover {
+  opacity: 0.9;
+}
+.ug-logo-spark {
+  color: var(--auth-accent);
+  font-size: 20px;
+  text-shadow: 0 0 16px var(--auth-accent-glow);
+}
+.ug-logo-highlight {
+  color: var(--auth-accent);
+  font-weight: 900;
+}
+.ug-logo-pill {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--auth-accent-soft);
+  color: var(--auth-accent);
+  border: 1px solid var(--auth-accent-glow);
+  margin-left: 4px;
+}
+
+.ug-auth-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ug-nav-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--auth-text-sub);
+  text-decoration: none;
+  background: var(--auth-surface-glass);
+  border: 1px solid var(--auth-border);
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+.ug-nav-link-btn:hover {
+  color: var(--auth-text-main);
+  border-color: var(--auth-accent);
+  transform: translateY(-1px);
+}
+
+.ug-theme-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--auth-surface-glass);
+  border: 1px solid var(--auth-border);
+  color: var(--auth-text-sub);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+}
+.ug-theme-btn:hover {
+  color: var(--auth-accent);
+  border-color: var(--auth-accent);
+  transform: translateY(-1px);
+}
+
+/* Main Split Shell */
+.ug-auth-main {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+}
+
+.ug-auth-split {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* ==========================================================================
+   LEFT COLUMN: The Discovery Canvas (Showcase)
+   ========================================================================== */
+.ug-discovery-canvas {
+  position: relative;
+  overflow: hidden;
+  background: #050806;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(28px, 5vw, 64px);
+  box-sizing: border-box;
+}
+
+.ug-discovery-canvas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(216, 255, 77, 0.08) 0%, transparent 50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Slides Container */
+.ug-slides-container {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ug-slide-item {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(1.04);
+  transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1), transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.9s;
+}
+
+.ug-slide-item.active {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* Cinematic Multi-stop Scrim Overlay */
+.ug-slide-item::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(7, 10, 8, 0.35) 0%,
+    rgba(7, 10, 8, 0.2) 30%,
+    rgba(7, 10, 8, 0.75) 70%,
+    rgba(7, 10, 8, 0.95) 100%
+  );
+}
+
+/* Discovery Header & Watermark */
+.ug-discovery-top {
+  position: relative;
+  z-index: 10;
+  margin-top: 50px;
+  margin-bottom: auto;
+}
+
+.ug-discovery-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #d8ff4d;
+  background: rgba(216, 255, 77, 0.12);
+  border: 1px solid rgba(216, 255, 77, 0.28);
+  padding: 5px 12px;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+}
+
+/* Active Slide Story Card */
+.ug-discovery-content {
+  position: relative;
+  z-index: 10;
+  max-width: 620px;
+  margin-bottom: 24px;
+}
+
+.ug-discovery-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.ug-badge {
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+}
+.ug-badge-lime {
+  background: #d8ff4d;
+  color: #070a08;
+}
+.ug-badge-glass {
+  background: rgba(255, 255, 255, 0.14);
+  color: #f5f8f4;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.ug-badge-rating {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.ug-slide-title {
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 850;
+  letter-spacing: -1.2px;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 12px 0;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.6);
+}
+
+.ug-slide-desc {
+  font-size: clamp(14px, 1.2vw, 16px);
+  line-height: 1.6;
+  color: #c8d4ca;
+  margin: 0 0 20px 0;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.7);
+  max-width: 540px;
+}
+
+/* Discovery Tags */
+.ug-slide-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.ug-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #a4b3a6;
+  background: rgba(14, 20, 16, 0.65);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 5px 11px;
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+}
+.ug-tag-pill span.icon {
+  color: #d8ff4d;
+}
+
+/* Interactive Discovery Nav / Selector */
+.ug-discovery-controls {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ug-discovery-thumbnails {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 4px 0;
+}
+.ug-discovery-thumbnails::-webkit-scrollbar {
+  display: none;
+}
+
+.ug-thumb-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(14, 20, 16, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #a4b3a6;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.ug-thumb-btn::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: #d8ff4d;
+  transition: width 0.3s ease;
+}
+.ug-thumb-btn:hover {
+  background: rgba(22, 32, 25, 0.9);
+  color: #f5f8f4;
+  border-color: rgba(216, 255, 77, 0.35);
+  transform: translateY(-2px);
+}
+.ug-thumb-btn.active {
+  background: rgba(216, 255, 77, 0.14);
+  color: #d8ff4d;
+  border-color: #d8ff4d;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+}
+.ug-thumb-btn.active::after {
+  width: 100%;
+}
+.ug-thumb-index {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* Highlights stats strip */
+.ug-discovery-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 8px;
+}
+
+.ug-strip-stat {
+  display: flex;
+  flex-direction: column;
+}
+.ug-strip-stat b {
+  font-size: 16px;
+  font-weight: 850;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+.ug-strip-stat b span {
+  color: #d8ff4d;
+}
+.ug-strip-stat span {
+  font-size: 11px;
+  color: #8c9c8e;
+}
+
+.ug-explore-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 750;
+  color: #d8ff4d;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(216, 255, 77, 0.12);
+  border: 1px solid rgba(216, 255, 77, 0.25);
+  transition: all 0.2s ease;
+}
+.ug-explore-link:hover {
+  background: #d8ff4d;
+  color: #070a08;
+  transform: translateX(3px);
+}
+
+/* ==========================================================================
+   RIGHT COLUMN: The Web Interface for Sign In
+   ========================================================================== */
+.ug-auth-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 5vw, 60px) clamp(20px, 4vw, 48px);
+  background: var(--auth-bg);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+}
+
+.ug-auth-box {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin: auto;
+}
+
+/* Card Header */
+.ug-auth-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ug-auth-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--auth-accent);
+}
+
+.ug-auth-title {
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 850;
+  letter-spacing: -1.2px;
+  color: var(--auth-text-main);
+  margin: 0;
+  line-height: 1.15;
+}
+
+.ug-auth-subtitle {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--auth-text-sub);
+  margin: 0;
+}
+
+/* Main Form Card */
+.ug-auth-card {
+  background: var(--auth-surface);
+  border: 1px solid var(--auth-border);
+  border-radius: var(--auth-radius-lg);
+  padding: clamp(24px, 4vw, 36px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+/* Google Sign-in Button */
+.ug-btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  height: 48px;
+  padding: 0 18px;
+  border-radius: var(--auth-radius-md);
+  background: var(--auth-surface-elevated);
+  border: 1px solid var(--auth-border);
+  color: var(--auth-text-main);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+.ug-btn-google:hover {
+  background: var(--auth-surface);
+  border-color: var(--auth-accent);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  transform: translateY(-1px);
+}
+.ug-btn-google svg {
+  flex-shrink: 0;
+}
+
+/* Subtle Divider */
+.ug-auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--auth-text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.ug-auth-divider::before,
+.ug-auth-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--auth-border);
+}
+
+/* Form Styles */
+.ug-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ug-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.ug-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--auth-text-main);
+}
+
+.ug-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.ug-input-icon {
+  position: absolute;
+  left: 14px;
+  color: var(--auth-text-muted);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.ug-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px 0 42px;
+  background: var(--auth-surface-elevated);
+  border: 1px solid var(--auth-border);
+  border-radius: var(--auth-radius-md);
+  color: var(--auth-text-main);
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s ease;
+}
+.ug-input::placeholder {
+  color: var(--auth-text-muted);
+}
+.ug-input:focus {
+  border-color: var(--auth-accent);
+  background: var(--auth-surface);
+  box-shadow: 0 0 0 3px var(--auth-accent-soft);
+}
+.ug-input-wrap:focus-within .ug-input-icon {
+  color: var(--auth-accent);
+}
+.ug-input.has-toggle {
+  padding-right: 44px;
+}
+
+/* Password Toggle Eye */
+.ug-pass-toggle {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  padding: 8px;
+  color: var(--auth-text-muted);
+  cursor: pointer;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+.ug-pass-toggle:hover {
+  color: var(--auth-accent);
+}
+
+/* Helper Row (Remember me + Forgot password) */
+.ug-auth-options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+}
+
+.ug-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--auth-text-sub);
+  cursor: pointer;
+  user-select: none;
+}
+.ug-checkbox-label input[type="checkbox"] {
+  accent-color: var(--auth-accent);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.ug-forgot-link {
+  color: var(--auth-accent);
+  text-decoration: none;
+  font-weight: 700;
+  transition: opacity 0.2s ease;
+}
+.ug-forgot-link:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+/* Primary Submit Button */
+.ug-btn-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 50px;
+  border: none;
+  border-radius: var(--auth-radius-md);
+  background: var(--auth-accent);
+  color: #070a08;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 6px 24px var(--auth-accent-glow);
+  box-sizing: border-box;
+}
+.ug-btn-submit:hover:not(:disabled) {
+  background: var(--auth-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px var(--auth-accent-glow);
+}
+.ug-btn-submit:active:not(:disabled) {
+  transform: translateY(0);
+}
+.ug-btn-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Message Feedback */
+.ug-msg {
+  padding: 11px 14px;
+  border-radius: var(--auth-radius-sm);
+  font-size: 13px;
+  line-height: 1.45;
+  display: none;
+}
+.ug-msg:not(:empty) {
+  display: block;
+}
+.ug-msg.error, .message.error {
+  display: block;
+  background: var(--auth-danger-bg);
+  border: 1px solid var(--auth-danger);
+  color: var(--auth-danger);
+}
+.ug-msg.success, .message.success {
+  display: block;
+  background: var(--auth-success-bg);
+  border: 1px solid var(--auth-success);
+  color: var(--auth-success);
+}
+
+/* ==========================================================================
+   Quick Demo & Guest Pass Section (Refined, zero clutter)
+   ========================================================================== */
+.ug-demo-section {
+  background: var(--auth-surface-elevated);
+  border: 1px solid var(--auth-border);
+  border-radius: var(--auth-radius-md);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ug-demo-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ug-demo-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--auth-text-muted);
+}
+.ug-demo-pill {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--auth-accent);
+  background: var(--auth-accent-soft);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+
+/* 1-Click Guest Button */
+.ug-btn-guest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--auth-surface);
+  border: 1px dashed var(--auth-border);
+  color: var(--auth-text-main);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.ug-btn-guest:hover {
+  background: var(--auth-accent-soft);
+  border-color: var(--auth-accent);
+  color: var(--auth-accent);
+  transform: translateY(-1px);
+}
+.ug-btn-guest span.spark {
+  color: var(--auth-accent);
+}
+
+/* Personas Row */
+.ug-persona-chips {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.ug-persona-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  background: var(--auth-surface);
+  border: 1px solid var(--auth-border);
+  color: var(--auth-text-sub);
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+.ug-persona-btn:hover {
+  background: var(--auth-surface-glass);
+  border-color: var(--auth-accent);
+  color: var(--auth-text-main);
+  transform: translateY(-2px);
+}
+.ug-persona-btn .emoji {
+  font-size: 16px;
+}
+.ug-persona-btn .name {
+  font-size: 11px;
+  font-weight: 750;
+}
+.ug-persona-btn .role {
+  font-size: 9px;
+  color: var(--auth-text-muted);
+}
+
+/* Switch to Signup Card */
+.ug-switch-card {
+  text-align: center;
+  font-size: 13px;
+  color: var(--auth-text-sub);
+  padding: 14px;
+  border-radius: var(--auth-radius-md);
+  background: var(--auth-surface);
+  border: 1px solid var(--auth-border);
+}
+.ug-switch-card a {
+  color: var(--auth-accent);
+  font-weight: 800;
+  text-decoration: none;
+  margin-left: 6px;
+}
+.ug-switch-card a:hover {
+  text-decoration: underline;
+}
+
+/* Clean Trust Footer */
+.ug-auth-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 11px;
+  color: var(--auth-text-muted);
+  text-align: center;
+}
+.ug-auth-footer a {
+  color: var(--auth-text-muted);
+  text-decoration: none;
+}
+.ug-auth-footer a:hover {
+  color: var(--auth-text-sub);
+}
+
+/* ==========================================================================
+   GOOGLE MODAL OVERLAY (Fallback Dialog)
+   ========================================================================== */
+.google-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.google-modal-overlay.open {
+  display: flex;
+}
+.google-modal-card {
+  background: var(--auth-surface);
+  border: 1px solid var(--auth-border);
+  border-radius: 20px;
+  padding: 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
+  position: relative;
+  color: var(--auth-text-main);
+}
+.google-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.google-modal-close {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--auth-text-muted);
+  padding: 4px;
+  border-radius: 6px;
+}
+.google-modal-close:hover {
+  color: var(--auth-text-main);
+}
+.google-modal-title {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+}
+.google-modal-sub {
+  font-size: 13px;
+  color: var(--auth-text-sub);
+  margin: 0 0 24px;
+}
+.google-modal-input {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid var(--auth-border);
+  background: var(--auth-surface-elevated);
+  color: var(--auth-text-main);
+  box-sizing: border-box;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+}
+.google-modal-input:focus {
+  border-color: var(--auth-accent);
+}
+
+.google-account-chooser {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.google-account-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--auth-surface-elevated);
+  border: 1px solid var(--auth-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  width: 100%;
+  color: var(--auth-text-main);
+  box-sizing: border-box;
+}
+.google-account-item:hover {
+  border-color: var(--auth-accent);
+  background: var(--auth-surface);
+  transform: translateY(-1px);
+}
+.google-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4285F4, #34A853);
+  color: #fff;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.google-avatar.admin {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+.google-account-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.google-account-name {
+  font-size: 13px;
+  font-weight: 750;
+  color: var(--auth-text-main);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.google-account-email {
+  font-size: 11px;
+  color: var(--auth-text-sub);
+}
+.google-account-badge {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(216, 255, 77, 0.15);
+  color: var(--auth-accent);
+  border: 1px solid rgba(216, 255, 77, 0.3);
+}
+.google-account-badge.admin {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+.google-account-action {
+  margin-left: auto;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--auth-text-muted);
+  transition: transform 0.2s ease, color 0.2s ease;
+  padding-left: 8px;
+}
+.google-account-item:hover .google-account-action {
+  color: var(--auth-accent);
+  transform: translateX(3px);
+}
+.google-modal-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 14px 0;
+  font-size: 11px;
+  color: var(--auth-text-muted);
+}
+.google-modal-divider::before,
+.google-modal-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--auth-border);
+}
+
+
+/* ==========================================================================
+   RESPONSIVE DESIGN (Tablets & Mobile Phones)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .ug-auth-split {
+    grid-template-columns: 1fr;
+  }
+
+  .ug-discovery-canvas {
+    min-height: 480px;
+    padding: 72px 28px 36px;
+  }
+
+  .ug-discovery-top {
+    margin-top: 10px;
+  }
+
+  .ug-auth-panel {
+    padding: 40px 24px 60px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ug-auth-nav {
+    padding: 0 16px;
+  }
+  .ug-logo-pill {
+    display: none;
+  }
+  .ug-discovery-canvas {
+    min-height: 380px;
+    padding: 68px 18px 24px;
+  }
+  .ug-slide-title {
+    font-size: 24px;
+  }
+  .ug-slide-desc {
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+  .ug-slide-tags {
+    display: none;
+  }
+  .ug-discovery-strip {
+    display: none;
+  }
+  .ug-auth-panel {
+    padding: 24px 16px 48px;
+  }
+  .ug-auth-card {
+    padding: 24px 18px;
+  }
+  .ug-persona-chips {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
