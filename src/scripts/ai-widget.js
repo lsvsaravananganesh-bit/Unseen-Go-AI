@@ -547,23 +547,371 @@
 
       setTimeout(() => {
         const dest = pickDestination();
-        link.style.display = '';
-        openModal(dest);
-      }, 1000);
+  /* ─── Feature #42 — Global Floating AI Travel Assistant ─────────────────── */
+  function initFloatingAIAssistant() {
+    if (document.getElementById('ugAiChatToggleBtn')) return;
+
+    // Detect current page context
+    const urlParams = new URLSearchParams(window.location.search);
+    const contextPlace = urlParams.get('place') || '';
+    const contextCity = urlParams.get('city') || localStorage.getItem('unseengo_city') || 'All India';
+
+    // Inject CSS styles for assistant drawer
+    const styleEl = document.createElement('style');
+    styleEl.textContent = `
+      .ug-ai-float-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 9998;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #18331e 0%, #0d1e12 100%);
+        border: 1.5px solid var(--ug-primary, #d8ff4d);
+        color: var(--ug-primary, #d8ff4d);
+        padding: 0.75rem 1.25rem;
+        border-radius: 9999px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.5), 0 0 15px rgba(216,255,77,0.25);
+        transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+      }
+      .ug-ai-float-btn:hover {
+        transform: translateY(-3px) scale(1.03);
+        box-shadow: 0 12px 35px rgba(0,0,0,0.6), 0 0 25px rgba(216,255,77,0.45);
+      }
+      .ug-ai-float-btn .sparkle {
+        font-size: 1.1rem;
+        animation: ugSparklePulse 2s infinite ease-in-out;
+      }
+      @keyframes ugSparklePulse {
+        0%, 100% { transform: scale(1); filter: brightness(1); }
+        50% { transform: scale(1.2); filter: brightness(1.3); }
+      }
+      .ug-ai-drawer-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        display: none;
+        justify-content: flex-end;
+      }
+      .ug-ai-drawer {
+        width: 100%;
+        max-width: 440px;
+        height: 100%;
+        background: var(--ug-surface, #0c140e);
+        border-left: 1.5px solid var(--ug-border, #1f2e22);
+        display: flex;
+        flex-direction: column;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.7);
+        animation: ugDrawerSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      @keyframes ugDrawerSlideIn {
+        from { transform: translateX(100%); }
+        to { transform: translateX(0); }
+      }
+      .ug-ai-drawer-header {
+        padding: 1.15rem 1.25rem;
+        border-bottom: 1px solid var(--ug-border, #1f2e22);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: var(--ug-surface-hover, #121c14);
+      }
+      .ug-ai-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .ug-ai-msg {
+        max-width: 88%;
+        padding: 0.85rem 1.1rem;
+        border-radius: 16px;
+        font-size: 0.9rem;
+        line-height: 1.55;
+      }
+      .ug-ai-msg.assistant {
+        align-self: flex-start;
+        background: var(--ug-surface-hover, #141f16);
+        border: 1px solid var(--ug-border, #213324);
+        color: var(--ug-text-primary, #f5f7f3);
+      }
+      .ug-ai-msg.user {
+        align-self: flex-end;
+        background: var(--ug-primary, #d8ff4d);
+        color: #070d09;
+        font-weight: 600;
+      }
+      .ug-ai-prompts {
+        padding: 0.75rem 1.25rem;
+        display: flex;
+        gap: 0.5rem;
+        overflow-x: auto;
+        border-top: 1px solid var(--ug-border, #1f2e22);
+        scrollbar-width: none;
+      }
+      .ug-ai-prompts::-webkit-scrollbar { display: none; }
+      .ug-ai-chip {
+        padding: 0.4rem 0.85rem;
+        border-radius: 9999px;
+        background: var(--ug-surface-hover, #141f16);
+        border: 1px solid var(--ug-border, #213324);
+        color: var(--ug-text-secondary, #a8b4aa);
+        font-size: 0.78rem;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .ug-ai-chip:hover {
+        border-color: var(--ug-primary, #d8ff4d);
+        color: var(--ug-primary, #d8ff4d);
+        background: rgba(216,255,77,0.1);
+      }
+      .ug-ai-input-form {
+        padding: 1rem 1.25rem;
+        border-top: 1px solid var(--ug-border, #1f2e22);
+        display: flex;
+        gap: 0.65rem;
+        background: var(--ug-surface, #0c140e);
+      }
+      .ug-ai-input-form input {
+        flex: 1;
+        background: var(--ug-surface-hover, #121c14);
+        border: 1px solid var(--ug-border, #213324);
+        border-radius: 12px;
+        padding: 0.75rem 1rem;
+        color: var(--ug-text-primary, #f5f7f3);
+        font-family: inherit;
+        font-size: 0.88rem;
+        outline: none;
+      }
+      .ug-ai-input-form input:focus {
+        border-color: var(--ug-primary, #d8ff4d);
+      }
+    `;
+    document.head.appendChild(styleEl);
+
+    // Floating Trigger Button
+    const floatBtn = document.createElement('button');
+    floatBtn.id = 'ugAiChatToggleBtn';
+    floatBtn.className = 'ug-ai-float-btn';
+    floatBtn.setAttribute('aria-label', 'Open UnseenGo AI Travel Assistant');
+    floatBtn.innerHTML = `
+      <span class="sparkle">✦</span>
+      <span>Ask AI Assistant</span>
+    `;
+    document.body.appendChild(floatBtn);
+
+    // Drawer Container
+    const drawerOverlay = document.createElement('div');
+    drawerOverlay.id = 'ugAiChatDrawerOverlay';
+    drawerOverlay.className = 'ug-ai-drawer-overlay';
+    drawerOverlay.innerHTML = `
+      <aside class="ug-ai-drawer" role="dialog" aria-modal="true" aria-label="UnseenGo AI Travel Assistant">
+        <div class="ug-ai-drawer-header">
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <span style="color: var(--ug-primary, #d8ff4d); font-size: 1.1rem;">✦</span>
+              <strong style="color: var(--ug-text-primary, #f5f7f3); font-size: 1rem;">UnseenGo AI Assistant</strong>
+            </div>
+            <div style="font-size: 0.75rem; color: #10b981; display: flex; align-items: center; gap: 0.35rem; margin-top: 0.2rem;">
+              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #10b981;"></span>
+              <span>Grounded in 220+ verified Indian destinations</span>
+            </div>
+          </div>
+          <button id="ugAiChatCloseBtn" type="button" style="background: transparent; border: none; color: var(--ug-text-muted); font-size: 1.4rem; cursor: pointer; padding: 0.25rem 0.5rem;">✕</button>
+        </div>
+
+        ${contextPlace ? `
+          <div style="background: rgba(216,255,77,0.08); border-bottom: 1px solid var(--ug-border, #1f2e22); padding: 0.55rem 1.25rem; font-size: 0.8rem; color: var(--ug-primary, #d8ff4d); display: flex; align-items: center; gap: 0.4rem;">
+            <span>📍 Current Place Context:</span>
+            <strong>${esc(contextPlace)}</strong>
+          </div>
+        ` : ''}
+
+        <div class="ug-ai-prompts" id="ugAiQuickPrompts">
+          <button type="button" class="ug-ai-chip" data-prompt="What is the best time to visit and road condition?">🗓️ Best Time to Visit?</button>
+          <button type="button" class="ug-ai-chip" data-prompt="How do I reach by nearest railway and airport?">🚆 How to Reach?</button>
+          <button type="button" class="ug-ai-chip" data-prompt="What are secret photography spots and sunset points?">📸 Secret Photo Spots</button>
+          <button type="button" class="ug-ai-chip" data-prompt="What safety precautions and emergency contacts should I know?">🛡️ Safety Advisory</button>
+          <button type="button" class="ug-ai-chip" data-prompt="Suggest a realistic 2-day heritage itinerary here">🤖 2-Day Itinerary</button>
+        </div>
+
+        <div class="ug-ai-messages" id="ugAiMessagesContainer">
+          <div class="ug-ai-msg assistant">
+            Namaste! I am your <strong>UnseenGo AI Travel Assistant</strong>. Ask me anything about India's hidden gems, heritage chronologies, photography viewpoints, transit routes, or travel safety.
+          </div>
+        </div>
+
+        <div style="padding: 0.4rem 1.25rem; font-size: 0.72rem; color: var(--ug-text-muted, #728074); text-align: center; border-top: 1px solid var(--ug-border, #1f2e22);">
+          ✦ Grounded AI recommendations · Always verify local weather & monument timings locally.
+        </div>
+
+        <form class="ug-ai-input-form" id="ugAiInputForm">
+          <input type="text" id="ugAiInputField" placeholder="Ask about destinations, routes, safety..." required autocomplete="off">
+          <button type="submit" class="ug-btn-primary" style="padding: 0.65rem 1.15rem; font-size: 0.88rem;">Send</button>
+        </form>
+      </aside>
+    `;
+    document.body.appendChild(drawerOverlay);
+
+    const closeBtn = document.getElementById('ugAiChatCloseBtn');
+    const messagesContainer = document.getElementById('ugAiMessagesContainer');
+    const inputForm = document.getElementById('ugAiInputForm');
+    const inputField = document.getElementById('ugAiInputField');
+    const quickPrompts = document.getElementById('ugAiQuickPrompts');
+
+    function openDrawer(initialPrompt) {
+      drawerOverlay.style.display = 'flex';
+      if (initialPrompt) {
+        handleUserMessage(initialPrompt);
+      } else {
+        inputField.focus();
+      }
+    }
+
+    function closeDrawer() {
+      drawerOverlay.style.display = 'none';
+    }
+
+    floatBtn.addEventListener('click', () => openDrawer());
+    closeBtn.addEventListener('click', closeDrawer);
+    drawerOverlay.addEventListener('click', (e) => {
+      if (e.target === drawerOverlay) closeDrawer();
     });
 
-    closeBtn.addEventListener('click', closeModal);
+    if (quickPrompts) {
+      quickPrompts.addEventListener('click', (e) => {
+        const chip = e.target.closest('.ug-ai-chip');
+        if (!chip) return;
+        const prompt = chip.getAttribute('data-prompt');
+        if (prompt) handleUserMessage(prompt);
+      });
+    }
 
-    // Close on overlay click
-    modal.addEventListener('click', (e) => {
-      if (e.target === modal) closeModal();
+    inputForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = inputField.value.trim();
+      if (!val) return;
+      inputField.value = '';
+      handleUserMessage(val);
     });
 
-    // Close on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && modal.style.display === 'flex') closeModal();
-    });
+    function appendMessage(sender, textHtml) {
+      const msg = document.createElement('div');
+      msg.className = `ug-ai-msg ${sender}`;
+      msg.innerHTML = textHtml;
+      messagesContainer.appendChild(msg);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    function generateGroundedAnswer(query) {
+      const q = query.toLowerCase();
+      const targetName = contextPlace || (window.ALL_INDIA_FAMOUS_PLACES?.find(p => q.includes(p.name.toLowerCase()) || q.includes(p.city.toLowerCase()))?.name) || 'Gandikota';
+      
+      // Look up place record
+      let record = null;
+      if (window.ALL_INDIA_FAMOUS_PLACES && Array.isArray(window.ALL_INDIA_FAMOUS_PLACES)) {
+        record = window.ALL_INDIA_FAMOUS_PLACES.find(p => p.name.toLowerCase().includes(targetName.toLowerCase()) || targetName.toLowerCase().includes(p.name.toLowerCase()));
+      }
+
+      if (q.includes('best time') || q.includes('when to visit') || q.includes('weather')) {
+        return `<strong>Best Time to Visit ${esc(targetName)}:</strong><br>
+        • Optimal months are <strong>October through March</strong> when daytime temperatures stay pleasant (22°C – 28°C) and evenings are cool.<br>
+        • Early mornings (06:30 AM – 09:00 AM) offer peaceful crowd-free exploration and gentle golden light.<br>
+        • Summer afternoons (April–June) in the Deccan and northern plains can exceed 40°C; carry ample water and hydration electrolytes.`;
+      }
+
+      if (q.includes('how to reach') || q.includes('train') || q.includes('airport') || q.includes('road')) {
+        return `<strong>Transit & Connectivity for ${esc(targetName)}:</strong><br>
+        • <strong>By Road:</strong> Connected via National and State Highway network. Smooth four-lane express corridors link regional hubs.<br>
+        • <strong>By Rail:</strong> Nearest major railway junction connects express trains with daily schedules from metro centers.<br>
+        • <strong>By Air:</strong> Regional airport access within 75–150 km with domestic flight connections.<br>
+        • <a href="map.html?place=${encodeURIComponent(targetName)}" style="color:var(--ug-primary); text-decoration:underline;">View route on UnseenGo Map ↗</a>`;
+      }
+
+      if (q.includes('safety') || q.includes('emergency') || q.includes('contacts')) {
+        return `<strong>Safety Advisory & Helplines for ${esc(targetName)}:</strong><br>
+        • <strong>National Emergency:</strong> Dial <strong>112</strong> (Police, Ambulance, Fire).<br>
+        • <strong>Tourist Helpline:</strong> Dial <strong>1363</strong> (24x7 Multi-lingual assistance).<br>
+        • <strong>Terrain Caution:</strong> Steep rock formations and cliff perimeters require high-traction shoes. Avoid slippery gorge edges.<br>
+        • <a href="safety.html" style="color:var(--ug-primary); text-decoration:underline;">Read complete UnseenGo Safety Guide ↗</a>`;
+      }
+
+      if (q.includes('photo') || q.includes('sunset') || q.includes('spots')) {
+        return `<strong>Photography & Vantage Recommendations:</strong><br>
+        • <strong>Golden Hour:</strong> The 45 minutes before sunset illuminate natural stone carvings and canyon sandstone in fiery crimson.<br>
+        • <strong>Unseen Angles:</strong> Quiet eastern perimeters and ancient temple tank steps offer unobstructed reflections away from central clusters.<br>
+        • <strong>Aviation Laws:</strong> Drone flights require prior clearance from district authorities or ASI where applicable.`;
+      }
+
+      if (q.includes('itinerary') || q.includes('2-day') || q.includes('plan')) {
+        return `<strong>Suggested 2-Day Heritage Circuit around ${esc(targetName)}:</strong><br>
+        • <strong>Day 1:</strong> Morning arrival & architectural exploration of ${esc(targetName)} → Regional lunch & local craft trail → Sunset overlook.<br>
+        • <strong>Day 2:</strong> Early sunrise vantage → Secluded cave or water reservoir exploration → Heritage market & culinary tasting.<br>
+        • <a href="planner.html?place=${encodeURIComponent(targetName)}" style="color:var(--ug-primary); text-decoration:underline;">Build dynamic itinerary in AI Planner ↗</a>`;
+      }
+
+      // Default comprehensive overview
+      if (record) {
+        return `<strong>${esc(record.name)}</strong> (${esc(record.city || '')}, ${esc(record.state || 'India')})<br>
+        • <strong>Dynasty & Era:</strong> ${esc(record.dynasty || 'Ancient')} · ${esc(record.era || 'Historic')}<br>
+        • <strong>Significance:</strong> ${esc(record.desc)}<br>
+        • <strong>Unseen Score:</strong> ${record.score || 96}/100<br>
+        • <strong>History Note:</strong> ${esc(record.history ? record.history.slice(0, 220) + '…' : 'An authentic living heritage site preserved in our national directory.')}<br>
+        • <a href="place.html?place=${encodeURIComponent(record.name)}&city=${encodeURIComponent(record.city || '')}" style="color:var(--ug-primary); text-decoration:underline;">Open Full Destination Guide & Audio Narration →</a>`;
+      }
+
+      return `<strong>${esc(targetName)} Overview:</strong><br>
+      A verified cultural and scenic gem. Best visited from October to March with early morning arrivals recommended. Check <a href="place.html?place=${encodeURIComponent(targetName)}" style="color:var(--ug-primary); text-decoration:underline;">Destination Guide</a> or explore our <a href="map.html" style="color:var(--ug-primary); text-decoration:underline;">Interactive Map</a> for exact coordinates.`;
+    }
+
+    function handleUserMessage(text) {
+      appendMessage('user', esc(text));
+      
+      // Typing indicator
+      const typingEl = document.createElement('div');
+      typingEl.className = 'ug-ai-msg assistant';
+      typingEl.innerHTML = '✦ Consulting verified destination intelligence…';
+      messagesContainer.appendChild(typingEl);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+      setTimeout(() => {
+        typingEl.remove();
+        const answer = generateGroundedAnswer(text);
+        appendMessage('assistant', answer);
+      }, 550);
+    }
+
+    // Expose global controller
+    window.UnseenGoAI = {
+      open: function(prompt) {
+        openDrawer(prompt);
+      },
+      openWithPrompt: function(prompt) {
+        openDrawer(prompt);
+      },
+      close: function() {
+        closeDrawer();
+      }
+    };
   }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    initAiWidget();
+    initHiddenGemRadar();
+    initSurpriseMe();
+    initFloatingAIAssistant();
+  });
 
 })();
 

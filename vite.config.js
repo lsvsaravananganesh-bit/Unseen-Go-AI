@@ -153,7 +153,10 @@ export default defineConfig({
         stay: resolve(__dirname, 'stay.html'),
         flights: resolve(__dirname, 'flights.html'),
         transport: resolve(__dirname, 'transport.html'),
-        utilities: resolve(__dirname, 'utilities.html')
+        utilities: resolve(__dirname, 'utilities.html'),
+        about: resolve(__dirname, 'about.html'),
+        safety: resolve(__dirname, 'safety.html'),
+        security: resolve(__dirname, 'security.html')
       }
     }
   }

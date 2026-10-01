@@ -1152,8 +1152,71 @@
       .ug-map-sidebar {
         height: 560px;
       }
-      .ug-map-container {
-        height: 500px;
+      .ug-route-tray {
+        position: absolute;
+        bottom: 24px;
+        right: 24px;
+        max-width: 400px;
+        width: calc(100% - 48px);
+        background: var(--ug-surface);
+        border: 1.5px solid var(--ug-lime);
+        border-radius: 18px;
+        z-index: 1000;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+        padding: 1rem 1.15rem;
+        backdrop-filter: blur(8px);
+        animation: ugDrawerSlideIn 0.25s ease;
+      }
+      .ug-route-tray-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.65rem;
+        border-bottom: 1px solid var(--ug-border);
+        padding-bottom: 0.5rem;
+      }
+      .route-clear-btn {
+        background: transparent;
+        border: 1px solid var(--ug-border);
+        color: var(--ug-text-muted);
+        border-radius: 6px;
+        padding: 0.25rem 0.6rem;
+        font-size: 0.75rem;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+      .route-clear-btn:hover {
+        border-color: #ef4444;
+        color: #ef4444;
+      }
+      .ug-route-stop-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        max-height: 140px;
+        overflow-y: auto;
+        margin-bottom: 0.75rem;
+      }
+      .ug-route-stop-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--ug-surface-elevated);
+        border: 1px solid var(--ug-border);
+        border-radius: 8px;
+        padding: 0.35rem 0.65rem;
+        font-size: 0.82rem;
+      }
+      .ug-route-stop-remove {
+        background: transparent;
+        border: none;
+        color: var(--ug-text-muted);
+        cursor: pointer;
+        font-size: 0.9rem;
+        padding: 0 0.3rem;
+      }
+      .ug-route-stop-remove:hover {
+        color: #ef4444;
       }
     }
   </style>
@@ -1339,12 +1402,38 @@
       <!-- Leaflet map mounts here -->
     </main>
 
+    <!-- Interactive Multi-Stop Route Tray -->
+    <div id="ugRouteTray" class="ug-route-tray" style="display:none;">
+      <div class="ug-route-tray-header">
+        <div style="display:flex; align-items:center; gap:0.5rem;">
+          <span style="color:var(--ug-lime); font-size:1.1rem;">🚗</span>
+          <strong>Route Stops (<span id="routeStopCount">0</span>)</strong>
+        </div>
+        <button id="clearRouteBtn" type="button" class="route-clear-btn">✕ Clear</button>
+      </div>
+      <div id="routeStopList" class="ug-route-stop-list"></div>
+      <div class="ug-route-tray-footer">
+        <div id="routeDistanceEst" style="font-size:0.8rem; color:var(--ug-text-secondary); margin-bottom:0.6rem;">Est. Road Distance: 0 km</div>
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+          <a id="routeGpsNavBtn" href="#" target="_blank" rel="noopener noreferrer" class="ug-btn-primary" style="padding:0.45rem 0.85rem; font-size:0.8rem; text-decoration:none;">
+            🧭 Multi-Stop Navigation ↗
+          </a>
+          <a id="routePlanAiBtn" href="#" class="ug-btn-secondary" style="padding:0.45rem 0.85rem; font-size:0.8rem; text-decoration:none;">
+            🤖 AI Itinerary
+          </a>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- Scripts -->
   <script src="app.js"></script>
   <script src="data/destination-registry.js"></script>
   <script src="src/scripts/navigation.js"></script>
+  <script src="src/scripts/ai-widget.js"></script>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <!-- Complete All-India Famous Places Dataset & Map Engine -->
@@ -1922,6 +2011,9 @@
                     <a href="place.html?place=${encodeURIComponent(item.name)}&city=${encodeURIComponent(item.city)}" class="popup-sub-btn">
                       📖 Details
                     </a>
+                    <button type="button" class="popup-sub-btn" onclick="window.addToMapRoute('${esc(item.name).replace(/'/g, "\\'")}')" style="background:var(--ug-lime-soft); color:var(--ug-lime); border-color:var(--ug-lime); cursor:pointer;">
+                      ➕ Route
+                    </button>
                     <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + item.city + ' ' + item.state)}" target="_blank" rel="noopener" class="popup-sub-btn">
                       🧭 GPS Nav ↗
                     </a>
@@ -1965,6 +2057,9 @@
                 <a href="planner.html?place=${encodeURIComponent(item.name)}&city=${encodeURIComponent(item.city)}" class="card-mini-btn" style="color:var(--ug-lime); border-color:var(--ug-lime);" onclick="event.stopPropagation();">
                   🤖 Plan
                 </a>
+                <button type="button" class="card-mini-btn" style="color:var(--ug-lime); border-color:var(--ug-lime);" onclick="event.stopPropagation(); window.addToMapRoute('${esc(item.name).replace(/'/g, "\\'")}')">
+                  ➕ Route
+                </button>
                 <a href="place.html?place=${encodeURIComponent(item.name)}&city=${encodeURIComponent(item.city)}" class="card-mini-btn" onclick="event.stopPropagation();">
                   Guide
                 </a>
@@ -2146,6 +2241,124 @@
           alert(`"${name}" is already in your My Travel vault.`);
         }
       };
+
+      // 6b. Interactive Multi-Stop Route Planner Engine
+      let routeStops = [];
+      let routePolyline = null;
+
+      function getDistKm(lat1, lon1, lat2, lon2) {
+        const R = 6371;
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+        return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      }
+
+      window.addToMapRoute = function(placeName) {
+        const item = ALL_INDIA_FAMOUS_PLACES.find(p => p.name === placeName || p.name.toLowerCase() === placeName.toLowerCase());
+        if (!item) return;
+
+        if (routeStops.some(s => s.name === item.name)) {
+          alert(`"${item.name}" is already in your active route.`);
+          return;
+        }
+
+        routeStops.push(item);
+        renderRouteTray();
+      };
+
+      window.removeFromMapRoute = function(idx) {
+        routeStops.splice(idx, 1);
+        renderRouteTray();
+      };
+
+      window.clearMapRoute = function() {
+        routeStops = [];
+        if (routePolyline) {
+          map.removeLayer(routePolyline);
+          routePolyline = null;
+        }
+        const tray = document.getElementById('ugRouteTray');
+        if (tray) tray.style.display = 'none';
+      };
+
+      function renderRouteTray() {
+        const tray = document.getElementById('ugRouteTray');
+        const listEl = document.getElementById('routeStopList');
+        const countEl = document.getElementById('routeStopCount');
+        const distEl = document.getElementById('routeDistanceEst');
+        const navBtn = document.getElementById('routeGpsNavBtn');
+        const planBtn = document.getElementById('routePlanAiBtn');
+        const clearBtn = document.getElementById('clearRouteBtn');
+
+        if (!tray || !listEl) return;
+
+        if (!routeStops.length) {
+          tray.style.display = 'none';
+          if (routePolyline) {
+            map.removeLayer(routePolyline);
+            routePolyline = null;
+          }
+          return;
+        }
+
+        tray.style.display = 'block';
+        if (countEl) countEl.textContent = routeStops.length;
+
+        // Render stop items with remove buttons
+        listEl.innerHTML = routeStops.map((s, idx) => `
+          <div class="ug-route-stop-item">
+            <span style="font-weight:700; color:var(--ug-lime); margin-right:6px;">${idx + 1}.</span>
+            <span style="flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--ug-text-primary); font-size:0.82rem;">${s.name} (${s.city})</span>
+            <button type="button" class="ug-route-stop-remove" onclick="window.removeFromMapRoute(${idx})" title="Remove stop">✕</button>
+          </div>
+        `).join('');
+
+        // Calculate distance
+        let totalKm = 0;
+        for (let i = 0; i < routeStops.length - 1; i++) {
+          totalKm += getDistKm(routeStops[i].lat, routeStops[i].lng, routeStops[i+1].lat, routeStops[i+1].lng);
+        }
+        const roadKm = Math.round(totalKm * 1.25); // ~25% road curvature
+        const estHrs = (roadKm / 50).toFixed(1); // 50 km/h avg driving speed
+
+        if (distEl) {
+          distEl.textContent = routeStops.length > 1
+            ? `Est. Distance: ~${roadKm} km (approx. ${estHrs} hrs driving)`
+            : `Add 1 more destination stop to calculate distance & draw route.`;
+        }
+
+        // Draw / update Polyline connecting stops
+        if (routePolyline) {
+          map.removeLayer(routePolyline);
+          routePolyline = null;
+        }
+        if (routeStops.length >= 2) {
+          const latLngs = routeStops.map(s => [s.lat, s.lng]);
+          routePolyline = L.polyline(latLngs, {
+            color: '#d8ff4d',
+            weight: 4,
+            opacity: 0.9,
+            dashArray: '6, 8',
+            lineJoin: 'round'
+          }).addTo(map);
+          map.fitBounds(routePolyline.getBounds(), { padding: [50, 50] });
+        }
+
+        // External directions link (Google Maps multi-stop)
+        if (navBtn) {
+          navBtn.href = 'https://www.google.com/maps/dir/' + routeStops.map(s => encodeURIComponent(`${s.name}, ${s.city}, ${s.state}`)).join('/');
+        }
+
+        // AI Plan Link
+        if (planBtn) {
+          planBtn.href = `planner.html?places=${encodeURIComponent(routeStops.map(s => s.name).join(','))}&city=${encodeURIComponent(routeStops[0].city)}`;
+        }
+
+        if (clearBtn) {
+          clearBtn.onclick = window.clearMapRoute;
+        }
+      }
 
       // 7. Initialize on load
       window.addEventListener('DOMContentLoaded', () => {

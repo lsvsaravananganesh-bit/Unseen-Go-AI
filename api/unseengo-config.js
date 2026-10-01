@@ -29,4 +29,5 @@ const CONFIG = {
   mongoDbName: getEnvVar('MONGODB_DB_NAME', 'unseengo_ai')
 };
 
+export { CONFIG };
 export default CONFIG;

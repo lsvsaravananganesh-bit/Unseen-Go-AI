@@ -1,1 +1,419 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>About UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font-family:Inter,system-ui,sans-serif}main{max-width:1050px;margin:auto;padding:70px 22px}a{color:#d8f36a;text-decoration:none}.brand{font-size:22px;font-weight:900}.brand b{color:#d8f36a}.box{margin-top:35px;border:1px solid #2a342d;border-radius:18px;padding:30px;background:#101713;line-height:1.75;color:#b8c2b9}h1{font-size:52px;margin:20px 0}h2{color:#fff;margin-top:35px}li{margin:10px 0}header{border-bottom:1px solid #2a342d;padding:20px 22px}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>UNSEENGO AI · ABOUT</p><h1>Discover India beyond the obvious.</h1><div class="box"><p>UnseenGo AI is a travel discovery platform focused on lesser-known destinations, local stories, experiences and practical trip planning.</p><h2>Our mission</h2><p>Make travel more meaningful by helping people find places that are often overlooked while connecting discovery with local culture and communities.</p><h2>What we bring together</h2><ul><li>Hidden-gem discovery and UnseenGo scoring</li><li>Personalized AI itineraries</li><li>Stays and transport planning</li><li>Historical and cultural storytelling</li><li>Local experiences and community connections</li></ul><h2>Our vision</h2><p>A connected travel ecosystem where every city has an opportunity to tell its lesser-known stories.</p></div><p><a href="index.html">← Back to UnseenGo</a></p></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="About UnseenGo AI — India's AI-powered hidden-gem tourism explorer dedicated to cultural preservation, responsible travel, and transparent AI recommendations.">
+  <title>About UnseenGo AI — India Has More to Discover</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="About UnseenGo">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .about-hero {
+      padding: 5rem 0 3.5rem;
+      text-align: center;
+      position: relative;
+    }
+    .about-hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-glass);
+      border: 1px solid var(--ug-border);
+      border-radius: 9999px;
+      padding: 0.4rem 1.25rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ug-primary);
+      margin-bottom: 1.5rem;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.75rem;
+      margin: 3rem 0;
+    }
+    .about-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 2.25rem;
+      transition: var(--ug-transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .about-card:hover {
+      border-color: var(--ug-primary);
+      transform: translateY(-4px);
+      box-shadow: var(--ug-shadow-lg);
+    }
+    .about-card-icon {
+      font-size: 2.2rem;
+      margin-bottom: 1.25rem;
+      width: 58px;
+      height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: var(--ug-primary-soft);
+      border: 1px solid var(--ug-border);
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin: 3.5rem 0;
+    }
+    @media (max-width: 820px) {
+      .about-stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .about-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+    .about-stat-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--ug-primary);
+      line-height: 1.1;
+      margin-bottom: 0.35rem;
+    }
+    .about-stat-label {
+      color: var(--ug-text-muted);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modern Responsive Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link active" href="about.html">🏛️ About</a></li>
+          </ul>
+        </nav>
+
+        <!-- Navigation Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;">
+            <span class="pin">📍</span>
+            <span>Current City:</span>
+            <b data-ug-current-city>All India</b>
+          </span>
+          <span>Change ▾</span>
+        </button>
+
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+          <a class="ug-drawer-link" href="stay.html"><span class="icon">🏡</span><span>Stay</span></a>
+          <a class="ug-drawer-link" href="transport.html"><span class="icon">🚗</span><span>Transport</span></a>
+          <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Experiences & Stories</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link active" href="about.html"><span class="icon">🏛️</span><span>About UnseenGo</span></a>
+          <a class="ug-drawer-link" href="safety.html"><span class="icon">🛡️</span><span>Help & Safety</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Content -->
+  <main class="ug-container">
+    <section class="about-hero">
+      <div class="about-hero-kicker">
+        <span>✦</span>
+        <span>THE UNSEENGO AI MISSION</span>
+      </div>
+      <h1 style="font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.15; margin-bottom: 1.25rem;">
+        Discovering the India <br><span class="ug-serif" style="color: var(--ug-primary);">Beyond the Obvious</span>
+      </h1>
+      <p style="color: var(--ug-text-secondary); font-size: 1.15rem; max-width: 760px; margin: 0 auto; line-height: 1.7;">
+        India harbors millennia of living folklore, remote geological splendors, and architectural marvels that remain overshadowed by crowded tourist hubs. UnseenGo AI is dedicated to uncovering, honoring, and responsibly guiding travelers to these hidden treasures.
+      </p>
+    </section>
+
+    <!-- Stat Highlights -->
+    <div class="about-stats">
+      <div>
+        <div class="about-stat-number">220+</div>
+        <div class="about-stat-label">Verified Hidden Gems Across 28 States & UTs</div>
+      </div>
+      <div>
+        <div class="about-stat-number">100%</div>
+        <div class="about-stat-label">Grounded Real-World Coordinates & Routes</div>
+      </div>
+      <div>
+        <div class="about-stat-number">0</div>
+        <div class="about-stat-label">Hallucinated Destinations or Commercial Ads</div>
+      </div>
+      <div>
+        <div class="about-stat-number">24/7</div>
+        <div class="about-stat-label">AI Itinerary & Safety Guidance System</div>
+      </div>
+    </div>
+
+    <!-- Core Pillars Grid -->
+    <section style="margin: 4rem 0;">
+      <div style="text-align: center; margin-bottom: 2.5rem;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 0.75rem;">Our Core Principles</h2>
+        <p style="color: var(--ug-text-secondary); max-width: 620px; margin: 0 auto;">
+          How we build technology in service of heritage, sustainable exploration, and honest traveler support.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Pillar 1 -->
+        <div class="about-card">
+          <div class="about-card-icon">🏛️</div>
+          <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--ug-text-primary);">Cultural Preservation</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; line-height: 1.65; flex: 1;">
+            We document oral traditions, temple legends, and royal chronologies — from the rock-cut wonders of Ahobilam to the Pemmasani dynasty of Gandikota — ensuring regional history is celebrated and remembered accurately.
+          </p>
+        </div>
+
+        <!-- Pillar 2 -->
+        <div class="about-card">
+          <div class="about-card-icon">🌿</div>
+          <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--ug-text-primary);">Responsible & Sustainable Tourism</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; line-height: 1.65; flex: 1;">
+            Overtourism damages fragile ecosystems and historic monuments. UnseenGo redistributes tourist footfall toward quieter villages and homestays, supporting local artisans while championing Leave-No-Trace wilderness principles.
+          </p>
+        </div>
+
+        <!-- Pillar 3 -->
+        <div class="about-card">
+          <div class="about-card-icon">🧠</div>
+          <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--ug-text-primary);">Explainable, Grounded AI</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; line-height: 1.65; flex: 1;">
+            Unlike generic AI chat models that invent non-existent hotels or closed routes, UnseenGo's intelligence is anchored strictly in verified Indian spatial coordinates, ASI timings, seasonal weather patterns, and authentic highway connectivity.
+          </p>
+        </div>
+
+        <!-- Pillar 4 -->
+        <div class="about-card">
+          <div class="about-card-icon">🛡️</div>
+          <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--ug-text-primary);">Traveler Safety First</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; line-height: 1.65; flex: 1;">
+            Remote locations present unique challenges: sudden monsoon torrents, cellular dead zones, and steep terrain. We provide verified emergency numbers (112, 1363), district hospitals, and real road access ratings for every journey.
+          </p>
+        </div>
+
+        <!-- Pillar 5 -->
+        <div class="about-card">
+          <div class="about-card-icon">🤝</div>
+          <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--ug-text-primary);">Community Verification</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; line-height: 1.65; flex: 1;">
+            Local explorers, district historians, and travelers submit on-the-ground updates. Every community submission is reviewed for factual accuracy and respect for local traditions before being indexed into our national registry.
+          </p>
+        </div>
+
+        <!-- Pillar 6 -->
+        <div class="about-card">
+          <div class="about-card-icon">⚡</div>
+          <h3 style="font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--ug-text-primary);">High-Speed & Offline-Ready</h3>
+          <p style="color: var(--ug-text-secondary); font-size: 0.95rem; line-height: 1.65; flex: 1;">
+            Built as a Progressive Web App (PWA) with client-side caching and responsive layouts that perform seamlessly even on low-bandwidth rural connections or offline remote trails.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verification & Transparency Section -->
+    <section style="background: var(--ug-surface); border: 1.5px solid var(--ug-border); border-radius: 28px; padding: 3rem 2.5rem; margin: 4rem 0;">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <span class="ug-badge ug-badge-verified" style="margin-bottom: 1rem; display: inline-block;">✦ Verification Methodology</span>
+        <h2 style="font-size: 2.1rem; margin-bottom: 1rem;">How UnseenGo Verifies Data</h2>
+        <p style="color: var(--ug-text-secondary); line-height: 1.7; margin-bottom: 1.5rem;">
+          Our platform combines curated spatial records with rigorous human review. We apply strict standards:
+        </p>
+        <ul style="color: var(--ug-text-secondary); line-height: 1.8; padding-left: 1.25rem; margin-bottom: 2rem;">
+          <li><b style="color: var(--ug-text-primary);">Official Sources:</b> Timings and entry fees are cross-referenced with Archaeological Survey of India (ASI), State Tourism Boards (APTDC, KSTDC, RTDC, TTDC), and Forest Departments.</li>
+          <li><b style="color: var(--ug-text-primary);">Spatial Integrity:</b> Exact latitude and longitude coordinates are audited with OpenStreetMap and satellite telemetry to ensure navigation directions lead to real trailheads.</li>
+          <li><b style="color: var(--ug-text-primary);">Transparent AI Badges:</b> Every recommendation displays its data origin — whether <i>Verified</i>, <i>Community Sourced</i>, or <i>AI Itinerary Suggestion</i> with clear disclaimers.</li>
+        </ul>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a class="ug-btn-primary" href="stories.html">
+            ✍️ Contribute an Experience
+          </a>
+          <a class="ug-btn-secondary" href="safety.html">
+            🛡️ View Safety & Emergency Guide
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact & Feedback CTA -->
+    <section style="text-align: center; padding: 3rem 0 5rem;">
+      <h2 style="font-size: 2rem; margin-bottom: 1rem;">Have a Suggestion or Found an Error?</h2>
+      <p style="color: var(--ug-text-secondary); max-width: 580px; margin: 0 auto 2rem; line-height: 1.65;">
+        We welcome corrections, historical nuances, and suggestions from fellow travelers and historians across India.
+      </p>
+      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+        <a class="ug-btn-primary" href="contact.html">📩 Contact Support Team</a>
+        <a class="ug-btn-secondary" href="discover.html">🔎 Explore Destinations</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-saffron); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Safety & Planning</h5>
+          <ul class="ug-footer-links">
+            <li><a href="safety.html">Help & Safety Guide</a></li>
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+            <li><a href="stay.html">Heritage Stays</a></li>
+            <li><a href="transport.html">Transport & Routes</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>About & Legal</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="security.html">Security Disclosure</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="safety.html" style="color: inherit; text-decoration: none;">Safety (112)</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="data/destination-registry.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script src="src/scripts/ai-widget.js"></script>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
+</body>
+</html>

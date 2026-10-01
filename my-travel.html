@@ -27,6 +27,44 @@
       border-color: rgba(77, 124, 15, 0.3);
     }
 
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .ug-header,
+      .ug-footer,
+      .ug-guest-banner,
+      .ug-vault-stats-grid,
+      .ug-tabs-bar,
+      .ug-vault-top-bar,
+      .ug-ai-float-btn,
+      .ug-ai-drawer-overlay,
+      .ug-btn-secondary,
+      .ug-btn-primary,
+      .ug-trip-card-actions,
+      button {
+        display: none !important;
+      }
+      .ug-tab-pane {
+        display: block !important;
+      }
+      .ug-itinerary-card,
+      .ug-trip-card {
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid;
+        margin-bottom: 2rem;
+        box-shadow: none !important;
+        background: #fff !important;
+        color: #000 !important;
+      }
+      .ug-itin-day-card {
+        background: #f9f9f9 !important;
+        border: 1px solid #ddd !important;
+        color: #000 !important;
+      }
+    }
+
     /* Scoped Luxury Styles for My Travel Vault */
     .ug-vault-hero {
       margin-bottom: 2.25rem;
@@ -817,7 +855,13 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="data/all-india-famous-places.js"></script>
+  <script src="data/destination-registry.js"></script>
   <script src="src/scripts/navigation.js"></script>
+  <script src="src/scripts/ai-widget.js"></script>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
   <script>
     (function() {
       'use strict';
@@ -1032,13 +1076,91 @@
         });
       });
 
-      // 2. Render Custom Trips
+      // 2. Render Custom Trips with Stop Reordering, Duplication, and URL Sharing
+      function getMergedTrips() {
+        let customTrips = [];
+        try { customTrips = JSON.parse(localStorage.getItem('unseengo_custom_trips') || '[]'); } catch (_) {}
+        let userTrips = [];
+        try { userTrips = JSON.parse(localStorage.getItem('unseengo_user_trips') || '[]'); } catch (_) {}
+
+        const tripMap = new Map();
+        [...customTrips, ...userTrips].forEach(t => {
+          if (!t) return;
+          const id = t.id || t.title;
+          if (tripMap.has(id)) {
+            const existing = tripMap.get(id);
+            existing.stops = [...(existing.stops || []), ...(t.stops || [])].filter((v, i, a) => a.findIndex(x => (x.name || x) === (v.name || v)) === i);
+          } else {
+            tripMap.set(id, { ...t, stops: t.stops || [] });
+          }
+        });
+
+        let trips = Array.from(tripMap.values());
+        if (!trips.length) trips = [...SAMPLE_TRIPS];
+        return trips;
+      }
+
+      function saveMergedTrips(trips) {
+        localStorage.setItem('unseengo_custom_trips', JSON.stringify(trips));
+        localStorage.setItem('unseengo_user_trips', JSON.stringify(trips));
+      }
+
+      window.moveTripStop = function(tripIdx, stopIdx, dir) {
+        const trips = getMergedTrips();
+        const trip = trips[tripIdx];
+        if (!trip || !trip.stops) return;
+        const targetIdx = stopIdx + dir;
+        if (targetIdx < 0 || targetIdx >= trip.stops.length) return;
+        const temp = trip.stops[stopIdx];
+        trip.stops[stopIdx] = trip.stops[targetIdx];
+        trip.stops[targetIdx] = temp;
+        saveMergedTrips(trips);
+        renderCustomTrips();
+      };
+
+      window.removeTripStop = function(tripIdx, stopIdx) {
+        const trips = getMergedTrips();
+        const trip = trips[tripIdx];
+        if (!trip || !trip.stops) return;
+        trip.stops.splice(stopIdx, 1);
+        saveMergedTrips(trips);
+        renderCustomTrips();
+      };
+
+      window.duplicateTrip = function(tripIdx) {
+        const trips = getMergedTrips();
+        const trip = trips[tripIdx];
+        if (!trip) return;
+        const copy = JSON.parse(JSON.stringify(trip));
+        copy.id = 'trip-' + Date.now();
+        copy.title = trip.title + ' (Copy)';
+        copy.created = 'Just now';
+        trips.unshift(copy);
+        saveMergedTrips(trips);
+        renderCustomTrips();
+        alert(`✓ Duplicated "${trip.title}"!`);
+      };
+
+      window.shareTrip = function(tripIdx) {
+        const trips = getMergedTrips();
+        const trip = trips[tripIdx];
+        if (!trip) return;
+        const stopsStr = (trip.stops || []).map(s => s.name || s).join(', ');
+        const shareUrl = `${window.location.origin}${window.location.pathname}?tab=trips&tripTitle=${encodeURIComponent(trip.title)}`;
+        const shareText = `Check out my travel expedition "${trip.title}" on UnseenGo AI!`;
+        if (navigator.share && navigator.canShare && navigator.canShare({ title: trip.title, text: shareText, url: shareUrl })) {
+          navigator.share({ title: trip.title, text: shareText, url: shareUrl }).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(shareUrl).then(() => {
+            alert(`✓ Shareable link for "${trip.title}" copied to clipboard!`);
+          }).catch(() => {
+            prompt('Copy Trip Link:', shareUrl);
+          });
+        }
+      };
+
       function renderCustomTrips() {
-        let trips = [];
-        try {
-          trips = JSON.parse(localStorage.getItem('unseengo_custom_trips') || '[]');
-        } catch (_) {}
-        if (!trips.length) trips = SAMPLE_TRIPS;
+        const trips = getMergedTrips();
 
         document.getElementById('statPlannedTrips').textContent = trips.length;
         document.getElementById('tabCountTrips').textContent = trips.length;
@@ -1065,29 +1187,60 @@
         trips.forEach((t, idx) => {
           const card = document.createElement('article');
           card.className = 'ug-trip-card';
+
+          const stopsHtml = (t.stops && t.stops.length > 0) ? `
+            <div style="margin: 0.85rem 0; background: var(--ug-surface-elevated, #141c14); border: 1px solid var(--ug-border); border-radius: 12px; padding: 0.75rem;">
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--ug-primary); text-transform: uppercase; margin-bottom: 0.4rem;">
+                📍 Expedition Stops (${t.stops.length})
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+                ${t.stops.map((s, sIdx) => `
+                  <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.82rem; padding: 0.3rem 0.5rem; background: rgba(255,255,255,0.03); border-radius: 6px;">
+                    <span><b>${sIdx + 1}.</b> ${s.name || s} <small style="color:var(--ug-text-muted);">(${s.city || t.destination})</small></span>
+                    <div style="display: flex; gap: 0.25rem;">
+                      ${sIdx > 0 ? `<button type="button" onclick="moveTripStop(${idx}, ${sIdx}, -1)" title="Move up" style="background:transparent; border:none; color:var(--ug-text-muted); cursor:pointer; font-size:0.8rem;">▲</button>` : ''}
+                      ${sIdx < t.stops.length - 1 ? `<button type="button" onclick="moveTripStop(${idx}, ${sIdx}, 1)" title="Move down" style="background:transparent; border:none; color:var(--ug-text-muted); cursor:pointer; font-size:0.8rem;">▼</button>` : ''}
+                      <button type="button" onclick="removeTripStop(${idx}, ${sIdx})" title="Remove stop" style="background:transparent; border:none; color:#ef4444; cursor:pointer; font-size:0.8rem; margin-left:4px;">✕</button>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : '';
+
           card.innerHTML = `
             <div>
               <div class="ug-trip-card-head">
-                <span class="ug-score-pill" style="font-size: 0.75rem;">🧳 ${t.days} Days Journey</span>
+                <span class="ug-score-pill" style="font-size: 0.75rem;">🧳 ${t.days || 2} Days Journey</span>
                 <span style="font-size: 0.75rem; color: var(--ug-text-muted);">${t.created || 'Recently'}</span>
               </div>
               <h3 class="ug-trip-card-title">${t.title}</h3>
               <div class="ug-trip-card-hub">
                 <span>📍 Hub:</span>
-                <strong>${t.destination}</strong>
+                <strong>${t.destination || 'India'}</strong>
               </div>
+              ${stopsHtml}
               <p class="ug-trip-card-notes">
-                ${t.notes || 'Custom trip planned with UnseenGo AI.'}
+                ${t.notes || 'Custom expedition planned with UnseenGo AI.'}
               </p>
             </div>
-            <div class="ug-trip-card-actions">
-              <a href="planner.html?city=${encodeURIComponent(t.destination)}" class="ug-btn-secondary" style="flex: 1; font-size: 0.82rem; justify-content: center; text-decoration: none;">
-                AI Planner ↗
+            <div class="ug-trip-card-actions" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+              <a href="planner.html?city=${encodeURIComponent(t.destination || '')}" class="ug-btn-secondary" style="flex: 1; font-size: 0.8rem; justify-content: center; text-decoration: none;">
+                🤖 AI Plan
               </a>
-              <a href="map.html?place=${encodeURIComponent(t.destination)}&navigate=true" class="ug-btn-primary" style="flex: 1.2; font-size: 0.82rem; justify-content: center; text-decoration: none;">
-                🧭 Start Navigation →
+              <a href="map.html?place=${encodeURIComponent(t.destination || '')}&navigate=true" class="ug-btn-primary" style="flex: 1.1; font-size: 0.8rem; justify-content: center; text-decoration: none;">
+                🧭 Map
               </a>
-              <button type="button" class="ug-btn-secondary delete-trip-btn" data-index="${idx}" style="color: #ef4444; padding: 0.6rem 0.85rem;" title="Delete Trip">
+              <button type="button" class="ug-btn-secondary" onclick="shareTrip(${idx})" title="Share Trip Link" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">
+                🔗 Share
+              </button>
+              <button type="button" class="ug-btn-secondary" onclick="duplicateTrip(${idx})" title="Duplicate Trip" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">
+                📋 Copy
+              </button>
+              <button type="button" class="ug-btn-secondary" onclick="window.print()" title="Print / PDF" style="padding: 0.5rem 0.75rem; font-size: 0.8rem;">
+                🖨️
+              </button>
+              <button type="button" class="ug-btn-secondary delete-trip-btn" data-index="${idx}" style="color: #ef4444; padding: 0.5rem 0.75rem;" title="Delete Trip">
                 🗑️
               </button>
             </div>
@@ -1098,11 +1251,9 @@
         grid.querySelectorAll('.delete-trip-btn').forEach(btn => {
           btn.addEventListener('click', () => {
             const index = Number(btn.dataset.index);
-            let current = [];
-            try { current = JSON.parse(localStorage.getItem('unseengo_custom_trips') || '[]'); } catch (_) {}
-            if (!current.length) current = [...SAMPLE_TRIPS];
-            current.splice(index, 1);
-            localStorage.setItem('unseengo_custom_trips', JSON.stringify(current));
+            const trips = getMergedTrips();
+            trips.splice(index, 1);
+            saveMergedTrips(trips);
             renderCustomTrips();
           });
         });

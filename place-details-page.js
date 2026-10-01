@@ -204,6 +204,22 @@
   }
 
   function find() {
+    const pNorm = norm(place);
+    if (window.ALL_INDIA_FAMOUS_PLACES && Array.isArray(window.ALL_INDIA_FAMOUS_PLACES)) {
+      const hit = window.ALL_INDIA_FAMOUS_PLACES.find(x => {
+        const xNorm = norm(x.name);
+        return xNorm === pNorm || xNorm.includes(pNorm) || pNorm.includes(xNorm) ||
+          (x.city && norm(x.city) === norm(city) && xNorm.includes(pNorm));
+      });
+      if (hit) {
+        return {
+          cat: hit.category || 'Heritage',
+          row: [hit.name, `${hit.city || city} · ${hit.state || 'India'}`, hit.score || 96, hit.desc],
+          d: { region: hit.region },
+          famousRecord: hit
+        };
+      }
+    }
     const d = db()[city] || {};
     for (const cat of Object.keys(d)) {
       if (cat === 'region' || !Array.isArray(d[cat])) continue;
@@ -482,6 +498,10 @@
     const history = historyData?.history || `${name} is an important cultural and heritage site associated with ${city}. It stands as a testament to the region's rich architecture and history.`;
     const source = historyData?.source || '';
     const near = nearby(found.d, name);
+    const lat = found.famousRecord?.lat || intel.lat || 15.8281;
+    const lng = found.famousRecord?.lng || intel.lng || 78.0373;
+    const mapUrl = `map.html?place=${encodeURIComponent(name)}&city=${encodeURIComponent(city)}&lat=${lat}&lng=${lng}`;
+    const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(name + ', ' + city + ', ' + state)}`;
     const map = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(name + ' ' + city);
     const reviewsList = getReviewsForPlace(name);
 
@@ -520,20 +540,29 @@
             <span class="place-pill">👥 ${intel.crowdLevel} Crowd</span>
           </div>
 
-          <!-- Action Buttons -->
-          <div class="place-actions" style="display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.25rem;">
-            <button id="imHereToggleBtn" type="button" class="ug-btn-primary" style="background: var(--ug-lime); color: #080d09; font-weight: 800; padding: 0.65rem 1.35rem; border-radius: 12px; border: none; cursor: pointer;">
-              📍 I'm Here (Tourist Mode)
+          <!-- Master Action Suite (All 6 Working Required Buttons) -->
+          <div class="place-actions" style="display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 1.25rem;">
+            <button id="btnFav" type="button" class="ug-btn-secondary" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.65rem 1.15rem; font-size: 0.88rem; cursor: pointer;">
+              <span id="favIcon">🤍</span> <span id="favText">Save to Favorites</span>
             </button>
-            <a href="planner.html?city=${encodeURIComponent(city)}&place=${encodeURIComponent(name)}" class="ug-btn-secondary" style="text-decoration: none; padding: 0.65rem 1.25rem; font-size: 0.88rem;">
-              🤖 Build AI Itinerary
-            </a>
-            <button id="savePlace" type="button" class="ug-btn-secondary" style="padding: 0.65rem 1.25rem; font-size: 0.88rem; cursor: pointer;">
-              ♡ Save to My Trips
+            <button id="btnAddTrip" type="button" class="ug-btn-secondary" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.65rem 1.15rem; font-size: 0.88rem; cursor: pointer;">
+              <span>➕</span> <span>Add to My Trip</span>
             </button>
-            <a href="${map}" target="_blank" rel="noopener noreferrer" class="ug-btn-secondary" style="text-decoration: none; padding: 0.65rem 1.25rem; font-size: 0.88rem;">
-              Google Maps ↗
+            <a id="btnViewMap" href="${mapUrl}" class="ug-btn-secondary" style="display: inline-flex; align-items: center; gap: 0.45rem; text-decoration: none; padding: 0.65rem 1.15rem; font-size: 0.88rem;">
+              <span>🗺️</span> <span>View on Map</span>
             </a>
+            <a id="btnDirections" href="${directionsUrl}" target="_blank" rel="noopener noreferrer" class="ug-btn-secondary" style="display: inline-flex; align-items: center; gap: 0.45rem; text-decoration: none; padding: 0.65rem 1.15rem; font-size: 0.88rem;">
+              <span>🧭</span> <span>Get Directions ↗</span>
+            </a>
+            <button id="btnShare" type="button" class="ug-btn-secondary" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.65rem 1.15rem; font-size: 0.88rem; cursor: pointer;">
+              <span>🔗</span> <span>Share Destination</span>
+            </button>
+            <button id="btnAskAI" type="button" class="ug-btn-primary" style="display: inline-flex; align-items: center; gap: 0.45rem; background: var(--ug-lime); color: #080d09; font-weight: 800; padding: 0.65rem 1.25rem; font-size: 0.88rem; border: none; cursor: pointer;">
+              <span>🤖</span> <span>Ask AI About This Place</span>
+            </button>
+            <button id="imHereToggleBtn" type="button" class="ug-btn-secondary" style="display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.65rem 1.15rem; font-size: 0.88rem; cursor: pointer; border-color: var(--ug-lime);">
+              <span>🎧</span> <span>Audio Guide / I'm Here</span>
+            </button>
           </div>
         </div>
       </section>
@@ -765,6 +794,36 @@
             </div>
           </article>
 
+          <!-- Live Weather & Environmental Card (Open-Meteo) -->
+          <article class="place-card" id="placeWeatherCard" style="background: #101611; border: 1px solid var(--ug-border); border-radius: 18px; padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <h3 style="font-size: 1.15rem; color: var(--ug-text-primary); margin: 0;">🌤️ Live Weather</h3>
+              <span class="ug-badge ug-badge-verified" style="font-size: 0.72rem;">Open-Meteo</span>
+            </div>
+            <div id="placeWeatherContent" style="color: var(--ug-text-muted); font-size: 0.85rem;">
+              Fetching live atmospheric data…
+            </div>
+            <p style="margin: 0.75rem 0 0; font-size: 0.75rem; color: var(--ug-text-muted); line-height: 1.4;">
+              Real meteorological data from Open-Meteo API. No fabricated temperature values.
+            </p>
+          </article>
+
+          <!-- Sustainable Tourism & Leave No Trace Card -->
+          <article class="place-card" style="background: #101611; border: 1px solid var(--ug-border); border-radius: 18px; padding: 1.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span style="font-size: 1.2rem;">🌱</span>
+              <h3 style="font-size: 1.15rem; color: var(--ug-text-primary); margin: 0;">Sustainable Travel</h3>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--ug-text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+              Preserve this sanctuary for generations. Please adhere to Leave No Trace principles:
+            </p>
+            <ul style="padding-left: 1.1rem; margin: 0; font-size: 0.8rem; color: var(--ug-text-muted); line-height: 1.5;">
+              <li>Carry all plastic and personal waste back to district hubs.</li>
+              <li>Respect sacred silence within inner sanctums.</li>
+              <li>Support local family-run tea stalls and registered rural guides.</li>
+            </ul>
+          </article>
+
           <!-- Location & Map Directions Card -->
           <article class="place-card" style="background: #101611; border: 1px solid var(--ug-border); border-radius: 18px; padding: 1.5rem;">
             <h3 style="font-size: 1.15rem; color: var(--ug-text-primary); margin-bottom: 0.6rem;">📍 Map & Directions</h3>
@@ -778,10 +837,227 @@
           </article>
         </aside>
       </section>
+
+      <!-- Add to Trip Modal -->
+      <div id="ugTripModal" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(6px); padding: 1.5rem;">
+        <div style="background: var(--ug-soft, #101611); border: 1.5px solid var(--ug-line, #1e2820); border-radius: 20px; max-width: 480px; width: 100%; padding: 1.75rem; box-shadow: 0 20px 50px rgba(0,0,0,0.7);">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3 style="margin: 0; font-size: 1.25rem; color: var(--ug-text-primary, #f5f7f3);">Add to My Trips</h3>
+            <button id="closeTripModal" type="button" style="background: transparent; border: none; color: var(--ug-muted, #a8b4aa); font-size: 1.3rem; cursor: pointer;">✕</button>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--ug-muted, #a8b4aa); margin-bottom: 1.25rem;">
+            Add <strong>${esc(name)}</strong> to an existing itinerary or create a new trip.
+          </p>
+          <div id="tripListContainer" style="display: flex; flex-direction: column; gap: 0.6rem; max-height: 220px; overflow-y: auto; margin-bottom: 1.25rem;">
+            <!-- Dynamic trip items -->
+          </div>
+          <div style="border-top: 1px solid var(--ug-line, #1e2820); padding-top: 1rem;">
+            <label style="display: block; font-size: 0.8rem; color: var(--ug-muted, #a8b4aa); margin-bottom: 0.4rem;">+ Or create a new trip:</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <input type="text" id="newTripNameInput" placeholder="e.g. South Heritage Weekend" style="flex: 1; background: #080d09; border: 1px solid var(--ug-line, #1e2820); border-radius: 10px; padding: 0.6rem 0.85rem; color: #fff; font-size: 0.88rem;">
+              <button id="createAndAddTripBtn" type="button" class="ug-btn-primary" style="padding: 0.6rem 1rem; font-size: 0.88rem; white-space: nowrap;">Create & Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast Feedback -->
+      <div id="ugToast" style="display: none; position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); background: #122116; border: 1.5px solid var(--ug-lime, #d8ff4d); color: #fff; padding: 0.75rem 1.4rem; border-radius: 999px; font-size: 0.88rem; font-weight: 600; z-index: 10001; box-shadow: 0 10px 30px rgba(0,0,0,0.6); align-items: center; gap: 0.5rem;">
+        <span id="ugToastText">Notification</span>
+      </div>
     `;
 
     // Initialize Audio Guide
     initAudioGuide(history);
+
+    // Toast notification helper
+    function showToast(msg, actionUrl, actionText) {
+      const toast = document.getElementById('ugToast');
+      const textEl = document.getElementById('ugToastText');
+      if (!toast || !textEl) return;
+      if (actionUrl && actionText) {
+        textEl.innerHTML = `${msg} <a href="${actionUrl}" style="color:var(--ug-lime,#d8ff4d); text-decoration:underline; margin-left:8px;">${actionText} →</a>`;
+      } else {
+        textEl.textContent = msg;
+      }
+      toast.style.display = 'inline-flex';
+      setTimeout(() => { if (toast) toast.style.display = 'none'; }, 4000);
+    }
+
+    // 1. Favorites Button Handler
+    const btnFav = document.getElementById('btnFav');
+    const favIcon = document.getElementById('favIcon');
+    const favText = document.getElementById('favText');
+    const favKey = 'unseengo_favorites';
+    let favorites = [];
+    try { favorites = JSON.parse(localStorage.getItem(favKey) || '[]'); } catch (_) {}
+    
+    function isFav() {
+      return favorites.some(f => (typeof f === 'string' ? f === name : f.name === name));
+    }
+
+    function updateFavUI() {
+      if (isFav()) {
+        if (favIcon) favIcon.textContent = '❤️';
+        if (favText) favText.textContent = 'Saved in Favorites';
+      } else {
+        if (favIcon) favIcon.textContent = '🤍';
+        if (favText) favText.textContent = 'Save to Favorites';
+      }
+    }
+    updateFavUI();
+
+    if (btnFav) {
+      btnFav.addEventListener('click', () => {
+        try { favorites = JSON.parse(localStorage.getItem(favKey) || '[]'); } catch (_) {}
+        if (isFav()) {
+          favorites = favorites.filter(f => (typeof f === 'string' ? f !== name : f.name !== name));
+          localStorage.setItem(favKey, JSON.stringify(favorites));
+          updateFavUI();
+          showToast(`Removed "${name}" from Favorites`);
+        } else {
+          favorites.push({
+            id: 'fav-' + Date.now(),
+            name,
+            city,
+            state,
+            category: cat,
+            score: score || intel.hiddenScore || 95,
+            image: photoData?.photos?.[0]?.url || 'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=400&q=80',
+            dateAdded: new Date().toISOString()
+          });
+          localStorage.setItem(favKey, JSON.stringify(favorites));
+          updateFavUI();
+          showToast(`❤️ Saved "${name}" to Favorites!`, 'my-travel.html', 'View Favorites');
+        }
+      });
+    }
+
+    // 2. Add to Trip Modal Handler
+    const btnAddTrip = document.getElementById('btnAddTrip');
+    const tripModal = document.getElementById('ugTripModal');
+    const closeTripModal = document.getElementById('closeTripModal');
+    const tripListContainer = document.getElementById('tripListContainer');
+    const newTripNameInput = document.getElementById('newTripNameInput');
+    const createAndAddTripBtn = document.getElementById('createAndAddTripBtn');
+
+    function populateTripModal() {
+      if (!tripListContainer) return;
+      let trips = [];
+      try { trips = JSON.parse(localStorage.getItem('unseengo_user_trips') || '[]'); } catch (_) {}
+      
+      if (!trips.length) {
+        trips = [
+          { id: 'trip-1', title: 'South India Heritage Loop', days: 3, stops: [] },
+          { id: 'trip-2', title: 'Monsoon Explorer 2026', days: 2, stops: [] }
+        ];
+        localStorage.setItem('unseengo_user_trips', JSON.stringify(trips));
+      }
+
+      tripListContainer.innerHTML = trips.map(t => `
+        <div style="display: flex; justify-content: space-between; align-items: center; background: #141c14; border: 1px solid var(--ug-line, #1e2820); border-radius: 10px; padding: 0.65rem 0.85rem;">
+          <div>
+            <strong style="color: var(--ug-text-primary, #f5f7f3); font-size: 0.9rem; display: block;">${esc(t.title)}</strong>
+            <small style="color: var(--ug-muted, #a8b4aa); font-size: 0.78rem;">${(t.stops || []).length} stops · ${t.days || 2} days</small>
+          </div>
+          <button type="button" class="ug-btn-secondary add-stop-btn" data-trip-id="${esc(t.id)}" style="padding: 0.4rem 0.75rem; font-size: 0.78rem; cursor: pointer;">
+            + Add Stop
+          </button>
+        </div>
+      `).join('');
+
+      tripListContainer.querySelectorAll('.add-stop-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tripId = btn.getAttribute('data-trip-id');
+          addPlaceToTrip(tripId);
+        });
+      });
+    }
+
+    function addPlaceToTrip(tripId, tripTitle) {
+      let trips = [];
+      try { trips = JSON.parse(localStorage.getItem('unseengo_user_trips') || '[]'); } catch (_) {}
+      let target = trips.find(t => t.id === tripId);
+      if (!target) {
+        target = { id: tripId || ('trip-' + Date.now()), title: tripTitle || 'My New Journey', days: 3, stops: [] };
+        trips.push(target);
+      }
+      target.stops = target.stops || [];
+      if (!target.stops.some(s => s.name === name)) {
+        target.stops.push({ name, city, state, lat, lng, category: cat });
+        localStorage.setItem('unseengo_user_trips', JSON.stringify(trips));
+        if (tripModal) tripModal.style.display = 'none';
+        showToast(`✓ Added to "${target.title}"!`, 'my-travel.html', 'View My Trips');
+      } else {
+        if (tripModal) tripModal.style.display = 'none';
+        showToast(`"${name}" is already in "${target.title}"`, 'my-travel.html', 'View My Trips');
+      }
+    }
+
+    if (btnAddTrip && tripModal) {
+      btnAddTrip.addEventListener('click', () => {
+        populateTripModal();
+        tripModal.style.display = 'flex';
+      });
+    }
+
+    if (closeTripModal && tripModal) {
+      closeTripModal.addEventListener('click', () => {
+        tripModal.style.display = 'none';
+      });
+    }
+
+    if (tripModal) {
+      tripModal.addEventListener('click', (e) => {
+        if (e.target === tripModal) tripModal.style.display = 'none';
+      });
+    }
+
+    if (createAndAddTripBtn && newTripNameInput) {
+      createAndAddTripBtn.addEventListener('click', () => {
+        const title = newTripNameInput.value.trim();
+        if (!title) return;
+        const newId = 'trip-' + Date.now();
+        addPlaceToTrip(newId, title);
+        newTripNameInput.value = '';
+      });
+    }
+
+    // 3. Share Destination Handler
+    const btnShare = document.getElementById('btnShare');
+    if (btnShare) {
+      btnShare.addEventListener('click', () => {
+        const shareData = {
+          title: `${name} — UnseenGo AI`,
+          text: `Discover ${name} in ${city}, ${state} — verified hidden gem on UnseenGo AI!`,
+          url: window.location.href
+        };
+        if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+          navigator.share(shareData).catch(() => {});
+        } else {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            showToast('✓ Link copied to clipboard! Share with fellow travelers.');
+          }).catch(() => {
+            prompt('Copy destination link:', window.location.href);
+          });
+        }
+      });
+    }
+
+    // 4. Ask AI About This Place Handler
+    const btnAskAI = document.getElementById('btnAskAI');
+    if (btnAskAI) {
+      btnAskAI.addEventListener('click', () => {
+        const promptText = `Tell me the history, secret photography spots, best visiting hours, and travel advice for ${name} in ${city}.`;
+        if (window.UnseenGoAI && typeof window.UnseenGoAI.openWithPrompt === 'function') {
+          window.UnseenGoAI.openWithPrompt(promptText);
+        } else if (window.UnseenGoAI && typeof window.UnseenGoAI.open === 'function') {
+          window.UnseenGoAI.open(promptText);
+        } else {
+          window.location.href = `planner.html?place=${encodeURIComponent(name)}&city=${encodeURIComponent(city)}`;
+        }
+      });
+    }
 
     // "I'm Here" Tourist Mode Toggle Handler
     const imHereBtn = document.getElementById('imHereToggleBtn');
@@ -821,30 +1097,6 @@
       });
     }
 
-    // Save Place Event Handler
-    const saveBtn = document.getElementById('savePlace');
-    const key = 'unseengo_saved_places';
-    let saved = [];
-    try {
-      saved = JSON.parse(localStorage.getItem(key) || '[]');
-    } catch (_) {}
-    const id = city + '|' + name;
-    if (saved.includes(id) || saved.includes(name)) {
-      saveBtn.textContent = '♥ Saved to My Trips';
-    }
-    saveBtn.onclick = function() {
-      saved = JSON.parse(localStorage.getItem(key) || '[]');
-      if (saved.includes(id) || saved.includes(name)) {
-        saved = saved.filter(x => x !== id && x !== name);
-        localStorage.setItem(key, JSON.stringify(saved));
-        this.textContent = '♡ Save to My Trips';
-      } else {
-        saved.push(id);
-        localStorage.setItem(key, JSON.stringify(saved));
-        this.textContent = '♥ Saved to My Trips';
-      }
-    };
-
     // Review Form Event Handler
     const reviewForm = document.getElementById('newReviewForm');
     if (reviewForm) {
@@ -865,6 +1117,54 @@
           render();
         }
       });
+    }
+
+    // Fetch live weather from Open-Meteo API
+    const weatherContainer = document.getElementById('placeWeatherContent');
+    if (weatherContainer) {
+      const qLat = placeObj?.lat || intel.lat || (typeof cities !== 'undefined' && cities[city]?.[0]?.[3]);
+      const qLng = placeObj?.lng || intel.lng || (typeof cities !== 'undefined' && cities[city]?.[0]?.[4]);
+      if (qLat && qLng) {
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=${encodeURIComponent(qLat)}&longitude=${encodeURIComponent(qLng)}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=3`)
+          .then(res => {
+            if (!res.ok) throw new Error('Weather API failed');
+            return res.json();
+          })
+          .then(data => {
+            if (data.current) {
+              const curTemp = Math.round(data.current.temperature_2m);
+              const curHum = data.current.relative_humidity_2m;
+              const curWind = Math.round(data.current.wind_speed_10m);
+              const days = (data.daily?.time || []).slice(0, 3);
+              weatherContainer.innerHTML = `
+                <div style="display: flex; align-items: baseline; gap: 0.5rem; margin: 0.4rem 0 0.6rem;">
+                  <strong style="font-size: 1.85rem; color: #fff; font-weight: 800;">${curTemp}°C</strong>
+                  <span style="font-size: 0.85rem; color: var(--ug-lime); font-weight: 600;">Current Temp</span>
+                </div>
+                <div style="display: flex; gap: 0.85rem; font-size: 0.78rem; color: var(--ug-text-secondary); margin-bottom: 0.75rem;">
+                  <span>💧 ${curHum}% humidity</span>
+                  <span>💨 ${curWind} km/h wind</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; padding-top: 0.6rem; border-top: 1px solid var(--ug-border);">
+                  ${days.map((d, i) => `
+                    <div style="background: #141c14; border: 1px solid var(--ug-border); border-radius: 8px; padding: 0.4rem; text-align: center;">
+                      <small style="display: block; font-size: 0.68rem; color: var(--ug-text-muted);">${new Date(d).toLocaleDateString(undefined, { weekday: 'short' })}</small>
+                      <strong style="display: block; font-size: 0.85rem; color: #fff; margin: 2px 0;">${Math.round(data.daily.temperature_2m_max[i])}°</strong>
+                      <small style="display: block; font-size: 0.65rem; color: var(--ug-lime);">${data.daily.precipitation_probability_max?.[i] ?? 0}% rain</small>
+                    </div>
+                  `).join('')}
+                </div>
+              `;
+            } else {
+              weatherContainer.innerHTML = `<span style="font-size: 0.85rem; color: var(--ug-text-muted);">Weather currently unavailable for coordinates.</span>`;
+            }
+          })
+          .catch(() => {
+            weatherContainer.innerHTML = `<span style="font-size: 0.85rem; color: var(--ug-text-muted);">Weather service temporarily offline.</span>`;
+          });
+      } else {
+        weatherContainer.innerHTML = `<span style="font-size: 0.85rem; color: var(--ug-text-muted);">Coordinates pending verification.</span>`;
+      }
     }
 
     // Record in recently viewed

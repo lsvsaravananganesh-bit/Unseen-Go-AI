@@ -1,1 +1,165 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Security | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui;line-height:1.7}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:#fff;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:900px;margin:auto;padding:60px 22px}.box{padding:30px;background:#101713;border:1px solid #2a342d;border-radius:16px}h1{font-size:48px}@media(max-width:650px){h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>SECURITY</p><h1>Help keep UnseenGo safe.</h1><div class="box"><p>We take security issues seriously. If you identify a vulnerability, suspicious behaviour or an exposed secret, please report it through our <a href="contact.html">support channel</a> and avoid publicly sharing sensitive details.</p><h2>Responsible disclosure</h2><p>Please provide enough information for us to reproduce the issue without accessing or modifying other users' information.</p></div></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Security & Responsible Disclosure — How UnseenGo AI safeguards user privacy, credentials, and data integrity.">
+  <title>Security & Responsible Disclosure — UnseenGo AI</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Security">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .sec-hero {
+      padding: 4.5rem 0 3rem;
+      text-align: center;
+    }
+    .sec-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 2.25rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modern Responsive Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="about.html">🏛️ About</a></li>
+            <li><a class="ug-nav-link" href="safety.html">🛡️ Safety</a></li>
+          </ul>
+        </nav>
+
+        <!-- Navigation Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+          <div class="ug-nav-auth"></div>
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="about.html"><span class="icon">🏛️</span><span>About UnseenGo</span></a>
+          <a class="ug-drawer-link" href="safety.html"><span class="icon">🛡️</span><span>Help & Safety</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <main class="ug-container" style="max-width: 900px; margin: auto;">
+    <section class="sec-hero">
+      <span class="ug-badge ug-badge-verified" style="margin-bottom: 1rem; display: inline-block;">✦ Security & Trust</span>
+      <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.2rem); margin-bottom: 1rem;">
+        Security & Responsible Disclosure
+      </h1>
+      <p style="color: var(--ug-text-secondary); font-size: 1.05rem; line-height: 1.6;">
+        We take the protection of user accounts, traveler privacy, and location telemetry seriously.
+      </p>
+    </section>
+
+    <div class="sec-card">
+      <h2 style="font-size: 1.4rem; margin-bottom: 0.75rem;">Account & Authentication Architecture</h2>
+      <p style="color: var(--ug-text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+        User passwords are encrypted with industry-standard cryptographic salting and hashing (<code style="color: var(--ug-primary);">scrypt</code>) before storage. We utilize timing-safe comparisons to prevent timing attacks. Sensitive credentials, database connection strings, and API secrets are managed exclusively through server-side environment variables and are never bundled in client assets.
+      </p>
+    </div>
+
+    <div class="sec-card">
+      <h2 style="font-size: 1.4rem; margin-bottom: 0.75rem;">Responsible Disclosure Policy</h2>
+      <p style="color: var(--ug-text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+        If you discover a vulnerability, misconfiguration, or data leakage in UnseenGo AI, please report it to us immediately. We commit to acknowledging receipt within 48 hours and working with you to validate and remediate the issue promptly.
+      </p>
+      <ul style="color: var(--ug-text-secondary); line-height: 1.7; padding-left: 1.25rem; margin-bottom: 1.5rem;">
+        <li>Do not attempt to access or modify data belonging to other users.</li>
+        <li>Do not execute denial-of-service (DoS/DDoS) attacks against production infrastructure.</li>
+        <li>Allow reasonable time for remediation before publishing details publicly.</li>
+      </ul>
+      <a class="ug-btn-primary" href="contact.html?subject=Security+Disclosure">
+        🛡️ Report a Security Vulnerability
+      </a>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer" style="margin-top: 5rem;">
+    <div class="ug-container">
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Security & Privacy First.</div>
+        <div style="display: flex; gap: 1.25rem;">
+          <a href="about.html" style="color: inherit; text-decoration: none;">About</a>
+          <a href="safety.html" style="color: inherit; text-decoration: none;">Safety</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script src="src/scripts/ai-widget.js"></script>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
+</body>
+</html>

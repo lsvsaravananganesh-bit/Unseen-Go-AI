@@ -525,10 +525,14 @@
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
           <div>
             <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--ug-text-primary); margin-bottom: 0.25rem;">Curated Heritage Chronicles</h2>
-            <p style="color: var(--ug-text-muted); font-size: 0.9rem;">Click any card to read in-depth history or listen with audio narration.</p>
+            <p style="color: var(--ug-text-muted); font-size: 0.9rem;">Click any card to read in-depth history, field notes, or listen with audio narration.</p>
           </div>
-          <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;">
             <span style="font-size: 0.85rem; color: var(--ug-text-muted); font-weight: 600;" id="storyCountBadge">Showing 12 Chronicles</span>
+            <button type="button" id="btnOpenSubmitStory" class="ug-btn ug-btn-primary" style="padding: 0.5rem 1.15rem; font-size: 0.85rem; border-radius: 9999px; display: inline-flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+              <span>✍️</span>
+              <span>Submit Lore or Review</span>
+            </button>
           </div>
         </div>
 
@@ -619,6 +623,144 @@
     </div>
   </div>
 
+  <!-- Community Lore & Field Review Submission Modal -->
+  <div class="story-modal-overlay" id="communityModal" style="display: none;">
+    <div class="story-modal-container" style="max-width: 740px;">
+      <button type="button" class="story-modal-close-btn" id="communityModalCloseBtn" aria-label="Close modal">✕</button>
+      <div style="padding: 2.25rem 2.25rem 2rem;">
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+          <span style="font-size: 1.4rem;">✍️</span>
+          <span style="font-size: 0.78rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ug-primary);">Community Contribution</span>
+        </div>
+        <h2 style="font-size: 1.6rem; font-weight: 900; color: var(--ug-text-primary); margin-bottom: 0.4rem;">Share Untold Lore & Field Notes</h2>
+        <p style="font-size: 0.88rem; color: var(--ug-text-secondary); margin-bottom: 1.25rem; line-height: 1.5;">
+          Preserve generational folklore, sacred legends, road conditions, and respectful travel tips to guide independent travelers across India.
+        </p>
+
+        <!-- Guidelines banner -->
+        <div style="background: rgba(216, 255, 77, 0.08); border: 1px solid rgba(216, 255, 77, 0.25); border-radius: 14px; padding: 0.85rem 1.15rem; margin-bottom: 1.5rem; font-size: 0.82rem; color: var(--ug-text-secondary); line-height: 1.5;">
+          <strong style="color: var(--ug-primary);">🌿 Community Guidelines:</strong> Submissions must be culturally respectful and factually grounded. Do not geotag sensitive, fragile tribal sanctuaries or deface protected monuments. All approved submissions carry a verified <code style="color: #2ecc71; font-weight: 700;">🌿 Community Sourced</code> badge.
+        </div>
+
+        <form id="communitySubmitForm">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Destination / Place Name *</label>
+              <input type="text" id="commPlaceName" required placeholder="e.g. Gandikota Granary or Lepakshi" style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Region / State / District *</label>
+              <input type="text" id="commLocation" required placeholder="e.g. Kadapa, Andhra Pradesh" style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Chronicle Theme / Category *</label>
+              <select id="commCategory" required style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+                <option value="folklore">📜 Myth & Oral Legends</option>
+                <option value="temples">🛕 Sacred Shrines</option>
+                <option value="forts">🏰 Deccan & Rajput Forts</option>
+                <option value="caves">⛰️ Subterranean Caves</option>
+                <option value="marvels">📐 Engineering Marvels</option>
+              </select>
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Historical Era / Tradition</label>
+              <input type="text" id="commEra" placeholder="e.g. 16th Century Vijayanagara / Tribal Tradition" style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+            </div>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Chronicle Title *</label>
+            <input type="text" id="commTitle" required placeholder="e.g. The Legend of the Unblinking Bull of Yaganti" style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Full Story, Folklore, or Insider Lore *</label>
+            <textarea id="commStoryBody" required rows="4" placeholder="Detail the oral history or folklore passed down through generations, hidden architectural features, or unique traveler insights..." style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.75rem 0.9rem; font-size: 0.9rem; line-height: 1.5;"></textarea>
+          </div>
+
+          <!-- Star Ratings for Grounded Experience -->
+          <div style="background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); border-radius: 14px; padding: 1rem 1.25rem; margin-bottom: 1rem;">
+            <span style="display: block; font-size: 0.82rem; font-weight: 800; color: var(--ug-primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">Community Field Ratings</span>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.75rem;">
+              <div>
+                <label style="display: block; font-size: 0.75rem; color: var(--ug-text-muted); margin-bottom: 0.25rem;">🚗 Road Condition</label>
+                <select id="commRatingRoad" style="width: 100%; background: var(--ug-surface); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 8px; padding: 0.4rem 0.6rem; font-size: 0.82rem;">
+                  <option value="5">⭐⭐⭐⭐⭐ Smooth Highway</option>
+                  <option value="4" selected>⭐⭐⭐⭐ Good Asphalt</option>
+                  <option value="3">⭐⭐⭐ Moderate / Patched</option>
+                  <option value="2">⭐⭐ Rough / Potholes</option>
+                  <option value="1">⭐ 4x4 Offroad Only</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.75rem; color: var(--ug-text-muted); margin-bottom: 0.25rem;">👥 Crowd Density</label>
+                <select id="commRatingCrowd" style="width: 100%; background: var(--ug-surface); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 8px; padding: 0.4rem 0.6rem; font-size: 0.82rem;">
+                  <option value="Secluded" selected>🌿 Secluded</option>
+                  <option value="Moderate">👥 Moderate</option>
+                  <option value="Busy">🏛️ Popular / Busy</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.75rem; color: var(--ug-text-muted); margin-bottom: 0.25rem;">👨‍👩‍👧 Family Friendly</label>
+                <select id="commRatingFamily" style="width: 100%; background: var(--ug-surface); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 8px; padding: 0.4rem 0.6rem; font-size: 0.82rem;">
+                  <option value="5">⭐⭐⭐⭐⭐ Easy for All</option>
+                  <option value="4" selected>⭐⭐⭐⭐ Good with Kids</option>
+                  <option value="3">⭐⭐⭐ Moderate Walk</option>
+                  <option value="2">⭐⭐ Strenuous Trek</option>
+                </select>
+              </div>
+              <div>
+                <label style="display: block; font-size: 0.75rem; color: var(--ug-text-muted); margin-bottom: 0.25rem;">📸 Photography</label>
+                <select id="commRatingPhoto" style="width: 100%; background: var(--ug-surface); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 8px; padding: 0.4rem 0.6rem; font-size: 0.82rem;">
+                  <option value="5" selected>⭐⭐⭐⭐⭐ World-Class</option>
+                  <option value="4">⭐⭐⭐⭐ Great Angles</option>
+                  <option value="3">⭐⭐⭐ Decent</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Photo URL (Optional)</label>
+              <input type="url" id="commPhotoUrl" placeholder="https://images.unsplash.com/..." style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Photo Caption & Attribution</label>
+              <input type="text" id="commPhotoCredit" placeholder="e.g. Photo by Rajesh K. (CC-BY)" style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Your Name / Contributor Handle *</label>
+              <input type="text" id="commAuthor" required placeholder="e.g. Kavitha R., Independent Chronicler" style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+            </div>
+            <div>
+              <label style="display: block; font-size: 0.8rem; font-weight: 700; color: var(--ug-text-muted); margin-bottom: 0.35rem;">Key Travel Note / Best Time Tip</label>
+              <input type="text" id="commTip" placeholder="e.g. Best light at 6:30 AM before gate rush" style="width: 100%; box-sizing: border-box; background: var(--ug-surface-elevated); border: 1px solid var(--ug-border); color: var(--ug-text-primary); border-radius: 10px; padding: 0.65rem 0.9rem; font-size: 0.9rem;">
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: flex-start; gap: 0.65rem; margin-bottom: 1.5rem;">
+            <input type="checkbox" id="commAgreement" required style="margin-top: 0.2rem; accent-color: var(--ug-primary);">
+            <label for="commAgreement" style="font-size: 0.82rem; color: var(--ug-text-secondary); line-height: 1.45;">
+              I certify that this submission is culturally respectful, authentic, and does not promote trespassing or desecration of protected heritage.
+            </label>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+            <button type="button" class="ug-btn ug-btn-outline" id="btnCancelSubmitStory" style="border-radius: 9999px; padding: 0.6rem 1.4rem;">Cancel</button>
+            <button type="submit" class="ug-btn ug-btn-primary" style="border-radius: 9999px; padding: 0.6rem 1.6rem; font-weight: 800;">Publish Chronicle ✦</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="ug-footer">
     <div class="ug-container">
@@ -650,6 +792,15 @@
             <li><a href="transport.html">Transport & Routes</a></li>
             <li><a href="flights.html">Flight Gateways</a></li>
             <li><a href="utilities.html">Packing & Budget Tools</a></li>
+          </ul>
+        </div>
+        <div class="ug-footer-col">
+          <h4>Company & Safety</h4>
+          <ul>
+            <li><a href="about.html">About UnseenGo</a></li>
+            <li><a href="safety.html">Safety & SOS Hub</a></li>
+            <li><a href="security.html">Security & Privacy</a></li>
+            <li><a href="admin.html">Admin Portal</a></li>
           </ul>
         </div>
       </div>
@@ -877,16 +1028,88 @@
       let currentUtterance = null;
       let isSpeaking = false;
 
+      /* Seed Community Oral Lore Submissions */
+      const SEED_COMMUNITY_STORIES = [
+        {
+          id: 'comm-gandikota-granary',
+          title: 'The Underground Granary & Sunset Gorge Lore',
+          category: 'marvels',
+          categoryLabel: 'Fort Lore',
+          location: 'Gandikota, Kadapa, Andhra Pradesh',
+          city: 'Kurnool',
+          era: '16th Century Pemmasani Kings',
+          architecturalStyle: 'Deccan Sandstone Military Architecture',
+          excerpt: 'Behind the massive Granary (Dhanyagara) lies a subterranean drainage and ventilation labyrinth engineered to keep grain dry for a 3-year siege.',
+          image: 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Engineered with thermal breathing slots so grain stayed moisture-free during monsoons.',
+            'A subterranean escape trench leads towards the Pennar riverbed.',
+            'Sunset from the gorge rim reveals natural quartz crystal reflections on the canyon cliff.'
+          ],
+          storyBody: `
+            <p>Local elders in Gandikota village recount that during the legendary siege by the Qutb Shahi forces, the fortress stood impregnable not just because of the 300-foot Pennar gorge, but due to its ingenious subterranean food storage network.</p>
+            <p>The vast granary building with its vaulted roof has hidden dual-layer stone walls that maintained a constant 22°C interior temperature. Local village historians share that ancient granary keepers communicated with sentries using acoustics carried through the ventilation pipes.</p>
+          `,
+          isCommunitySourced: true,
+          author: 'Kavitha R. (Heritage Chronicler)',
+          photoCredit: 'Photo by Rajesh K. (CC-BY 4.0)',
+          ratings: { road: 4, crowd: 'Secluded', family: 4, photo: 5 },
+          tip: 'Visit the granary roof terrace at 5:30 PM for a panoramic canyon vista with zero tour crowds.'
+        },
+        {
+          id: 'comm-yaganti-nandi',
+          title: 'The Enigma of Yaganti’s Self-Expanding Nandi',
+          category: 'folklore',
+          categoryLabel: 'Sacred Legend',
+          location: 'Yaganti, Kurnool District, Andhra Pradesh',
+          city: 'Kurnool',
+          era: '15th Century Sangama Dynasty',
+          architecturalStyle: 'Dravidian Cave Shrines',
+          excerpt: 'According to the Archaeological Survey of India, the stone Nandi monolith in the temple courtyard expands by roughly 1 inch every 20 years due to silica mineral crystallization.',
+          image: 'https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=800&q=80',
+          facts: [
+            'Pillars around the Nandi had to be removed by temple authorities decades ago as the idol outgrew the pavilion.',
+            'Sage Agastya was unable to install a Shiva idol here due to a chipped nail, leading to the Ardhanareeswara consecration.',
+            'No crows ever fly over the Yaganti valley due to a legend involving Sage Agastya.'
+          ],
+          storyBody: `
+            <p>Yaganti nestles inside a horseshoe-shaped valley enclosed by dramatic Yerramala limestone cliffs. The legend of the expanding monolithic Nandi has fascinated both pilgrims and mineralogists for centuries.</p>
+            <p>Geological inspections revealed that the rock type possesses a unique mineral composition that causes slow outward micro-expansion when exposed to ambient moisture from the underground Pushkarini springs.</p>
+          `,
+          isCommunitySourced: true,
+          author: 'Suresh Varma (Rayalaseema Traveler)',
+          photoCredit: 'Photo via Wikimedia Commons',
+          ratings: { road: 5, crowd: 'Moderate', family: 5, photo: 4 },
+          tip: 'Climb the steep steps to Venkateswara Cave for pristine echoes and view of the valley below.'
+        }
+      ];
+
+      function getAllStories() {
+        let stored = [];
+        try {
+          stored = JSON.parse(localStorage.getItem('unseengo_community_submissions') || 'null');
+          if (!stored || !Array.isArray(stored)) {
+            stored = SEED_COMMUNITY_STORIES;
+            localStorage.setItem('unseengo_community_submissions', JSON.stringify(stored));
+          }
+        } catch (_) {
+          stored = SEED_COMMUNITY_STORIES;
+        }
+        return [...stored, ...STORIES_DATA];
+      }
+
       /* Render Story Cards */
       function renderStories(filterCategory = 'all', searchQuery = '') {
         const query = searchQuery.trim().toLowerCase();
-        const filtered = STORIES_DATA.filter(s => {
+        const allStories = getAllStories();
+        const filtered = allStories.filter(s => {
           const matchCat = filterCategory === 'all' || s.category === filterCategory;
           const matchQuery = !query ||
             s.title.toLowerCase().includes(query) ||
             s.location.toLowerCase().includes(query) ||
             s.excerpt.toLowerCase().includes(query) ||
-            s.categoryLabel.toLowerCase().includes(query) ||
+            (s.categoryLabel && s.categoryLabel.toLowerCase().includes(query)) ||
+            (s.author && s.author.toLowerCase().includes(query)) ||
             (s.city && s.city.toLowerCase().includes(query));
           return matchCat && matchQuery;
         });
@@ -898,40 +1121,50 @@
             <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; background: var(--ug-surface); border: 1px dashed var(--ug-border); border-radius: 24px;">
               <span style="font-size: 2.5rem; display: block; margin-bottom: 0.75rem;">📜</span>
               <h3 style="color: var(--ug-text-primary); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">No chronicles match your search</h3>
-              <p style="color: var(--ug-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Try another keyword or search any Indian location using the custom storyteller below.</p>
+              <p style="color: var(--ug-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">Try another keyword or submit the story yourself using the button above.</p>
               <button class="ug-btn ug-btn-primary" onclick="document.getElementById('storySearchInput').value=''; document.querySelector('[data-category=all]').click();">Reset Filters</button>
             </div>
           `;
           return;
         }
 
-        storyGrid.innerHTML = filtered.map(s => `
-          <article class="story-card" data-story-id="${s.id}" tabindex="0" role="button" aria-label="Open chronicle: ${s.title}">
-            <div class="story-card-media">
-              <img class="story-card-img" src="${s.image}" alt="${s.title}" loading="lazy">
-              <span class="story-card-tag">${s.categoryLabel}</span>
-              <span class="story-card-audio-pill"><span>🎙️</span> Audio Story</span>
-            </div>
-            <div class="story-card-body">
-              <div class="story-location-meta">
-                <span>📍</span>
-                <span>${s.location}</span>
+        storyGrid.innerHTML = filtered.map(s => {
+          const badgeHtml = s.isCommunitySourced
+            ? `<span class="story-card-tag" style="background: rgba(46, 204, 113, 0.22); border: 1px solid #2ecc71; color: #2ecc71;">🌿 Community Sourced</span>`
+            : `<span class="story-card-tag">${s.categoryLabel}</span>`;
+          const footerMeta = s.isCommunitySourced && s.author
+            ? `By: ${s.author.split('(')[0].trim()}`
+            : `Era: ${s.era.split('(')[0].trim()}`;
+
+          return `
+            <article class="story-card" data-story-id="${s.id}" tabindex="0" role="button" aria-label="Open chronicle: ${s.title}">
+              <div class="story-card-media">
+                <img class="story-card-img" src="${s.image}" alt="${s.title}" loading="lazy">
+                ${badgeHtml}
+                <span class="story-card-audio-pill"><span>🎙️</span> Audio Story</span>
               </div>
-              <h3 class="story-card-title">${s.title}</h3>
-              <p class="story-card-excerpt">${s.excerpt}</p>
-              <div class="story-card-footer">
-                <span>Era: ${s.era.split('(')[0].trim()}</span>
-                <span>Read Story →</span>
+              <div class="story-card-body">
+                <div class="story-location-meta">
+                  <span>📍</span>
+                  <span>${s.location}</span>
+                </div>
+                <h3 class="story-card-title">${s.title}</h3>
+                <p class="story-card-excerpt">${s.excerpt}</p>
+                <div class="story-card-footer">
+                  <span>${footerMeta}</span>
+                  <span>Read Story →</span>
+                </div>
               </div>
-            </div>
-          </article>
-        `).join('');
+            </article>
+          `;
+        }).join('');
 
         // Bind clicks
         document.querySelectorAll('.story-card').forEach(card => {
           card.addEventListener('click', () => {
             const id = card.dataset.storyId;
-            const story = STORIES_DATA.find(x => x.id === id);
+            const allStoriesList = getAllStories();
+            const story = allStoriesList.find(x => x.id === id);
             if (story) openStoryModal(story);
           });
           card.addEventListener('keydown', (e) => {
@@ -950,11 +1183,42 @@
 
         modalHeroImg.src = story.image;
         modalHeroImg.alt = story.title;
-        modalCategoryTag.textContent = story.categoryLabel;
+        if (story.isCommunitySourced) {
+          modalCategoryTag.textContent = '🌿 Community Sourced';
+          modalCategoryTag.style.borderColor = '#2ecc71';
+          modalCategoryTag.style.color = '#2ecc71';
+        } else {
+          modalCategoryTag.textContent = story.categoryLabel;
+          modalCategoryTag.style.borderColor = 'var(--ug-border)';
+          modalCategoryTag.style.color = 'var(--ug-primary)';
+        }
         modalLocationMeta.textContent = `📍 ${story.location} · ${story.era}`;
         modalTitle.textContent = story.title;
         modalSubtitle.textContent = `Style: ${story.architecturalStyle}`;
-        modalStoryBody.innerHTML = story.storyBody;
+
+        let communityHeader = '';
+        if (story.isCommunitySourced) {
+          const roadStars = '⭐'.repeat(story.ratings?.road || 4);
+          const familyStars = '⭐'.repeat(story.ratings?.family || 4);
+          const photoStars = '⭐'.repeat(story.ratings?.photo || 5);
+          const crowd = story.ratings?.crowd || 'Secluded';
+          communityHeader = `
+            <div style="background: rgba(46, 204, 113, 0.1); border: 1px solid #2ecc71; border-radius: 14px; padding: 0.85rem 1.15rem; margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
+                <span style="font-weight: 700; color: #2ecc71; font-size: 0.88rem;">🌿 Community Verified Lore · By ${story.author || 'Independent Traveler'}</span>
+                <span style="font-size: 0.78rem; color: var(--ug-text-muted);">${story.photoCredit ? '📷 ' + story.photoCredit : ''}</span>
+              </div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.5rem; font-size: 0.8rem; color: var(--ug-text-secondary); padding-top: 0.5rem; border-top: 1px dashed rgba(46, 204, 113, 0.3);">
+                <div>🚗 Road: <b>${roadStars}</b></div>
+                <div>👥 Crowd: <b>${crowd}</b></div>
+                <div>👨‍👩‍👧 Family: <b>${familyStars}</b></div>
+                <div>📸 Photo: <b>${photoStars}</b></div>
+              </div>
+            </div>
+          `;
+        }
+
+        modalStoryBody.innerHTML = communityHeader + story.storyBody;
 
         // Populate Facts
         modalFactList.innerHTML = (story.facts || []).map(f => `
@@ -1108,6 +1372,102 @@
         }
       }
 
+      /* Community Modal Controllers */
+      const btnOpenSubmitStory = document.getElementById('btnOpenSubmitStory');
+      const communityModal = document.getElementById('communityModal');
+      const communityModalCloseBtn = document.getElementById('communityModalCloseBtn');
+      const btnCancelSubmitStory = document.getElementById('btnCancelSubmitStory');
+      const communitySubmitForm = document.getElementById('communitySubmitForm');
+
+      function openCommunityModal() {
+        communityModal.style.display = 'flex';
+        setTimeout(() => communityModal.classList.add('open'), 10);
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeCommunityModal() {
+        communityModal.classList.remove('open');
+        setTimeout(() => {
+          communityModal.style.display = 'none';
+          document.body.style.overflow = '';
+        }, 200);
+      }
+
+      if (btnOpenSubmitStory) btnOpenSubmitStory.addEventListener('click', openCommunityModal);
+      if (communityModalCloseBtn) communityModalCloseBtn.addEventListener('click', closeCommunityModal);
+      if (btnCancelSubmitStory) btnCancelSubmitStory.addEventListener('click', closeCommunityModal);
+      if (communityModal) {
+        communityModal.addEventListener('click', (e) => {
+          if (e.target === communityModal) closeCommunityModal();
+        });
+      }
+
+      if (communitySubmitForm) {
+        communitySubmitForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const placeName = document.getElementById('commPlaceName').value.trim();
+          const location = document.getElementById('commLocation').value.trim();
+          const category = document.getElementById('commCategory').value;
+          const era = document.getElementById('commEra').value.trim();
+          const title = document.getElementById('commTitle').value.trim();
+          const storyBody = document.getElementById('commStoryBody').value.trim();
+          const road = Number(document.getElementById('commRatingRoad').value);
+          const crowd = document.getElementById('commRatingCrowd').value;
+          const family = Number(document.getElementById('commRatingFamily').value);
+          const photo = Number(document.getElementById('commRatingPhoto').value);
+          const photoUrl = document.getElementById('commPhotoUrl').value.trim();
+          const photoCredit = document.getElementById('commPhotoCredit').value.trim();
+          const author = document.getElementById('commAuthor').value.trim();
+          const tip = document.getElementById('commTip').value.trim();
+
+          const categoryLabels = {
+            folklore: 'Sacred Myth & Legend',
+            temples: 'Sacred Shrine',
+            forts: 'Deccan & Rajput Fort',
+            caves: 'Subterranean Lore',
+            marvels: 'Engineering Marvel'
+          };
+
+          const newSubmission = {
+            id: 'comm-' + Date.now(),
+            title: title,
+            category: category,
+            categoryLabel: categoryLabels[category] || 'Community Lore',
+            location: `${placeName}, ${location}`,
+            city: location.split(',')[0].trim(),
+            era: era || 'Verified Oral Tradition',
+            architecturalStyle: 'Regional Heritage Architecture',
+            excerpt: storyBody.substring(0, 180) + '...',
+            image: photoUrl || 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
+            facts: [
+              `Community oral chronicle recorded by ${author}.`,
+              tip ? `Travel note: ${tip}` : 'Authentic oral lore preserved on UnseenGo AI.',
+              `Field Assessment: Road ${road}/5, Family ${family}/5, Photography ${photo}/5.`
+            ],
+            storyBody: `<p>${storyBody.replace(/\n\n+/g, '</p><p>').replace(/\n/g, '<br>')}</p>`,
+            isCommunitySourced: true,
+            author: author,
+            photoCredit: photoCredit || `Contributed by ${author}`,
+            ratings: { road, crowd, family, photo },
+            tip: tip
+          };
+
+          let currentStored = [];
+          try {
+            currentStored = JSON.parse(localStorage.getItem('unseengo_community_submissions') || '[]');
+            if (!Array.isArray(currentStored)) currentStored = [];
+          } catch (_) { currentStored = []; }
+
+          currentStored.unshift(newSubmission);
+          localStorage.setItem('unseengo_community_submissions', JSON.stringify(currentStored));
+
+          communitySubmitForm.reset();
+          closeCommunityModal();
+          alert('✨ Thank you! Your cultural chronicle has been recorded and badged as "🌿 Community Sourced".');
+          renderStories(activeCategory, searchInput.value);
+        });
+      }
+
       /* Event Listeners */
       searchInput.addEventListener('input', (e) => {
         const val = e.target.value;
@@ -1136,8 +1496,9 @@
       });
 
       document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && storyModal.classList.contains('open')) {
-          closeStoryModal();
+        if (e.key === 'Escape') {
+          if (storyModal.classList.contains('open')) closeStoryModal();
+          if (communityModal && communityModal.classList.contains('open')) closeCommunityModal();
         }
       });
 
@@ -1168,5 +1529,12 @@
       }
     })();
   </script>
+
+  <!-- Platform Core Scripts -->
+  <script src="data/all-india-famous-places.js"></script>
+  <script src="destination-registry.js"></script>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
+  <script src="src/scripts/ai-widget.js"></script>
 </body>
 </html>

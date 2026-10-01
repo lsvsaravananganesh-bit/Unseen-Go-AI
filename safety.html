@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Help, Safety and Emergency Information — Verified national helplines (112, 1363), state emergency contacts, medical guidance, and safety protocols for Indian travel on UnseenGo AI.">
+  <title>Help, Safety & Emergency Information — UnseenGo AI</title>
+
+  <!-- PWA & Mobile Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="UnseenGo Safety">
+
+  <!-- Royal Horizon Design System -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .safety-hero {
+      padding: 4.5rem 0 3rem;
+      text-align: center;
+    }
+    .safety-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 9999px;
+      padding: 0.4rem 1.25rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f87171;
+      margin-bottom: 1.25rem;
+    }
+    .emergency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin: 2.5rem 0;
+    }
+    .emergency-card {
+      background: var(--ug-surface);
+      border: 1.5px solid var(--ug-border);
+      border-radius: 18px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: var(--ug-transition);
+    }
+    .emergency-card.critical {
+      border-color: rgba(239, 68, 68, 0.4);
+      background: linear-gradient(180deg, rgba(239, 68, 68, 0.08) 0%, var(--ug-surface) 100%);
+    }
+    .emergency-card:hover {
+      border-color: var(--ug-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--ug-shadow-lg);
+    }
+    .emergency-number {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--ug-primary);
+      margin: 0.5rem 0;
+      letter-spacing: 0.02em;
+    }
+    .emergency-card.critical .emergency-number {
+      color: #f87171;
+    }
+    .emergency-dial-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--ug-surface-hover);
+      border: 1px solid var(--ug-border);
+      color: var(--ug-text-primary);
+      padding: 0.65rem 1rem;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: var(--ug-transition);
+      margin-top: 1rem;
+    }
+    .emergency-dial-btn:hover {
+      background: var(--ug-primary);
+      color: #070d09;
+      border-color: var(--ug-primary);
+    }
+    .guidance-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.75rem;
+      margin: 2.5rem 0;
+    }
+    .guidance-card {
+      background: var(--ug-surface);
+      border: 1px solid var(--ug-border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    .guidance-card h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+    }
+    .state-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+      font-size: 0.92rem;
+    }
+    .state-table th, .state-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--ug-border);
+      text-align: left;
+    }
+    .state-table th {
+      background: var(--ug-surface-hover);
+      color: var(--ug-text-primary);
+      font-weight: 700;
+    }
+    .state-table tr:hover td {
+      background: rgba(255,255,255,0.02);
+    }
+    .gps-share-box {
+      background: var(--ug-surface);
+      border: 2px dashed var(--ug-primary);
+      border-radius: 22px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin: 3.5rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Modern Responsive Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="map.html">🗺️ Map</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link active" href="safety.html">🛡️ Safety</a></li>
+          </ul>
+        </nav>
+
+        <!-- Navigation Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <!-- Mobile Hamburger Toggle -->
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop & Sidebar -->
+  <div class="ug-drawer-backdrop" aria-hidden="true">
+    <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+      <div class="ug-drawer-header">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+          <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+        </div>
+      </div>
+      <div class="ug-drawer-body">
+        <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+          <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+          <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+          <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+          <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+          <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips</span></a>
+          <a class="ug-drawer-link" href="about.html"><span class="icon">🏛️</span><span>About UnseenGo</span></a>
+          <a class="ug-drawer-link active" href="safety.html"><span class="icon">🛡️</span><span>Help & Safety (112)</span></a>
+        </nav>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Content -->
+  <main class="ug-container">
+    <section class="safety-hero">
+      <div class="safety-kicker">
+        <span>🚨</span>
+        <span>NATIONAL ASSISTANCE & EMERGENCY DIRECTORY</span>
+      </div>
+      <h1 style="font-size: clamp(2.2rem, 4.5vw, 3.5rem); line-height: 1.15; margin-bottom: 1.25rem;">
+        Travel Safely Across <span class="ug-serif" style="color: var(--ug-primary);">India</span>
+      </h1>
+      <p style="color: var(--ug-text-secondary); font-size: 1.1rem; max-width: 720px; margin: 0 auto; line-height: 1.65;">
+        Verified 24x7 emergency contacts, tourist distress helplines, remote trail safety protocols, and real-time medical guidance for your journeys.
+      </p>
+    </section>
+
+    <!-- Critical National Emergency Cards -->
+    <section>
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+        <h2 style="font-size: 1.6rem;">Key Emergency Numbers</h2>
+        <span style="font-size: 0.85rem; color: var(--ug-text-muted);">Toll-free across all telecom networks in India</span>
+      </div>
+
+      <div class="emergency-grid">
+        <!-- 112 -->
+        <div class="emergency-card critical">
+          <div>
+            <span class="ug-badge ug-badge-saffron" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: rgba(239, 68, 68, 0.4);">🚨 All-in-One Helpline</span>
+            <div class="emergency-number">112</div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">National Emergency</h3>
+            <p style="font-size: 0.88rem; color: var(--ug-text-secondary); line-height: 1.5;">
+              Unified emergency line for Police, Ambulance & Fire across all Indian states and Union Territories.
+            </p>
+          </div>
+          <a class="emergency-dial-btn" href="tel:112">📞 Dial 112</a>
+        </div>
+
+        <!-- 1363 -->
+        <div class="emergency-card">
+          <div>
+            <span class="ug-badge ug-badge-verified">✦ Ministry of Tourism</span>
+            <div class="emergency-number">1363</div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Tourist Info & Distress</h3>
+            <p style="font-size: 0.88rem; color: var(--ug-text-secondary); line-height: 1.5;">
+              24x7 Multi-lingual tourist assistance line in English, Hindi, and 10 international languages.
+            </p>
+          </div>
+          <a class="emergency-dial-btn" href="tel:1363">📞 Dial 1363</a>
+        </div>
+
+        <!-- 108 / 102 -->
+        <div class="emergency-card">
+          <div>
+            <span class="ug-badge">🚑 Medical Dispatch</span>
+            <div class="emergency-number">108 / 102</div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Ambulance Service</h3>
+            <p style="font-size: 0.88rem; color: var(--ug-text-secondary); line-height: 1.5;">
+              Emergency medical transport and district hospital dispatch service.
+            </p>
+          </div>
+          <a class="emergency-dial-btn" href="tel:108">📞 Dial 108</a>
+        </div>
+
+        <!-- 1091 -->
+        <div class="emergency-card">
+          <div>
+            <span class="ug-badge">🛡️ Safety Support</span>
+            <div class="emergency-number">1091</div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Women Helpline</h3>
+            <p style="font-size: 0.88rem; color: var(--ug-text-secondary); line-height: 1.5;">
+              National 24x7 helpline for women solo travelers, distress response, and transit protection.
+            </p>
+          </div>
+          <a class="emergency-dial-btn" href="tel:1091">📞 Dial 1091</a>
+        </div>
+
+        <!-- 139 -->
+        <div class="emergency-card">
+          <div>
+            <span class="ug-badge">🚆 Indian Railways</span>
+            <div class="emergency-number">139</div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">RailMadad & Security</h3>
+            <p style="font-size: 0.88rem; color: var(--ug-text-secondary); line-height: 1.5;">
+              Onboard medical assistance, security intervention (RPF), and rail travel inquiries.
+            </p>
+          </div>
+          <a class="emergency-dial-btn" href="tel:139">📞 Dial 139</a>
+        </div>
+
+        <!-- 1070 -->
+        <div class="emergency-card">
+          <div>
+            <span class="ug-badge">⛈️ NDRF / Disaster</span>
+            <div class="emergency-number">1070 / 1077</div>
+            <h3 style="font-size: 1.1rem; margin-bottom: 0.35rem;">Disaster Management</h3>
+            <p style="font-size: 0.88rem; color: var(--ug-text-secondary); line-height: 1.5;">
+              State and district disaster relief control room for floods, cyclones, and landslides.
+            </p>
+          </div>
+          <a class="emergency-dial-btn" href="tel:1070">📞 Dial 1070</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live GPS Location Share Widget -->
+    <section class="gps-share-box">
+      <div style="font-size: 2.2rem; margin-bottom: 0.75rem;">📡</div>
+      <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">Emergency Location Sharer</h2>
+      <p style="color: var(--ug-text-secondary); max-width: 580px; margin: 0 auto 1.5rem; line-height: 1.6;">
+        Trekking a remote gorge or offbeat hill trail? Grab your exact device GPS coordinates instantly to share with trusted contacts or emergency dispatch.
+      </p>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <button type="button" class="ug-btn-primary" id="getCoordsBtn">
+          📍 Fetch My Current GPS Coordinates
+        </button>
+        <button type="button" class="ug-btn-secondary" id="shareWhatsAppBtn" style="display: none;">
+          💬 Send SOS via WhatsApp
+        </button>
+      </div>
+
+      <div id="gpsResult" style="display: none; margin-top: 1.5rem; padding: 1.25rem; background: var(--ug-surface-hover); border-radius: 14px; max-width: 500px; margin-left: auto; margin-right: auto; text-align: left;">
+        <div style="font-weight: 700; color: var(--ug-primary); margin-bottom: 0.4rem;">Your Coordinates:</div>
+        <div id="gpsCoordsText" style="font-family: monospace; font-size: 1.1rem; margin-bottom: 0.75rem;"></div>
+        <a id="gpsMapLink" href="#" target="_blank" rel="noopener noreferrer" style="color: var(--ug-primary); text-decoration: underline; font-size: 0.9rem;">Open Location in Google Maps ↗</a>
+      </div>
+    </section>
+
+    <!-- Offbeat Travel Safety Guides -->
+    <section style="margin: 4rem 0;">
+      <h2 style="font-size: 1.85rem; margin-bottom: 0.5rem;">Safety Protocols for Remote Destinations</h2>
+      <p style="color: var(--ug-text-secondary); margin-bottom: 2rem;">
+        Essential guidelines when exploring deep canyons, ancient caves, sacred forests, and high ghat passes.
+      </p>
+
+      <div class="guidance-grid">
+        <!-- Guide 1: Gorges & Waterfalls -->
+        <div class="guidance-card">
+          <h3><span>🌊</span> Canyons, Gorges & Waterfalls</h3>
+          <ul style="color: var(--ug-text-secondary); line-height: 1.7; padding-left: 1.25rem;">
+            <li><b>Flash Flood Caution:</b> Riverbeds like the Pennar Gorge at Gandikota or Talakona can rise dangerously within 20 minutes if upstream dams release water or rain falls on catchments.</li>
+            <li><b>Cliff Edges:</b> Gandikota and Orvakal rock formations have sheer, unfenced drops over 300 feet. Never cross marked safety perimeters for photography.</li>
+            <li><b>Footwear:</b> Wear high-traction hiking shoes. Wet Deccan basalt and shale become exceptionally slick.</li>
+          </ul>
+        </div>
+
+        <!-- Guide 2: Caves & Underground -->
+        <div class="guidance-card">
+          <h3><span>🦇</span> Subterranean Caves (e.g. Belum, Borra)</h3>
+          <ul style="color: var(--ug-text-secondary); line-height: 1.7; padding-left: 1.25rem;">
+            <li><b>Ventilation & Air:</b> Oxygen levels drop in deep passages beyond the 1.5 km mark. Visitors with asthma or heart conditions should stay in main illuminated chambers.</li>
+            <li><b>Footwear & Headlamp:</b> Carry a reliable 300+ lumen torch. Limestone chambers can be moist with uneven steps and low clearances.</li>
+            <li><b>Hydration:</b> High humidity inside Belum Caves causes rapid dehydration. Carry at least 1 liter of drinking water per person.</li>
+          </ul>
+        </div>
+
+        <!-- Guide 3: Forest Reserves & Wildlife -->
+        <div class="guidance-card">
+          <h3><span>🐅</span> Sacred Forests & Tiger Reserves</h3>
+          <ul style="color: var(--ug-text-secondary); line-height: 1.7; padding-left: 1.25rem;">
+            <li><b>Nallamala / Srisailam / Ahobilam:</b> Forest ghat roads strictly close to night traffic (usually 9:00 PM to 6:00 AM). Plan departures early.</li>
+            <li><b>Local Guides:</b> The Upper Ahobilam 9-Narasimha jungle trek spans rugged terrain with leopards and bears. Always hire an authorized forest department tracker.</li>
+            <li><b>Offline Maps:</b> Download offline vector maps before entering forest valleys; cellular towers are rare.</li>
+          </ul>
+        </div>
+
+        <!-- Guide 4: Monsoon Traveling -->
+        <div class="guidance-card">
+          <h3><span>🌧️</span> Western Ghats & Monsoon Routes</h3>
+          <ul style="color: var(--ug-text-secondary); line-height: 1.7; padding-left: 1.25rem;">
+            <li><b>Agumbe & Malnad:</b> Heavy downpours (over 7,000 mm annually) cause mudslides on Someshwara and Charmadi ghats. Check state highway bulletins before departure.</li>
+            <li><b>Leech Protection:</b> Carry tobacco powder, salt, or high-ankle leech gaiters when hiking through rainforest trails in Karnataka or Kerala.</li>
+            <li><b>Vehicle Check:</b> Ensure brake pads, tire tread depth, and fog wipers are in prime condition before ascending Western or Eastern Ghat hairpins.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- State Tourism Police & Support Directory -->
+    <section style="background: var(--ug-surface); border: 1px solid var(--ug-border); border-radius: 24px; padding: 2.5rem; margin: 4rem 0;">
+      <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">State Tourism Support Directory</h2>
+      <p style="color: var(--ug-text-secondary); margin-bottom: 1.5rem;">
+        Direct helplines for regional tourism corporations and tourist police divisions.
+      </p>
+
+      <div style="overflow-x: auto;">
+        <table class="state-table">
+          <thead>
+            <tr>
+              <th>State / Region</th>
+              <th>Tourism Board Helpline</th>
+              <th>Tourist Police / Special Wing</th>
+              <th>Hospital / Regional Medical Hub</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Andhra Pradesh</b></td>
+              <td>1800-425-45454 (APTDC)</td>
+              <td>112 / District SP Office</td>
+              <td>Kurnool GGH (08518-255455) · Tirupati SVRR</td>
+            </tr>
+            <tr>
+              <td><b>Karnataka</b></td>
+              <td>080-22352828 (KSTDC)</td>
+              <td>112 / Hampi Tourist Police Unit</td>
+              <td>Hospet Taluk Hospital · VIMS Ballari</td>
+            </tr>
+            <tr>
+              <td><b>Tamil Nadu</b></td>
+              <td>044-25333333 (TTDC)</td>
+              <td>112 / Madurai & Chennai Tourist Wing</td>
+              <td>Rajaji Govt Hospital Madurai · MMC Chennai</td>
+            </tr>
+            <tr>
+              <td><b>Kerala</b></td>
+              <td>1800-425-4747 (KTDC)</td>
+              <td>112 / Kerala Tourism Police Wing</td>
+              <td>Wayanad DM Wayanad Medical College</td>
+            </tr>
+            <tr>
+              <td><b>Rajasthan</b></td>
+              <td>0141-2822863 (RTDC)</td>
+              <td>112 / Jaipur Tourist Police Station</td>
+              <td>SMS Medical College Jaipur · Jodhpur AIIMS</td>
+            </tr>
+            <tr>
+              <td><b>Maharashtra</b></td>
+              <td>022-22845678 (MTDC)</td>
+              <td>112 / Highway Safety Police (HSP)</td>
+              <td>Aurangabad GMCH · Pune Sassoon Hospital</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Report Hazard Form -->
+    <section style="text-align: center; padding: 2rem 0 4rem;">
+      <h2 style="font-size: 1.8rem; margin-bottom: 0.75rem;">Report a Road Hazard or Update Information</h2>
+      <p style="color: var(--ug-text-secondary); max-width: 620px; margin: 0 auto 1.75rem; line-height: 1.6;">
+        Did you encounter a road closure, changed monument timings, or a safety concern on your trip? Let our moderation team know so other travelers stay informed.
+      </p>
+      <a class="ug-btn-primary" href="contact.html?subject=Safety+Update">
+        🛡️ Submit Safety or Hazard Report
+      </a>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-saffron); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Safety & Planning</h5>
+          <ul class="ug-footer-links">
+            <li><a href="safety.html">Help & Safety Guide</a></li>
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+            <li><a href="stay.html">Heritage Stays</a></li>
+            <li><a href="transport.html">Transport & Routes</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>About & Legal</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="security.html">Security Disclosure</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="safety.html" style="color: inherit; text-decoration: none;">Safety (112)</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script src="data/destination-registry.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+  <script src="src/scripts/ai-widget.js"></script>
+  <script src="auth.js"></script>
+  <script src="nav-auth.js"></script>
+
+  <!-- GPS Locator Script -->
+  <script>
+    (function(){
+      var getBtn = document.getElementById('getCoordsBtn');
+      var shareBtn = document.getElementById('shareWhatsAppBtn');
+      var resBox = document.getElementById('gpsResult');
+      var textEl = document.getElementById('gpsCoordsText');
+      var linkEl = document.getElementById('gpsMapLink');
+
+      var currentLat = null;
+      var currentLng = null;
+
+      if (getBtn) {
+        getBtn.addEventListener('click', function() {
+          if (!navigator.geolocation) {
+            alert('Geolocation is not supported by your browser.');
+            return;
+          }
+          getBtn.disabled = true;
+          getBtn.textContent = '⏳ Locating device...';
+
+          navigator.geolocation.getCurrentPosition(
+            function(pos) {
+              currentLat = pos.coords.latitude.toFixed(6);
+              currentLng = pos.coords.longitude.toFixed(6);
+              var mapUrl = 'https://www.google.com/maps?q=' + currentLat + ',' + currentLng;
+
+              textEl.textContent = 'Latitude: ' + currentLat + ', Longitude: ' + currentLng + ' (Accuracy: ±' + Math.round(pos.coords.accuracy) + 'm)';
+              linkEl.href = mapUrl;
+              resBox.style.display = 'block';
+
+              if (shareBtn) {
+                var message = encodeURIComponent('EMERGENCY / SOS: I am sharing my live location via UnseenGo Safety: ' + mapUrl + ' (' + currentLat + ', ' + currentLng + ')');
+                shareBtn.onclick = function() {
+                  window.open('https://api.whatsapp.com/send?text=' + message, '_blank');
+                };
+                shareBtn.style.display = 'inline-flex';
+              }
+
+              getBtn.disabled = false;
+              getBtn.textContent = '🔄 Refresh GPS Coordinates';
+            },
+            function(err) {
+              getBtn.disabled = false;
+              getBtn.textContent = '📍 Fetch My Current GPS Coordinates';
+              alert('Could not retrieve GPS location: ' + err.message + '. Please ensure location permission is enabled.');
+            },
+            { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+          );
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
