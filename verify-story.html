@@ -1,1 +1,252 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Understand the Story — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="unseengo-background.css?v=20260824"><link rel="stylesheet" href="journey-pages.css"></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a href="discover.html">Discover</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='discover.html'">Explore places</button></header><main class="journey-page"><section class="journey-hero"><p class="eyebrow">03 · VERIFY</p><h1>Understand the story.<br><em>Travel with context.</em></h1><p class="lead">A place becomes more meaningful when you understand why it matters. UnseenGo is designed to pair discovery with historical context, cultural significance and practical information before you travel.</p><span class="journey-badge">📖 Context before itinerary</span></section><section class="journey-grid"><article class="journey-card"><div class="icon">📖</div><h2>Know before you go</h2><p>The Verify stage helps travelers move beyond a name and a photograph. The aim is to make every recommendation easier to understand, evaluate and place in context.</p><div class="journey-mini-grid"><div class="journey-mini"><div class="mini-icon">⌛</div><h3>History</h3><p>Understand the timeline and background of a place.</p></div><div class="journey-mini"><div class="mini-icon">🏛️</div><h3>Significance</h3><p>Learn why the place matters culturally.</p></div><div class="journey-mini"><div class="mini-icon">📍</div><h3>Place facts</h3><p>See practical information before deciding.</p></div><div class="journey-mini"><div class="mini-icon">✓</div><h3>Confidence</h3><p>Separate known information from generated explanation.</p></div></div><div class="journey-steps"><div class="journey-step"><span class="step-no">01</span><div><h3>Identify the place</h3><p>Know exactly what destination or attraction you are considering.</p></div></div><div class="journey-step"><span class="step-no">02</span><div><h3>Understand the context</h3><p>Read the history, culture and significance around it.</p></div></div><div class="journey-step"><span class="step-no">03</span><div><h3>Decide responsibly</h3><p>Use the information to choose whether and how to visit.</p></div></div></div><div class="journey-cta"><a class="primary" href="discover.html">Explore places →</a><a class="secondary" href="explore-places.html">← Previous</a></div></article><aside><div class="journey-card"><h2>Trust is part of discovery</h2><p>AI-generated explanations should never be treated as automatically true. UnseenGo should use real place records where available, identify uncertainty and avoid inventing historical facts, timings or facilities.</p><div class="journey-flow"><span>Context</span><span>Evidence</span><span>Clarity</span><span>Responsible travel</span></div><a class="back-link" href="connect-travel.html">Continue to Connect →</a></div></aside></section><section class="journey-card journey-bottom"><p class="eyebrow">THE PURPOSE</p><h2>Don't just visit a place. Understand it.</h2><p>Cultural tourism becomes richer when visitors know the story behind what they see. This layer is what turns a recommendation into a meaningful experience.</p></section><div class="journey-nav"><a href="explore-places.html">← 02 · Explore</a><a href="connect-travel.html">04 · Connect →</a></div></main><footer><b>✦ UnseenGo AI</b><span>Discover heritage. Empower communities. Grow local economies.</span><span>© 2026</span></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Understand the Story (03 · Verify) — UnseenGo AI</title>
+  <meta name="description" content="Discover the cultural significance, historical timeline, and architecture of a place before you travel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="journey-pages.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="journey-page">
+    <section class="journey-hero">
+      <div class="ug-breadcrumbs" style="margin-bottom: 1.5rem;">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="how.html">How It Works</a>
+        <span class="sep">›</span>
+        <span class="current">03 · Verify & Understand</span>
+      </div>
+      <p class="eyebrow">STAGE 03 · VERIFY</p>
+      <h1>Understand the story.<br><em>Travel with context.</em></h1>
+      <p class="lead">
+        A monument becomes profoundly meaningful when you understand why it was built, who carved its stones, and what living traditions endure. UnseenGo pairs geographic discovery with historical context, architectural background, and verified practical details before you set foot on site.
+      </p>
+      <span class="journey-badge">📖 Architectural Context Before Itinerary Generation</span>
+    </section>
+
+    <section class="journey-grid">
+      <article class="journey-card">
+        <div class="icon">📖</div>
+        <h2>Know before you go</h2>
+        <p>The Verify stage helps conscious travelers move past the quick photo-op. The objective is to make every recommendation transparent, evaluate its authenticity, and respect its sanctity.</p>
+
+        <div class="journey-mini-grid">
+          <div class="journey-mini">
+            <div class="mini-icon">⌛</div>
+            <h3>Historical Timeline</h3>
+            <p>Understand the dynastic era, patrons, and founding myths of the site.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🏛️</div>
+            <h3>Architecture & Style</h3>
+            <p>Learn whether stones are Chalukyan, Kakatiyan, Dravidian, or Rock-Cut.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">📍</div>
+            <h3>Verified Place Facts</h3>
+            <p>Access accurate opening hours, darshan rules, footwear regulations, and photography permits.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">✓</div>
+            <h3>Confidence Scoring</h3>
+            <p>Clearly distinguish between verified administrative records and AI-suggested summaries.</p>
+          </div>
+        </div>
+
+        <div class="journey-steps">
+          <div class="journey-step">
+            <span class="step-no">01</span>
+            <div>
+              <h3>Identify the place</h3>
+              <p>Review the exact destination coordinates and official preservation status.</p>
+            </div>
+          </div>
+          <div class="journey-step">
+            <span class="step-no">02</span>
+            <div>
+              <h3>Understand the context</h3>
+              <p>Immerse yourself in regional folklore, inscriptions, and cultural meaning.</p>
+            </div>
+          </div>
+          <div class="journey-step">
+            <span class="step-no">03</span>
+            <div>
+              <h3>Decide responsibly</h3>
+              <p>Travel with appropriate etiquette, modest attire, and Leave-No-Trace principles.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-cta">
+          <a class="primary" href="discover.html">Explore places →</a>
+          <a class="secondary" href="explore-places.html">← 02 · Find Places</a>
+        </div>
+      </article>
+
+      <aside>
+        <div class="journey-card">
+          <h2>Trust is core to discovery</h2>
+          <p>
+            AI recommendations should never invent facts or hallucinate temple timings. UnseenGo utilizes real historical inventories, marks uncertain information honestly, and preserves cultural dignity above all else.
+          </p>
+
+          <div class="journey-flow">
+            <span>Historical Accuracy</span>
+            <span>Archaeological Evidence</span>
+            <span>Etiquette Guidelines</span>
+            <span>Sacred Preservation</span>
+          </div>
+
+          <a class="back-link" href="connect-travel.html">Continue to 04 · Connect Mobility →</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="journey-card journey-bottom">
+      <p class="eyebrow">THE CORE PRINCIPLE</p>
+      <h2>Don't just visit a place. Understand it.</h2>
+      <p>
+        Cultural journeys transform our worldview when we know the stories etched in rock and earth. This verification layer is what elevates a basic travel pin into an unforgettable personal journey.
+      </p>
+    </section>
+
+    <div class="journey-nav">
+      <a href="explore-places.html">← 02 · Explore Places</a>
+      <a href="connect-travel.html">Continue to 04 · Connect &amp; Travel →</a>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

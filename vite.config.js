@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import fs from 'node:fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -125,39 +126,20 @@ function apiMiddlewarePlugin() {
   };
 }
 
+const htmlInputs = fs.readdirSync(__dirname)
+  .filter(file => file.endsWith('.html'))
+  .reduce((acc, file) => {
+    const name = file.replace(/\.html$/, '');
+    acc[name] = resolve(__dirname, file);
+    return acc;
+  }, {});
+
 export default defineConfig({
   plugins: [tailwindcss(), directCssPlugin(), apiMiddlewarePlugin()],
   base: './',
   build: {
     rollupOptions: {
-      input: {
-        home: resolve(__dirname, 'index.html'),
-        discover: resolve(__dirname, 'discover.html'),
-        planner: resolve(__dirname, 'planner.html'),
-        place: resolve(__dirname, 'place.html'),
-        profile: resolve(__dirname, 'profile.html'),
-        personalize: resolve(__dirname, 'personalize.html'),
-        'stay-local': resolve(__dirname, 'stay-local.html'),
-        'india-cities': resolve(__dirname, 'india-cities.html'),
-        'connect-travel': resolve(__dirname, 'connect-travel.html'),
-        'decision-engine': resolve(__dirname, 'decision-engine.html'),
-        stories: resolve(__dirname, 'stories.html'),
-        tripideas: resolve(__dirname, 'tripideas.html'),
-        map: resolve(__dirname, 'map.html'),
-        'my-travel': resolve(__dirname, 'my-travel.html'),
-        admin: resolve(__dirname, 'admin.html'),
-        login: resolve(__dirname, 'login.html'),
-        signin: resolve(__dirname, 'signin.html'),
-        signup: resolve(__dirname, 'signup.html'),
-        search: resolve(__dirname, 'search.html'),
-        stay: resolve(__dirname, 'stay.html'),
-        flights: resolve(__dirname, 'flights.html'),
-        transport: resolve(__dirname, 'transport.html'),
-        utilities: resolve(__dirname, 'utilities.html'),
-        about: resolve(__dirname, 'about.html'),
-        safety: resolve(__dirname, 'safety.html'),
-        security: resolve(__dirname, 'security.html')
-      }
+      input: htmlInputs
     }
   }
 });

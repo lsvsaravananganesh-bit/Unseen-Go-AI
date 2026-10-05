@@ -1,1 +1,370 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Customer Support | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui;line-height:1.7}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:white;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1000px;margin:auto;padding:60px 22px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.box{padding:25px;background:#101713;border:1px solid #2a342d;border-radius:16px}h1{font-size:50px}@media(max-width:650px){.grid{grid-template-columns:1fr}h1{font-size:38px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>HELP CENTER</p><h1>How can we help?</h1><p>Find answers, report an issue or connect with the UnseenGo team.</p><div class="grid"><div class="box"><h2>Travel support</h2><p>Questions about discovering destinations, itineraries, stays or transport.</p></div><div class="box"><h2>Account support</h2><p>Need help with login, signup or account settings? Tell us what happened.</p></div><div class="box"><h2>Partner support</h2><p>Hotels, guides, local businesses and travel partners can ask about onboarding.</p></div><div class="box"><h2>Safety & security</h2><p>Report suspicious activity, incorrect information or security issues.</p><p><a href="security.html">Security reporting →</a></p></div></div><p><a href="index.html">← Back to UnseenGo</a></p></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="description" content="Customer Support & Assistance Center — UnseenGo AI. Get 24/7 help for itineraries, bookings, local guides, and emergency travel assistance.">
+  <title>Customer Support & Contact — UnseenGo AI</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Help Center & Contact</span>
+          </div>
+          <span class="ug-kicker">✦ Dedicated Traveler Assistance</span>
+          <h1 class="ug-page-hero-title">How can we help your <em>journey?</em></h1>
+          <p class="ug-page-hero-lead">
+            Whether you need help with destination intelligence, personalized AI itineraries, heritage stays, local guide onboarding, or safety assistance — the UnseenGo team is here for you.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Categories -->
+    <section style="padding: 3.5rem 0;">
+      <div class="ug-container">
+        <div class="ug-grid-4">
+          <article class="ug-card">
+            <div class="ug-card-icon">🧭</div>
+            <h2 class="ug-card-title">Travel & Discovery</h2>
+            <p class="ug-card-desc">Questions about exploring hidden gems, temple trails, road conditions, or AI recommendations.</p>
+            <a href="#contactFormSection" class="ug-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Ask Question →</a>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🏡</div>
+            <h2 class="ug-card-title">Stays & Bookings</h2>
+            <p class="ug-card-desc">Inquiries regarding heritage homestays, verified boutique accommodations, and partner stays.</p>
+            <a href="stay.html" class="ug-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Browse Stays →</a>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🤝</div>
+            <h2 class="ug-card-title">Partners & Hosts</h2>
+            <p class="ug-card-desc">Join our ecosystem as a verified local host, cultural storyteller, or artisanal heritage guide.</p>
+            <a href="list-your-hotel.html" class="ug-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Host Portal →</a>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🛡️</div>
+            <h2 class="ug-card-title">Trust & Security</h2>
+            <p class="ug-card-desc">Report data discrepancies, security vulnerabilities, or community safety inquiries.</p>
+            <a href="safety.html" class="ug-btn-secondary" style="font-size: 0.85rem; padding: 0.5rem 1rem;">Safety Hub →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Form & Emergency Section -->
+    <section id="contactFormSection" style="padding: 1rem 0 4.5rem;">
+      <div class="ug-container">
+        <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 2.5rem; align-items: start;">
+          <!-- Form Box -->
+          <div class="ug-content-box" style="margin-bottom: 0;">
+            <span class="ug-kicker emerald">Direct Message</span>
+            <h2 style="font-size: 1.85rem; margin: 0.35rem 0 0.85rem; color: var(--ug-text-primary);">Send us an inquiry</h2>
+            <p style="color: var(--ug-text-secondary); margin-bottom: 2rem; font-size: 0.95rem;">
+              Fill in your query below. Our cultural curators and travel support specialists typically respond within 2–4 hours.
+            </p>
+
+            <form id="supportContactForm">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="ug-form-group">
+                  <label class="ug-form-label" for="userName">Full Name</label>
+                  <input type="text" id="userName" class="ug-form-input" placeholder="e.g. Ananya Sharma" required>
+                </div>
+                <div class="ug-form-group">
+                  <label class="ug-form-label" for="userEmail">Email Address</label>
+                  <input type="email" id="userEmail" class="ug-form-input" placeholder="name@domain.com" required>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="ug-form-group">
+                  <label class="ug-form-label" for="queryCategory">Inquiry Type</label>
+                  <select id="queryCategory" class="ug-form-select">
+                    <option value="travel">Destination & AI Planning</option>
+                    <option value="stay">Stays & Homestay Inquiries</option>
+                    <option value="partner">Partner & Host Verification</option>
+                    <option value="account">Account & Profile Settings</option>
+                    <option value="safety">Safety & Road Advisory</option>
+                    <option value="other">General Feedback</option>
+                  </select>
+                </div>
+                <div class="ug-form-group">
+                  <label class="ug-form-label" for="urgencyLevel">Priority</label>
+                  <select id="urgencyLevel" class="ug-form-select">
+                    <option value="normal">Standard (within 24 hrs)</option>
+                    <option value="active">Active Trip / Urgent (within 4 hrs)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="ug-form-group">
+                <label class="ug-form-label" for="querySubject">Subject</label>
+                <input type="text" id="querySubject" class="ug-form-input" placeholder="What can we help you with?" required>
+              </div>
+
+              <div class="ug-form-group">
+                <label class="ug-form-label" for="queryMessage">Message</label>
+                <textarea id="queryMessage" class="ug-form-textarea" placeholder="Provide details, destination names, or dates if applicable..." required></textarea>
+              </div>
+
+              <button type="submit" id="submitBtn" class="ug-btn-primary" style="width: 100%; margin-top: 0.5rem;">
+                ✦ Submit Support Request
+              </button>
+            </form>
+
+            <div id="formSuccessMessage" style="display:none; margin-top: 1.5rem; padding: 1.25rem; border-radius: 14px; background: rgba(34, 197, 94, 0.12); border: 1px solid rgba(34, 197, 94, 0.3); color: #22c55e;">
+              <strong>✓ Support request received!</strong> Ticket #UG-2026-8491 has been created. A specialist will reply to your email shortly.
+            </div>
+          </div>
+
+          <!-- Emergency Contacts & Sidebar -->
+          <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- 24/7 Helpline Card -->
+            <div class="ug-card" style="border-color: rgba(216, 255, 77, 0.3); background: linear-gradient(145deg, rgba(216, 255, 77, 0.05), var(--ug-surface));">
+              <div class="ug-badge ug-badge-verified" style="align-self: flex-start; margin-bottom: 0.75rem;">
+                🇮🇳 24/7 National Emergency
+              </div>
+              <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: var(--ug-text-primary);">India Travel Helplines</h3>
+              <p style="font-size: 0.88rem; color: var(--ug-text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+                Immediate emergency contacts across all Indian states and Union Territories. Free toll-free numbers.
+              </p>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.9rem;">
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--ug-border);">
+                  <span style="color: var(--ug-text-secondary);">Tourist Helpline (Govt of India):</span>
+                  <strong style="color: var(--ug-primary);">1363 (or 1800-11-1363)</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--ug-border);">
+                  <span style="color: var(--ug-text-secondary);">National Emergency SOS:</span>
+                  <strong style="color: #ef4444;">112</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--ug-border);">
+                  <span style="color: var(--ug-text-secondary);">Women Safety Helpline:</span>
+                  <strong style="color: var(--ug-primary);">1091</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between; padding: 0.5rem 0;">
+                  <span style="color: var(--ug-text-secondary);">Highway Emergency SOS:</span>
+                  <strong style="color: var(--ug-primary);">1033</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Email & Direct Channels -->
+            <div class="ug-card">
+              <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--ug-text-primary);">Direct Channels</h3>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.9rem; color: var(--ug-text-secondary);">
+                <li>
+                  <b style="color: var(--ug-text-primary); display: block;">General Inquiries:</b>
+                  <span>support@unseengo.ai</span>
+                </li>
+                <li>
+                  <b style="color: var(--ug-text-primary); display: block;">Host & Guide Verification:</b>
+                  <span>partners@unseengo.ai</span>
+                </li>
+                <li>
+                  <b style="color: var(--ug-text-primary); display: block;">Security Disclosures:</b>
+                  <span>security@unseengo.ai</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs Section -->
+    <section style="padding: 1rem 0 5rem; border-top: 1px solid var(--ug-border);">
+      <div class="ug-container">
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 3rem;">
+          <span class="ug-kicker">✦ Quick Answers</span>
+          <h2 style="font-size: 2.2rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Frequently Asked Questions</h2>
+          <p style="color: var(--ug-text-secondary);">Find answers to common questions about using UnseenGo AI.</p>
+        </div>
+
+        <div style="max-width: 850px; margin: 0 auto;">
+          <details class="ug-faq-item">
+            <summary class="ug-faq-summary">How does UnseenGo AI discover hidden gems?</summary>
+            <div class="ug-faq-body">
+              Our recommendation engine balances "hiddenness scores" against cultural depth, road connectivity, authentic verified photography, and seasonal climate factors. It identifies heritage monuments, canyons, and sacred sites with lower commercial tourist footfall but exceptional architectural and natural merit.
+            </div>
+          </details>
+
+          <details class="ug-faq-item">
+            <summary class="ug-faq-summary">Is UnseenGo AI free to use for travelers?</summary>
+            <div class="ug-faq-body">
+              Yes, all exploration, mapping, AI itinerary planning, and destination guides are completely free to browse. Travelers can also create a free account to save itineraries into their personal Travel Vault.
+            </div>
+          </details>
+
+          <details class="ug-faq-item">
+            <summary class="ug-faq-summary">How do I report outdated road or temple information?</summary>
+            <div class="ug-faq-body">
+              You can send a message via this Contact page or click the "Verify / Suggest Update" button on any place guide page. Our cultural curators verify every submission with local authorities and satellite imagery.
+            </div>
+          </details>
+
+          <details class="ug-faq-item">
+            <summary class="ug-faq-summary">How can local homestays or heritage properties get listed?</summary>
+            <div class="ug-faq-body">
+              Visit our <a href="list-your-hotel.html" style="color:var(--ug-primary);">List Your Hotel</a> or <a href="partner.html" style="color:var(--ug-primary);">Partner Portal</a> page and submit your property details. We prioritize authentic, locally owned stays that reflect regional architecture.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+  <script>
+    document.getElementById('supportContactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('submitBtn').disabled = true;
+      document.getElementById('submitBtn').textContent = 'Submitting Ticket...';
+      setTimeout(function() {
+        document.getElementById('supportContactForm').style.display = 'none';
+        document.getElementById('formSuccessMessage').style.display = 'block';
+      }, 700);
+    });
+  </script>
+</body>
+</html>

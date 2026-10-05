@@ -1,20 +1,328 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Kurnool Temples | UnseenGo AI</title><style>body{margin:0;background:#07100d;color:#eafff4;font-family:Arial,sans-serif}.wrap{max-width:1100px;margin:auto;padding:40px 20px}h1{color:#b8ff3d}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}.card{background:#101b17;border:1px solid #294238;border-radius:16px;padding:22px}.num{color:#b8ff3d;font-size:13px}.photo{height:150px;border-radius:12px;background:linear-gradient(135deg,#16251f,#25382f);display:flex;align-items:center;justify-content:center;color:#8ba99a;margin-bottom:16px}.card h2{font-size:19px;margin:8px 0}.card p{color:#b6c8c0;line-height:1.55}.back{color:#b8ff3d;text-decoration:none}</style></head>
-<body><div class="wrap"><a class="back" href="discover.html?city=Kurnool">← Back to Kurnool Discover</a><h1>🛕 Temples of Kurnool</h1><p>Explore important temples in and around Kurnool. Temple photographs can be added later after verification.</p><div class="grid">
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">01</div><h2>Sri Neelakantheswara Devalayam</h2><p>Lord Shiva temple at Joharapuram, Kurnool.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">02</div><h2>Sri Raghavendra Swami Math</h2><p>Raghavendra Swamy devotional centre in Kurnool.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">03</div><h2>New Ayyappa Swamy Temple</h2><p>Ayyappa temple in A Camp, Kurnool.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">04</div><h2>Sri Suryanarayana Swamy Devalayam</h2><p>Surya Narayana Swamy temple on the Kurnool area of NH44/Gooty Road.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">05</div><h2>Sri Rambolta Devalayam</h2><p>Listed as a heritage religious structure in Kurnool district.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">06</div><h2>Sri Rupala Sangameswara Swamy Temple</h2><p>Historic Shiva temple relocated to Jagannatha Gattu near Kurnool.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">07</div><h2>Sri Lakshmi Jagannatha Swamy Cave Temple</h2><p>Cave temple at Lakshmipuram/Jagannatha Gattu, surrounded by hills and greenery.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">08</div><h2>Sri Eswara Veerabhadra Swamy Temple</h2><p>Heritage-listed temple at Panchalingala village.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">09</div><h2>Sri Nandeeswara &amp; Nageswara Swamy Temples</h2><p>Historic Shiva temples at Prathakota.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">10</div><h2>Nivruthi Sangameswaram Temple</h2><p>Historic Sangameswaram temple associated with the region's sacred river landscape.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">11</div><h2>Mahanandiswara Swamy Temple</h2><p>Major Shiva temple at Mahanandi, known for its sacred natural spring.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">12</div><h2>Yaganti Uma Maheswara Swamy Temple</h2><p>Famous Shiva temple at Yaganti in the wider Kurnool region.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">13</div><h2>Lakshmi Narasimha Swamy Temple, Ahobilam</h2><p>Major Narasimha pilgrimage site in the wider Kurnool region.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">14</div><h2>Bhramaramba Mallikarjuna Swamy Temple, Srisailam</h2><p>Major Shaiva-Shakta pilgrimage centre included in the wider Kurnool-area temple circuit.</p></div>
-<div class="card"><div class="photo">Temple photo — to be verified</div><div class="num">15</div><h2>Maddileti Narasimha Swamy Temple</h2><p>Lakshmi Narasimha Swamy temple at R.S. Rangapuram/Maddileru.</p></div>
-</div></div></body></html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Sacred Temples of Kurnool — UnseenGo AI</title>
+  <meta name="description" content="Discover historic Shaivite, Vaishnavite, and rock-cut cave temples in and around Kurnool, Andhra Pradesh with verified cultural context.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+  <style>
+    .temple-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 2.5rem 0 5rem;
+    }
+    .temple-card {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .temple-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--ug-primary, #d8ff4d);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+    }
+    [data-theme="light"] .temple-card, html.ug-light .temple-card {
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+    .temple-photo-header {
+      height: 140px;
+      background: linear-gradient(135deg, rgba(216, 255, 77, 0.08), rgba(77, 124, 15, 0.2));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem;
+      border-bottom: 1px solid var(--ug-border);
+    }
+    .temple-num {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--ug-primary, #d8ff4d);
+      opacity: 0.8;
+    }
+    .temple-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.3);
+      color: #ffffff;
+      backdrop-filter: blur(4px);
+    }
+    .temple-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .temple-body h2 {
+      font-size: 1.25rem;
+      margin: 0 0 8px;
+      color: var(--ug-text, #f0f4ee);
+      line-height: 1.25;
+    }
+    .temple-body p {
+      color: var(--ug-text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+    .temple-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--ug-primary, #d8ff4d);
+      font-size: 0.82rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .temple-action:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 950px) {
+      .temple-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .temple-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link active" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>Kurnool</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <a href="discover.html?city=Kurnool">Kurnool Guide</a>
+            <span class="sep">›</span>
+            <span class="current">Temples Circuit</span>
+          </div>
+          <span class="ug-kicker">✦ SACRED GEOGRAPHY OF RAYALASEEMA</span>
+          <h1 class="ug-page-hero-title">Temples of <em>Kurnool.</em></h1>
+          <p class="ug-page-hero-lead">
+            Explore 15 venerable Shaivite, Vaishnavite, and rock-cut cave sanctuaries across Kurnool and the sacred Nallamala forest perimeter, from the ancient Sangameswara river confluence to Ahobilam.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Circuit Catalog -->
+    <section>
+      <div class="ug-container">
+        <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap;">
+          <input id="templeSearch" type="text" class="ug-form-input" style="max-width: 400px;" placeholder="Search by temple name, deity or location...">
+          <a href="discover.html?city=Kurnool" class="ug-btn-secondary" style="font-size: 0.85rem;">← Back to Kurnool Explorer</a>
+        </div>
+
+        <div id="templesGrid" class="temple-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+
+  <script>
+    (function() {
+      'use strict';
+      const temples = [
+        { num: '01', name: 'Sri Neelakantheswara Devalayam', tag: 'Lord Shiva · Joharapuram', desc: 'Ancient Shaivite shrine in Joharapuram, revered for peaceful dawn rituals on the banks of the Handri River.' },
+        { num: '02', name: 'Sri Raghavendra Swami Math', tag: 'Madhva Tradition · City Center', desc: 'Devotional center in Kurnool city affiliated with the venerated Mantralayam Guru Raghavendra tradition.' },
+        { num: '03', name: 'New Ayyappa Swamy Temple', tag: 'Ayyappa · A Camp', desc: 'Prominent community shrine and pilgrimage hub in A Camp, especially vibrant during the annual Mandala season.' },
+        { num: '04', name: 'Sri Suryanarayana Swamy Devalayam', tag: 'Surya · NH44 Gooty Rd', desc: 'Rare sun temple on the historic Gooty highway route, celebrated for east-facing morning solar alignments.' },
+        { num: '05', name: 'Sri Rambolta Devalayam', tag: 'Heritage Structure · Kurnool District', desc: 'State heritage-recognized religious complex featuring regional stone carving traditions.' },
+        { num: '06', name: 'Sri Rupala Sangameswara Swamy Temple', tag: 'Chalukya Shaivite · Jagannatha Gattu', desc: 'Historic 7th-century Chalukyan temple carefully relocated to Jagannatha Gattu hillock during river reservoir construction.' },
+        { num: '07', name: 'Sri Lakshmi Jagannatha Swamy Cave Temple', tag: 'Rock-Cut Cave · Lakshmipuram', desc: 'Scenic hilltop cave temple sanctuary at Lakshmipuram surrounded by natural boulders and panoramic greenery.' },
+        { num: '08', name: 'Sri Eswara Veerabhadra Swamy Temple', tag: 'Heritage Listed · Panchalingala', desc: 'Centuries-old village shrine located at Panchalingala at the confluence of regional water courses.' },
+        { num: '09', name: 'Sri Nandeeswara & Nageswara Swamy Temples', tag: 'Dual Shrines · Prathakota', desc: 'Historic twin Shiva temples in Prathakota exhibiting early medieval Telugu stone inscriptions.' },
+        { num: '10', name: 'Nivruthi Sangameswaram Temple', tag: 'Sacred Confluence · Tungabhadra-Krishna', desc: 'Submerged-heritage river temple dedicated to the sacred sangam landscape of seven historic holy rivers.' },
+        { num: '11', name: 'Mahanandiswara Swamy Temple', tag: 'Nallamala Spring · Mahanandi', desc: 'Venerable 10th-century temple complex renowned for crystal-clear perennial natural spring tanks.' },
+        { num: '12', name: 'Yaganti Uma Maheswara Swamy Temple', tag: 'Cave Architecture · Banaganapalle', desc: 'Celebrated Agastya cave temple famous for its growing monolithic Nandi and natural spring pond.' },
+        { num: '13', name: 'Lakshmi Narasimha Swamy Temple, Ahobilam', tag: 'Nava Narasimha · Nallamala Forest', desc: 'Legendary pilgrimage circuit featuring nine cave shrines of Lord Narasimha tucked inside deep forest gorges.' },
+        { num: '14', name: 'Bhramaramba Mallikarjuna Swamy, Srisailam', tag: 'Jyotirlinga & Shakti Peeth', desc: 'Monumental riverfront Shaiva-Shakta temple fortress overlooking the Krishna gorge in the wider regional circuit.' },
+        { num: '15', name: 'Maddileti Narasimha Swamy Temple', tag: 'Wilderness Shrine · R.S. Rangapuram', desc: 'Beloved pilgrimage shrine nestled between rocky knolls along the Maddileru stream.' }
+      ];
+
+      const grid = document.getElementById('templesGrid');
+      const search = document.getElementById('templeSearch');
+
+      function render() {
+        const q = (search.value || '').toLowerCase().trim();
+        const filtered = temples.filter(t => !q || t.name.toLowerCase().includes(q) || t.tag.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q));
+
+        if (!filtered.length) {
+          grid.innerHTML = '<div style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: var(--ug-text-secondary);">No temples matched your search keyword.</div>';
+          return;
+        }
+
+        grid.innerHTML = filtered.map(t => `
+          <article class="temple-card">
+            <div class="temple-photo-header">
+              <span class="temple-num">${t.num}</span>
+              <span class="temple-badge">${t.tag}</span>
+            </div>
+            <div class="temple-body">
+              <div>
+                <h2>${t.name}</h2>
+                <p>${t.desc}</p>
+              </div>
+              <div>
+                <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(t.name + ' Kurnool')}" class="temple-action">
+                  🗺 Open in Maps ↗
+                </a>
+              </div>
+            </div>
+          </article>
+        `).join('');
+      }
+
+      search.addEventListener('input', render);
+      render();
+    })();
+  </script>
+</body>
+</html>

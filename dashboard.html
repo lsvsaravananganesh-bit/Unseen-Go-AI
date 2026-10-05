@@ -1,1 +1,445 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UnseenGo AI — My dashboard</title><link rel="stylesheet" href="account.css"></head><body class="ug-account"><header class="ug-account-nav"><a class="ug-brand" href="index.html">UNSEEN<span>GO</span></a><div class="ug-nav-actions"><a class="ug-link" href="personalize.html">Personalize</a><button class="ug-btn2" id="logout">Sign out</button></div></header><main class="ug-shell ug-dashboard"><div class="ug-dashboard-grid"><aside class="ug-side"><div class="ug-kicker2">Traveller space</div><h3 id="hello" style="margin:9px 0 18px">Welcome</h3><a class="active" href="dashboard.html">Overview</a><a href="personalize.html">🎯 My preferences</a><a href="#saved">♡ Saved places</a><a href="#trips">🧳 My trips</a><a href="decision-engine.html">✨ AI Decision Engine</a><a href="index.html">← Explore India</a></aside><section><div class="ug-panel" style="background:#07100b;color:#fff;border-color:#1e2b21"><div class="ug-kicker2">Your UnseenGo journey</div><h1 style="margin:8px 0 7px;font-size:42px;letter-spacing:-2px">Discover less. <span style="color:#d8f36a">Travel better.</span></h1><p style="color:#c6d0c7;line-height:1.6;font-size:12px">Your profile drives the ranking engine. Update your preferences whenever your travel mood changes.</p><a class="ug-btn2" href="personalize.html">Run my personalized engine →</a></div><div class="ug-stat-grid"><div class="ug-stat"><span>Saved places</span><b id="savedCount">—</b></div><div class="ug-stat"><span>Saved trips</span><b id="tripCount">—</b></div><div class="ug-stat"><span>Profile status</span><b id="profileStatus">—</b></div></div><section class="ug-panel" id="saved"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div><h2 style="margin:0">Saved hidden gems</h2><p class="ug-small">Places you want to remember.</p></div><a class="ug-btn2 dark" href="personalize.html">Find more</a></div><div id="savedGrid" class="ug-recs" style="margin-top:15px"><div class="ug-empty">Loading your saved places…</div></div></section><section class="ug-panel" id="trips"><h2 style="margin:0">My trips</h2><p class="ug-small">Save a generated itinerary here when you are ready to turn recommendations into a journey.</p><div id="tripsGrid" class="ug-empty" style="margin-top:15px">No saved trips yet.</div></section></section></div></main><script src="supabase-config.js"></script><script src="supabase-client.js"></script><script src="account.js"></script><script>(async function(){try{const user=await UnseenGoAccount.user();if(!user){location.href='login.html?redirect=dashboard.html';return}const name=user.user_metadata?.full_name||user.email?.split('@')[0]||'Traveller';document.getElementById('hello').textContent='Hi, '+name+' 👋';const prefs=await UnseenGoAccount.getPreferences(),saved=await UnseenGoAccount.savedRecommendations();document.getElementById('savedCount').textContent=saved.length;document.getElementById('profileStatus').textContent=prefs?'Ready':'Set up';const grid=document.getElementById('savedGrid');if(!saved.length)grid.innerHTML='<div class="ug-empty">No saved places yet. Run the engine and save the hidden gems that feel right.</div>';else{grid.innerHTML='';saved.forEach(r=>{const card=document.createElement('article');card.className='ug-rec';card.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px"><h3>'+r.place_name+'</h3><span class="ug-score2">'+r.score+'% match</span></div><p>'+String(r.reason||'Saved from your personalized recommendations.')+'</p><div class="ug-rec-actions"><a href="place.html?place='+encodeURIComponent(r.place_name)+'">View place</a><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.place_name)+'">Navigate →</a></div>';grid.appendChild(card)})}document.getElementById('logout').onclick=async()=>{await UnseenGoAccount.signOut();location.href='index.html'};let trips=[];try{const dt=localStorage.getItem('unseengo_demo_trips');if(dt)trips=JSON.parse(dt);}catch(_){}const tg=document.getElementById('tripsGrid');if(trips&&trips.length){document.getElementById('tripCount').textContent=trips.length;if(tg){tg.className='ug-recs';tg.innerHTML='';trips.forEach(t=>{const card=document.createElement('article');card.className='ug-rec';card.innerHTML='<div style="display:flex;justify-content:space-between;gap:8px"><h3>'+(t.title||'Trip')+'</h3><span class="ug-score2">'+(t.trip_data?.days||2)+' Days</span></div><p>Destination: '+(t.destination||'India')+'</p><div class="ug-rec-actions"><a href="planner.html?city='+encodeURIComponent(t.destination||'')+'">Open in AI Planner →</a></div>';tg.appendChild(card);});}}else{document.getElementById('tripCount').textContent='0';}UnseenGoAccount.ready(async s=>{try{const {data}=await s.from('saved_trips').select('id').eq('user_id',user.id);if(data&&data.length)document.getElementById('tripCount').textContent=data.length;}catch(_){}});}catch(e){console.error(e)}})();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Traveler Dashboard — UnseenGo AI</title>
+  <meta name="description" content="Manage your saved hidden gems, personalized itineraries, travel preferences, and account settings.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="account.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+  <style>
+    .dash-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 5rem;
+    }
+    .dash-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .dash-sidebar {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 20px;
+      padding: 1.5rem;
+      position: sticky;
+      top: 100px;
+    }
+    [data-theme="light"] .dash-sidebar, html.ug-light .dash-sidebar {
+      background: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    .dash-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      color: var(--ug-text, #f0f4ee);
+      text-decoration: none;
+      font-size: 13.5px;
+      font-weight: 700;
+      transition: all 0.2s ease;
+      margin-bottom: 4px;
+    }
+    .dash-nav-link:hover, .dash-nav-link.active {
+      background: rgba(216, 255, 77, 0.12);
+      color: var(--ug-primary, #d8ff4d);
+    }
+    [data-theme="light"] .dash-nav-link:hover, [data-theme="light"] .dash-nav-link.active,
+    html.ug-light .dash-nav-link:hover, html.ug-light .dash-nav-link.active {
+      background: rgba(77, 124, 15, 0.1);
+      color: var(--ug-primary, #4d7c0f);
+    }
+    .dash-panel {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    [data-theme="light"] .dash-panel, html.ug-light .dash-panel {
+      background: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    .dash-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .dash-stat-card {
+      background: var(--ug-elevated, #18221a);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+    [data-theme="light"] .dash-stat-card, html.ug-light .dash-stat-card {
+      background: #f8faf6;
+    }
+    .dash-stat-card span {
+      display: block;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--ug-text-secondary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .dash-stat-card b {
+      display: block;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--ug-primary, #d8ff4d);
+      margin-top: 4px;
+    }
+    @media (max-width: 900px) {
+      .dash-layout {
+        grid-template-columns: 1fr;
+      }
+      .dash-sidebar {
+        position: static;
+      }
+    }
+    @media (max-width: 600px) {
+      .dash-stat-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <span class="current">My Dashboard</span>
+          </div>
+          <span class="ug-kicker">✦ TRAVEL VAULT & PROFILE MANAGEMENT</span>
+          <h1 class="ug-page-hero-title">Discover less. <em style="color:var(--ug-primary);">Travel better.</em></h1>
+          <p class="ug-page-hero-lead">
+            Welcome to your personal UnseenGo command center. Manage your saved heritage gems, customize your travel style preferences, and review your multi-day AI itineraries.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="dash-wrap">
+      <div class="dash-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="dash-sidebar">
+          <span class="ug-kicker" style="font-size: 10px;">TRAVELLER SPACE</span>
+          <h3 id="hello" style="margin: 8px 0 16px; font-size: 1.25rem;">Welcome</h3>
+          <nav>
+            <a class="dash-nav-link active" href="dashboard.html">📊 Overview</a>
+            <a class="dash-nav-link" href="personalize.html">🎯 My Preferences</a>
+            <a class="dash-nav-link" href="#saved">♡ Saved Places</a>
+            <a class="dash-nav-link" href="#trips">🧳 My Trips</a>
+            <a class="dash-nav-link" href="decision-engine.html">✨ AI Decision Engine</a>
+            <a class="dash-nav-link" href="discover.html">🧭 Explore India</a>
+          </nav>
+          <hr style="border: 0; border-top: 1px solid var(--ug-border); margin: 16px 0;">
+          <button id="logout" class="ug-btn-secondary" style="width: 100%; font-size: 0.85rem; padding: 10px;">Sign Out</button>
+        </aside>
+
+        <!-- Main Dashboard Content -->
+        <section>
+          <!-- Quick Status Card -->
+          <div class="dash-stat-row">
+            <div class="dash-stat-card">
+              <span>Saved Places</span>
+              <b id="savedCount">—</b>
+            </div>
+            <div class="dash-stat-card">
+              <span>Saved Trips</span>
+              <b id="tripCount">—</b>
+            </div>
+            <div class="dash-stat-card">
+              <span>Profile Status</span>
+              <b id="profileStatus">—</b>
+            </div>
+          </div>
+
+          <!-- Preferences Banner -->
+          <div class="dash-panel" style="background: linear-gradient(145deg, var(--ug-surface), var(--ug-elevated));">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;">
+              <div>
+                <span class="ug-kicker">PERSONALIZATION ENGINE</span>
+                <h2 style="margin:6px 0 8px; font-size:1.4rem;">Keep your recommendations fresh</h2>
+                <p style="color:var(--ug-text-secondary); font-size:0.9rem; margin:0; max-width:560px;">
+                  Update your interests, pacing, and budget tier to refine UnseenGo's explainable scoring algorithms.
+                </p>
+              </div>
+              <a class="ug-btn-primary" href="personalize.html">Configure Preferences →</a>
+            </div>
+          </div>
+
+          <!-- Saved Places Section -->
+          <section class="dash-panel" id="saved">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:1.5rem; border-bottom:1px solid var(--ug-border); padding-bottom:1rem;">
+              <div>
+                <h2 style="margin:0; font-size:1.35rem;">Saved Hidden Gems</h2>
+                <p style="color:var(--ug-text-secondary); font-size:0.85rem; margin:4px 0 0;">Monuments, trails, and quiet destinations you want to visit.</p>
+              </div>
+              <a class="ug-btn-secondary" href="personalize.html" style="font-size:0.85rem;">Find More Gems</a>
+            </div>
+
+            <div id="savedGrid" class="ug-recs">
+              <div class="ug-empty" style="padding: 2.5rem 1rem;">Loading your saved places…</div>
+            </div>
+          </section>
+
+          <!-- Saved Trips Section -->
+          <section class="dash-panel" id="trips">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:1.5rem; border-bottom:1px solid var(--ug-border); padding-bottom:1rem;">
+              <div>
+                <h2 style="margin:0; font-size:1.35rem;">My Curated Trips</h2>
+                <p style="color:var(--ug-text-secondary); font-size:0.85rem; margin:4px 0 0;">Multi-day AI travel circuits with day-by-day itineraries.</p>
+              </div>
+              <a class="ug-btn-primary" href="planner.html" style="font-size:0.85rem;">+ Create New Trip</a>
+            </div>
+
+            <div id="tripsGrid" class="ug-empty" style="padding: 2.5rem 1rem;">
+              No saved trips yet. Use the <a href="planner.html" style="color:var(--ug-primary);">AI Planner</a> to generate your first circuit.
+            </div>
+          </section>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="account.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+
+  <script>
+    (async function(){
+      try {
+        const user = await UnseenGoAccount.user();
+        if (!user) {
+          location.href = 'login.html?redirect=dashboard.html';
+          return;
+        }
+
+        const name = user.user_metadata?.full_name || user.email?.split('@')[0] || 'Traveller';
+        document.getElementById('hello').textContent = 'Hi, ' + name + ' 👋';
+
+        const prefs = await UnseenGoAccount.getPreferences();
+        const saved = await UnseenGoAccount.savedRecommendations();
+
+        document.getElementById('savedCount').textContent = saved.length;
+        document.getElementById('profileStatus').textContent = prefs ? 'Active' : 'Setup Required';
+
+        const grid = document.getElementById('savedGrid');
+        if (!saved.length) {
+          grid.innerHTML = '<div class="ug-empty" style="padding:2.5rem 1rem;">No saved places yet. Run the <a href="personalize.html" style="color:var(--ug-primary);">Personalization Engine</a> to discover and save destinations that fit your rhythm.</div>';
+        } else {
+          grid.innerHTML = '';
+          saved.forEach(r => {
+            const card = document.createElement('article');
+            card.className = 'ug-rec';
+            card.style.background = 'var(--ug-elevated)';
+            card.style.borderColor = 'var(--ug-border)';
+            card.innerHTML = `
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                <h3 style="margin:0; font-size:1.1rem; color:var(--ug-text);">${r.place_name}</h3>
+                <span class="ug-score-pill" style="font-size:0.75rem; background:rgba(216,255,77,0.15); color:var(--ug-primary);">${r.score}% match</span>
+              </div>
+              <p style="font-size:0.85rem; color:var(--ug-text-secondary); line-height:1.55; margin:8px 0 12px;">${String(r.reason || 'Saved from your personalized recommendations.')}</p>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <a href="place.html?place=${encodeURIComponent(r.place_name)}" class="ug-btn-secondary" style="padding:6px 12px; font-size:0.8rem;">View Place</a>
+                <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.place_name)}" class="ug-btn-secondary" style="padding:6px 12px; font-size:0.8rem;">Navigate ↗</a>
+              </div>
+            `;
+            grid.appendChild(card);
+          });
+        }
+
+        document.getElementById('logout').onclick = async () => {
+          await UnseenGoAccount.signOut();
+          location.href = 'index.html';
+        };
+
+        let trips = [];
+        try {
+          const dt = localStorage.getItem('unseengo_demo_trips');
+          if (dt) trips = JSON.parse(dt);
+        } catch (_) {}
+
+        const tg = document.getElementById('tripsGrid');
+        if (trips && trips.length) {
+          document.getElementById('tripCount').textContent = trips.length;
+          if (tg) {
+            tg.className = 'ug-recs';
+            tg.innerHTML = '';
+            trips.forEach(t => {
+              const card = document.createElement('article');
+              card.className = 'ug-rec';
+              card.style.background = 'var(--ug-elevated)';
+              card.style.borderColor = 'var(--ug-border)';
+              card.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px;">
+                  <h3 style="margin:0; font-size:1.1rem; color:var(--ug-text);">${t.title || 'Curated Itinerary'}</h3>
+                  <span class="ug-score-pill" style="font-size:0.75rem;">${t.trip_data?.days || 2} Days</span>
+                </div>
+                <p style="font-size:0.85rem; color:var(--ug-text-secondary); margin:8px 0 12px;">Destination: <b>${t.destination || 'India'}</b></p>
+                <div>
+                  <a href="planner.html?city=${encodeURIComponent(t.destination || '')}" class="ug-btn-primary" style="padding:6px 12px; font-size:0.8rem;">Open in AI Planner →</a>
+                </div>
+              `;
+              tg.appendChild(card);
+            });
+          }
+        } else {
+          document.getElementById('tripCount').textContent = '0';
+        }
+
+        UnseenGoAccount.ready(async s => {
+          try {
+            const { data } = await s.from('saved_trips').select('id').eq('user_id', user.id);
+            if (data && data.length) document.getElementById('tripCount').textContent = data.length;
+          } catch (_) {}
+        });
+
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  </script>
+</body>
+</html>

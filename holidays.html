@@ -1,1 +1,268 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Holiday Packages | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:#fff;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1050px;margin:auto;padding:60px 22px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{padding:25px;border:1px solid #2a342d;border-radius:16px;background:#101713}a{text-decoration:none}h1{font-size:48px}@media(max-width:700px){.grid{grid-template-columns:1fr}h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>HOLIDAY IDEAS</p><h1>Packages built around discovery.</h1><div class="grid"><div class="box"><h2>Andhra Pradesh</h2><p>Heritage, temples, nature and lesser-known local experiences.</p></div><div class="box"><h2>Kerala</h2><p>Backwaters, villages, culture and slow travel.</p></div><div class="box"><h2>Rajasthan</h2><p>Fort towns, desert culture and hidden heritage.</p></div><div class="box"><h2>Goa</h2><p>Beyond beaches: villages, food and local culture.</p></div><div class="box"><h2>Karnataka</h2><p>Historic landscapes, food and nature.</p></div><div class="box"><h2>Custom trip</h2><p>Let AI build a package around your preferences.</p><a href="planner.html">Plan with AI →</a></div></div></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="description" content="Signature Holiday Packages & Slow Travel Circuits — UnseenGo AI. Curated multi-day heritage road trips, canyon expeditions, and sacred pilgrimage circuits across India.">
+  <title>Signature Holiday Circuits — UnseenGo AI</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Holiday Packages</span>
+          </div>
+          <span class="ug-kicker emerald">✦ Curated Multi-Day Circuits</span>
+          <h1 class="ug-page-hero-title">Signature holiday circuits <em>crafted by AI.</em></h1>
+          <p class="ug-page-hero-lead">
+            Escape generic tourist traps. Explore handcrafted 3-day to 7-day slow travel itineraries linking offbeat canyons, living temple monoliths, and organic forest retreats.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages Grid -->
+    <section style="padding: 3.5rem 0 5rem;">
+      <div class="ug-container">
+        <div class="ug-grid-2">
+          <!-- Package 1 -->
+          <article class="ug-card" style="padding: 0; overflow: hidden;">
+            <div style="height: 240px; background: #131d14 url('https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=800&q=80') center/cover; position: relative;">
+              <span class="ug-badge ug-badge-verified" style="position: absolute; top: 16px; left: 16px;">✦ 4 Days / 3 Nights</span>
+              <span class="ug-score-pill" style="position: absolute; bottom: 16px; right: 16px; background: rgba(8,13,9,0.85); backdrop-filter: blur(4px);">₹11,500 / person</span>
+            </div>
+            <div style="padding: 2rem;">
+              <h3 style="font-size: 1.45rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">
+                The Rayalaseema Canyon & Cave Odyssey
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--ug-text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+                Circuit: Hyderabad/Kurnool → Orvakal Quartz Garden → Belum Underground Caves → Yaganti Growing Nandi Temple → Gandikota Penna Gorge.
+              </p>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <span class="ug-score-pill">Private Cab Included</span>
+                <span class="ug-score-pill">Heritage Homestay</span>
+                <span class="ug-score-pill">Gorge Sunset Camp</span>
+              </div>
+              <div style="display: flex; gap: 0.75rem;">
+                <a href="planner.html?circuit=Rayalaseema" class="ug-btn-primary" style="flex: 1; text-align: center;">Plan in AI Planner →</a>
+                <a href="contact.html?query=Rayalaseema%20Package" class="ug-btn-secondary">Inquire</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Package 2 -->
+          <article class="ug-card" style="padding: 0; overflow: hidden;">
+            <div style="height: 240px; background: #131d14 url('https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=800&q=80') center/cover; position: relative;">
+              <span class="ug-badge ug-badge-verified" style="position: absolute; top: 16px; left: 16px;">✦ 5 Days / 4 Nights</span>
+              <span class="ug-score-pill" style="position: absolute; bottom: 16px; right: 16px; background: rgba(8,13,9,0.85); backdrop-filter: blur(4px);">₹16,800 / person</span>
+            </div>
+            <div style="padding: 2rem;">
+              <h3 style="font-size: 1.45rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">
+                The Vijayanagara Stone Empire Expedition
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--ug-text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+                Circuit: Bengaluru → Lepakshi Hanging Pillar → Hampi World Heritage Core → Anegundi Kishkindha Village → Badami Rock-Cut Caves.
+              </p>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <span class="ug-score-pill">Archaeologist Guide</span>
+                <span class="ug-score-pill">River Coracle Ride</span>
+                <span class="ug-score-pill">Stone Villa Stay</span>
+              </div>
+              <div style="display: flex; gap: 0.75rem;">
+                <a href="planner.html?circuit=Vijayanagara" class="ug-btn-primary" style="flex: 1; text-align: center;">Plan in AI Planner →</a>
+                <a href="contact.html?query=Vijayanagara%20Package" class="ug-btn-secondary">Inquire</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Package 3 -->
+          <article class="ug-card" style="padding: 0; overflow: hidden;">
+            <div style="height: 240px; background: #131d14 url('https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=800&q=80') center/cover; position: relative;">
+              <span class="ug-badge ug-badge-verified" style="position: absolute; top: 16px; left: 16px;">✦ 4 Days / 3 Nights</span>
+              <span class="ug-score-pill" style="position: absolute; bottom: 16px; right: 16px; background: rgba(8,13,9,0.85); backdrop-filter: blur(4px);">₹13,200 / person</span>
+            </div>
+            <div style="padding: 2rem;">
+              <h3 style="font-size: 1.45rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">
+                Western Ghats Rainforest & Canopy Trail
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--ug-text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+                Circuit: Mangaluru / Udupi → Agumbe Rainforest Observatory → Jog Falls Gorge → Honnavar Mangrove Boat Safari → Gokarna Secret Beaches.
+              </p>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <span class="ug-score-pill">Naturalist Escort</span>
+                <span class="ug-score-pill">Farm Plantation Stay</span>
+                <span class="ug-score-pill">Sunset Boat Trail</span>
+              </div>
+              <div style="display: flex; gap: 0.75rem;">
+                <a href="planner.html?circuit=WesternGhats" class="ug-btn-primary" style="flex: 1; text-align: center;">Plan in AI Planner →</a>
+                <a href="contact.html?query=Ghats%20Package" class="ug-btn-secondary">Inquire</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Package 4 -->
+          <article class="ug-card" style="padding: 0; overflow: hidden;">
+            <div style="height: 240px; background: #131d14 url('https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80') center/cover; position: relative;">
+              <span class="ug-badge ug-badge-verified" style="position: absolute; top: 16px; left: 16px;">✦ 6 Days / 5 Nights</span>
+              <span class="ug-score-pill" style="position: absolute; bottom: 16px; right: 16px; background: rgba(8,13,9,0.85); backdrop-filter: blur(4px);">₹18,500 / person</span>
+            </div>
+            <div style="padding: 2rem;">
+              <h3 style="font-size: 1.45rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">
+                Sacred Jyotirlinga & River Forest Pilgrimage
+              </h3>
+              <p style="font-size: 0.9rem; color: var(--ug-text-secondary); line-height: 1.6; margin-bottom: 1.25rem;">
+                Circuit: Hyderabad → Nallamala Forest Drive → Srisailam Mallikarjuna Jyotirlinga → Akkamahadevi River Caves → Mahanandi Springs.
+              </p>
+              <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                <span class="ug-score-pill">Forest Safari Permit</span>
+                <span class="ug-score-pill">Temple Protocol Assistance</span>
+                <span class="ug-score-pill">Riverboat Included</span>
+              </div>
+              <div style="display: flex; gap: 0.75rem;">
+                <a href="planner.html?circuit=Jyotirlinga" class="ug-btn-primary" style="flex: 1; text-align: center;">Plan in AI Planner →</a>
+                <a href="contact.html?query=Srisailam%20Package" class="ug-btn-secondary">Inquire</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

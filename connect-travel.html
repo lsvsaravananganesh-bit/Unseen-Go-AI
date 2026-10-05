@@ -1,1 +1,254 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Locate & Travel — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="unseengo-background.css?v=20260824"><link rel="stylesheet" href="journey-pages.css"></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a href="discover.html">Discover</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='transport.html'">Transport</button></header><main class="journey-page"><section class="journey-hero"><p class="eyebrow">04 · CONNECT</p><h1>Locate & travel.<br><em>Turn interest into movement.</em></h1><p class="lead">Once a place catches your attention, UnseenGo connects discovery with the real world. Find the location, understand your transport choices and open live navigation when you are ready to move.</p><span class="journey-badge">📍 Place → Route → Live navigation</span></section><section class="journey-grid"><article class="journey-card"><div class="icon">📍</div><h2>From a place card to a real route</h2><p>The Connect stage bridges information and action. A useful tourism platform should help a traveler move from “that looks interesting” to “here is how I get there.”</p><div class="journey-mini-grid"><div class="journey-mini"><div class="mini-icon">📍</div><h3>Real location</h3><p>Open the destination in a live map service.</p></div><div class="journey-mini"><div class="mini-icon">🚗</div><h3>Road travel</h3><p>Compare practical driving and taxi routes.</p></div><div class="journey-mini"><div class="mini-icon">🚌</div><h3>Transit</h3><p>Look for bus, rail and public transport connections.</p></div><div class="journey-mini"><div class="mini-icon">🧭</div><h3>Navigation</h3><p>Continue with current directions and map information.</p></div></div><div class="journey-steps"><div class="journey-step"><span class="step-no">01</span><div><h3>Choose a place</h3><p>Start from a destination discovered in UnseenGo.</p></div></div><div class="journey-step"><span class="step-no">02</span><div><h3>Compare movement</h3><p>Consider road, transit, walking, cycling or other practical modes.</p></div></div><div class="journey-step"><span class="step-no">03</span><div><h3>Open live navigation</h3><p>Use current map services for the final route.</p></div></div></div><div class="journey-cta"><a class="primary" href="transport.html">Open Transport →</a><a class="secondary" href="verify-story.html">← Previous</a></div></article><aside><div class="journey-card"><h2>Live, not invented</h2><p>Transport schedules, availability and travel times change. UnseenGo should avoid presenting stale or fabricated schedules as live facts and instead connect travelers to current services.</p><div class="journey-flow"><span>Maps</span><span>Transport</span><span>Directions</span><span>Current info</span></div><a class="back-link" href="stay-local.html">Continue to Experience →</a></div></aside></section><section class="journey-card journey-bottom"><p class="eyebrow">REAL-WORLD CONNECTION</p><h2>Discovery should end with a route.</h2><p>The Connect layer makes the platform practical: discover a place, understand it, then make the next action—getting there—simple.</p></section><div class="journey-nav"><a href="verify-story.html">← 03 · Verify</a><a href="stay-local.html">05 · Experience →</a></div></main><footer><b>✦ UnseenGo AI</b><span>Discover heritage. Empower communities. Grow local economies.</span><span>© 2026</span></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Locate & Travel (04 · Connect) — UnseenGo AI</title>
+  <meta name="description" content="Turn interest into real-world movement with multi-modal transport comparisons, GPS navigation, and road intelligence.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="journey-pages.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="journey-page">
+    <section class="journey-hero">
+      <div class="ug-breadcrumbs" style="margin-bottom: 1.5rem;">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="how.html">How It Works</a>
+        <span class="sep">›</span>
+        <span class="current">04 · Connect & Travel</span>
+      </div>
+      <p class="eyebrow">STAGE 04 · CONNECT</p>
+      <h1>Locate &amp; travel.<br><em>Turn interest into movement.</em></h1>
+      <p class="lead">
+        Once a hidden gem catches your imagination, UnseenGo connects digital discovery with the physical world. Pin exact GPS coordinates, compare multi-modal transport options, and launch live turn-by-turn navigation when you're ready to explore.
+      </p>
+      <span class="journey-badge">📍 Discovered Pin → Multi-Modal Routing → Live Turn-by-Turn Navigation</span>
+    </section>
+
+    <section class="journey-grid">
+      <article class="journey-card">
+        <div class="icon">📍</div>
+        <h2>From a place card to a real route</h2>
+        <p>
+          The Connect stage bridges digital curiosity and physical mobility. A dependable travel platform must help a traveler transition seamlessly from "that looks breathtaking" to "here is the safest, most scenic way to arrive."
+        </p>
+
+        <div class="journey-mini-grid">
+          <div class="journey-mini">
+            <div class="mini-icon">📍</div>
+            <h3>Exact Geolocation</h3>
+            <p>Open destination coordinates directly in Google Maps or OpenStreetMap.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🚗</div>
+            <h3>Road Corridors</h3>
+            <p>Compare driving times, toll stops, ghat section conditions, and cab availability.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🚆</div>
+            <h3>Rail &amp; Transit</h3>
+            <p>Locate nearby junction stations, express lines, and RTC regional bus depots.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🧭</div>
+            <h3>Last-Mile Mobility</h3>
+            <p>Get tips for auto-rickshaws, ferry crossings, coracle rides, and walking trails.</p>
+          </div>
+        </div>
+
+        <div class="journey-steps">
+          <div class="journey-step">
+            <span class="step-no">01</span>
+            <div>
+              <h3>Choose a place</h3>
+              <p>Select any temple, fort, viewpoint, or waterfall saved from UnseenGo.</p>
+            </div>
+          </div>
+          <div class="journey-step">
+            <span class="step-no">02</span>
+            <div>
+              <h3>Compare movement modes</h3>
+              <p>Evaluate personal driving, hired cabs, state buses, and scenic rail options.</p>
+            </div>
+          </div>
+          <div class="journey-step">
+            <span class="step-no">03</span>
+            <div>
+              <h3>Launch live navigation</h3>
+              <p>Receive live traffic status, satellite maps, and parking access points.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-cta">
+          <a class="primary" href="transport.html">Open Transport Hub →</a>
+          <a class="secondary" href="verify-story.html">← 03 · Know Story</a>
+        </div>
+      </article>
+
+      <aside>
+        <div class="journey-card">
+          <h2>Live, not invented</h2>
+          <p>
+            Bus timetables and train schedules fluctuate constantly. UnseenGo avoids presenting static or fabricated schedules as live facts, providing verified station links and direct route maps instead.
+          </p>
+
+          <div class="journey-flow">
+            <span>Multi-Modal Routing</span>
+            <span>Real-Time Traffic</span>
+            <span>Ghat Advisories</span>
+            <span>Verified Depots</span>
+          </div>
+
+          <a class="back-link" href="stay-local.html">Continue to 05 · Experience Local Stays →</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="journey-card journey-bottom">
+      <p class="eyebrow">REAL-WORLD MOBILITY</p>
+      <h2>Discovery should always end with a clear route.</h2>
+      <p>
+        The Connect layer transforms inspiration into smooth action: find a monument, appreciate its architectural depth, and effortlessly navigate the last mile.
+      </p>
+    </section>
+
+    <div class="journey-nav">
+      <a href="verify-story.html">← 03 · Understand Story</a>
+      <a href="stay-local.html">Continue to 05 · Stay Local →</a>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

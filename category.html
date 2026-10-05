@@ -1,1 +1,281 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>UnseenGo AI — Category</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="category-pages.css"><link rel="stylesheet" href="bright-theme.css"></head><body><header class="nav"><a class="brand" href="index.html"><span>✦</span> UnseenGo <b>AI</b></a><a id="backLink" class="back-link" href="index.html#discover">← Back to city</a></header><main><section class="category-hero"><p class="eyebrow">UNSEENGO CITY EXPLORER</p><h1 id="categoryTitle">🏛️ Heritage & History</h1><p class="category-city" id="categoryCity"></p><p id="categoryIntro"></p></section><section class="category-section"><div class="category-grid" id="categoryCards"></div></section></main><script src="category-pages.js"></script><script src="category-bootstrap.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Category Explorer — UnseenGo AI</title>
+  <meta name="description" content="Explore Indian city destinations categorized by Heritage, Nature, Local Food, Living Culture, and Regional Adventures.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="category-pages.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+  <style>
+    .cat-page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1rem 5rem;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+    .category-card {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .category-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--ug-primary, #d8ff4d);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="light"] .category-card, html.ug-light .category-card {
+      background: #ffffff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    }
+    .category-photo {
+      height: 160px;
+      background: var(--ug-elevated, #18221a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      border-bottom: 1px solid var(--ug-border, #28372b);
+    }
+    .category-card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .category-card-body span {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--ug-primary, #d8ff4d);
+    }
+    .category-card-body h2 {
+      font-size: 1.35rem;
+      margin: 8px 0;
+      color: var(--ug-text, #f0f4ee);
+    }
+    .category-card-body .rating {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #f59e0b;
+      margin-bottom: 10px;
+    }
+    .category-card-body .rating small {
+      color: var(--ug-text-secondary);
+      font-weight: 500;
+      margin-left: 4px;
+    }
+    .category-card-body p {
+      color: var(--ug-text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin: 0 0 16px;
+    }
+    .category-card-body button {
+      background: var(--ug-elevated);
+      color: var(--ug-text);
+      border: 1px solid var(--ug-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      align-self: flex-start;
+    }
+    .category-card-body button:hover {
+      background: var(--ug-primary);
+      color: #0b110c;
+      border-color: var(--ug-primary);
+    }
+    [data-theme="light"] .category-card-body button:hover,
+    html.ug-light .category-card-body button:hover {
+      color: #ffffff;
+    }
+    @media (max-width: 950px) {
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 600px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link active" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <a id="backLink" href="discover.html">Destination Guide</a>
+            <span class="sep">›</span>
+            <span class="current" id="categoryCity">City</span>
+          </div>
+          <span class="ug-kicker">✦ THEMATIC CULTURAL EXPLORER</span>
+          <h1 class="ug-page-hero-title" id="categoryTitle">🏛️ Heritage &amp; History</h1>
+          <p class="ug-page-hero-lead" id="categoryIntro">
+            Historic monuments, old quarters, and the living heritage stories that shaped this city.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Categories Grid Content -->
+    <div class="cat-page-wrap">
+      <div id="categoryCards" class="category-grid">
+        <!-- Injected by category-pages.js & category-bootstrap.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="category-pages.js"></script>
+  <script src="category-bootstrap.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

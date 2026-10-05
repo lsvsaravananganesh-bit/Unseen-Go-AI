@@ -1,1 +1,255 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stay Local — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="unseengo-background.css?v=20260824"><link rel="stylesheet" href="journey-pages.css"></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a href="discover.html">Discover</a><a class="active" href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='stay.html'">Find a stay</button></header><main class="journey-page"><section class="journey-hero"><p class="eyebrow">05 · EXPERIENCE</p><h1>Stay local.<br><em>Make the journey matter.</em></h1><p class="lead">Travel is more than reaching a monument. Connect the trip with accommodation, food, guides, artisans, transport providers and community-led experiences that help local value stay local.</p><span class="journey-badge">🤝 Traveler ↔ Local ecosystem</span></section><section class="journey-grid"><article class="journey-card"><div class="icon">🤝</div><h2>Connect tourism with local opportunity</h2><p>The Experience stage expands the journey beyond sightseeing. A destination becomes more useful when the traveler can discover the people, services and businesses that make it feel alive.</p><div class="journey-mini-grid"><div class="journey-mini"><div class="mini-icon">🛏️</div><h3>Stay</h3><p>Find accommodation close to the experience.</p></div><div class="journey-mini"><div class="mini-icon">🍛</div><h3>Food</h3><p>Discover local food and dining opportunities.</p></div><div class="journey-mini"><div class="mini-icon">🧑‍🏫</div><h3>Guides</h3><p>Connect with people who can add local context.</p></div><div class="journey-mini"><div class="mini-icon">🎨</div><h3>Artisans</h3><p>Give crafts and local businesses visibility.</p></div></div><div class="journey-flow"><span>Stay</span><span>Food</span><span>Guides</span><span>Artisans</span><span>Community</span></div><div class="journey-cta"><a class="primary" href="stay.html">Explore stays →</a><a class="secondary" href="connect-travel.html">← Previous</a></div></article><aside><div class="journey-card"><h2>The cultural-economy layer</h2><p>When hidden places receive responsible visibility, visitor interest can create opportunities for local providers. The platform should help discovery flow toward real local participation rather than stopping at a recommendation.</p><div class="journey-steps"><div class="journey-step"><span class="step-no">01</span><div><h3>Visibility</h3><p>Help travelers discover local assets.</p></div></div><div class="journey-step"><span class="step-no">02</span><div><h3>Connection</h3><p>Point interest toward real providers.</p></div></div><div class="journey-step"><span class="step-no">03</span><div><h3>Participation</h3><p>Encourage responsible local spending and experiences.</p></div></div></div><a class="back-link" href="personalize.html">Continue to Personalize →</a></div></aside></section><section class="journey-card journey-bottom"><p class="eyebrow">THE EXPERIENCE PRINCIPLE</p><h2>Don't just visit the destination. Participate in it.</h2><p>UnseenGo's cultural-economy vision is to connect discovery with local opportunity while keeping travelers informed, respectful and in control of their choices.</p></section><div class="journey-nav"><a href="connect-travel.html">← 04 · Connect</a><a href="personalize.html">06 · Plan →</a></div></main><footer><b>✦ UnseenGo AI</b><span>Discover heritage. Empower communities. Grow local economies.</span><span>© 2026</span></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Stay Local (05 · Experience) — UnseenGo AI</title>
+  <meta name="description" content="Connect with authentic heritage homestays, regional culinary traditions, master artisans, and community guides.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="journey-pages.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="journey-page">
+    <section class="journey-hero">
+      <div class="ug-breadcrumbs" style="margin-bottom: 1.5rem;">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="how.html">How It Works</a>
+        <span class="sep">›</span>
+        <span class="current">05 · Stay Local & Experience</span>
+      </div>
+      <p class="eyebrow">STAGE 05 · EXPERIENCE</p>
+      <h1>Stay local.<br><em>Make the journey matter.</em></h1>
+      <p class="lead">
+        Meaningful exploration is much more than staring at a stone wall. Weave your itinerary into traditional family homestays, authentic hearth cooking, knowledgeable local elders, master artisans, and community-led initiatives that keep tourist expenditure circulating inside the host village.
+      </p>
+      <span class="journey-badge">🤝 Conscious Traveler ↔ Local Village &amp; Cultural Economy</span>
+    </section>
+
+    <section class="journey-grid">
+      <article class="journey-card">
+        <div class="icon">🤝</div>
+        <h2>Connect tourism with local opportunity</h2>
+        <p>
+          The Experience stage expands your visit into a living cultural exchange. A destination feels vibrant when travelers actively support the stewards, creators, and traditional businesses that make it unique.
+        </p>
+
+        <div class="journey-mini-grid">
+          <div class="journey-mini">
+            <div class="mini-icon">🛏️</div>
+            <h3>Heritage Stays</h3>
+            <p>Courtyard havelis, plantation bungalows, and warm village homestays.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🍛</div>
+            <h3>Culinary Traditions</h3>
+            <p>Millets, clay-pot curries, seasonal harvests, and forgotten recipes.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🧑‍🏫</div>
+            <h3>Community Guides</h3>
+            <p>Certified local historians, naturalists, and folklore narrators.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🎨</div>
+            <h3>Master Artisans</h3>
+            <p>Direct fair-trade purchases of handlooms, pottery, brassware, and wood carvings.</p>
+          </div>
+        </div>
+
+        <div class="journey-flow">
+          <span>Heritage Stays</span>
+          <span>Regional Flavors</span>
+          <span>Storytelling Guides</span>
+          <span>Village Artisans</span>
+          <span>Eco-Tourism</span>
+        </div>
+
+        <div class="journey-cta">
+          <a class="primary" href="stay.html">Explore Heritage Stays →</a>
+          <a class="secondary" href="connect-travel.html">← 04 · Locate &amp; Travel</a>
+        </div>
+      </article>
+
+      <aside>
+        <div class="journey-card">
+          <h2>The cultural-economy layer</h2>
+          <p>
+            When offbeat heritage receives responsible publicity, tourism revenues should benefit local caretakers rather than distant mega-aggregators. UnseenGo actively channels discovery toward genuine grassroot hosts.
+          </p>
+
+          <div class="journey-steps">
+            <div class="journey-step">
+              <span class="step-no">01</span>
+              <div>
+                <h3>Grassroots Visibility</h3>
+                <p>Surface authentic regional homestays and rural crafts.</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <span class="step-no">02</span>
+              <div>
+                <h3>Direct Connection</h3>
+                <p>Facilitate direct contact with local hosts with zero commissions.</p>
+              </div>
+            </div>
+            <div class="journey-step">
+              <span class="step-no">03</span>
+              <div>
+                <h3>Ethical Participation</h3>
+                <p>Encourage culturally respectful spending that sustains traditions.</p>
+              </div>
+            </div>
+          </div>
+
+          <a class="back-link" href="personalize.html">Continue to 06 · Personalize Recommendations →</a>
+        </div>
+      </aside>
+    </section>
+
+    <section class="journey-card journey-bottom">
+      <p class="eyebrow">THE EXPERIENCE PRINCIPLE</p>
+      <h2>Don't just visit the destination. Participate in it.</h2>
+      <p>
+        UnseenGo's mission is to unite discovery with community stewardship—allowing mindful travelers to leave destinations thriving, preserved, and proud.
+      </p>
+    </section>
+
+    <div class="journey-nav">
+      <a href="connect-travel.html">← 04 · Locate &amp; Travel</a>
+      <a href="personalize.html">Continue to 06 · Personalize Engine →</a>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

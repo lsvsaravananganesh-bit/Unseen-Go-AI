@@ -1,1 +1,338 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>City Directory | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:white;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1050px;margin:auto;padding:55px 22px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.city{padding:20px;border:1px solid #2a342d;border-radius:14px;background:#101713}.city a{font-weight:900;text-decoration:none}.city span{display:block;color:#89958c;font-size:12px;margin-top:6px}h1{font-size:48px}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>DESTINATION DIRECTORY</p><h1>Explore cities across India.</h1><p>Start with a city. UnseenGo finds the less-obvious side of it.</p><div class="grid"><div class="city"><a href="discover.html?city=Kurnool">Kurnool</a><span>Andhra Pradesh</span></div><div class="city"><a href="discover.html?city=Hyderabad">Hyderabad</a><span>Telangana</span></div><div class="city"><a href="discover.html?city=Vijayawada">Vijayawada</a><span>Andhra Pradesh</span></div><div class="city"><a href="discover.html?city=Tirupati">Tirupati</a><span>Andhra Pradesh</span></div><div class="city"><a href="discover.html?city=Visakhapatnam">Visakhapatnam</a><span>Andhra Pradesh</span></div><div class="city"><a href="discover.html?city=Hampi">Hampi</a><span>Karnataka</span></div><div class="city"><a href="discover.html?city=Jaipur">Jaipur</a><span>Rajasthan</span></div><div class="city"><a href="discover.html?city=Goa">Goa</a><span>Goa</span></div></div></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Indian Cities Directory — UnseenGo AI</title>
+  <meta name="description" content="Explore India's cities and towns across all 28 States and 8 Union Territories with UnseenGo AI's destination directory.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+  <style>
+    .directory-tools {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 1rem;
+      margin: 2rem 0 1.5rem;
+    }
+    .directory-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 4rem;
+    }
+    .city-card {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 16px;
+      padding: 1.25rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 120px;
+    }
+    .city-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--ug-primary, #d8ff4d);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="light"] .city-card, html.ug-light .city-card {
+      background: #ffffff;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
+    }
+    .city-card-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--ug-text, #f0f4ee);
+      margin: 0;
+    }
+    .city-card-state {
+      font-size: 0.8rem;
+      color: var(--ug-text-secondary, #95a396);
+      margin-top: 4px;
+      display: block;
+    }
+    .city-card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--ug-primary, #d8ff4d);
+      margin-top: 12px;
+    }
+    @media (max-width: 1000px) {
+      .directory-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 700px) {
+      .directory-tools {
+        grid-template-columns: 1fr;
+      }
+      .directory-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 480px) {
+      .directory-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link active" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <a href="discover.html">Discover</a>
+            <span class="sep">›</span>
+            <span class="current">City Directory</span>
+          </div>
+          <span class="ug-kicker">✦ PAN-INDIA DESTINATIONS DIRECTORY</span>
+          <h1 class="ug-page-hero-title">Explore cities <em>across India.</em></h1>
+          <p class="ug-page-hero-lead">
+            Start with an authentic destination. UnseenGo searches beyond commercial centers to uncover ancient temple compounds, forgotten fortresses, quiet hill trails, and local culinary traditions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Controls -->
+    <section>
+      <div class="ug-container">
+        <div class="directory-tools">
+          <div>
+            <label for="citySearch" style="display:block; font-size:11px; font-weight:800; color:var(--ug-text-secondary); margin-bottom:6px; letter-spacing:1px; text-transform:uppercase;">Search by name</label>
+            <input id="citySearch" type="text" class="ug-form-input" placeholder="Type city or town name (e.g. Kurnool, Hampi, Madurai)...">
+          </div>
+          <div>
+            <label for="stateFilter" style="display:block; font-size:11px; font-weight:800; color:var(--ug-text-secondary); margin-bottom:6px; letter-spacing:1px; text-transform:uppercase;">Filter by State or UT</label>
+            <select id="stateFilter" class="ug-form-select">
+              <option value="">All States &amp; Union Territories</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; color:var(--ug-text-secondary); font-size:0.9rem;">
+          <span id="resultsCount">Loading cities...</span>
+          <span>💡 Tap any card to open its discovery guide</span>
+        </div>
+
+        <div id="citiesGrid" class="directory-grid">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="india-state-directory.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+
+  <script>
+    (function() {
+      'use strict';
+      const searchInput = document.getElementById('citySearch');
+      const stateSelect = document.getElementById('stateFilter');
+      const grid = document.getElementById('citiesGrid');
+      const countEl = document.getElementById('resultsCount');
+
+      const dir = window.INDIA_DIRECTORY || {};
+      const stateList = Object.keys(dir).sort();
+
+      // Populate State Select
+      stateList.forEach(st => {
+        const opt = document.createElement('option');
+        opt.value = st;
+        opt.textContent = st;
+        stateSelect.appendChild(opt);
+      });
+
+      // Flatten list of { city, state }
+      const allCities = [];
+      stateList.forEach(st => {
+        (dir[st] || []).forEach(city => {
+          allCities.push({ city, state: st });
+        });
+      });
+
+      // Sort alphabetically by city name
+      allCities.sort((a, b) => a.city.localeCompare(b.city));
+
+      function render() {
+        const query = (searchInput.value || '').toLowerCase().trim();
+        const selectedState = stateSelect.value;
+
+        const filtered = allCities.filter(item => {
+          const matchQuery = !query || item.city.toLowerCase().includes(query) || item.state.toLowerCase().includes(query);
+          const matchState = !selectedState || item.state === selectedState;
+          return matchQuery && matchState;
+        });
+
+        countEl.textContent = `Showing ${filtered.length} destinations across ${selectedState ? '1 region' : stateList.length + ' States & UTs'}`;
+
+        if (!filtered.length) {
+          grid.innerHTML = `
+            <div style="grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--ug-text-secondary); background: var(--ug-surface); border: 1px dashed var(--ug-border); border-radius: 16px;">
+              <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+              <h3 style="color: var(--ug-text); margin: 0 0 6px;">No cities found matching your filter</h3>
+              <p style="margin: 0; font-size: 0.9rem;">Try adjusting your search keyword or selecting "All States &amp; UTs".</p>
+            </div>
+          `;
+          return;
+        }
+
+        grid.innerHTML = filtered.map(item => `
+          <a class="city-card" href="discover.html?city=${encodeURIComponent(item.city)}">
+            <div>
+              <h3 class="city-card-name">${item.city}</h3>
+              <span class="city-card-state">📍 ${item.state}</span>
+            </div>
+            <span class="city-card-action">Explore City →</span>
+          </a>
+        `).join('');
+      }
+
+      searchInput.addEventListener('input', render);
+      stateSelect.addEventListener('change', render);
+
+      render();
+    })();
+  </script>
+</body>
+</html>

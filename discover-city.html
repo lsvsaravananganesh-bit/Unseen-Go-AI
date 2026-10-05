@@ -1,1 +1,252 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Choose a City — UnseenGo AI</title><link rel="stylesheet" href="styles.css"><link rel="stylesheet" href="unseengo-background.css?v=20260824"><link rel="stylesheet" href="journey-pages.css"></head><body><header class="nav"><a class="brand" href="index.html">✦ UnseenGo <b>AI</b></a><nav><a class="active" href="discover.html">Discover</a><a href="stay.html">Stay</a><a href="planner.html">AI Planner</a><a href="how.html">How it works</a></nav><button onclick="location.href='discover.html'">Explore India</button></header><main class="journey-page"><section class="journey-hero"><p class="eyebrow">01 · DISCOVER</p><h1>Choose a city.<br><em>Start somewhere real.</em></h1><p class="lead">Start with a city, not a generic travel list. UnseenGo organizes Indian destinations into a focused journey where a state becomes a gateway to local stories, places and experiences.</p><span class="journey-badge">🧭 State → City → Experience</span></section><section class="journey-grid"><article class="journey-card"><div class="icon">🧭</div><h2>Explore India, city by city</h2><p>Pick a state and move into a dedicated city experience. This creates a clear starting point for discovering what is famous, what is overlooked and what is worth planning around.</p><div class="journey-mini-grid"><div class="journey-mini"><div class="mini-icon">🇮🇳</div><h3>Browse states</h3><p>Move through India's destinations without overwhelming lists.</p></div><div class="journey-mini"><div class="mini-icon">🏙️</div><h3>Choose a city</h3><p>Focus your trip around one real destination.</p></div><div class="journey-mini"><div class="mini-icon">🗺️</div><h3>Open the experience</h3><p>Connect city discovery with places and maps.</p></div><div class="journey-mini"><div class="mini-icon">✦</div><h3>Find the unseen</h3><p>Look beyond the standard tourist checklist.</p></div></div><div class="journey-steps"><div class="journey-step"><span class="step-no">01</span><div><h3>Choose a state</h3><p>Start broad and narrow the journey naturally.</p></div></div><div class="journey-step"><span class="step-no">02</span><div><h3>Select a city</h3><p>Enter a destination with a clear local context.</p></div></div><div class="journey-step"><span class="step-no">03</span><div><h3>Continue exploring</h3><p>Discover places, stories, travel options and local experiences.</p></div></div></div><div class="journey-cta"><a class="primary" href="discover.html">Browse destinations →</a><a class="secondary" href="how.html">Back to journey</a></div></article><aside><div class="journey-stat"><div class="stat"><b>01</b><span>Journey stage</span></div><div class="stat"><b>City</b><span>Primary starting point</span></div></div><div class="journey-card journey-bottom"><h2>Why city-first?</h2><p>A city gives the traveler a useful frame: history, neighborhoods, food, nature, mobility and local businesses can all be connected instead of being treated as separate searches.</p></div></aside></section><section class="journey-card journey-bottom"><p class="eyebrow">NEXT: EXPLORE</p><h2>Now find the places that make the city interesting.</h2><p>Once the destination is chosen, UnseenGo moves from broad discovery to a mix of famous landmarks and lesser-known experiences.</p><a class="back-link" href="explore-places.html">Continue to Find Places →</a></section><div class="journey-nav"><a href="how.html">← How It Works</a><a href="explore-places.html">02 · Explore →</a></div></main><footer><b>✦ UnseenGo AI</b><span>Discover heritage. Empower communities. Grow local economies.</span><span>© 2026</span></footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Choose a City (01 · Discover) — UnseenGo AI</title>
+  <meta name="description" content="Start your Indian travel discovery by focusing on a specific city rather than a generic national listicle.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="journey-pages.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="journey-page">
+    <section class="journey-hero">
+      <div class="ug-breadcrumbs" style="margin-bottom: 1.5rem;">
+        <a href="index.html">Home</a>
+        <span class="sep">›</span>
+        <a href="how.html">How It Works</a>
+        <span class="sep">›</span>
+        <span class="current">01 · Discover City</span>
+      </div>
+      <p class="eyebrow">STAGE 01 · DISCOVER</p>
+      <h1>Choose a city.<br><em>Start somewhere real.</em></h1>
+      <p class="lead">
+        Start with an authentic city rather than a generic national travel list. UnseenGo organizes Indian destinations into a focused journey where a state becomes an authentic gateway to local stories, heritage places, and living communities.
+      </p>
+      <span class="journey-badge">🧭 State → City → Experience Ecosystem</span>
+    </section>
+
+    <section class="journey-grid">
+      <article class="journey-card">
+        <div class="icon">🧭</div>
+        <h2>Explore India, city by city</h2>
+        <p>Pick a state and move into a dedicated city experience. This creates a clear starting point for discovering what is famous, what is overlooked, and what is truly worth planning around.</p>
+
+        <div class="journey-mini-grid">
+          <div class="journey-mini">
+            <div class="mini-icon">🇮🇳</div>
+            <h3>Browse States</h3>
+            <p>Move through India's destinations without overwhelming, commercialized lists.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🏙️</div>
+            <h3>Choose a City</h3>
+            <p>Focus your trip around an authentic destination with historical roots.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">🗺️</div>
+            <h3>Open Experience</h3>
+            <p>Connect city discovery directly with interactive maps and place files.</p>
+          </div>
+          <div class="journey-mini">
+            <div class="mini-icon">✦</div>
+            <h3>Find the Unseen</h3>
+            <p>Look beyond standard tourist traps to discover quiet monuments and living traditions.</p>
+          </div>
+        </div>
+
+        <div class="journey-steps">
+          <div class="journey-step">
+            <span class="step-no">01</span>
+            <div>
+              <h3>Choose a state</h3>
+              <p>Start broad and narrow down regional geography naturally.</p>
+            </div>
+          </div>
+          <div class="journey-step">
+            <span class="step-no">02</span>
+            <div>
+              <h3>Select an anchor city</h3>
+              <p>Enter an anchor destination with rich local cultural context.</p>
+            </div>
+          </div>
+          <div class="journey-step">
+            <span class="step-no">03</span>
+            <div>
+              <h3>Continue exploring</h3>
+              <p>Discover places, stories, travel options, and local hosts.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-cta">
+          <a class="primary" href="discover.html">Browse destinations →</a>
+          <a class="secondary" href="how.html">← How it works</a>
+        </div>
+      </article>
+
+      <aside>
+        <div class="journey-stat">
+          <div class="stat">
+            <b>01</b>
+            <span>Journey stage</span>
+          </div>
+          <div class="stat">
+            <b>City</b>
+            <span>Primary starting point</span>
+          </div>
+        </div>
+        <div class="journey-card journey-bottom">
+          <h2>Why city-first?</h2>
+          <p>
+            A city gives the traveler a useful frame: history, neighborhoods, regional cuisine, riverbanks, mobility corridors, and local artisans can all be connected rather than treated as disconnected internet searches.
+          </p>
+        </div>
+      </aside>
+    </section>
+
+    <section class="journey-card journey-bottom">
+      <p class="eyebrow">NEXT: EXPLORE</p>
+      <h2>Now find the places that make the city unforgettable.</h2>
+      <p>Once your destination is chosen, UnseenGo moves from broad geographical discovery to a curated mix of prominent landmarks and lesser-known regional marvels.</p>
+      <a class="back-link" href="explore-places.html">Continue to 02 · Find Places →</a>
+    </section>
+
+    <div class="journey-nav">
+      <a href="how.html">← Back to How It Works</a>
+      <a href="explore-places.html">Continue to 02 · Explore Places →</a>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

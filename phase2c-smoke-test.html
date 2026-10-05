@@ -1,1 +1,268 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UnseenGo Phase 2C Smoke Test</title><style>body{font:16px system-ui;background:#0d120e;color:#e8eee6;padding:32px;max-width:900px;margin:auto}h1{color:#d8ff4d}.item{padding:14px;margin:8px 0;border:1px solid #303930;border-radius:12px}.ok{border-color:#607f45}.warn{border-color:#8a743b}.status{float:right;font-weight:800}</style></head><body><h1>UnseenGo · Phase 2C Smoke Test</h1><p>This page validates the deployed browser-side building blocks without inventing destination data.</p><div id="out"></div><script src="app.js"></script><script src="unseen-engine.js"></script><script src="route-engine.js"></script><script src="supabase-place-loader.js"></script><script>(async()=>{const out=document.getElementById('out');const tests=[];const add=(name,ok,detail)=>tests.push({name,ok,detail});try{add('Static destination dataset',typeof cities==='object'&&Object.keys(cities).length>0,`${typeof cities==='object'?Object.keys(cities).length:0} cities in fallback dataset`)}catch(e){add('Static destination dataset',false,e.message)}add('Recommendation engine',!!window.UnseenGoAI&&typeof window.UnseenGoAI.generate==='function','generate() available');add('Natural-language parser',!!window.UnseenGoAI&&typeof window.UnseenGoAI.parseNaturalLanguage==='function','parseNaturalLanguage() available');add('Route engine',!!window.UnseenGoRoute&&typeof window.UnseenGoRoute.optimize==='function','coordinate-aware optimizer available');add('Supabase loader',!!window.UnseenGoSupabasePlaces&&typeof window.UnseenGoSupabasePlaces.load==='function','database loader available');let rows=[];try{rows=await window.UnseenGoSupabasePlaces.load('Kurnool');add('Supabase destination data',rows.length>0,rows.length?`${rows.length} active records returned`:'0 records returned — populate/verify places before calling the database migration complete')}catch(e){add('Supabase destination data',false,e.message)}add('Route optimization data readiness',rows.some(x=>x.latitude!=null&&x.longitude!=null),rows.some(x=>x.latitude!=null&&x.longitude!=null)?'coordinates available':'no coordinates in current Supabase records');out.innerHTML=tests.map(t=>`<div class="item ${t.ok?'ok':'warn'}"><span class="status">${t.ok?'PASS':'CHECK'}</span><b>${t.name}</b><br><small>${t.detail}</small></div>`).join('')})();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8ff4d">
+  <title>Architecture Verification & Smoke Test &mdash; UnseenGo AI</title>
+  
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+
+  <style>
+    .smoke-test-container {
+      max-width: 960px;
+      margin: 40px auto 80px;
+      padding: 0 24px;
+    }
+    .smoke-card {
+      background: var(--ug-surface-card, #101611);
+      border: 1px solid var(--ug-border, #1f2a21);
+      border-radius: var(--ug-radius-lg, 20px);
+      padding: 32px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .smoke-header {
+      margin-bottom: 28px;
+    }
+    .smoke-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ug-accent, #d8ff4d);
+      margin-bottom: 10px;
+    }
+    .smoke-title {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800;
+      color: var(--ug-text-main, #f5f8f5);
+      margin: 0 0 10px 0;
+      letter-spacing: -0.02em;
+    }
+    .smoke-desc {
+      font-size: 15px;
+      color: var(--ug-text-sub, #a4b3a6);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .smoke-results {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .item {
+      padding: 16px 20px;
+      border: 1px solid var(--ug-border, #1f2a21);
+      border-radius: 12px;
+      background: var(--ug-surface-elevated, #141c16);
+      transition: all 0.2s ease;
+    }
+    .item.ok {
+      border-color: rgba(74, 222, 128, 0.4);
+      background: rgba(74, 222, 128, 0.04);
+    }
+    .item.warn {
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.04);
+    }
+    .status {
+      float: right;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.05em;
+    }
+    .item.ok .status {
+      background: rgba(74, 222, 128, 0.15);
+      color: #4ade80;
+    }
+    .item.warn .status {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+    }
+    .item b {
+      color: var(--ug-text-main, #f5f8f5);
+      font-size: 15px;
+    }
+    .item small {
+      color: var(--ug-text-sub, #a4b3a6);
+      font-size: 13px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Standard Royal Horizon Header -->
+  <header class="ug-header">
+    <div class="ug-nav-container">
+      <a href="index.html" class="ug-logo" aria-label="UnseenGo AI Home">
+        <span class="ug-logo-spark">✦</span>
+        <span class="ug-logo-text">UnseenGo <span class="ug-logo-highlight">AI</span></span>
+      </a>
+
+      <nav class="ug-nav-menu" aria-label="Primary Navigation">
+        <a href="discover.html" class="ug-nav-link">Discover</a>
+        <a href="planner.html" class="ug-nav-link">AI Planner</a>
+        <a href="map.html" class="ug-nav-link">Explore Map</a>
+        <a href="stay.html" class="ug-nav-link">Heritage Stays</a>
+        <a href="transport.html" class="ug-nav-link">Transit</a>
+        <a href="stories.html" class="ug-nav-link">Stories</a>
+        <a href="how.html" class="ug-nav-link">Methodology</a>
+        <a href="dashboard.html" class="ug-nav-link">Vault</a>
+      </nav>
+
+      <div class="ug-nav-actions">
+        <button type="button" class="ug-theme-btn" aria-label="Toggle dark/light theme" title="Toggle theme">
+          <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+        <button type="button" class="ug-city-selector-btn" aria-label="Select City">
+          <span class="ug-city-icon">📍</span>
+          <span class="ug-city-label" data-selected-city>All India</span>
+        </button>
+        <div class="ug-nav-auth" id="ugNavAuthSlot">
+          <a href="signin.html" class="ug-btn-pill ug-btn-primary">Sign In</a>
+        </div>
+        <button type="button" class="ug-mobile-menu-btn" aria-label="Open navigation menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="smoke-test-container">
+    <div class="smoke-card">
+      <div class="smoke-header">
+        <span class="smoke-eyebrow">✦ SYSTEM DIAGNOSTICS</span>
+        <h1 class="smoke-title">Phase 2C Architecture Verification</h1>
+        <p class="smoke-desc">Validating browser-side recommendation models, static fallback directories, route optimizer, and Supabase destination datasets in real-time.</p>
+      </div>
+
+      <div id="out" class="smoke-results">
+        <div style="padding:20px;text-align:center;color:var(--ug-text-sub);">
+          <span>Running automated validation suite…</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Standard Royal Horizon Footer -->
+  <footer class="ug-footer">
+    <div class="ug-footer-container">
+      <div class="ug-footer-top">
+        <div class="ug-footer-brand">
+          <a href="index.html" class="ug-footer-logo">
+            <span class="ug-logo-spark">✦</span>
+            <span>UnseenGo <span class="ug-logo-highlight">AI</span></span>
+          </a>
+          <p class="ug-footer-desc">India's pioneering crowd-free discovery platform, empowering travelers with AI-curated itineraries, heritage homestays, and sacred circuits.</p>
+        </div>
+
+        <div class="ug-footer-nav-col">
+          <h3 class="ug-footer-col-title">Discovery</h3>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems</a></li>
+            <li><a href="map.html">Interactive Map</a></li>
+            <li><a href="temples.html">Sacred Temples</a></li>
+            <li><a href="city-directory.html">City Directory</a></li>
+            <li><a href="major-events.html">Cultural Calendar</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-nav-col">
+          <h3 class="ug-footer-col-title">Intelligence</h3>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Trip Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="live-travel.html">Live Telemetry</a></li>
+            <li><a href="how.html">Discovery Pipeline</a></li>
+            <li><a href="phase2c-smoke-test.html">Diagnostics</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-nav-col">
+          <h3 class="ug-footer-col-title">Company & Legal</h3>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms of Service</a></li>
+            <li><a href="safety.html">Safety & Guidelines</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <p class="ug-footer-copy">&copy; 2026 UnseenGo AI. Crafted with pride across India.</p>
+        <div class="ug-footer-bottom-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="terms.html">Terms</a>
+          <a href="security.html">Security</a>
+          <a href="sitemap.html">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script src="unseen-engine.js"></script>
+  <script src="route-engine.js"></script>
+  <script src="supabase-place-loader.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+
+  <script>
+    (async () => {
+      const out = document.getElementById('out');
+      const tests = [];
+      const add = (name, ok, detail) => tests.push({ name, ok, detail });
+
+      try {
+        add('Static destination dataset', typeof cities === 'object' && Object.keys(cities).length > 0, `${typeof cities === 'object' ? Object.keys(cities).length : 0} cities in fallback dataset`);
+      } catch (e) {
+        add('Static destination dataset', false, e.message);
+      }
+
+      add('Recommendation engine', !!window.UnseenGoAI && typeof window.UnseenGoAI.generate === 'function', 'generate() available');
+      add('Natural-language parser', !!window.UnseenGoAI && typeof window.UnseenGoAI.parseNaturalLanguage === 'function', 'parseNaturalLanguage() available');
+      add('Route engine', !!window.UnseenGoRoute && typeof window.UnseenGoRoute.optimize === 'function', 'coordinate-aware optimizer available');
+      add('Supabase loader', !!window.UnseenGoSupabasePlaces && typeof window.UnseenGoSupabasePlaces.load === 'function', 'database loader available');
+
+      let rows = [];
+      try {
+        rows = await window.UnseenGoSupabasePlaces.load('Kurnool');
+        add('Supabase destination data', rows.length > 0, rows.length ? `${rows.length} active records returned` : '0 records returned — populate/verify places before calling database migration complete');
+      } catch (e) {
+        add('Supabase destination data', false, e.message);
+      }
+
+      add('Route optimization data readiness', rows.some(x => x.latitude != null && x.longitude != null), rows.some(x => x.latitude != null && x.longitude != null) ? 'coordinates available' : 'no coordinates in current Supabase records');
+
+      out.innerHTML = tests.map(t => `
+        <div class="item ${t.ok ? 'ok' : 'warn'}">
+          <span class="status">${t.ok ? 'PASS' : 'CHECK'}</span>
+          <b>${t.name}</b><br>
+          <small>${t.detail}</small>
+        </div>
+      `).join('');
+    })();
+  </script>
+</body>
+</html>

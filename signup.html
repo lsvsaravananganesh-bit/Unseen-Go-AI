@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#d8ff4d">
-  <meta name="description" content="Sign up for UnseenGo AI — Discover India's hidden gems, offbeat wonders, and generate AI-personalized itineraries.">
-  <title>Sign Up — UnseenGo AI</title>
+  <meta name="description" content="Create Your Explorer Vault on UnseenGo AI &mdash; Discover India's hidden gems, offbeat wonders, and generate AI-personalized itineraries.">
+  <title>Create Your Vault &mdash; UnseenGo AI</title>
   
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="src/styles/heritage-theme.css">
   <link rel="stylesheet" href="responsive.css">
   <link rel="stylesheet" href="auth.css">
+  <link rel="stylesheet" href="src/styles/luxury-auth.css">
 
   <script>
     (function(){
@@ -21,233 +22,356 @@
     })();
   </script>
 </head>
-<body class="ig-auth-wrapper">
-  <!-- Minimalist Top Bar Controls -->
-  <div style="position:absolute;top:16px;right:20px;display:flex;align-items:center;gap:10px;z-index:20;">
-    <button type="button" class="auth-theme-toggle auth-nav-btn" aria-label="Toggle dark/light theme" title="Toggle theme">
-      <svg class="theme-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      <svg class="theme-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-    </button>
-    <a href="index.html" class="auth-nav-btn" style="font-size:12px;padding:6px 12px;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      <span>Home</span>
+<body class="ug-auth-body">
+
+  <!-- Minimalist Top Navigation -->
+  <header class="ug-auth-nav">
+    <a href="index.html" class="ug-auth-logo" aria-label="UnseenGo AI Home">
+      <span class="ug-logo-spark">✦</span>
+      <span class="ug-logo-text">UnseenGo <span class="ug-logo-highlight">AI</span></span>
+      <span class="ug-logo-pill">Explorer Vault</span>
     </a>
-  </div>
 
-  <div class="ig-auth-container">
-    <!-- Left Column: Instagram-Style Smartphone Mockup with Rotating Slides -->
-    <div class="ig-phone-showcase" aria-hidden="true">
-      <div class="ig-phone-frame">
-        <div class="ig-phone-notch">
-          <div class="ig-phone-camera"></div>
-        </div>
-        <div class="ig-phone-screen">
+    <div class="ug-auth-nav-actions">
+      <button type="button" class="auth-theme-toggle ug-theme-btn" aria-label="Toggle dark/light theme" title="Toggle theme">
+        <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+
+      <a href="signin.html" class="ug-nav-link-btn" title="Sign In to existing account">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+        <span>Sign In</span>
+      </a>
+
+      <a href="index.html" class="ug-nav-link-btn" title="Return to home page">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span>Home</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Split Layout -->
+  <main class="ug-auth-main">
+    <div class="ug-auth-split">
+
+      <!-- ============================================================
+           LEFT COLUMN: Beautiful Discovery Showcase Canvas
+           ============================================================ -->
+      <section class="ug-discovery-canvas" id="discoveryCanvas" aria-label="Curated Indian Hidden Gems Discovery Showcase">
+        <!-- Background Slides -->
+        <div class="ug-slides-container">
           <!-- Slide 1: Gandikota Canyon -->
-          <div class="ig-slide active" id="slide1" style="background-image: url('https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=800&q=80');">
-            <div class="ig-slide-scrim"></div>
-            <div class="ig-slide-content">
-              <div class="ig-slide-header">
-                <span class="ig-slide-badge">98% UNSEEN</span>
-                <span class="ig-slide-rating">★ 4.9 · ANDHRA</span>
-              </div>
-              <h3 class="ig-slide-title">Gandikota Gorge & Fort</h3>
-              <p class="ig-slide-desc">The Grand Canyon of India carved by the Pennar river, featuring 13th-century red granite ramparts.</p>
-              <div class="ig-slide-footer">
-                <span style="font-size:10px;color:#a4b1a3;">0 commercial tour buses</span>
-                <a href="discover.html" class="ig-slide-action">Explore Gem →</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 2: Agumbe Rainforest -->
-          <div class="ig-slide" id="slide2" style="background-image: url('https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?auto=format&fit=crop&w=800&q=80');">
-            <div class="ig-slide-scrim"></div>
-            <div class="ig-slide-content">
-              <div class="ig-slide-header">
-                <span class="ig-slide-badge">97% UNSEEN</span>
-                <span class="ig-slide-rating">★ 4.8 · KARNATAKA</span>
-              </div>
-              <h3 class="ig-slide-title">Agumbe Rainforest Trail</h3>
-              <p class="ig-slide-desc">Cherrapunji of the South with misty canopy treks, endemic biodiversity, and secret waterfalls.</p>
-              <div class="ig-slide-footer">
-                <span style="font-size:10px;color:#a4b1a3;">Canopy Biodiversity Sanctuary</span>
-                <a href="discover.html" class="ig-slide-action">Explore Gem →</a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Slide 3: Hampi Monolithic Stone Chariot -->
-          <div class="ig-slide" id="slide3" style="background-image: url('https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80');">
-            <div class="ig-slide-scrim"></div>
-            <div class="ig-slide-content">
-              <div class="ig-slide-header">
-                <span class="ig-slide-badge">HERITAGE MARVEL</span>
-                <span class="ig-slide-rating">★ 4.9 · HAMPI</span>
-              </div>
-              <h3 class="ig-slide-title">Vijayanagara Ruins</h3>
-              <p class="ig-slide-desc">Monumental boulder landscapes and 14th-century sacred granite temples lost in time.</p>
-              <div class="ig-slide-footer">
-                <span style="font-size:10px;color:#a4b1a3;">UNESCO Sacred Archeological Zone</span>
-                <a href="discover.html" class="ig-slide-action">Explore Gem →</a>
-              </div>
-            </div>
-          </div>
+          <div class="ug-slide-item active" id="slide1" style="background-image: url('https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=1600&q=85');"></div>
+          
+          <!-- Slide 2: Meghalaya Living Root Bridges -->
+          <div class="ug-slide-item" id="slide2" style="background-image: url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=85');"></div>
+          
+          <!-- Slide 3: Agumbe Rainforest -->
+          <div class="ug-slide-item" id="slide3" style="background-image: url('https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=1600&q=85');"></div>
 
           <!-- Slide 4: Chand Baori Stepwell -->
-          <div class="ig-slide" id="slide4" style="background-image: url('https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=800&q=80');">
-            <div class="ig-slide-scrim"></div>
-            <div class="ig-slide-content">
-              <div class="ig-slide-header">
-                <span class="ig-slide-badge">96% UNSEEN</span>
-                <span class="ig-slide-rating">★ 4.8 · RAJASTHAN</span>
-              </div>
-              <h3 class="ig-slide-title">Chand Baori Stepwell</h3>
-              <p class="ig-slide-desc">3,500 narrow steps over 13 storeys forming an infinite geometric subterranean sanctuary.</p>
-              <div class="ig-slide-footer">
-                <span style="font-size:10px;color:#a4b1a3;">8th-Century Subterranean Architecture</span>
-                <a href="discover.html" class="ig-slide-action">Explore Gem →</a>
-              </div>
+          <div class="ug-slide-item" id="slide4" style="background-image: url('https://images.unsplash.com/photo-1598890777032-bde835ba27c2?auto=format&fit=crop&w=1600&q=85');"></div>
+
+          <!-- Slide 5: Nubra Valley Cold Desert -->
+          <div class="ug-slide-item" id="slide5" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=85');"></div>
+        </div>
+
+        <div class="ug-canvas-overlay"></div>
+
+        <!-- Floating Story Content -->
+        <div class="ug-canvas-content">
+          <!-- Story 1 -->
+          <div class="ug-story-panel active" id="story1">
+            <div class="ug-slide-meta">
+              <span class="ug-badge ug-badge-lime">✦ 98.6% UNTOUCHED</span>
+              <span class="ug-badge ug-badge-glass">ANDHRA PRADESH</span>
+            </div>
+            <h2 class="ug-slide-title">Gandikota Gorge & Citadel</h2>
+            <p class="ug-slide-desc">The Grand Canyon of India carved over millennia by the Pennar river, flanked by 13th-century red granite ramparts without commercial tour buses.</p>
+            <div class="ug-slide-tags">
+              <span class="ug-tag-pill"><span class="icon">📍</span> Kadapa District</span>
+              <span class="ug-tag-pill"><span class="icon">🌅</span> Golden Hour Sunset Point</span>
+              <span class="ug-tag-pill"><span class="icon">⛺</span> Gorge Camping Rim</span>
+            </div>
+          </div>
+
+          <!-- Story 2 -->
+          <div class="ug-story-panel" id="story2" style="display:none;">
+            <div class="ug-slide-meta">
+              <span class="ug-badge ug-badge-lime">✦ BIO-ENGINEERING</span>
+              <span class="ug-badge ug-badge-glass">MEGHALAYA</span>
+            </div>
+            <h2 class="ug-slide-title">Jingkieng Nongriat Double Decker</h2>
+            <p class="ug-slide-desc">Living rubber tree roots intertwined across centuries by the Khasi indigenous tribes to cross torrential monsoon rivers without iron or concrete.</p>
+            <div class="ug-slide-tags">
+              <span class="ug-tag-pill"><span class="icon">🌿</span> 500-Year Ancient Craft</span>
+              <span class="ug-tag-pill"><span class="icon">💧</span> Rainbow Falls Trail</span>
+              <span class="ug-tag-pill"><span class="icon">🧗</span> 3,500 Step Forest Descent</span>
+            </div>
+          </div>
+
+          <!-- Story 3 -->
+          <div class="ug-story-panel" id="story3" style="display:none;">
+            <div class="ug-slide-meta">
+              <span class="ug-badge ug-badge-lime">✦ CHERAPUNJI OF SOUTH</span>
+              <span class="ug-badge ug-badge-glass">KARNATAKA</span>
+            </div>
+            <h2 class="ug-slide-title">Agumbe Cloud Forest Reserve</h2>
+            <p class="ug-slide-desc">Pristine Western Ghats canopy shrouded in mist, secret cascades, medicinal flora reserves, and unforgettable sunset vantage points over the Arabian Sea.</p>
+            <div class="ug-slide-tags">
+              <span class="ug-tag-pill"><span class="icon">🐍</span> King Cobra Research Base</span>
+              <span class="ug-tag-pill"><span class="icon">☕</span> Heritage Malnad Cuisine</span>
+              <span class="ug-tag-pill"><span class="icon">🌧️</span> Monsoon Canopy Trails</span>
+            </div>
+          </div>
+
+          <!-- Story 4 -->
+          <div class="ug-story-panel" id="story4" style="display:none;">
+            <div class="ug-slide-meta">
+              <span class="ug-badge ug-badge-lime">✦ GEOMETRIC MARVEL</span>
+              <span class="ug-badge ug-badge-glass">RAJASTHAN</span>
+            </div>
+            <h2 class="ug-slide-title">Chand Baori Ancient Stepwell</h2>
+            <p class="ug-slide-desc">3,500 symmetrical narrow steps descending 13 storeys into subterranean aquifers, built in the 9th century to conserve desert water in eternal serenity.</p>
+            <div class="ug-slide-tags">
+              <span class="ug-tag-pill"><span class="icon">📐</span> Infinite Optical Symmetry</span>
+              <span class="ug-tag-pill"><span class="icon">👑</span> Chauhan Dynasty Heritage</span>
+              <span class="ug-tag-pill"><span class="icon">🏛️</span> Harshat Mata Temple</span>
+            </div>
+          </div>
+
+          <!-- Story 5 -->
+          <div class="ug-story-panel" id="story5" style="display:none;">
+            <div class="ug-slide-meta">
+              <span class="ug-badge ug-badge-lime">✦ SILK ROUTE PASS</span>
+              <span class="ug-badge ug-badge-glass">COLD DESERT</span>
+            </div>
+            <h2 class="ug-slide-title">Nubra Valley & Diskit Monastery</h2>
+            <p class="ug-slide-desc">High-altitude white sand dunes framed by snowcapped Karakoram peaks, double-humped camel paths, and ancient cliffside monasteries.</p>
+            <div class="ug-slide-tags">
+              <span class="ug-tag-pill"><span class="icon">🐪</span> Silk Route Bactrian Trails</span>
+              <span class="ug-tag-pill"><span class="icon">🌌</span> Dark Sky Stargazing</span>
+              <span class="ug-tag-pill"><span class="icon">🏔️</span> Karakoram Mountain Pass</span>
             </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Right Column: Instagram Email Signup Card Architecture -->
-    <div class="ig-auth-column">
-      <!-- Box 1: Main Signup Card -->
-      <section class="ig-card" aria-labelledby="igSignupHeading">
-        <a class="ig-brand-wordmark" href="index.html">
-          <span>✦ UnseenGo <b>AI</b></span>
-        </a>
-        <h1 id="igSignupHeading" class="visually-hidden">Sign Up for UnseenGo AI</h1>
+        <!-- Interactive Discovery Controls & Slide Switcher -->
+        <div class="ug-discovery-controls">
+          <div class="ug-discovery-thumbnails" role="tablist" aria-label="Hidden Gems Carousel Navigation">
+            <button type="button" class="ug-thumb-btn active" data-slide-index="0" role="tab" aria-selected="true">
+              <span class="ug-thumb-index">01</span>
+              <span>Gandikota</span>
+            </button>
+            <button type="button" class="ug-thumb-btn" data-slide-index="1" role="tab" aria-selected="false">
+              <span class="ug-thumb-index">02</span>
+              <span>Living Root Bridges</span>
+            </button>
+            <button type="button" class="ug-thumb-btn" data-slide-index="2" role="tab" aria-selected="false">
+              <span class="ug-thumb-index">03</span>
+              <span>Agumbe Forest</span>
+            </button>
+            <button type="button" class="ug-thumb-btn" data-slide-index="3" role="tab" aria-selected="false">
+              <span class="ug-thumb-index">04</span>
+              <span>Chand Baori</span>
+            </button>
+            <button type="button" class="ug-thumb-btn" data-slide-index="4" role="tab" aria-selected="false">
+              <span class="ug-thumb-index">05</span>
+              <span>Nubra Valley</span>
+            </button>
+          </div>
 
-        <!-- Instagram Tagline -->
-        <p class="ig-subtext" style="font-weight:600;font-size:14px;color:#9aa799;margin-bottom:18px;">
-          Sign up to discover hidden gems, secret routes, and AI itineraries across India.
-        </p>
-
-        <!-- Continue with Google Button -->
-        <button type="button" class="ig-google-btn" id="googleSignInBtn" aria-label="Log in with Google">
-          <svg class="google-icon" viewBox="0 0 24 24" width="18" height="18">
-            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-          </svg>
-          <span>Log in with Google</span>
-        </button>
-
-        <!-- Instagram-Style OR Divider -->
-        <div class="ig-divider">
-          <span>OR</span>
+          <!-- Bottom Stats Strip -->
+          <div class="ug-discovery-strip">
+            <div class="ug-strip-stat">
+              <b>1,200<span>+</span></b>
+              <span>Curated Hidden Gems</span>
+            </div>
+            <div class="ug-strip-stat">
+              <b>0<span> tour buses</span></b>
+              <span>Crowd-Free Travel</span>
+            </div>
+            <div class="ug-strip-stat">
+              <b>98.4<span>%</span></b>
+              <span>Verified Coordinates</span>
+            </div>
+            <a href="discover.html" class="ug-explore-link" title="Explore all hidden gems">
+              <span>Browse All Gems</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
-
-        <!-- 4-Input Form: Mobile/Email, Full Name, Username, Password -->
-        <form class="ig-form" id="signupForm" novalidate>
-          <div class="ig-field">
-            <input class="ig-input" id="email" type="email" autocomplete="email" required placeholder="Mobile Number or Email">
-          </div>
-
-          <div class="ig-field">
-            <input class="ig-input" id="name" type="text" autocomplete="name" required placeholder="Full Name">
-          </div>
-
-          <div class="ig-field">
-            <input class="ig-input" id="username" type="text" autocomplete="username" required placeholder="Username">
-          </div>
-
-          <div class="ig-field">
-            <input class="ig-input has-toggle" id="password" type="password" autocomplete="new-password" required minlength="6" placeholder="Password">
-            <button type="button" class="ig-input-toggle" id="togglePassword" aria-label="Show password">Show</button>
-          </div>
-
-          <!-- Instagram-Style Policy Disclaimers -->
-          <p class="ig-disclaimer" style="margin-top:14px;margin-bottom:8px;">
-            People who use our service may have uploaded your contact information to UnseenGo AI. <a href="privacy.html" target="_blank">Learn More</a>
-          </p>
-
-          <p class="ig-disclaimer" style="margin-top:0;margin-bottom:16px;">
-            By signing up, you agree to our <a href="terms.html" target="_blank">Terms</a>, <a href="privacy.html" target="_blank">Privacy Policy</a> and <a href="privacy.html" target="_blank">Cookies Policy</a>.
-          </p>
-
-          <button class="ig-btn-submit" id="signupButton" type="submit">Sign up</button>
-        </form>
-
-        <div id="message" class="message" style="margin-top:10px;font-size:12px;" aria-live="polite"></div>
       </section>
 
-      <!-- Box 2: Switcher Card ("Have an account? Log in") -->
-      <div class="ig-switch-box">
-        <span>Have an account?</span>
-        <a href="signin.html">Log in</a>
-      </div>
+      <!-- ============================================================
+           RIGHT COLUMN: Refined Web Interface for Sign Up
+           ============================================================ -->
+      <section class="ug-auth-panel" aria-labelledby="signUpHeading">
+        <div class="ug-auth-box">
 
-      <!-- Box 3: Experience UnseenGo as Guest -->
-      <div class="ig-guest-box">
-        <p class="ig-guest-title">Experience UnseenGo AI as Guest</p>
-        <div class="ig-guest-grid">
-          <a href="discover.html" class="ig-guest-pill" title="1,200+ hidden gems">
-            <span class="ig-guest-icon">🔎</span>
-            <span class="ig-guest-label">Discover Gems</span>
-          </a>
-          <a href="planner.html" class="ig-guest-pill" title="AI Trip Planner">
-            <span class="ig-guest-icon">🤖</span>
-            <span class="ig-guest-label">AI Planner</span>
-          </a>
-          <a href="map.html" class="ig-guest-pill" title="Interactive Map">
-            <span class="ig-guest-icon">🗺️</span>
-            <span class="ig-guest-label">Live Map</span>
-          </a>
-          <a href="stories.html" class="ig-guest-pill" title="Traveler stories">
-            <span class="ig-guest-icon">📖</span>
-            <span class="ig-guest-label">Stories</span>
-          </a>
-          <a href="stay.html" class="ig-guest-pill" title="Heritage stays">
-            <span class="ig-guest-icon">🏡</span>
-            <span class="ig-guest-label">Heritage Stays</span>
-          </a>
-          <a href="transport.html" class="ig-guest-pill" title="Transport engine">
-            <span class="ig-guest-icon">🚗</span>
-            <span class="ig-guest-label">Transit Routes</span>
-          </a>
+          <!-- Header -->
+          <div class="ug-auth-header">
+            <span class="ug-auth-eyebrow">
+              <span style="color:var(--auth-accent);">✦</span>
+              JOIN THE EXPEDITION
+            </span>
+            <h1 class="ug-auth-title" id="signUpHeading">Create Your Vault</h1>
+            <p class="ug-auth-subtitle">Join conscious explorers discovering India's untouched wonders, AI itineraries, and crowd-free routes.</p>
+          </div>
+
+          <!-- Auth Card -->
+          <div class="ug-auth-card">
+
+            <!-- Continue with Google Button -->
+            <button type="button" class="ug-btn-google" id="googleSignInBtn" aria-label="Sign up with Google">
+              <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+
+            <!-- Clean Divider -->
+            <div class="ug-auth-divider">
+              <span>or create with email</span>
+            </div>
+
+            <!-- Sign Up Form -->
+            <form class="ug-auth-form" id="signupForm" novalidate>
+              <!-- Full Name Field -->
+              <div class="ug-field">
+                <label class="ug-label" for="name">Full Name</label>
+                <div class="ug-input-wrap">
+                  <span class="ug-input-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                  </span>
+                  <input class="ug-input" id="name" type="text" autocomplete="name" required placeholder="Aarav Sharma">
+                </div>
+              </div>
+
+              <!-- Username Field -->
+              <div class="ug-field">
+                <label class="ug-label" for="username">Username</label>
+                <div class="ug-input-wrap">
+                  <span class="ug-input-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-3.92 7.94"></path></svg>
+                  </span>
+                  <input class="ug-input" id="username" type="text" autocomplete="username" required placeholder="aarav_explorer">
+                </div>
+              </div>
+
+              <!-- Email Field -->
+              <div class="ug-field">
+                <label class="ug-label" for="email">Email Address</label>
+                <div class="ug-input-wrap">
+                  <span class="ug-input-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                  </span>
+                  <input class="ug-input" id="email" type="email" autocomplete="email" required placeholder="aarav@example.com">
+                </div>
+              </div>
+
+              <!-- Password Field -->
+              <div class="ug-field">
+                <div class="ug-label">
+                  <label for="password">Password</label>
+                </div>
+                <div class="ug-input-wrap">
+                  <span class="ug-input-icon">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                  </span>
+                  <input class="ug-input has-toggle" id="password" type="password" autocomplete="new-password" required minlength="6" placeholder="At least 6 characters">
+                  <button type="button" class="ug-pass-toggle" id="togglePassword" aria-label="Show password" title="Toggle password visibility">
+                    <svg class="eye-show" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                    <svg class="eye-hide" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Terms & Policies Agreement -->
+              <div class="ug-auth-options" style="margin-top:6px;margin-bottom:14px;">
+                <label class="ug-checkbox-label" style="font-size:12px;line-height:1.5;">
+                  <input type="checkbox" id="agreeTerms" checked required>
+                  <span>I agree to the <a href="terms.html" target="_blank" style="color:var(--auth-accent);text-decoration:underline;">Terms</a>, <a href="privacy.html" target="_blank" style="color:var(--auth-accent);text-decoration:underline;">Privacy Policy</a> and <a href="cookies.html" target="_blank" style="color:var(--auth-accent);text-decoration:underline;">Cookies Policy</a>.</span>
+                </label>
+              </div>
+
+              <!-- Submit Button -->
+              <button class="ug-btn-submit" id="signupButton" type="submit">
+                <span>Create Explorer Vault</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </form>
+
+            <!-- Message Alert -->
+            <div id="message" class="ug-msg" aria-live="polite"></div>
+
+            <!-- Quick Demo & Instant Explorer Section -->
+            <div class="ug-demo-section">
+              <div class="ug-demo-head">
+                <span class="ug-demo-title">Instant Exploration</span>
+                <span class="ug-demo-pill">No Password Needed</span>
+              </div>
+
+              <!-- 1-Click Instant Guest Pass -->
+              <button type="button" class="ug-btn-guest" id="guestQuickBtn">
+                <span class="spark">⚡</span>
+                <span>1-Click Instant Guest Pass (Skip Sign-up)</span>
+              </button>
+
+              <!-- Curated Demo Personas -->
+              <div class="ug-persona-chips">
+                <button type="button" class="ug-persona-btn" data-persona="arjun" title="Explore as Arjun: Heritage & Architecture">
+                  <span class="emoji">🏛️</span>
+                  <span class="name">Arjun</span>
+                  <span class="role">Heritage</span>
+                </button>
+                <button type="button" class="ug-persona-btn" data-persona="ananya" title="Explore as Ananya: Nature & Rainforests">
+                  <span class="emoji">🌿</span>
+                  <span class="name">Ananya</span>
+                  <span class="role">Nature</span>
+                </button>
+                <button type="button" class="ug-persona-btn" data-persona="vikram" title="Explore as Vikram: Roadtripper & Food">
+                  <span class="emoji">🚗</span>
+                  <span class="name">Vikram</span>
+                  <span class="role">Roadtrips</span>
+                </button>
+                <button type="button" class="ug-persona-btn" data-persona="ganesh" title="Explore as Ganesh: Admin Console Access">
+                  <span class="emoji">👑</span>
+                  <span class="name">Admin</span>
+                  <span class="role">Full Access</span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Switch to Sign In Card -->
+          <div class="ug-switch-card">
+            <span>Already have an account?</span>
+            <a href="signin.html">Sign In to Vault →</a>
+          </div>
+
+          <!-- Minimalist Trust Footer -->
+          <footer class="ug-auth-footer">
+            <span>🔒 256-Bit SSL Encrypted</span>
+            <span>·</span>
+            <a href="privacy.html">Privacy</a>
+            <span>·</span>
+            <a href="terms.html">Terms</a>
+            <span>·</span>
+            <a href="cookies.html">Cookies</a>
+            <span>·</span>
+            <span>© 2026 UnseenGo AI</span>
+          </footer>
+
         </div>
+      </section>
 
-        <!-- 1-Click Guest Pass -->
-        <button type="button" class="ig-1click-btn" id="guestQuickBtn">
-          <span>⚡ Instant 1-Click Guest Pass (Skip Registration)</span>
-        </button>
-      </div>
     </div>
-  </div>
-
-  <!-- Instagram-Style Global Directory Footer -->
-  <footer class="ig-footer">
-    <ul class="ig-footer-links">
-      <li><a href="discover.html">Discover Gems</a></li>
-      <li><a href="planner.html">AI Planner</a></li>
-      <li><a href="map.html">Interactive Map</a></li>
-      <li><a href="stay.html">Heritage Stays</a></li>
-      <li><a href="transport.html">Transport</a></li>
-      <li><a href="stories.html">Stories</a></li>
-      <li><a href="tripideas.html">Road Trips</a></li>
-      <li><a href="india-cities.html">Destinations</a></li>
-      <li><a href="flights.html">Flights</a></li>
-      <li><a href="utilities.html">Travel Tools</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="privacy.html">Privacy</a></li>
-      <li><a href="terms.html">Terms</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-    <div class="ig-footer-bottom">
-      <select class="ig-lang-select" aria-label="Select Language">
-        <option>English (India)</option>
-        <option>English (UK)</option>
-        <option>Hindi (हिन्दी)</option>
-      </select>
-      <span>© 2026 UnseenGo AI from India</span>
-    </div>
-  </footer>
+  </main>
 
   <!-- Google Sign-In Dialog (Modal) -->
   <div class="google-modal-overlay" id="googleModalOverlay" role="dialog" aria-modal="true" aria-labelledby="googleModalTitle">
@@ -315,43 +439,109 @@
   <script src="supabase-config.js?v=20260826a"></script>
   <script src="supabase-client.js?v=20260826a"></script>
   <script src="auth.js?v=20260929e"></script>
+
+  <!-- Interactive Slide Switcher & Theme Scripts -->
   <script>
-    document.addEventListener('DOMContentLoaded', function(){
-      // 1. Password Toggle
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Password Visibility Toggle
       const passInput = document.getElementById('password');
       const passToggle = document.getElementById('togglePassword');
       if (passInput && passToggle) {
-        passToggle.addEventListener('click', function(){
-          const isText = passInput.type === 'text';
-          passInput.type = isText ? 'password' : 'text';
-          passToggle.textContent = isText ? 'Show' : 'Hide';
-          passToggle.setAttribute('aria-label', isText ? 'Show password' : 'Hide password');
+        passToggle.addEventListener('click', () => {
+          const isPass = passInput.type === 'password';
+          passInput.type = isPass ? 'text' : 'password';
+          const eyeShow = passToggle.querySelector('.eye-show');
+          const eyeHide = passToggle.querySelector('.eye-hide');
+          if (eyeShow && eyeHide) {
+            eyeShow.style.display = isPass ? 'none' : 'block';
+            eyeHide.style.display = isPass ? 'block' : 'none';
+          }
+          passToggle.setAttribute('aria-label', isPass ? 'Hide password' : 'Show password');
         });
       }
 
-      // 2. Rotating Phone Slideshow (Like Instagram's Iconic Desktop Phone Carousel)
+      // 2. Discovery Canvas Carousel & Autoplay
       const slides = [
         document.getElementById('slide1'),
         document.getElementById('slide2'),
         document.getElementById('slide3'),
-        document.getElementById('slide4')
+        document.getElementById('slide4'),
+        document.getElementById('slide5')
       ].filter(Boolean);
 
-      let currentSlide = 0;
-      if (slides.length > 1) {
-        setInterval(() => {
-          slides[currentSlide].classList.remove('active');
-          currentSlide = (currentSlide + 1) % slides.length;
-          slides[currentSlide].classList.add('active');
-        }, 4500);
+      const stories = [
+        document.getElementById('story1'),
+        document.getElementById('story2'),
+        document.getElementById('story3'),
+        document.getElementById('story4'),
+        document.getElementById('story5')
+      ].filter(Boolean);
+
+      const thumbBtns = document.querySelectorAll('.ug-thumb-btn');
+      let currentIdx = 0;
+      let slideTimer = null;
+      let isPaused = false;
+
+      function goToSlide(index) {
+        if (index < 0 || index >= slides.length) return;
+        slides[currentIdx]?.classList.remove('active');
+        if (stories[currentIdx]) stories[currentIdx].style.display = 'none';
+        thumbBtns[currentIdx]?.classList.remove('active');
+        thumbBtns[currentIdx]?.setAttribute('aria-selected', 'false');
+
+        currentIdx = index;
+
+        slides[currentIdx]?.classList.add('active');
+        if (stories[currentIdx]) stories[currentIdx].style.display = 'block';
+        thumbBtns[currentIdx]?.classList.add('active');
+        thumbBtns[currentIdx]?.setAttribute('aria-selected', 'true');
       }
 
-      // 3. Instant 1-Click Guest Pass
+      function nextSlide() {
+        if (isPaused) return;
+        goToSlide((currentIdx + 1) % slides.length);
+      }
+
+      function startAutoplay() {
+        stopAutoplay();
+        slideTimer = setInterval(nextSlide, 5000);
+      }
+
+      function stopAutoplay() {
+        if (slideTimer) clearInterval(slideTimer);
+      }
+
+      thumbBtns.forEach((btn, idx) => {
+        btn.addEventListener('click', () => {
+          goToSlide(idx);
+          startAutoplay();
+        });
+      });
+
+      const discoveryCanvas = document.getElementById('discoveryCanvas');
+      if (discoveryCanvas) {
+        discoveryCanvas.addEventListener('mouseenter', () => { isPaused = true; });
+        discoveryCanvas.addEventListener('mouseleave', () => { isPaused = false; });
+      }
+
+      startAutoplay();
+
+      // 3. Demo Persona Instant Logins
+      document.querySelectorAll('.ug-persona-btn[data-persona]').forEach(btn => {
+        btn.addEventListener('click', function(){
+          const personaKey = this.dataset.persona;
+          if (window.UnseenGoAuth && typeof window.UnseenGoAuth.loginDemo === 'function') {
+            window.UnseenGoAuth.loginDemo(personaKey);
+          }
+        });
+      });
+
+      // 4. Instant 1-Click Guest Pass
       const guestBtn = document.getElementById('guestQuickBtn');
       if (guestBtn) {
         guestBtn.addEventListener('click', function(){
           guestBtn.disabled = true;
-          guestBtn.textContent = 'Opening Guest Vault…';
+          guestBtn.innerHTML = '<span>⚡ Opening Guest Vault…</span>';
           const guestUser = {
             id: 'guest-' + Date.now(),
             email: 'traveler@unseengo.guest',
@@ -375,8 +565,8 @@
 
           const msg = document.getElementById('message');
           if (msg) {
-            msg.textContent = '✓ Welcome, Explorer! Opening your travel dashboard…';
-            msg.className = 'message success';
+            msg.textContent = '✓ Welcome! Opening travel vault…';
+            msg.className = 'ug-msg success';
           }
           setTimeout(() => {
             const redirect = new URLSearchParams(location.search).get('redirect') || 'profile.html';

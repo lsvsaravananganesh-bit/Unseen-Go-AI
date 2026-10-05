@@ -1,1 +1,230 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Payments | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui;line-height:1.7}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:white;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:900px;margin:auto;padding:60px 22px}.box{padding:30px;background:#101713;border:1px solid #2a342d;border-radius:16px}h1{font-size:48px}@media(max-width:650px){h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>PAYMENTS</p><h1>Secure payment information.</h1><div class="box"><p>Payment features on UnseenGo may depend on the service being offered and its connected provider.</p><h2>Before paying</h2><p>Check the amount, merchant, cancellation terms and confirmation details before completing a transaction.</p><h2>Need help?</h2><p><a href="contact.html">Contact support →</a></p></div></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Payment Security & Guidelines — UnseenGo AI</title>
+  <meta name="description" content="Learn about secure payment processing, UPI protocols, transaction protection, and refund guarantees on UnseenGo AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <a href="terms.html">Terms</a>
+            <span class="sep">›</span>
+            <span class="current">Payment Security</span>
+          </div>
+          <span class="ug-kicker">✦ RBI-COMPLIANT FINANCIAL INFRASTRUCTURE</span>
+          <h1 class="ug-page-hero-title">Secure payment <em>information.</em></h1>
+          <p class="ug-page-hero-lead">
+            Transparent, zero-hidden-fee transaction standards. Discover how payments for curated stays, village experiences, and registered guides are safeguarded on UnseenGo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Sections -->
+    <section style="padding: 3.5rem 0;">
+      <div class="ug-container">
+        <!-- Feature Highlights -->
+        <div class="ug-grid-3" style="margin-bottom: 3rem;">
+          <article class="ug-card">
+            <div class="ug-card-icon">🔒</div>
+            <h2 class="ug-card-title">256-Bit TLS Encryption</h2>
+            <p class="ug-card-desc">All payment sessions are encrypted end-to-end via PCI-DSS Level 1 certified gateways. UnseenGo never stores CVVs or card credentials.</p>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">⚡</div>
+            <h2 class="ug-card-title">Instant UPI &amp; NetBanking</h2>
+            <p class="ug-card-desc">Seamless checkout via Google Pay, PhonePe, Paytm, BHIM UPI, RuPay, Visa, MasterCard, and all major Indian commercial banks.</p>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🛡️</div>
+            <h2 class="ug-card-title">Escrow Traveler Protection</h2>
+            <p class="ug-card-desc">For curated village experiences and homestays, funds are secured until check-in is verified, protecting you from unexpected cancellations.</p>
+          </article>
+        </div>
+
+        <!-- Detailed Prose Box -->
+        <div class="ug-content-box" style="margin-bottom: 3rem;">
+          <h2 style="font-size: 1.6rem; margin-top: 0;">Payment Processing Guidelines</h2>
+          
+          <h3 style="font-size: 1.15rem; color: var(--ug-primary); margin-top: 1.5rem;">1. Zero Hidden Platform Markups</h3>
+          <p>
+            When you book through verified partner links or direct host integrations on UnseenGo, the final amount displayed at checkout reflects the total cost, inclusive of applicable GST (Goods and Services Tax) and statutory service fees. We do not apply undisclosed surge markups at final payment.
+          </p>
+
+          <h3 style="font-size: 1.15rem; color: var(--ug-primary); margin-top: 1.5rem;">2. Supported Payment Methods</h3>
+          <ul style="padding-left: 1.25rem; line-height: 1.8; color: var(--ug-text-secondary);">
+            <li><strong>UPI (Unified Payments Interface):</strong> Instant scan-and-pay QR codes and VPA payment requests via BHIM, PhonePe, GPay, and Cred.</li>
+            <li><strong>Debit &amp; Credit Cards:</strong> Domestic and international RuPay, Visa, MasterCard, and American Express cards with mandatory Two-Factor Authentication (OTP/3D Secure).</li>
+            <li><strong>Direct NetBanking:</strong> Support for 50+ scheduled commercial banks across India.</li>
+            <li><strong>Direct Host Cash-on-Arrival:</strong> Select verified rural homestays accept direct cash payments upon check-in to accommodate remote village banking realities.</li>
+          </ul>
+
+          <h3 style="font-size: 1.15rem; color: var(--ug-primary); margin-top: 1.5rem;">3. Cancellations &amp; Refund Timelines</h3>
+          <p>
+            All refund requests are processed according to our transparent tier schedule. Approved refunds are credited back to the original source payment instrument within <strong>5 to 7 business days</strong>. For complete details, consult our <a href="refunds.html" style="color:var(--ug-primary);">Cancellation &amp; Refund Policy</a>.
+          </p>
+
+          <h3 style="font-size: 1.15rem; color: var(--ug-primary); margin-top: 1.5rem;">4. Payment Dispute Support</h3>
+          <p>
+            Encountered an erroneous deduction or dual charge? Our financial operations desk is on standby. Send your transaction reference ID, payment timestamp, and booking number to <a href="mailto:support@unseengo.ai" style="color:var(--ug-primary);">billing@unseengo.ai</a>, and our desk will respond within 4 hours.
+          </p>
+        </div>
+
+        <!-- Call to Action Banner -->
+        <div class="ug-card" style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+          <div>
+            <h3 style="margin: 0 0 6px; font-size: 1.25rem;">Have questions regarding a recent transaction?</h3>
+            <p style="margin: 0; color: var(--ug-text-secondary); font-size: 0.9rem;">Our specialized traveler finance desk is available 7 days a week.</p>
+          </div>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <a href="contact.html" class="ug-btn-primary">Contact Billing Support →</a>
+            <a href="refunds.html" class="ug-btn-secondary">View Refund Policy</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

@@ -1,1 +1,254 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Travel Blog | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:#fff;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1050px;margin:auto;padding:60px 22px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{padding:25px;background:#101713;border:1px solid #2a342d;border-radius:16px}a{text-decoration:none}h1{font-size:48px}@media(max-width:700px){.grid{grid-template-columns:1fr}h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>UNSEENGO JOURNAL</p><h1>Stories for curious travelers.</h1><div class="grid"><div class="box"><h2>Hidden India</h2><p>Destination guides for places beyond the standard itinerary.</p></div><div class="box"><h2>Travel smarter</h2><p>Practical ideas for planning meaningful journeys.</p></div><div class="box"><h2>Culture & heritage</h2><p>Context that makes a place more than a photo.</p></div></div><p><a href="stories.html">Explore local stories →</a></p></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="description" content="Cultural Chronicles & Travel Blog — UnseenGo AI. In-depth field dispatches on India's hidden canyons, cave temples, artisanal legacies, and slow travel trails.">
+  <title>Travel Chronicles & Blog — UnseenGo AI</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Chronicles & Blog</span>
+          </div>
+          <span class="ug-kicker emerald">✦ Field Notes & Dispatches</span>
+          <h1 class="ug-page-hero-title">Cultural Chronicles of <em>Unseen India.</em></h1>
+          <p class="ug-page-hero-lead">
+            Curated essays, field notes from forgotten valleys, architectural deep dives, and practical slow travel wisdom from our editorial team and local historians.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section style="padding: 3.5rem 0 2rem;">
+      <div class="ug-container">
+        <div class="ug-card" style="padding: 0; overflow: hidden; display: grid; grid-template-columns: 1.2fr 1fr; border-color: rgba(216, 255, 77, 0.3);">
+          <div style="height: 380px; position: relative; background: #131d14 url('https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=1200&q=80') center/cover;">
+            <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,13,9,0.85) 0%, transparent 60%);"></div>
+            <span class="ug-badge ug-badge-verified" style="position: absolute; top: 16px; left: 16px;">✦ Featured Essay</span>
+          </div>
+          <div style="padding: 2.5rem; display: flex; flex-direction: column; justify-content: center;">
+            <div style="display: flex; gap: 0.65rem; align-items: center; margin-bottom: 0.85rem;">
+              <span class="ug-score-pill">History & Myth</span>
+              <span style="font-size: 0.8rem; color: var(--ug-text-muted);">6 min read · Lepakshi, Andhra Pradesh</span>
+            </div>
+            <h2 style="font-size: 1.85rem; color: var(--ug-text-primary); margin-bottom: 0.75rem; line-height: 1.25;">
+              The Hanging Pillar of Veerabhadra: Where 16th-Century Sculptors Defied Gravity
+            </h2>
+            <p style="font-size: 0.92rem; color: var(--ug-text-secondary); line-height: 1.65; margin-bottom: 1.5rem;">
+              How the Vijayanagara brothers Virupanna and Veeranna engineered a monumental stone temple that balances light, sacred acoustics, and monolithic grandeur.
+            </p>
+            <div>
+              <a href="place.html?place=Lepakshi" class="ug-btn-primary">Read Full Chronicle →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Articles Grid -->
+    <section style="padding: 2rem 0 4.5rem;">
+      <div class="ug-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+          <h2 style="font-size: 1.8rem; color: var(--ug-text-primary);">Recent Field Dispatches</h2>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <span class="ug-score-pill" style="cursor: pointer;">All Topics</span>
+            <span class="ug-score-pill" style="background: transparent; border-color: var(--ug-border); color: var(--ug-text-muted); cursor: pointer;">Heritage</span>
+            <span class="ug-score-pill" style="background: transparent; border-color: var(--ug-border); color: var(--ug-text-muted); cursor: pointer;">Nature & Canyons</span>
+            <span class="ug-score-pill" style="background: transparent; border-color: var(--ug-border); color: var(--ug-text-muted); cursor: pointer;">Spiritual</span>
+          </div>
+        </div>
+
+        <div class="ug-grid-3">
+          <!-- Post 1 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span class="ug-badge ug-badge-ai">Canyon Trails</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">5 min read</span>
+            </div>
+            <h3 class="ug-card-title" style="font-size: 1.2rem;">Camping at the Edge of India’s Grand Canyon: Gandikota Notes</h3>
+            <p class="ug-card-desc">Sleeping under star-dense skies beside 300-foot red sandstone cliffs overlooking the sacred Penna River gorge.</p>
+            <a href="place.html?place=Gandikota" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">Read Dispatch →</a>
+          </article>
+
+          <!-- Post 2 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span class="ug-badge ug-badge-verified">Underground</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">4 min read</span>
+            </div>
+            <h3 class="ug-card-title" style="font-size: 1.2rem;">Subterranean Silence: Navigating 3.5 Kilometers of Belum Caves</h3>
+            <p class="ug-card-desc">Musical limestone columns, natural freshwater sinkholes, and Buddhist meditation chambers hidden beneath Andhra's plains.</p>
+            <a href="place.html?place=Belum%20Caves" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">Read Dispatch →</a>
+          </article>
+
+          <!-- Post 3 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+              <span class="ug-badge ug-badge-ai">Rainforest</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">7 min read</span>
+            </div>
+            <h3 class="ug-card-title" style="font-size: 1.2rem;">Agumbe: The Cherrapunji of the South and Its Twilight Ghat Sunsets</h3>
+            <p class="ug-card-desc">Endemic reptiles, dense Western Ghats canopy walks, and the aroma of monsoon mud in Karnataka’s rain capital.</p>
+            <a href="place.html?place=Agumbe" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">Read Dispatch →</a>
+          </article>
+        </div>
+
+        <!-- Newsletter Subscription -->
+        <div class="ug-content-box" style="margin-top: 3.5rem; text-align: center; background: linear-gradient(145deg, rgba(216,255,77,0.06), var(--ug-surface));">
+          <span class="ug-kicker emerald">✦ Weekly Field Dispatch</span>
+          <h3 style="font-size: 1.75rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Never miss an offbeat trail.</h3>
+          <p style="color: var(--ug-text-secondary); max-width: 550px; margin: 0 auto 1.5rem; font-size: 0.95rem;">
+            Join 35,000+ conscious explorers receiving our Friday dossier: one forgotten temple, one wild canyon, and one regional food secret.
+          </p>
+          <form style="display: flex; gap: 0.75rem; max-width: 480px; margin: 0 auto; flex-wrap: wrap;" onsubmit="event.preventDefault(); alert('Thank you for subscribing to UnseenGo Field Dispatches!');">
+            <input type="email" class="ug-form-input" style="flex: 1; min-width: 220px;" placeholder="Enter your email address" required>
+            <button type="submit" class="ug-btn-primary">Subscribe ✦</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

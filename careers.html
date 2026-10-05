@@ -1,1 +1,269 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Careers | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:16px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}main{max-width:1000px;margin:auto;padding:60px 22px}.brand{color:white;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}a{text-decoration:none}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.box{padding:25px;background:#101713;border:1px solid #2a342d;border-radius:16px}h1{font-size:50px}@media(max-width:650px){.grid{grid-template-columns:1fr}h1{font-size:38px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>WORK WITH US</p><h1>Build the future of meaningful travel.</h1><p>We are building technology that helps travelers discover India's hidden stories while creating value for local communities.</p><div class="grid"><div class="box"><h2>AI & Data</h2><p>Recommendation systems, destination intelligence and personalization.</p></div><div class="box"><h2>Product & Design</h2><p>Travel experiences that are simple, useful and memorable.</p></div><div class="box"><h2>Engineering</h2><p>Frontend, backend, maps, APIs and scalable travel infrastructure.</p></div><div class="box"><h2>Travel & Research</h2><p>Destination research, cultural storytelling and local discovery.</p></div></div><h2>Open applications</h2><p>Send your profile, portfolio or project ideas through our <a href="contact.html">contact page</a>.</p><p><a href="index.html">← Back to UnseenGo</a></p></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="description" content="Careers at UnseenGo AI — Join our team building the future of cultural heritage preservation, explainable AI travel recommendations, and local tourism in India.">
+  <title>Careers & Opportunities — UnseenGo AI</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Careers</span>
+          </div>
+          <span class="ug-kicker emerald">✦ Join Our Mission</span>
+          <h1 class="ug-page-hero-title">Build the future of <em>meaningful travel.</em></h1>
+          <p class="ug-page-hero-lead">
+            We are engineering intelligent systems to help travelers discover India's hidden wonders, support grassroots heritage communities, and bypass cookie-cutter mass tourism.
+          </p>
+          <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="#openings" class="ug-btn-primary">View Open Positions ↓</a>
+            <a href="about.html" class="ug-btn-secondary">Read Our Story →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Values & Culture -->
+    <section style="padding: 4rem 0;">
+      <div class="ug-container">
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 3rem;">
+          <span class="ug-kicker">✦ What Drives Us</span>
+          <h2 style="font-size: 2.2rem; color: var(--ug-text-primary);">Why Work at UnseenGo?</h2>
+          <p style="color: var(--ug-text-secondary);">We combine rigorous engineering with deep cultural reverence for India.</p>
+        </div>
+
+        <div class="ug-grid-3">
+          <article class="ug-card">
+            <div class="ug-card-icon">🏛️</div>
+            <h3 class="ug-card-title">Cultural Preservation</h3>
+            <p class="ug-card-desc">Every line of code helps highlight forgotten stepwells, Chalukyan temples, tribal weaving valleys, and indigenous folklore.</p>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🧠</div>
+            <h3 class="ug-card-title">Explainable, Honest AI</h3>
+            <p class="ug-card-desc">We build recommendation engines based on transparency, historical context, and real ground truth — zero spam or hidden sponsored placements.</p>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🏕️</div>
+            <h3 class="ug-card-title">Field Travel Stipends</h3>
+            <p class="ug-card-desc">We give every team member an annual exploration stipend to travel offbeat India, visit our partner homestays, and document forgotten trails.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Open Positions -->
+    <section id="openings" style="padding: 2rem 0 5rem; border-top: 1px solid var(--ug-border);">
+      <div class="ug-container">
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 3rem;">
+          <span class="ug-kicker emerald">✦ Current Opportunities</span>
+          <h2 style="font-size: 2.2rem; color: var(--ug-text-primary);">Open Positions</h2>
+          <p style="color: var(--ug-text-secondary);">Remote-first across India. Competitive compensation + travel perks.</p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 1.25rem; max-width: 900px; margin: 0 auto;">
+          <!-- Role 1 -->
+          <div class="ug-card" style="padding: 1.75rem 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+              <div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.35rem; align-items: center;">
+                  <span class="ug-badge ug-badge-ai">Engineering</span>
+                  <span style="font-size: 0.78rem; color: var(--ug-text-muted);">Remote (India) · Full-Time</span>
+                </div>
+                <h3 style="font-size: 1.35rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">AI & Geospatial Intelligence Engineer</h3>
+                <p style="font-size: 0.9rem; color: var(--ug-text-secondary); line-height: 1.6; max-width: 650px;">
+                  Develop ranking algorithms, terrain heuristics, and multi-modal travel reasoning models for hidden-gem scoring across 10,000+ Indian heritage coordinates.
+                </p>
+              </div>
+              <a href="mailto:careers@unseengo.ai?subject=Application:%20AI%20Engineer" class="ug-btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.25rem;">Apply Now →</a>
+            </div>
+          </div>
+
+          <!-- Role 2 -->
+          <div class="ug-card" style="padding: 1.75rem 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+              <div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.35rem; align-items: center;">
+                  <span class="ug-badge ug-badge-verified">Research & Editorial</span>
+                  <span style="font-size: 0.78rem; color: var(--ug-text-muted);">Remote / Hybrid · Full-Time</span>
+                </div>
+                <h3 style="font-size: 1.35rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Senior Cultural Historian & Field Researcher</h3>
+                <p style="font-size: 0.9rem; color: var(--ug-text-secondary); line-height: 1.6; max-width: 650px;">
+                  Lead ground research into architectural histories (Vijayanagara, Chalukya, Kakatiya, Ahom), mythologies, and verified local folklore guides across southern and central India.
+                </p>
+              </div>
+              <a href="mailto:careers@unseengo.ai?subject=Application:%20Cultural%20Historian" class="ug-btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.25rem;">Apply Now →</a>
+            </div>
+          </div>
+
+          <!-- Role 3 -->
+          <div class="ug-card" style="padding: 1.75rem 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
+              <div>
+                <div style="display: flex; gap: 0.5rem; margin-bottom: 0.35rem; align-items: center;">
+                  <span class="ug-badge ug-badge-ai">Product Design</span>
+                  <span style="font-size: 0.78rem; color: var(--ug-text-muted);">Remote (India) · Full-Time</span>
+                </div>
+                <h3 style="font-size: 1.35rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Senior Product & UI/UX Designer</h3>
+                <p style="font-size: 0.9rem; color: var(--ug-text-secondary); line-height: 1.6; max-width: 650px;">
+                  Craft rich, tactile digital travel experiences, interactive Leaflet maps, and responsive luxury interfaces celebrating Indian aesthetics and modern typography.
+                </p>
+              </div>
+              <a href="mailto:careers@unseengo.ai?subject=Application:%20Product%20Designer" class="ug-btn-primary" style="font-size: 0.85rem; padding: 0.6rem 1.25rem;">Apply Now →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- General Pitch -->
+        <div class="ug-content-box" style="max-width: 900px; margin: 3rem auto 0; text-align: center;">
+          <h3 style="font-size: 1.5rem; color: var(--ug-text-primary); margin-bottom: 0.75rem;">Don't see your specific role?</h3>
+          <p style="color: var(--ug-text-secondary); max-width: 600px; margin: 0 auto 1.5rem; line-height: 1.6;">
+            We love self-starters, cartographers, travel writers, and software craftspeople. Send us your GitHub, portfolio, or a note about your favorite hidden place in India.
+          </p>
+          <a href="mailto:careers@unseengo.ai?subject=General%20Inquiry%20-%20UnseenGo" class="ug-btn-secondary">Send an Open Pitch → careers@unseengo.ai</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

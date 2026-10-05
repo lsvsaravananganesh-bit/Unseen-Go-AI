@@ -72,17 +72,23 @@
 
   function updateThemeToggleIcons(theme) {
     const isLight = theme === 'light';
-    const toggleBtns = document.querySelectorAll('[data-ug-theme-toggle], .ug-theme-toggle');
+    const toggleBtns = document.querySelectorAll('[data-ug-theme-toggle], .ug-theme-toggle, .ug-theme-btn, .auth-theme-toggle');
     toggleBtns.forEach(btn => {
       const icon = btn.querySelector('.ug-theme-icon');
       const label = btn.querySelector('.ug-theme-label');
+      const moonSvg = btn.querySelector('.theme-icon-moon');
+      const sunSvg = btn.querySelector('.theme-icon-sun');
+      if (moonSvg && sunSvg) {
+        moonSvg.style.display = isLight ? 'none' : 'block';
+        sunSvg.style.display = isLight ? 'block' : 'none';
+      }
       if (icon) {
         icon.textContent = isLight ? '🌙' : '☀️';
       }
       if (label) {
         label.textContent = isLight ? 'Dark' : 'Light';
       }
-      if (!icon && !label) {
+      if (!icon && !label && !moonSvg && !sunSvg) {
         btn.textContent = isLight ? '🌙' : '☀️';
       }
       btn.setAttribute('aria-label', `Switch to ${isLight ? 'Dark' : 'Light'} Mode`);
@@ -94,7 +100,7 @@
   function initTheme() {
     applyTheme(getSavedTheme());
 
-    const toggleBtns = document.querySelectorAll('[data-ug-theme-toggle], .ug-theme-toggle');
+    const toggleBtns = document.querySelectorAll('[data-ug-theme-toggle], .ug-theme-toggle, .ug-theme-btn, .auth-theme-toggle');
     toggleBtns.forEach(btn => {
       // Prevent multiple listeners if already bound
       if (btn.dataset.themeBound) return;
@@ -134,11 +140,63 @@
 
   /* 3. Mobile Navigation Drawer */
   function initMobileDrawer() {
-    const toggle = document.querySelector('.ug-mobile-toggle');
-    const backdrop = document.querySelector('.ug-drawer-backdrop');
-    const closeBtn = document.querySelector('.ug-drawer-close');
+    const toggle = document.querySelector('.ug-mobile-toggle, .ug-mobile-menu-btn');
+    let backdrop = document.querySelector('.ug-drawer-backdrop');
 
-    if (!toggle || !backdrop) return;
+    if (!toggle) return;
+
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'ug-drawer-backdrop';
+      backdrop.setAttribute('aria-hidden', 'true');
+      backdrop.innerHTML = `
+        <aside class="ug-mobile-drawer" aria-label="Mobile menu">
+          <div class="ug-drawer-header">
+            <a class="ug-brand" href="index.html">
+              <span class="ug-sparkle">✦</span>
+              <span>UnseenGo</span>
+              <span class="ug-brand-badge">AI</span>
+            </a>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+              <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle theme">🌙</button>
+              <button type="button" class="ug-drawer-close" aria-label="Close mobile navigation">✕</button>
+            </div>
+          </div>
+          <div class="ug-drawer-body">
+            <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger style="width: 100%; justify-content: space-between;">
+              <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="pin">📍</span>
+                <span>Current City:</span>
+                <b data-ug-current-city>All India</b>
+              </span>
+              <span>Change ▾</span>
+            </button>
+
+            <nav class="ug-drawer-nav" aria-label="Mobile navigation links">
+              <a class="ug-drawer-link" href="index.html"><span class="icon">🏠</span><span>Home</span></a>
+              <a class="ug-drawer-link" href="discover.html"><span class="icon">🔎</span><span>Discover</span></a>
+              <a class="ug-drawer-link" href="planner.html"><span class="icon">🤖</span><span>AI Planner</span></a>
+              <a class="ug-drawer-link" href="stay.html"><span class="icon">🏡</span><span>Stay</span></a>
+              <a class="ug-drawer-link" href="transport.html"><span class="icon">🚗</span><span>Transport</span></a>
+              <a class="ug-drawer-link" href="stories.html"><span class="icon">📖</span><span>Experiences & Stories</span></a>
+              <a class="ug-drawer-link" href="tripideas.html"><span class="icon">💡</span><span>Thematic Expeditions</span></a>
+              <a class="ug-drawer-link" href="flights.html"><span class="icon">✈️</span><span>Flights & Gateways</span></a>
+              <a class="ug-drawer-link" href="utilities.html"><span class="icon">🧰</span><span>Travel Utilities</span></a>
+              <a class="ug-drawer-link" href="map.html"><span class="icon">🗺️</span><span>Interactive Map</span></a>
+              <a class="ug-drawer-link" href="india-cities.html"><span class="icon">📍</span><span>Destinations Directory</span></a>
+              <a class="ug-drawer-link" href="my-travel.html"><span class="icon">❤️</span><span>My Trips Vault</span></a>
+              <a class="ug-drawer-link" href="profile.html"><span class="icon">👤</span><span>Traveler Profile</span></a>
+            </nav>
+            <div class="ug-drawer-footer">
+              <div class="ug-drawer-auth"></div>
+            </div>
+          </div>
+        </aside>
+      `;
+      document.body.appendChild(backdrop);
+    }
+
+    const closeBtn = backdrop.querySelector('.ug-drawer-close');
 
     function openDrawer() {
       backdrop.classList.add('open');
@@ -168,6 +226,35 @@
       if (e.target === backdrop) closeDrawer();
     });
 
+    backdrop.querySelectorAll('.ug-drawer-link').forEach(link => {
+      link.addEventListener('click', () => {
+        closeDrawer();
+      });
+    });
+
+    // Touch swipe-to-close gesture (swiping right to dismiss)
+    const drawerEl = backdrop.querySelector('.ug-mobile-drawer');
+    if (drawerEl) {
+      let touchStartX = 0;
+      let touchStartY = 0;
+      drawerEl.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches[0]) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      drawerEl.addEventListener('touchend', (e) => {
+        if (e.changedTouches && e.changedTouches[0]) {
+          const deltaX = e.changedTouches[0].clientX - touchStartX;
+          const deltaY = Math.abs(e.changedTouches[0].clientY - touchStartY);
+          if (deltaX > 60 && deltaY < 60) {
+            closeDrawer();
+          }
+        }
+      }, { passive: true });
+    }
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && backdrop.classList.contains('open')) {
         closeDrawer();
@@ -177,12 +264,34 @@
 
   /* 4. Quick City Selector Modal & Search */
   function initCitySelector() {
-    const openBtns = document.querySelectorAll('[data-ug-city-modal-trigger]');
-    const modal = document.querySelector('.ug-city-modal');
-    const closeBtn = document.querySelector('.ug-city-modal-close');
-    const searchInput = document.querySelector('.ug-city-search-input');
-    const cityList = document.querySelector('.ug-city-list');
-    const currentCityLabels = document.querySelectorAll('[data-ug-current-city]');
+    let modal = document.querySelector('.ug-city-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.className = 'ug-city-modal';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-labelledby', 'cityModalTitle');
+      modal.innerHTML = `
+        <div class="ug-city-modal-box">
+          <div class="ug-city-modal-head">
+            <h3 id="cityModalTitle"><span>📍</span> Select Destination Hub</h3>
+            <button type="button" class="ug-city-modal-close ug-drawer-close" aria-label="Close city selector">✕</button>
+          </div>
+          <div class="ug-city-search-wrap">
+            <input type="text" class="ug-city-search-input" placeholder="Search cities or regions (e.g. Hyderabad, Karnataka, South)..." aria-label="Search destination city">
+          </div>
+          <div class="ug-city-list"></div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    const openBtns = document.querySelectorAll('[data-ug-city-modal-trigger], .ug-city-selector-btn');
+    const closeBtn = modal.querySelector('.ug-city-modal-close');
+    const searchInput = modal.querySelector('.ug-city-search-input');
+    const cityList = modal.querySelector('.ug-city-list');
+    const currentCityLabels = document.querySelectorAll('[data-ug-current-city], [data-selected-city], .ug-city-label');
 
     const savedCity = localStorage.getItem('unseengo_city') || 'All India';
     updateCurrentCityDisplay(savedCity);
@@ -246,6 +355,7 @@
     function openCityModal() {
       if (!modal) return;
       modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
       renderCityChips('');
       if (searchInput) {
         searchInput.value = '';
@@ -256,6 +366,7 @@
     function closeCityModal() {
       if (!modal) return;
       modal.classList.remove('open');
+      document.body.style.overflow = '';
     }
 
     openBtns.forEach(btn => btn.addEventListener('click', openCityModal));

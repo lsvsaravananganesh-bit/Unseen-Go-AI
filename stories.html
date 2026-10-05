@@ -110,7 +110,7 @@
     /* Story Cards Grid */
     .story-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
       gap: 1.75rem;
       margin-bottom: 4rem;
     }
@@ -762,50 +762,69 @@
   </div>
 
   <!-- Footer -->
+  <!-- Modern Heritage Footer -->
   <footer class="ug-footer">
     <div class="ug-container">
       <div class="ug-footer-grid">
-        <div class="ug-footer-brand-col">
-          <a class="ug-brand" href="index.html">
-            <span class="ug-sparkle">✦</span>
-            <span>UnseenGo</span>
-            <span class="ug-brand-badge">AI</span>
-          </a>
-          <p class="ug-footer-tagline">
-            Preserving India's living cultural memories, local heritage, and hidden sanctuaries through transparent AI discovery.
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
           </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
         </div>
+
         <div class="ug-footer-col">
-          <h4>Explore</h4>
-          <ul>
-            <li><a href="discover.html">Discover Places</a></li>
-            <li><a href="planner.html">AI Trip Planner</a></li>
-            <li><a href="map.html">India Explorer Map</a></li>
-            <li><a href="stories.html">Cultural Stories</a></li>
-            <li><a href="tripideas.html">Thematic Expeditions</a></li>
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
           </ul>
         </div>
+
         <div class="ug-footer-col">
-          <h4>Travel Services</h4>
-          <ul>
-            <li><a href="stay.html">Local Stays</a></li>
-            <li><a href="transport.html">Transport & Routes</a></li>
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
             <li><a href="flights.html">Flight Gateways</a></li>
-            <li><a href="utilities.html">Packing & Budget Tools</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
           </ul>
         </div>
+
         <div class="ug-footer-col">
-          <h4>Company & Safety</h4>
-          <ul>
-            <li><a href="about.html">About UnseenGo</a></li>
-            <li><a href="safety.html">Safety & SOS Hub</a></li>
-            <li><a href="security.html">Security & Privacy</a></li>
-            <li><a href="admin.html">Admin Portal</a></li>
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
           </ul>
         </div>
       </div>
+
       <div class="ug-footer-bottom">
-        <div>© 2026 UnseenGo AI · Cultural Chronicles of India. Verified oral traditions and architectural archives.</div>
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
       </div>
     </div>
   </footer>

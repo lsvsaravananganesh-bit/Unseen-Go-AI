@@ -1,41 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="unseengo-theme.css?v=20260927">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>UnseenGo AI — Product Demo</title>
-<style>
-:root{--ink:#101510;--muted:#69746b;--lime:#d8f36a;--dark:#07100b;--cream:#f5f4ed;--line:#dfe4dc}
-*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif}.wrap{width:min(1160px,calc(100% - 32px));margin:auto}.top{background:var(--dark);color:#fff}.nav{height:76px;display:flex;align-items:center;justify-content:space-between}.brand{font-size:21px;font-weight:950}.brand b{color:var(--lime)}.back{color:#dce5dc;font-size:12px;font-weight:850;text-decoration:none}.hero{padding:75px 0 35px;text-align:center}.eyebrow{color:#61752c;font-size:10px;font-weight:950;letter-spacing:2.4px}.hero h1{font-size:clamp(38px,6vw,68px);line-height:1;letter-spacing:-3px;margin:14px 0}.hero p{color:var(--muted);max-width:650px;margin:auto;line-height:1.7}.demo{padding:30px 0 90px}.panel{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 25px 70px rgba(16,21,16,.09);overflow:hidden}.prompt{padding:28px;border-bottom:1px solid var(--line)}.label{font-size:10px;letter-spacing:1.5px;font-weight:950;color:#657066;margin-bottom:10px}.inputrow{display:flex;gap:10px}.inputrow textarea{flex:1;resize:none;border:1px solid #d8ded7;border-radius:12px;padding:15px;font:600 15px/1.5 inherit;outline:none;min-height:76px}.inputrow textarea:focus{border-color:#a9bf63;box-shadow:0 0 0 3px #edf5da}.run{border:0;border-radius:12px;background:#172217;color:#fff;font-weight:950;padding:0 20px;cursor:pointer}.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}.chip{border:1px solid #d7ded5;background:#fff;border-radius:999px;padding:8px 11px;font-size:10px;font-weight:850;cursor:pointer}.chip:hover{background:#f1f6e6}.stage{display:none;padding:28px}.stage.show{display:block}.status{display:flex;align-items:center;gap:10px;font-weight:900}.pulse{width:10px;height:10px;border-radius:50%;background:#a5bf54;box-shadow:0 0 0 7px #edf4dc;animation:pulse 1.2s infinite}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}.step{border:1px solid var(--line);border-radius:13px;padding:16px;opacity:.35;transform:translateY(5px);transition:.45s}.step.on{opacity:1;transform:none;background:#fbfcf8}.step b{display:block;font-size:12px;margin-bottom:5px}.step span{font-size:11px;color:var(--muted)}.profile{margin-top:20px;padding:20px;border-radius:16px;background:#09120c;color:#fff}.profile-title{font-size:10px;color:var(--lime);letter-spacing:1.5px;font-weight:950}.profile-grid{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.profile-grid span{padding:8px 10px;border:1px solid #344235;border-radius:999px;color:#d7dfd6;font-size:10px}.results{margin-top:25px}.result-head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:14px}.result-head h2{margin:0;font-size:25px;letter-spacing:-1px}.result-head p{margin:0;color:var(--muted);font-size:11px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.card{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}.card img{width:100%;height:185px;object-fit:cover;display:block}.body{padding:16px}.body small{color:#647532;font-size:9px;font-weight:950;letter-spacing:1px;text-transform:uppercase}.body h3{margin:6px 0;font-size:19px}.body p{color:var(--muted);font-size:11px;line-height:1.55;margin:0 0 12px}
-.score-signature{margin:15px 0 0;padding:16px;border:1px solid #dbe5c8;border-radius:15px;background:linear-gradient(145deg,#f8faef,#edf4dc);position:relative;overflow:hidden}.score-signature:after{content:"";position:absolute;width:110px;height:110px;border-radius:50%;border:1px solid rgba(125,151,59,.16);right:-35px;top:-35px}.score-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}.score-ring{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;position:relative;background:conic-gradient(#657f25 0 92%,#d9e3c7 92% 100%);flex:none}.score-ring:before{content:"";position:absolute;inset:7px;border-radius:50%;background:#f7f9ef}.score-number{position:relative;z-index:1;font-size:25px;font-weight:950;letter-spacing:-1px}.score-meta{position:relative;z-index:1}.score-meta strong{display:block;font-size:11px;letter-spacing:2px;color:#24330f}.score-meta span{display:block;margin-top:3px;font-size:9px;color:#6b765f}.score-bars{display:grid;gap:8px}.score-row{display:grid;grid-template-columns:92px 1fr 30px;align-items:center;gap:7px;font-size:9px;font-weight:850;color:#56614e}.score-bar{height:6px;background:#dbe4ce;border-radius:999px;overflow:hidden}.score-fill{height:100%;width:var(--score);background:#657f25;border-radius:inherit;transform-origin:left;animation:scoreFill .9s ease both}.score-why{margin-top:14px;padding-top:12px;border-top:1px solid #d8e1cc}.score-why small{display:block!important;color:#43551c!important;letter-spacing:1.2px!important;margin-bottom:4px}.score-why p{margin:0!important;color:#465144!important;font-size:10px!important;line-height:1.55!important}.why{margin-top:12px;padding-top:12px;border-top:1px solid #e6ebe5;font-size:10px;color:#59645c;line-height:1.6}.reset{margin-top:16px;border:1px solid #ccd5c9;background:#fff;border-radius:10px;padding:10px 14px;font-size:11px;font-weight:900;cursor:pointer}@keyframes pulse{50%{opacity:.45;transform:scale(.8)}}@keyframes scoreFill{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media(max-width:700px){.inputrow{display:block}.run{width:100%;height:50px;margin-top:9px}.steps,.cards{grid-template-columns:1fr}.hero{text-align:left;padding-top:50px}.hero p{margin:0}.prompt,.stage{padding:20px}.card img{height:210px}.score-row{grid-template-columns:82px 1fr 28px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Interactive AI Product Demo — UnseenGo AI</title>
+  <meta name="description" content="Watch how UnseenGo transforms natural language travel requests into explainable hidden-gem recommendations with cultural depth.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+  <style>
+    .demo-panel {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 24px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      margin: 2rem 0 5rem;
+    }
+    [data-theme="light"] .demo-panel, html.ug-light .demo-panel {
+      background: #ffffff;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+    }
+    .demo-prompt {
+      padding: 2rem;
+      border-bottom: 1px solid var(--ug-border, #28372b);
+    }
+    .demo-inputrow {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .demo-inputrow textarea {
+      flex: 1;
+      resize: none;
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 14px;
+      padding: 16px;
+      font: inherit;
+      font-size: 15px;
+      outline: none;
+      background: var(--ug-elevated, #18221a);
+      color: var(--ug-text, #f0f4ee);
+      min-height: 80px;
+    }
+    .demo-inputrow textarea:focus {
+      border-color: var(--ug-primary, #d8ff4d);
+    }
+    [data-theme="light"] .demo-inputrow textarea, html.ug-light .demo-inputrow textarea {
+      background: #f8faf6;
+    }
+    .demo-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .demo-chip {
+      border: 1px solid var(--ug-border, #28372b);
+      background: var(--ug-elevated, #18221a);
+      color: var(--ug-text, #f0f4ee);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .demo-chip:hover {
+      background: var(--ug-primary, #d8ff4d);
+      color: #0b110c;
+    }
+    [data-theme="light"] .demo-chip, html.ug-light .demo-chip {
+      background: #f0f4ed;
+    }
+    .demo-stage {
+      display: none;
+      padding: 2rem;
+    }
+    .demo-stage.show {
+      display: block;
+    }
+    .demo-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--ug-text);
+    }
+    .demo-pulse {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--ug-primary, #d8ff4d);
+      box-shadow: 0 0 0 6px rgba(216, 255, 77, 0.2);
+      animation: pulse 1.2s infinite;
+    }
+    .demo-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+    .demo-step {
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 14px;
+      padding: 16px;
+      background: var(--ug-elevated, #18221a);
+      opacity: 0.35;
+      transform: translateY(6px);
+      transition: all 0.4s ease;
+    }
+    .demo-step.on {
+      opacity: 1;
+      transform: none;
+      border-color: var(--ug-primary, #d8ff4d);
+    }
+    [data-theme="light"] .demo-step, html.ug-light .demo-step {
+      background: #f8faf6;
+    }
+    .demo-step b {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+      color: var(--ug-text);
+    }
+    .demo-step span {
+      font-size: 11px;
+      color: var(--ug-text-secondary);
+    }
+    .demo-profile {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: var(--ug-elevated, #18221a);
+      border: 1px solid var(--ug-border, #28372b);
+    }
+    .demo-profile-title {
+      font-size: 11px;
+      color: var(--ug-primary, #d8ff4d);
+      letter-spacing: 1.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .demo-profile-grid {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+    .demo-profile-grid span {
+      padding: 8px 12px;
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 999px;
+      background: var(--ug-surface);
+      color: var(--ug-text);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .demo-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .demo-card {
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--ug-surface, #121913);
+      display: flex;
+      flex-direction: column;
+    }
+    [data-theme="light"] .demo-card, html.ug-light .demo-card {
+      background: #ffffff;
+    }
+    .demo-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+    }
+    .demo-card-body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .demo-card-body small {
+      color: var(--ug-primary, #d8ff4d);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .demo-card-body h3 {
+      margin: 6px 0 8px;
+      font-size: 1.25rem;
+      color: var(--ug-text);
+    }
+    .demo-card-body p {
+      color: var(--ug-text-secondary);
+      font-size: 0.88rem;
+      line-height: 1.55;
+      margin: 0 0 14px;
+    }
+    .score-signature {
+      margin: 12px 0 0;
+      padding: 14px;
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 14px;
+      background: var(--ug-elevated, #18221a);
+    }
+    [data-theme="light"] .score-signature, html.ug-light .score-signature {
+      background: #f8faf6;
+    }
+    .score-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .score-ring {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: conic-gradient(var(--ug-primary, #d8ff4d) 0 92%, rgba(216,255,77,0.15) 92% 100%);
+      flex: none;
+    }
+    .score-ring:before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border-radius: 50%;
+      background: var(--ug-surface, #121913);
+    }
+    [data-theme="light"] .score-ring:before, html.ug-light .score-ring:before {
+      background: #ffffff;
+    }
+    .score-number {
+      position: relative;
+      z-index: 1;
+      font-size: 1.25rem;
+      font-weight: 900;
+      color: var(--ug-text);
+    }
+    .score-meta strong {
+      display: block;
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      color: var(--ug-primary, #d8ff4d);
+    }
+    .score-meta span {
+      display: block;
+      font-size: 10px;
+      color: var(--ug-text-secondary);
+    }
+    .score-bars {
+      display: grid;
+      gap: 6px;
+    }
+    .score-row {
+      display: grid;
+      grid-template-columns: 85px 1fr 28px;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      color: var(--ug-text-secondary);
+    }
+    .score-bar {
+      height: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    [data-theme="light"] .score-bar, html.ug-light .score-bar {
+      background: #e2e8df;
+    }
+    .score-fill {
+      height: 100%;
+      width: var(--score);
+      background: var(--ug-primary, #d8ff4d);
+      border-radius: inherit;
+    }
+    [data-theme="light"] .score-fill, html.ug-light .score-fill {
+      background: #4d7c0f;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    @media (max-width: 900px) {
+      .demo-steps, .demo-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (max-width: 650px) {
+      .demo-inputrow {
+        flex-direction: column;
+      }
+      .demo-steps, .demo-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-<header class="top"><div class="wrap nav"><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a><a class="back" href="index.html">← Back to homepage</a></div></header>
-<main>
-<section class="hero"><div class="wrap"><div class="eyebrow">✦ SEE UNSEENGO THINK</div><h1>Tell us what you want.<br>We'll find what others miss.</h1><p>This interactive demo shows how UnseenGo turns a natural-language travel request into a personalized hidden-gem shortlist.</p></div></section>
-<section class="demo"><div class="wrap"><div class="panel">
-<div class="prompt"><div class="label">YOUR TRAVEL REQUEST</div><div class="inputrow"><textarea id="prompt">I have one day in Kurnool. I love history, photography and quiet places.</textarea><button class="run" onclick="runDemo()">Discover →</button></div><div class="chips"><button class="chip" onclick="setPrompt('I have one day in Kurnool. I love history, photography and quiet places.')">🏛 History + quiet</button><button class="chip" onclick="setPrompt('I want beautiful photography spots in Kurnool away from crowds.')">📸 Photography</button><button class="chip" onclick="setPrompt('I want peaceful nature and local experiences in Kurnool.')">🌿 Peaceful places</button></div></div>
-<div id="stage" class="stage"><div class="status"><span class="pulse"></span><span id="status">Understanding your trip...</span></div><div class="steps"><div class="step" id="s1"><b>Destination</b><span>Kurnool</span></div><div class="step" id="s2"><b>Interests</b><span>History · Photography</span></div><div class="step" id="s3"><b>Preferences</b><span>Quiet · Low crowds</span></div><div class="step" id="s4"><b>Trip length</b><span>1 day</span></div></div><div class="profile"><div class="profile-title">✦ UNSEENGO TRAVEL PROFILE</div><div class="profile-grid"><span>🏛 Heritage</span><span>📸 Photography</span><span>🌿 Quiet</span><span>👥 Low crowds</span><span>⏱ One day</span></div></div><div id="results" class="results" style="display:none"><div class="result-head"><div><h2>UnseenGo found 5 places</h2><p>Matched to your interests, time and preference for quieter experiences.</p></div></div><div class="cards">
-<article class="card"><img src="https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=900&q=80" alt="Konda Reddy Fort"><div class="body"><small>Heritage · Photography</small><h3>Konda Reddy Fort</h3><p>Historic Kurnool landmark with strong architecture and photography appeal.</p><div class="score-signature"><div class="score-top"><div class="score-ring"><span class="score-number">92</span></div><div class="score-meta"><strong>UNSEENGO SCORE</strong><span>Excellent hidden-gem match</span></div></div><div class="score-bars"><div class="score-row"><span>Hiddenness</span><div class="score-bar"><i class="score-fill" style="--score:92%"></i></div><b>92%</b></div><div class="score-row"><span>Culture</span><div class="score-bar"><i class="score-fill" style="--score:95%"></i></div><b>95%</b></div><div class="score-row"><span>Match</span><div class="score-bar"><i class="score-fill" style="--score:98%"></i></div><b>98%</b></div><div class="score-row"><span>Accessibility</span><div class="score-bar"><i class="score-fill" style="--score:78%"></i></div><b>78%</b></div></div><div class="score-why"><small>WHY YOU'LL LIKE IT</small><p>Excellent match for your interest in heritage photography and quieter experiences.</p></div></div><div class="why">✓ Strong history match<br>✓ Great visual detail<br>✓ Easy to include in one day</div></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80" alt="Heritage fort"><div class="body"><small>Heritage · Quiet</small><h3>Gadwal Fort</h3><p>A heritage-focused option for travelers who want culture beyond the obvious.</p><div class="score-signature"><div class="score-top"><div class="score-ring" style="background:conic-gradient(#657f25 0 88%,#d9e3c7 88% 100%)"><span class="score-number">88</span></div><div class="score-meta"><strong>UNSEENGO SCORE</strong><span>Strong cultural match</span></div></div><div class="score-bars"><div class="score-row"><span>Hiddenness</span><div class="score-bar"><i class="score-fill" style="--score:89%"></i></div><b>89%</b></div><div class="score-row"><span>Culture</span><div class="score-bar"><i class="score-fill" style="--score:94%"></i></div><b>94%</b></div><div class="score-row"><span>Match</span><div class="score-bar"><i class="score-fill" style="--score:91%"></i></div><b>91%</b></div><div class="score-row"><span>Accessibility</span><div class="score-bar"><i class="score-fill" style="--score:76%"></i></div><b>76%</b></div></div><div class="score-why"><small>WHY YOU'LL LIKE IT</small><p>A strong choice when heritage depth and a less obvious route matter most.</p></div></div><div class="why">✓ Heritage fit<br>✓ Photography potential<br>✓ Lower-tourism feel</div></div></article>
-<article class="card"><img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80" alt="Scenic natural landscape"><div class="body"><small>Nature · Photography</small><h3>Orvakal Rock Garden</h3><p>Striking natural formations that work especially well for photography.</p><div class="score-signature"><div class="score-top"><div class="score-ring" style="background:conic-gradient(#657f25 0 86%,#d9e3c7 86% 100%)"><span class="score-number">86</span></div><div class="score-meta"><strong>UNSEENGO SCORE</strong><span>Great visual match</span></div></div><div class="score-bars"><div class="score-row"><span>Hiddenness</span><div class="score-bar"><i class="score-fill" style="--score:86%"></i></div><b>86%</b></div><div class="score-row"><span>Culture</span><div class="score-bar"><i class="score-fill" style="--score:72%"></i></div><b>72%</b></div><div class="score-row"><span>Match</span><div class="score-bar"><i class="score-fill" style="--score:95%"></i></div><b>95%</b></div><div class="score-row"><span>Accessibility</span><div class="score-bar"><i class="score-fill" style="--score:80%"></i></div><b>80%</b></div></div><div class="score-why"><small>WHY YOU'LL LIKE IT</small><p>Ideal if photography and a quieter scenic escape are the priority.</p></div></div><div class="why">✓ Scenic match<br>✓ Photography friendly<br>✓ Balances heritage with nature</div></div></article>
-</div><button class="reset" onclick="resetDemo()">↻ Try another request</button></div></div>
-</div></div></section>
-</main>
-<script>
-const promptBox=document.getElementById('prompt');
-function setPrompt(text){promptBox.value=text;promptBox.focus()}
-function runDemo(){
- const stage=document.getElementById('stage'),results=document.getElementById('results'),status=document.getElementById('status');
- stage.classList.add('show');results.style.display='none';['s1','s2','s3','s4'].forEach(id=>document.getElementById(id).classList.remove('on'));
- const messages=['Understanding your trip...','Matching your interests...','Applying quiet-place preference...','Ranking hidden gems...'];
- messages.forEach((msg,i)=>setTimeout(()=>{status.textContent=msg;document.getElementById('s'+(i+1)).classList.add('on')},i*650));
- setTimeout(()=>{status.textContent='✦ UnseenGo found your best matches';results.style.display='block';results.scrollIntoView({behavior:'smooth',block:'nearest'})},2900);
-}
-function resetDemo(){document.getElementById('results').style.display='none';document.getElementById('stage').classList.remove('show');window.scrollTo({top:document.querySelector('.demo').offsetTop-40,behavior:'smooth'})}
-</script>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link active" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <a href="planner.html">AI Planner</a>
+            <span class="sep">›</span>
+            <span class="current">Interactive AI Demo</span>
+          </div>
+          <span class="ug-kicker">✦ EXPERIENCE THE ENGINE IN ACTION</span>
+          <h1 class="ug-page-hero-title">Tell us what you want.<br><em>We'll find what others miss.</em></h1>
+          <p class="ug-page-hero-lead">
+            This live interactive simulation demonstrates how UnseenGo turns a conversational travel request into an explainable shortlist of quiet heritage spots, scenic rock gardens, and local cultural assets.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Demo Simulation Container -->
+    <section>
+      <div class="ug-container">
+        <div class="demo-panel">
+          <div class="demo-prompt">
+            <label for="prompt" style="font-size: 11px; letter-spacing: 1.5px; font-weight: 800; color: var(--ug-text-secondary); text-transform: uppercase;">YOUR TRAVEL REQUEST</label>
+            <div class="demo-inputrow">
+              <textarea id="prompt">I have one day in Kurnool. I love history, photography and quiet places away from crowds.</textarea>
+              <button class="ug-btn-primary" onclick="runDemo()" style="padding: 0 24px;">Discover →</button>
+            </div>
+            <div class="demo-chips">
+              <button class="demo-chip" onclick="setPrompt('I have one day in Kurnool. I love history, photography and quiet places away from crowds.')">🏛 History + Quiet Heritage</button>
+              <button class="demo-chip" onclick="setPrompt('I want scenic photography spots and rugged geological formations in Kurnool.')">📸 Photography &amp; Geology</button>
+              <button class="demo-chip" onclick="setPrompt('I want peaceful nature, ancient temples and sacred rivers in Kurnool.')">🌿 Sacred Nature &amp; Rivers</button>
+            </div>
+          </div>
+
+          <!-- Processing Stages & Results -->
+          <div id="stage" class="demo-stage">
+            <div class="demo-status">
+              <span class="demo-pulse"></span>
+              <span id="status">Understanding your trip...</span>
+            </div>
+            <div class="demo-steps">
+              <div class="demo-step" id="s1"><b>01 Destination</b><span>Kurnool Region</span></div>
+              <div class="demo-step" id="s2"><b>02 Interests</b><span>History · Photography</span></div>
+              <div class="demo-step" id="s3"><b>03 Pacing</b><span>Quiet · Low Crowds</span></div>
+              <div class="demo-step" id="s4"><b>04 Duration</b><span>1 Day Exploration</span></div>
+            </div>
+
+            <div class="demo-profile">
+              <div class="demo-profile-title">✦ CONSTRUCTED TRAVELER PROFILE</div>
+              <div class="demo-profile-grid">
+                <span>🏛 Heritage Archetypes</span>
+                <span>📸 Architectural Photography</span>
+                <span>🌿 Quiet Corridors</span>
+                <span>👥 Low Tourist Density</span>
+                <span>⏱ 1-Day Regional Circuit</span>
+              </div>
+            </div>
+
+            <div id="results" style="display: none; margin-top: 2rem;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 15px; margin-bottom: 1rem;">
+                <div>
+                  <h2 style="font-size: 1.5rem; margin: 0 0 4px;">Top Hidden Gem Matches</h2>
+                  <p style="margin: 0; color: var(--ug-text-secondary); font-size: 0.9rem;">Ranked by UnseenGo's explainable compatibility model.</p>
+                </div>
+                <button class="ug-btn-secondary" onclick="resetDemo()" style="font-size: 0.85rem;">↻ Try Another Prompt</button>
+              </div>
+
+              <div class="demo-cards">
+                <!-- Card 1 -->
+                <article class="demo-card">
+                  <img src="https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=900&q=80" alt="Konda Reddy Fort" loading="lazy">
+                  <div class="demo-card-body">
+                    <small>Heritage · Photography</small>
+                    <h3>Konda Reddy Fort</h3>
+                    <p>Historic Kurnool landmark featuring circular bastions and 12th-century stone masonry.</p>
+                    <div class="score-signature">
+                      <div class="score-top">
+                        <div class="score-ring"><span class="score-number">92</span></div>
+                        <div class="score-meta"><strong>COMPATIBILITY</strong><span>Excellent match</span></div>
+                      </div>
+                      <div class="score-bars">
+                        <div class="score-row"><span>Hiddenness</span><div class="score-bar"><i class="score-fill" style="--score:92%"></i></div><b>92%</b></div>
+                        <div class="score-row"><span>Culture</span><div class="score-bar"><i class="score-fill" style="--score:95%"></i></div><b>95%</b></div>
+                        <div class="score-row"><span>Fit</span><div class="score-bar"><i class="score-fill" style="--score:98%"></i></div><b>98%</b></div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="demo-card">
+                  <img src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80" alt="Gadwal Fort" loading="lazy">
+                  <div class="demo-card-body">
+                    <small>Heritage · Quiet</small>
+                    <h3>Gadwal Fort</h3>
+                    <p>Deep heritage fortress with towering ramparts and centuries of regional weaving history.</p>
+                    <div class="score-signature">
+                      <div class="score-top">
+                        <div class="score-ring" style="background:conic-gradient(var(--ug-primary) 0 88%, rgba(216,255,77,0.15) 88% 100%)"><span class="score-number">88</span></div>
+                        <div class="score-meta"><strong>COMPATIBILITY</strong><span>Strong cultural fit</span></div>
+                      </div>
+                      <div class="score-bars">
+                        <div class="score-row"><span>Hiddenness</span><div class="score-bar"><i class="score-fill" style="--score:89%"></i></div><b>89%</b></div>
+                        <div class="score-row"><span>Culture</span><div class="score-bar"><i class="score-fill" style="--score:94%"></i></div><b>94%</b></div>
+                        <div class="score-row"><span>Fit</span><div class="score-bar"><i class="score-fill" style="--score:91%"></i></div><b>91%</b></div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="demo-card">
+                  <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80" alt="Orvakal Rock Garden" loading="lazy">
+                  <div class="demo-card-body">
+                    <small>Nature · Photography</small>
+                    <h3>Orvakal Rock Garden</h3>
+                    <p>Ancient natural silica rock formations and tranquil water reservoirs with stellar vistas.</p>
+                    <div class="score-signature">
+                      <div class="score-top">
+                        <div class="score-ring" style="background:conic-gradient(var(--ug-primary) 0 86%, rgba(216,255,77,0.15) 86% 100%)"><span class="score-number">86</span></div>
+                        <div class="score-meta"><strong>COMPATIBILITY</strong><span>Stunning visual match</span></div>
+                      </div>
+                      <div class="score-bars">
+                        <div class="score-row"><span>Hiddenness</span><div class="score-bar"><i class="score-fill" style="--score:86%"></i></div><b>86%</b></div>
+                        <div class="score-row"><span>Culture</span><div class="score-bar"><i class="score-fill" style="--score:72%"></i></div><b>72%</b></div>
+                        <div class="score-row"><span>Fit</span><div class="score-bar"><i class="score-fill" style="--score:95%"></i></div><b>95%</b></div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+
+  <script>
+    const promptBox = document.getElementById('prompt');
+    function setPrompt(text) {
+      promptBox.value = text;
+      promptBox.focus();
+    }
+    function runDemo() {
+      const stage = document.getElementById('stage'), results = document.getElementById('results'), status = document.getElementById('status');
+      stage.classList.add('show');
+      results.style.display = 'none';
+      ['s1', 's2', 's3', 's4'].forEach(id => document.getElementById(id).classList.remove('on'));
+      const messages = ['Understanding your trip...', 'Matching your interests...', 'Applying quiet-place preference...', 'Ranking hidden gems...'];
+      messages.forEach((msg, i) => setTimeout(() => {
+        status.textContent = msg;
+        document.getElementById('s' + (i + 1)).classList.add('on');
+      }, i * 600));
+      setTimeout(() => {
+        status.textContent = '✦ UnseenGo found your best matches';
+        results.style.display = 'block';
+        results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }, 2600);
+    }
+    function resetDemo() {
+      document.getElementById('results').style.display = 'none';
+      document.getElementById('stage').classList.remove('show');
+      window.scrollTo({ top: document.querySelector('.demo-panel').offsetTop - 100, behavior: 'smooth' });
+    }
+  </script>
 </body>
 </html>

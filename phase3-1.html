@@ -1,40 +1,289 @@
 <!doctype html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="unseengo-theme.css?v=20260927">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>UnseenGo AI — Phase 3.1</title>
+  <title>Phase 3.1 Explainable AI Recommendation Test — UnseenGo AI</title>
+  <meta name="description" content="Phase 3.1 explainable personalized recommendation engine test harness for UnseenGo AI.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
   <style>
-    body{margin:0;background:#080808;color:#f5f5f5;font:16px system-ui,sans-serif}.wrap{max-width:900px;margin:auto;padding:40px 20px}h1{color:#b6ff00}.panel,.card{background:#111;border:1px solid #292929;border-radius:16px;padding:20px;margin:16px 0}button{background:#b6ff00;border:0;padding:12px 18px;border-radius:10px;font-weight:700;cursor:pointer}.score{font-size:42px;color:#b6ff00}.bar{height:8px;background:#292929;border-radius:5px;overflow:hidden}.fill{height:100%;background:#b6ff00}.muted{color:#aaa}.why{border-left:3px solid #b6ff00;padding-left:12px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.metric{padding:12px;background:#181818;border-radius:10px}.metric b{display:block;margin-bottom:6px}
+    .phase-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 1rem 5rem;
+    }
+    .phase-panel {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="light"] .phase-panel, html.ug-light .phase-panel {
+      background: #ffffff;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+    }
+    .score-badge {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--ug-primary, #d8ff4d);
+    }
+    .metric-bar {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    [data-theme="light"] .metric-bar, html.ug-light .metric-bar {
+      background: #e2e8df;
+    }
+    .metric-fill {
+      height: 100%;
+      background: var(--ug-primary, #d8ff4d);
+      border-radius: inherit;
+    }
+    [data-theme="light"] .metric-fill, html.ug-light .metric-fill {
+      background: #4d7c0f;
+    }
   </style>
 </head>
 <body>
-<div class="wrap">
-  <h1>UnseenGo AI</h1>
-  <p class="muted">Phase 3.1 · Explainable personalized recommendation engine</p>
-  <div class="panel">
-    <h2>Test recommendation</h2>
-    <p><b>City:</b> Kurnool</p>
-    <p><b>Interests:</b> Heritage, Photography</p>
-    <p><b>Duration:</b> 2 days</p>
-    <button id="run">Run Recommendation</button>
-  </div>
-  <div id="output" class="panel"><p class="muted">Click the button to rank available destinations.</p></div>
-</div>
-<script src="data/destination-registry.js"></script>
-<script src="core/phase3-1-ai-recommendation.js"></script>
-<script>
-function run(){
-  const all=(window.UnseenGoData&&Array.isArray(window.UnseenGoData.destinations))?window.UnseenGoData.destinations:[];
-  const prefs={interests:['heritage','photography'],pace:'moderate',budget:null};
-  const kurnool=all.filter(d=>String(d?.identity?.city||'').toLowerCase()==='kurnool');
-  const ranked=window.UnseenGoRecommendation.recommend(kurnool.length?kurnool:all,prefs,5);
-  const out=document.getElementById('output');
-  if(!ranked.length){out.innerHTML='<h2>No destinations available</h2><p class="muted">Load the destination registry first.</p>';return;}
-  out.innerHTML='<h2>Top personalized matches</h2>'+ranked.map((r,i)=>`<div class="card"><h3>${i+1}. ${r.destination.identity?.name||'Destination'}</h3><div class="score">${r.score}/100</div><p class="why">${r.explanation}</p><div class="grid">${Object.entries(r.parts).map(([k,v])=>`<div class="metric"><b>${k}</b>${Math.round(v)}<div class="bar"><div class="fill" style="width:${Math.round(v)}%"></div></div></div>`).join('')}</div></div>`).join('');
-}
-document.getElementById('run').addEventListener('click',run);
-</script>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link active" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <a href="decision-engine.html">Decision Engine</a>
+            <span class="sep">›</span>
+            <span class="current">Phase 3.1 Test Harness</span>
+          </div>
+          <span class="ug-kicker">✦ ALGORITHMIC VERIFICATION HARNESS</span>
+          <h1 class="ug-page-hero-title">Phase 3.1 <em>recommendation test.</em></h1>
+          <p class="ug-page-hero-lead">
+            Explainable personalized recommendation engine test bed. Inspects feature breakdown metrics across candidate destinations in the registry.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="phase-wrap">
+      <!-- Test Parameters Panel -->
+      <section class="phase-panel">
+        <span class="ug-kicker">BENCHMARK PARAMETERS</span>
+        <h2 style="font-size: 1.35rem; margin: 4px 0 12px;">Test Profile: Kurnool Heritage Circuit</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 1.5rem;">
+          <div style="background: var(--ug-elevated); padding: 12px; border-radius: 12px; border: 1px solid var(--ug-border);">
+            <small style="color: var(--ug-text-secondary); font-size: 10px; font-weight: 800; text-transform: uppercase;">City</small>
+            <strong style="display: block; font-size: 14px; margin-top: 4px;">Kurnool, AP</strong>
+          </div>
+          <div style="background: var(--ug-elevated); padding: 12px; border-radius: 12px; border: 1px solid var(--ug-border);">
+            <small style="color: var(--ug-text-secondary); font-size: 10px; font-weight: 800; text-transform: uppercase;">Interests</small>
+            <strong style="display: block; font-size: 14px; margin-top: 4px;">Heritage, Photography</strong>
+          </div>
+          <div style="background: var(--ug-elevated); padding: 12px; border-radius: 12px; border: 1px solid var(--ug-border);">
+            <small style="color: var(--ug-text-secondary); font-size: 10px; font-weight: 800; text-transform: uppercase;">Duration</small>
+            <strong style="display: block; font-size: 14px; margin-top: 4px;">2 Days</strong>
+          </div>
+        </div>
+        <button id="run" class="ug-btn-primary">Execute Test Recommendation →</button>
+      </section>
+
+      <!-- Output Panel -->
+      <section id="output" class="phase-panel">
+        <p style="color: var(--ug-text-secondary); margin: 0; text-align: center; padding: 2rem 0;">
+          Click the button above to score and rank available destination records.
+        </p>
+      </section>
+    </div>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="data/destination-registry.js"></script>
+  <script src="core/phase3-1-ai-recommendation.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+
+  <script>
+    function run() {
+      const all = (window.UnseenGoData && Array.isArray(window.UnseenGoData.destinations)) ? window.UnseenGoData.destinations : [];
+      const prefs = { interests: ['heritage', 'photography'], pace: 'moderate', budget: null };
+      const kurnool = all.filter(d => String(d?.identity?.city || '').toLowerCase() === 'kurnool');
+      const ranked = (window.UnseenGoRecommendation && typeof window.UnseenGoRecommendation.recommend === 'function')
+        ? window.UnseenGoRecommendation.recommend(kurnool.length ? kurnool : all, prefs, 5)
+        : [];
+      const out = document.getElementById('output');
+
+      if (!ranked.length) {
+        out.innerHTML = `
+          <h2 style="font-size: 1.25rem; margin: 0 0 8px;">No Destinations Available</h2>
+          <p style="color: var(--ug-text-secondary); margin: 0;">Ensure the destination registry is loaded before executing the benchmark.</p>
+        `;
+        return;
+      }
+
+      out.innerHTML = `
+        <h2 style="font-size: 1.35rem; margin: 0 0 1.25rem;">Top Personalized Matches</h2>
+        <div style="display: grid; gap: 1rem;">
+          ${ranked.map((r, i) => `
+            <div style="background: var(--ug-elevated); border: 1px solid var(--ug-border); border-radius: 16px; padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div>
+                  <h3 style="margin: 0; font-size: 1.25rem; color: var(--ug-text);">${i + 1}. ${r.destination.identity?.name || 'Destination'}</h3>
+                  <div style="color: var(--ug-text-secondary); font-size: 0.85rem; margin-top: 4px;">📍 ${r.destination.identity?.city || 'India'}</div>
+                </div>
+                <span class="score-badge">${r.score}/100</span>
+              </div>
+              <p style="border-left: 3px solid var(--ug-primary); padding-left: 12px; margin: 12px 0; color: var(--ug-text-secondary); font-size: 0.9rem; line-height: 1.5;">${r.explanation}</p>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-top: 1rem;">
+                ${Object.entries(r.parts).map(([k, v]) => `
+                  <div style="background: var(--ug-surface); border: 1px solid var(--ug-border); border-radius: 10px; padding: 10px;">
+                    <span style="font-size: 10px; color: var(--ug-text-secondary); text-transform: uppercase; font-weight: 800;">${k}</span>
+                    <strong style="display: block; font-size: 14px; color: var(--ug-text); margin: 2px 0 6px;">${Math.round(v)}%</strong>
+                    <div class="metric-bar">
+                      <div class="metric-fill" style="width: ${Math.round(v)}%;"></div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    document.getElementById('run').addEventListener('click', run);
+  </script>
 </body>
 </html>

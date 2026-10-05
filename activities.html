@@ -1,1 +1,258 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Activities | UnseenGo AI</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:15px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}.brand{color:#fff;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}main{max-width:1000px;margin:auto;padding:60px 22px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{padding:25px;background:#101713;border:1px solid #2a342d;border-radius:16px}a{text-decoration:none}h1{font-size:48px}@media(max-width:700px){.grid{grid-template-columns:1fr}h1{font-size:36px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>EXPERIENCES</p><h1>Do more than visit. Experience.</h1><div class="grid"><div class="box"><h2>Culture</h2><p>Local traditions, crafts and community experiences.</p></div><div class="box"><h2>Food</h2><p>Regional dishes, markets and food trails.</p></div><div class="box"><h2>Nature</h2><p>Walks, viewpoints, waterfalls and outdoor discoveries.</p></div><div class="box"><h2>Heritage</h2><p>Stories, architecture and living history.</p></div><div class="box"><h2>Adventure</h2><p>Active experiences for curious travelers.</p></div><div class="box"><h2>Local life</h2><p>Neighbourhoods beyond the tourist route.</p></div></div><p><a href="planner.html">Build an itinerary →</a></p></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="description" content="Authentic Activities & Guided Trails — UnseenGo AI. Coracle river crossings, cave crawls, heritage architecture walks, and artisanal craft experiences across India.">
+  <title>Authentic Activities & Trails — UnseenGo AI</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Activities & Trails</span>
+          </div>
+          <span class="ug-kicker emerald">✦ Immersive Field Experiences</span>
+          <h1 class="ug-page-hero-title">Beyond sightseeing. <em>Living culture.</em></h1>
+          <p class="ug-page-hero-lead">
+            Curated trails and hands-on activities led by verified local naturalists, temple historians, coracle boatmen, and traditional master artisans.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Activity Catalog -->
+    <section style="padding: 3.5rem 0 5rem;">
+      <div class="ug-container">
+        <div class="ug-grid-3">
+          <!-- Act 1 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1600100397608-f0109f7d1d4e?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+              <span class="ug-badge ug-badge-verified">River Trail</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">2.5 Hours · Hampi / Anegundi</span>
+            </div>
+            <h3 class="ug-card-title">Tungabhadra Coracle Crossing & Boulder Sunset</h3>
+            <p class="ug-card-desc">Navigate gentle river whirlpools in woven bamboo round coracles, spotting prehistoric rock art along the Kishkindha cliffs.</p>
+            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: var(--ug-primary); font-size: 1.1rem;">₹600 <span style="font-size: 0.75rem; color: var(--ug-text-muted);">/ person</span></strong>
+              <a href="planner.html?activity=Coracle%20Crossing" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">Add to Itinerary</a>
+            </div>
+          </article>
+
+          <!-- Act 2 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+              <span class="ug-badge ug-badge-ai">Spelunking</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">3 Hours · Kurnool District</span>
+            </div>
+            <h3 class="ug-card-title">Belum Cave Subterranean Passage Exploration</h3>
+            <p class="ug-card-desc">Venture into limestone musical chambers, underground freshwater siphons, and ancient Buddhist meditation halls 150 feet below ground.</p>
+            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: var(--ug-primary); font-size: 1.1rem;">₹350 <span style="font-size: 0.75rem; color: var(--ug-text-muted);">/ entry</span></strong>
+              <a href="place.html?place=Belum%20Caves" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">View Guide</a>
+            </div>
+          </article>
+
+          <!-- Act 3 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1606298855672-3efb63017be8?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+              <span class="ug-badge ug-badge-verified">Adventure</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">Overnight · Kadapa</span>
+            </div>
+            <h3 class="ug-card-title">Gandikota Gorge Kayaking & Stargazing Camp</h3>
+            <p class="ug-card-desc">Paddle the tranquil waters of the Penna Gorge beneath 300-foot sheer canyon precipices, followed by cliffside night camping.</p>
+            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: var(--ug-primary); font-size: 1.1rem;">₹1,800 <span style="font-size: 0.75rem; color: var(--ug-text-muted);">/ camper</span></strong>
+              <a href="place.html?place=Gandikota" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">View Guide</a>
+            </div>
+          </article>
+
+          <!-- Act 4 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+              <span class="ug-badge ug-badge-ai">Craft Guild</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">4 Hours · Srikalahasti</span>
+            </div>
+            <h3 class="ug-card-title">Organic Dye Kalamkari Textile Workshop</h3>
+            <p class="ug-card-desc">Learn the 17-step natural dye painting technique using bamboo pens, fermented jaggery ink, and river washing with master artisans.</p>
+            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: var(--ug-primary); font-size: 1.1rem;">₹1,200 <span style="font-size: 0.75rem; color: var(--ug-text-muted);">/ session</span></strong>
+              <a href="planner.html?activity=Kalamkari" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">Plan Activity</a>
+            </div>
+          </article>
+
+          <!-- Act 5 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+              <span class="ug-badge ug-badge-verified">Rainforest</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">3 Hours · Agumbe</span>
+            </div>
+            <h3 class="ug-card-title">Agumbe Ghat Canopy & Herpetology Walk</h3>
+            <p class="ug-card-desc">Trek with rainforest biologists in search of bioluminescent fungi, endemic frogs, and majestic Western Ghats viewpoints.</p>
+            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: var(--ug-primary); font-size: 1.1rem;">₹850 <span style="font-size: 0.75rem; color: var(--ug-text-muted);">/ person</span></strong>
+              <a href="place.html?place=Agumbe" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">View Guide</a>
+            </div>
+          </article>
+
+          <!-- Act 6 -->
+          <article class="ug-card">
+            <div style="height: 200px; border-radius: 12px; margin-bottom: 1.25rem; background: #131d14 url('https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=700&q=80') center/cover;"></div>
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem; align-items: center;">
+              <span class="ug-badge ug-badge-ai">Culinary</span>
+              <span style="font-size: 0.78rem; color: var(--ug-text-muted);">2.5 Hours · Hyderabad</span>
+            </div>
+            <h3 class="ug-card-title">Dawn Irani Chai & Nizam Bakery Food Walk</h3>
+            <p class="ug-card-desc">Sample century-old slow-cooked chai, oven-fresh Osmania biscuits, and khari puffs while learning Hyderabad’s Persian cafe heritage.</p>
+            <div style="margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <strong style="color: var(--ug-primary); font-size: 1.1rem;">₹750 <span style="font-size: 0.75rem; color: var(--ug-text-muted);">/ person</span></strong>
+              <a href="planner.html?activity=Irani%20Chai" class="ug-btn-secondary" style="font-size: 0.82rem; padding: 0.45rem 0.95rem;">Plan Activity</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

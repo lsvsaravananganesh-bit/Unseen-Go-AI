@@ -1,1 +1,454 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UnseenGo AI — Personalize my journey</title><link rel="stylesheet" href="account.css"></head><body class="ug-account"><header class="ug-account-nav"><a class="ug-brand" href="index.html">UNSEEN<span>GO</span></a><div class="ug-nav-actions"><a class="ug-link" href="dashboard.html">My dashboard</a><a class="ug-btn2 dark" href="index.html">Home</a></div></header><section class="ug-account-hero"><div class="ug-shell"><div class="ug-kicker2">Personalization engine</div><h1>Your preferences.<br>Your hidden gems.</h1><p>Choose what matters to you. UnseenGo converts your interests, budget and pace into an explainable hidden-gem score.</p></div></section><main class="ug-shell" style="padding:30px 0 80px"><section class="ug-panel"><h2>Tell UnseenGo how you travel</h2><p class="ug-small">Your profile is saved to your account and used for future recommendations.</p><form id="prefForm" class="ug-form"><div><label>Interests — choose one or more</label><div class="ug-checks" id="interests"><label class="ug-check"><input type="checkbox" value="Heritage"> 🏛 Heritage</label><label class="ug-check"><input type="checkbox" value="Nature"> 🌿 Nature</label><label class="ug-check"><input type="checkbox" value="Food"> 🍛 Food</label><label class="ug-check"><input type="checkbox" value="Culture"> 🎭 Culture</label><label class="ug-check"><input type="checkbox" value="Adventure"> ⛰ Adventure</label><label class="ug-check"><input type="checkbox" value="Photography"> 📷 Photography</label></div></div><div><label for="budget">Budget</label><select id="budget"><option value="low">Budget-friendly</option><option value="medium" selected>Moderate</option><option value="high">Premium</option></select></div><div><label for="pace">Travel pace</label><select id="pace"><option value="slow">Slow & relaxed</option><option value="balanced" selected>Balanced</option><option value="fast">Fast & packed</option></select></div><div><label for="city">Starting city / destination</label><select id="city"><option value="">All India</option></select></div><div><label for="days">Days available</label><input id="days" type="number" min="1" max="14" value="2"></div><div class="ug-actions-row"><button class="ug-btn2" type="submit">✨ Find my hidden gems</button><a class="ug-btn2 dark" href="dashboard.html">Dashboard</a></div></form><div id="message" class="ug-error"></div></section><section class="ug-panel"><div style="display:flex;justify-content:space-between;gap:15px;align-items:end;flex-wrap:wrap"><div><div class="ug-kicker2" style="color:#839c36">Personalized ranking</div><h2 style="margin:5px 0">Recommended for you</h2><p class="ug-small">Hiddenness + interest fit + travel ease + budget + pace + photography.</p></div><span id="profileBadge" class="ug-score2">Waiting for profile</span></div><div id="results" class="ug-recs" style="margin-top:18px"><div class="ug-empty">Choose your preferences and run the engine.</div></div></section></main><div class="ug-toast" id="toast"></div><script src="supabase-config.js"></script><script src="supabase-client.js"></script><script src="account.js"></script><script src="data/destination-registry.js"></script><script src="core/unseengo-core.js"></script><script src="unseen-engine.js"></script><script>(async function(){const city=document.getElementById('city'),form=document.getElementById('prefForm'),results=document.getElementById('results'),message=document.getElementById('message'),badge=document.getElementById('profileBadge'),toast=document.getElementById('toast');function show(t){message.textContent=t;message.style.display='block'}function pop(t){toast.textContent=t;toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),1800)}try{const user=await UnseenGoAccount.user();if(!user){location.href='login.html?redirect=personalize.html';return}UnseenGoAI.getCityNames().forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;city.appendChild(o)});const old=await UnseenGoAccount.getPreferences();if(old){document.querySelectorAll('#interests input').forEach(i=>i.checked=(old.interests||[]).includes(i.value));document.getElementById('budget').value=old.budget||'medium';document.getElementById('pace').value=old.pace||'balanced'}form.onsubmit=async e=>{e.preventDefault();message.style.display='none';const interests=[...document.querySelectorAll('#interests input:checked')].map(x=>x.value);if(!interests.length)return show('Choose at least one interest.');const prefs={interests,budget:document.getElementById('budget').value,pace:document.getElementById('pace').value};const saved=await UnseenGoAccount.savePreferences(prefs);if(saved.error)return show(saved.error.message);const profile={...prefs,days:Number(document.getElementById('days').value)||2};const ranked=UnseenGoAI.generate(city.value,profile)?.recommendations||[];badge.textContent=interests.join(' · ')+' · '+prefs.budget+' · '+prefs.pace;results.innerHTML='';if(!ranked.length){results.innerHTML='<div class="ug-empty">No strong matches yet. Try All India or add another interest.</div>';return}ranked.slice(0,6).forEach((r,i)=>{const card=document.createElement('article');card.className='ug-rec';const safe=s=>String(s??'').replace(/[&<>]/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[x]));card.innerHTML='<div style="display:flex;justify-content:space-between;gap:10px"><h3>'+(i+1)+'. '+safe(r.name)+'</h3><span class="ug-score2">'+r.unseenScore+'% match</span></div><div class="ug-small">'+safe(r.location||'India')+'</div><p>'+safe(r.why||'A strong match for your travel profile.')+'</p><div class="ug-rec-actions"><button class="primary save">♡ Save</button><a href="place.html?place='+encodeURIComponent(r.name)+'">View place</a><a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(r.name+' '+(r.location||''))+'">Navigate →</a></div>';card.querySelector('.save').onclick=async()=>{const sr=await UnseenGoAccount.saveRecommendation({name:r.name,score:r.unseenScore,why:r.why,place:r});if(sr.error)return show(sr.error.message);card.querySelector('.save').textContent='✓ Saved';pop(r.name+' saved')};results.appendChild(card)})};}catch(e){console.error(e);show('Personalization engine could not start. Please refresh and try again.')}})();</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Personalize Your Journey — UnseenGo AI</title>
+  <meta name="description" content="Configure your travel preferences, budget, pace, and interests into an explainable AI hidden-gem recommendation score.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+  <link rel="stylesheet" href="account.css">
+  <script>
+    (function() {
+      const t = localStorage.getItem('unseengo_theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+  <style>
+    /* Royal Horizon Custom Enhancements for Personalize */
+    .personalize-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2.5rem 1rem 5rem;
+    }
+    .pref-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 2rem;
+      align-items: start;
+    }
+    .ug-panel-custom {
+      background: var(--ug-surface, #121913);
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+    }
+    [data-theme="light"] .ug-panel-custom, html.ug-light .ug-panel-custom {
+      background: #ffffff;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+    .ug-checks-custom {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .ug-check-custom {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--ug-border, #28372b);
+      background: var(--ug-elevated, #18221a);
+      color: var(--ug-text, #f0f4ee);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+    }
+    .ug-check-custom input {
+      accent-color: var(--ug-primary, #d8ff4d);
+    }
+    .ug-check-custom:hover {
+      border-color: var(--ug-primary, #d8ff4d);
+    }
+    [data-theme="light"] .ug-check-custom, html.ug-light .ug-check-custom {
+      background: #f0f4ed;
+    }
+    .ug-rec-custom {
+      border: 1px solid var(--ug-border, #28372b);
+      border-radius: 16px;
+      padding: 1.25rem;
+      background: var(--ug-elevated, #18221a);
+      margin-bottom: 1rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .ug-rec-custom:hover {
+      transform: translateY(-2px);
+      border-color: var(--ug-primary, #d8ff4d);
+    }
+    [data-theme="light"] .ug-rec-custom, html.ug-light .ug-rec-custom {
+      background: #f8faf6;
+    }
+    @media (max-width: 900px) {
+      .pref-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <!-- Desktop Navigation Links -->
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Page Hero -->
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <a href="dashboard.html">Dashboard</a>
+            <span class="sep">›</span>
+            <span class="current">Personalize</span>
+          </div>
+          <span class="ug-kicker">✦ EXPLAINABLE AI PREFERENCE ENGINE</span>
+          <h1 class="ug-page-hero-title">Your preferences.<br>Your <em>hidden gems.</em></h1>
+          <p class="ug-page-hero-lead">
+            Select what truly matters to you. UnseenGo converts your interests, budget boundaries, pace, and photography passion into a transparent hidden-gem compatibility score.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Form & Recommendation Split View -->
+    <div class="personalize-wrap">
+      <div class="pref-grid">
+        <!-- Form Panel -->
+        <section class="ug-panel-custom">
+          <span class="ug-kicker">STEP 1 · PROFILE TUNING</span>
+          <h2 style="font-size: 1.5rem; margin: 6px 0 10px;">Tell UnseenGo how you travel</h2>
+          <p style="color: var(--ug-text-secondary); font-size: 0.9rem; margin-bottom: 1.5rem;">
+            Your profile is saved directly to your account and automatically guides future AI discoveries.
+          </p>
+
+          <form id="prefForm" class="ug-form">
+            <div>
+              <label style="font-weight: 700; font-size: 0.85rem; color: var(--ug-text);">INTERESTS (Select one or more)</label>
+              <div class="ug-checks-custom" id="interests">
+                <label class="ug-check-custom"><input type="checkbox" value="Heritage"> 🏛 Heritage</label>
+                <label class="ug-check-custom"><input type="checkbox" value="Nature"> 🌿 Nature</label>
+                <label class="ug-check-custom"><input type="checkbox" value="Food"> 🍛 Food</label>
+                <label class="ug-check-custom"><input type="checkbox" value="Culture"> 🎭 Culture</label>
+                <label class="ug-check-custom"><input type="checkbox" value="Adventure"> ⛰ Adventure</label>
+                <label class="ug-check-custom"><input type="checkbox" value="Photography"> 📷 Photography</label>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <label for="budget" style="font-weight: 700; font-size: 0.85rem; color: var(--ug-text);">BUDGET TIER</label>
+              <select id="budget" class="ug-form-select" style="margin-top: 6px;">
+                <option value="low">Budget-friendly (Affordable homestays & local transit)</option>
+                <option value="medium" selected>Moderate (Boutique heritage stays & private cabs)</option>
+                <option value="high">Premium (Luxury royal havelis & chartered transfers)</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <label for="pace" style="font-weight: 700; font-size: 0.85rem; color: var(--ug-text);">TRAVEL PACE</label>
+              <select id="pace" class="ug-form-select" style="margin-top: 6px;">
+                <option value="slow">Slow & Immersive (1-2 sites/day with village walks)</option>
+                <option value="balanced" selected>Balanced (3 sites/day with leisurely lunches)</option>
+                <option value="fast">Active & Packed (Full dawn-to-dusk regional circuit)</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <label for="city" style="font-weight: 700; font-size: 0.85rem; color: var(--ug-text);">STARTING CITY / DESTINATION REGION</label>
+              <select id="city" class="ug-form-select" style="margin-top: 6px;">
+                <option value="">All India (Search Whole Country)</option>
+              </select>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <label for="days" style="font-weight: 700; font-size: 0.85rem; color: var(--ug-text);">DAYS AVAILABLE</label>
+              <input id="days" type="number" min="1" max="14" value="2" class="ug-form-input" style="margin-top: 6px;">
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 1.5rem; flex-wrap: wrap;">
+              <button class="ug-btn-primary" type="submit">✨ Find My Hidden Gems</button>
+              <a class="ug-btn-secondary" href="dashboard.html">View Dashboard</a>
+            </div>
+          </form>
+
+          <div id="message" class="ug-error" style="margin-top: 1rem;"></div>
+        </section>
+
+        <!-- Recommendations Panel -->
+        <section class="ug-panel-custom">
+          <div style="display: flex; justify-content: space-between; gap: 15px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 1.5rem; border-bottom: 1px solid var(--ug-border); padding-bottom: 1rem;">
+            <div>
+              <span class="ug-kicker">STEP 2 · REAL-TIME MATCHING</span>
+              <h2 style="font-size: 1.5rem; margin: 4px 0 6px;">Personalized Shortlist</h2>
+              <p style="color: var(--ug-text-secondary); font-size: 0.85rem; margin: 0;">
+                Calculated from: Hiddenness + Interest Fit + Travel Ease + Budget + Photography.
+              </p>
+            </div>
+            <span id="profileBadge" class="ug-score-pill" style="font-size: 0.8rem;">Waiting for profile</span>
+          </div>
+
+          <div id="results" class="ug-recs">
+            <div class="ug-empty" style="padding: 3rem 1.5rem;">
+              <div style="font-size: 2rem; margin-bottom: 0.75rem;">🧭</div>
+              <div style="font-weight: 700; color: var(--ug-text); margin-bottom: 0.25rem;">No recommendations generated yet</div>
+              <p style="margin: 0; font-size: 0.9rem;">Choose your travel preferences on the left and click "Find My Hidden Gems".</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <div class="ug-toast" id="toast"></div>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="account.js"></script>
+  <script src="data/destination-registry.js"></script>
+  <script src="core/unseengo-core.js"></script>
+  <script src="unseen-engine.js"></script>
+  <script src="src/scripts/navigation.js"></script>
+
+  <script>
+    (async function(){
+      const city = document.getElementById('city');
+      const form = document.getElementById('prefForm');
+      const results = document.getElementById('results');
+      const message = document.getElementById('message');
+      const badge = document.getElementById('profileBadge');
+      const toast = document.getElementById('toast');
+
+      function show(t){
+        message.textContent = t;
+        message.style.display = 'block';
+      }
+
+      function pop(t){
+        toast.textContent = t;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2200);
+      }
+
+      try {
+        const user = await UnseenGoAccount.user();
+        if (!user) {
+          location.href = 'login.html?redirect=personalize.html';
+          return;
+        }
+
+        if (window.UnseenGoAI && typeof UnseenGoAI.getCityNames === 'function') {
+          UnseenGoAI.getCityNames().forEach(c => {
+            const o = document.createElement('option');
+            o.value = c;
+            o.textContent = c;
+            city.appendChild(o);
+          });
+        }
+
+        const old = await UnseenGoAccount.getPreferences();
+        if (old) {
+          document.querySelectorAll('#interests input').forEach(i => {
+            i.checked = (old.interests || []).includes(i.value);
+          });
+          document.getElementById('budget').value = old.budget || 'medium';
+          document.getElementById('pace').value = old.pace || 'balanced';
+        }
+
+        form.onsubmit = async e => {
+          e.preventDefault();
+          message.style.display = 'none';
+
+          const interests = [...document.querySelectorAll('#interests input:checked')].map(x => x.value);
+          if (!interests.length) return show('Please choose at least one interest.');
+
+          const prefs = {
+            interests,
+            budget: document.getElementById('budget').value,
+            pace: document.getElementById('pace').value
+          };
+
+          const saved = await UnseenGoAccount.savePreferences(prefs);
+          if (saved && saved.error) return show(saved.error.message);
+
+          const profile = {
+            ...prefs,
+            days: Number(document.getElementById('days').value) || 2
+          };
+
+          const ranked = (window.UnseenGoAI && typeof UnseenGoAI.generate === 'function')
+            ? (UnseenGoAI.generate(city.value, profile)?.recommendations || [])
+            : [];
+
+          badge.textContent = interests.join(' · ') + ' · ' + prefs.budget + ' · ' + prefs.pace;
+          results.innerHTML = '';
+
+          if (!ranked.length) {
+            results.innerHTML = '<div class="ug-empty" style="padding: 2.5rem 1rem;">No strong matches yet for this specific combination. Try selecting "All India" or add another interest category.</div>';
+            return;
+          }
+
+          ranked.slice(0, 6).forEach((r, i) => {
+            const card = document.createElement('article');
+            card.className = 'ug-rec-custom';
+            const safe = s => String(s ?? '').replace(/[&<>]/g, x => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[x]));
+
+            card.innerHTML = `
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom: 6px;">
+                <h3 style="margin:0; font-size:1.15rem; color:var(--ug-text);">${i + 1}. ${safe(r.name)}</h3>
+                <span class="ug-score-pill" style="font-size:0.75rem; background:rgba(216,255,77,0.15); color:var(--ug-primary);">${r.unseenScore}% match</span>
+              </div>
+              <div style="font-size:0.8rem; color:var(--ug-text-secondary); margin-bottom:8px;">📍 ${safe(r.location || 'India')}</div>
+              <p style="font-size:0.85rem; line-height:1.6; color:var(--ug-text-secondary); margin:0 0 12px;">${safe(r.why || 'A strong cultural match for your travel profile.')}</p>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="ug-btn-primary save" type="button" style="padding:6px 12px; font-size:0.8rem;">♡ Save</button>
+                <a href="place.html?place=${encodeURIComponent(r.name)}" class="ug-btn-secondary" style="padding:6px 12px; font-size:0.8rem;">View Place Guide</a>
+                <a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(r.name + ' ' + (r.location || ''))}" class="ug-btn-secondary" style="padding:6px 12px; font-size:0.8rem;">Navigate ↗</a>
+              </div>
+            `;
+
+            card.querySelector('.save').onclick = async () => {
+              const sr = await UnseenGoAccount.saveRecommendation({
+                name: r.name,
+                score: r.unseenScore,
+                why: r.why,
+                place: r
+              });
+              if (sr && sr.error) return show(sr.error.message);
+              card.querySelector('.save').textContent = '✓ Saved';
+              pop(r.name + ' saved to your vault');
+            };
+
+            results.appendChild(card);
+          });
+        };
+      } catch (e) {
+        console.error(e);
+        show('Personalization engine could not start. Please refresh and try again.');
+      }
+    })();
+  </script>
+</body>
+</html>

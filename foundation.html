@@ -1,1 +1,243 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>UnseenGo Foundation</title><style>body{margin:0;background:#070b09;color:#f4f7f1;font:16px system-ui}header{padding:20px;border-bottom:1px solid #2a342d}main{max-width:1000px;margin:auto;padding:60px 22px}.brand{color:white;text-decoration:none;font-size:22px;font-weight:900}.brand b,a{color:#d8f36a}.box{padding:30px;background:#101713;border:1px solid #2a342d;border-radius:16px;line-height:1.75}a{text-decoration:none}h1{font-size:50px}@media(max-width:650px){h1{font-size:38px}}</style></head><body><header><a class="brand" href="index.html">📍 UnseenGo <b>AI</b></a></header><main><p>UNSEENGO FOUNDATION</p><h1>Travel that creates local opportunity.</h1><div class="box"><p>The UnseenGo Foundation concept supports responsible tourism, cultural awareness, local storytelling and opportunities for communities to participate in the tourism economy.</p><h2>Focus areas</h2><p>Heritage awareness · Local entrepreneurship · Responsible travel · Youth participation · Digital visibility for lesser-known destinations</p><h2>Get involved</h2><p>Community groups, researchers, tourism organizations and local businesses can connect with us through the <a href="contact.html">contact page</a>.</p></div><p><a href="index.html">← Back to UnseenGo</a></p></main></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8ff4d">
+  <meta name="description" content="The UnseenGo Heritage Foundation — Safeguarding India's neglected ancient monuments, traditional artisan guilds, and oral histories.">
+  <title>Heritage Foundation — UnseenGo AI</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="src/styles/heritage-theme.css">
+  <link rel="stylesheet" href="src/styles/navigation.css">
+  <link rel="stylesheet" href="src/styles/components.css">
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('unseengo_theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.dataset.theme = t;
+      if (t === 'light') { document.documentElement.classList.add('ug-light'); }
+      else { document.documentElement.classList.add('dark'); }
+    })();
+  </script>
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <header class="ug-header">
+    <div class="ug-container">
+      <div class="ug-nav-wrapper">
+        <a class="ug-brand" href="index.html">
+          <span class="ug-sparkle">✦</span>
+          <span>UnseenGo</span>
+          <span class="ug-brand-badge">AI</span>
+        </a>
+
+        <nav aria-label="Primary navigation">
+          <ul class="ug-nav-links">
+            <li><a class="ug-nav-link" href="index.html">🏠 Home</a></li>
+            <li><a class="ug-nav-link" href="discover.html">🔎 Discover</a></li>
+            <li><a class="ug-nav-link" href="planner.html">🤖 AI Planner</a></li>
+            <li><a class="ug-nav-link" href="stay.html">🏡 Stay</a></li>
+            <li><a class="ug-nav-link" href="transport.html">🚗 Transport</a></li>
+            <li><a class="ug-nav-link" href="stories.html">📖 Experiences</a></li>
+            <li><a class="ug-nav-link" href="my-travel.html">❤️ My Trips</a></li>
+            <li><a class="ug-nav-link" href="profile.html">👤 Profile</a></li>
+          </ul>
+        </nav>
+
+        <div class="ug-nav-actions">
+          <button type="button" class="ug-theme-toggle" data-ug-theme-toggle aria-label="Toggle dark/light theme" title="Toggle theme">
+            🌙
+          </button>
+
+          <button type="button" class="ug-city-selector-btn" data-ug-city-modal-trigger title="Select City (or press /)">
+            <span class="pin">📍</span>
+            <span class="label">City:</span>
+            <b data-ug-current-city>All India</b>
+            <span class="ug-kbd-shortcut">/</span>
+          </button>
+
+          <div class="ug-nav-auth"></div>
+
+          <button type="button" class="ug-mobile-toggle" aria-label="Open mobile navigation" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section class="ug-page-hero">
+      <div class="ug-container">
+        <div class="ug-page-hero-inner">
+          <div class="ug-breadcrumbs">
+            <a href="index.html">Home</a>
+            <span class="sep">›</span>
+            <span class="current">Heritage Foundation</span>
+          </div>
+          <span class="ug-kicker emerald">✦ Nonprofit Cultural Trust</span>
+          <h1 class="ug-page-hero-title">Protecting what modern hurry <em>leaves behind.</em></h1>
+          <p class="ug-page-hero-lead">
+            The philanthropic arm of UnseenGo AI. Dedicated to restoring forgotten stepwells, digitizing stone inscriptions, and supporting traditional craft masters across rural India.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Stats -->
+    <section style="padding: 3.5rem 0;">
+      <div class="ug-container">
+        <div class="ug-grid-4">
+          <div class="ug-card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--ug-primary); margin-bottom: 0.35rem;">42</div>
+            <div style="font-size: 0.82rem; color: var(--ug-text-secondary); text-transform: uppercase; font-weight: 700;">Monuments Documented</div>
+          </div>
+          <div class="ug-card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--ug-accent-emerald); margin-bottom: 0.35rem;">180+</div>
+            <div style="font-size: 0.82rem; color: var(--ug-text-secondary); text-transform: uppercase; font-weight: 700;">Artisans Supported</div>
+          </div>
+          <div class="ug-card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--ug-primary); margin-bottom: 0.35rem;">14</div>
+            <div style="font-size: 0.82rem; color: var(--ug-text-secondary); text-transform: uppercase; font-weight: 700;">Canyon Cleanups</div>
+          </div>
+          <div class="ug-card" style="text-align: center;">
+            <div style="font-size: 2.2rem; font-weight: 800; color: var(--ug-accent-indigo); margin-bottom: 0.35rem;">100%</div>
+            <div style="font-size: 0.82rem; color: var(--ug-text-secondary); text-transform: uppercase; font-weight: 700;">Direct Grassroots Impact</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Four Pillars -->
+    <section style="padding: 1rem 0 5rem;">
+      <div class="ug-container">
+        <div style="text-align: center; max-width: 650px; margin: 0 auto 3rem;">
+          <span class="ug-kicker">✦ Our Core Pillars</span>
+          <h2 style="font-size: 2.2rem; color: var(--ug-text-primary);">How the Foundation Acts</h2>
+          <p style="color: var(--ug-text-secondary);">Direct on-the-ground initiatives funded through platform proceeds and donations.</p>
+        </div>
+
+        <div class="ug-grid-2">
+          <article class="ug-card">
+            <div class="ug-card-icon">📜</div>
+            <h3 class="ug-card-title">Epigraphic & Stone Archival Digitization</h3>
+            <p class="ug-card-desc">
+              We deploy LiDAR scanning and high-resolution photographic archival to document deteriorating Kannada, Telugu, Tamil, and Sanskrit stone inscriptions at neglected roadside shrines and stepwells.
+            </p>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🎨</div>
+            <h3 class="ug-card-title">Living Heritage Guild Grants</h3>
+            <p class="ug-card-desc">
+              Direct micro-stipends provided to master stone carvers in Lepakshi, Kalamkari organic dye painters in Srikalahasti, and brass metal smiths across Andhra and Karnataka to preserve generational apprenticeships.
+            </p>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🌿</div>
+            <h3 class="ug-card-title">Clean Canyon & Cave Stewardship</h3>
+            <p class="ug-card-desc">
+              We organize volunteer and village waste-retrieval expeditions in high-fragility gorges including Gandikota Canyon and Belum Cave surrounds, eradicating plastic debris from water catchments.
+            </p>
+          </article>
+
+          <article class="ug-card">
+            <div class="ug-card-icon">🎙️</div>
+            <h3 class="ug-card-title">Oral Folklore Preservation Studio</h3>
+            <p class="ug-card-desc">
+              Recording elder community custodians, village priest lineages, and folk singers to ensure that local myths, sthala puranas, and sacred songs do not vanish with time.
+            </p>
+          </article>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="ug-content-box" style="margin-top: 3.5rem; text-align: center;">
+          <span class="ug-kicker emerald">Support the Mission</span>
+          <h3 style="font-size: 1.75rem; color: var(--ug-text-primary); margin-bottom: 0.5rem;">Join as a Cultural Custodian</h3>
+          <p style="color: var(--ug-text-secondary); max-width: 600px; margin: 0 auto 1.5rem; line-height: 1.6;">
+            100% of individual contributions go directly to field clean-ups and artisan stipends. We publish audited balance sheets every quarter.
+          </p>
+          <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="contact.html" class="ug-btn-primary">Become a Foundation Patron ✦</a>
+            <a href="sustainability.html" class="ug-btn-secondary">Read Our Sustainability Charter →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modern Heritage Footer -->
+  <footer class="ug-footer">
+    <div class="ug-container">
+      <div class="ug-footer-grid">
+        <div class="ug-footer-brand">
+          <h4>UNSEEN<span class="ug-brand-badge">GO</span> AI</h4>
+          <p style="font-size: 0.9rem; line-height: 1.6; margin-bottom: 1rem;">
+            India's AI-assisted hidden-gem tourism platform. Curating authentic heritage, sacred geography, quiet landscapes, and living culture.
+          </p>
+          <div class="ug-score-pill" style="background: rgba(255,255,255,0.08); color: var(--ug-primary); border-color: rgba(255,255,255,0.15);">
+            ✦ Transparent, Explainable AI Recommendations
+          </div>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Discovery & Maps</h5>
+          <ul class="ug-footer-links">
+            <li><a href="discover.html">Hidden Gems Explorer</a></li>
+            <li><a href="map.html">Explore Interactive Map</a></li>
+            <li><a href="india-cities.html">Destinations Directory</a></li>
+            <li><a href="temples.html">Temples & Sacred Heritage</a></li>
+            <li><a href="tripideas.html">Curated Road Trips</a></li>
+            <li><a href="stories.html">Destination Stories</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>AI & Travel Hub</h5>
+          <ul class="ug-footer-links">
+            <li><a href="planner.html">AI Itinerary Planner</a></li>
+            <li><a href="decision-engine.html">Decision Engine</a></li>
+            <li><a href="stay.html">Heritage Stays & Havens</a></li>
+            <li><a href="transport.html">Smart Transport Hub</a></li>
+            <li><a href="flights.html">Flight Gateways</a></li>
+            <li><a href="utilities.html">Packing & Utilities</a></li>
+            <li><a href="my-travel.html">My Travel Vault</a></li>
+          </ul>
+        </div>
+
+        <div class="ug-footer-col">
+          <h5>Trust & Company</h5>
+          <ul class="ug-footer-links">
+            <li><a href="about.html">About UnseenGo AI</a></li>
+            <li><a href="how.html">How It Works</a></li>
+            <li><a href="safety.html">Traveler Safety & SOS</a></li>
+            <li><a href="security.html">Security Center</a></li>
+            <li><a href="sustainability.html">Sustainability Charter</a></li>
+            <li><a href="contact.html">Customer Support</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="ug-footer-bottom">
+        <div>© 2026 UnseenGo AI · Crafted with devotion to India's cultural heritage.</div>
+        <div style="display: flex; gap: 1.25rem; flex-wrap: wrap;">
+          <a href="signin.html" style="color: inherit; text-decoration: none;">Sign In</a>
+          <a href="signup.html" style="color: inherit; text-decoration: none;">Sign Up</a>
+          <a href="contact.html" style="color: inherit; text-decoration: none;">Support</a>
+          <a href="privacy.html" style="color: inherit; text-decoration: none;">Privacy</a>
+          <a href="terms.html" style="color: inherit; text-decoration: none;">Terms</a>
+          <a href="refunds.html" style="color: inherit; text-decoration: none;">Refunds</a>
+          <a href="cookies.html" style="color: inherit; text-decoration: none;">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="src/scripts/navigation.js"></script>
+</body>
+</html>

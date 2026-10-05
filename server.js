@@ -85,7 +85,13 @@ const server = http.createServer(async (req, res) => {
     return res.status(200).end();
   }
 
-  const urlObj = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+  let urlObj;
+  try {
+    const cleanUrl = (req.url || '/').replace(/^\/+/, '/');
+    urlObj = new URL(cleanUrl, `http://${req.headers.host || 'localhost'}`);
+  } catch (_) {
+    urlObj = new URL('/', `http://${req.headers.host || 'localhost'}`);
+  }
   const pathname = urlObj.pathname.replace(/\/$/, '') || '/';
 
   // 1. API Routes

@@ -1149,15 +1149,23 @@
         grid-template-columns: 1fr;
         height: auto;
       }
+      .ug-map-container {
+        height: 50vh;
+        min-height: 360px;
+        order: 1;
+      }
       .ug-map-sidebar {
-        height: 560px;
+        height: 520px;
+        order: 2;
       }
       .ug-route-tray {
-        position: absolute;
-        bottom: 24px;
-        right: 24px;
-        max-width: 400px;
-        width: calc(100% - 48px);
+        position: fixed;
+        bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+        right: 16px;
+        left: 16px;
+        max-width: 440px;
+        width: auto;
+        margin-inline: auto;
         background: var(--ug-surface);
         border: 1.5px solid var(--ug-lime);
         border-radius: 18px;
